@@ -23,17 +23,17 @@
           <td>{{ role.name }}</td>
           <td class="d-flex gap-2">
             <Link
-              class="btn btn-success"
+              class="btn btn-success btn-sm"
               :href="
                 route('admin.role_permission.role.edit', {
                   role: role.id
                 })
               "
             >
-              <i class="bi-pencil-fill" />
+              <i class="fa-solid fa-pencil" />
             </Link>
             <Link
-              class="btn btn-danger"
+              class="btn btn-danger btn-sm"
               method="delete"
               :href="
                 route('admin.role_permission.role.destroy', {
@@ -42,7 +42,7 @@
               "
               as="button"
             >
-              <i class="bi-trash-fill" />
+              <i class="fa-solid fa-trash" />
             </Link>
           </td>
         </tr>

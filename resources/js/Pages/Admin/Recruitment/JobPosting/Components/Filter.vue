@@ -38,14 +38,14 @@
         </div>
       </div>
       <div class="col-auto">
-        <button type="submit" class="btn btn-dark btn-sm">
+        <button type="submit" class="btn btn-dark ">
           Filter
         </button>
       </div>
       <div class="col-auto">
         <button
           type="reset"
-          class="btn btn-secondary btn-sm"
+          class="btn btn-secondary "
           @click="resetFilter"
         >
           Reset

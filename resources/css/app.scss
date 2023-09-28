@@ -1,4 +1,5 @@
 // Required
+@import 'mdb-vue-ui-kit/css/mdb.min.css';
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/mixins";
@@ -14,6 +15,10 @@ $theme-colors: (
   "secondary": $gray-700,
   "success": $green-600
 );
+
+#app {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+}
 
 .center-element {
     position: absolute;
@@ -44,17 +49,22 @@ $theme-colors: (
     height: 100vh;
     z-index: 1;
     width: 300px;
-
-
+    
+    * {
+        color: $white !important;
+    }
+    
     .nav-link {
         transition: background-color 0.2s;
         &:hover{
             background-color: $blue-800;
+            border-radius: 7px;
         }
     }
 
     .nav-item .active{
         background-color: $blue-800;
+        border-radius: 7px;
     }
 
     
@@ -79,5 +89,3 @@ $theme-colors: (
     }
 }
 
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-@import "../../node_modules/bootstrap/scss/bootstrap";

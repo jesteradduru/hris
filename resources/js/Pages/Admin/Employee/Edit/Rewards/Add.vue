@@ -6,7 +6,7 @@
     <div class="container">
       <div class="card shadow">
         <div class="card-body">
-          <Link :href="route('admin.employees.rewards.edit', {employee: props.employee.id})" class="btn btn-sm btn-secondary"><i class="bi-arrow-left" /> Back</Link>
+          <Link :href="route('admin.employees.rewards.edit', {employee: props.employee.id})" class="btn  btn-secondary"><i class="bi-arrow-left" /> Back</Link>
           <div class="table-responsive">
             <table class="table table-compact">
               <thead>
@@ -21,7 +21,7 @@
                   <td scope="row">{{ item.title }}</td>
                   <td>{{ item.points }}</td>
                   <td class="d-flex gap-2">
-                    <button :data-id="item.id" class="btn btn-success btn-sm" @click="addReward">
+                    <button :data-id="item.id" class="btn btn-success " @click="addReward">
                       Add
                     </button>
                   </td>

@@ -131,7 +131,7 @@
         <div class="col-12">
           <h5>Name of Children</h5>
           <div class="container border py-2 rounded">
-            <button type="button" class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#addChildren">
+            <button type="button" class="btn btn-success  mb-3" data-bs-toggle="modal" data-bs-target="#addChildren">
               Add Child
             </button>
             <table class="table table-bordered table-sm" style="text-transform: uppercase;">
@@ -148,7 +148,7 @@
                   <td>{{ child.date_of_birth }}</td>
                   <td>
                     <Link
-                      :only="['children']" as="button" class="btn btn-danger btn-sm" method="delete"
+                      :only="['children']" as="button" class="btn btn-danger " method="delete"
                       :href="route('profile.pds.children.delete', { children: child.id })"
                       preserve-scroll
                     >

@@ -1,6 +1,5 @@
 <template>
   <ProfileLayout>
-    
     <PDSLayout>
       <Link :href="route('profile.pds.learning_and_development.create')" class="btn btn-success">Add</Link>
       <div class="table-responsive">
@@ -27,14 +26,14 @@
               <td>
                 <div class="d-flex gap-2">
                   <Link
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary "
                     :href="route('profile.pds.learning_and_development.edit', { learning_and_development: learning.id })"
                     preserve-scroll
                   >
                     Edit
                   </Link>
                   <Link
-                    as="button" class="btn btn-danger btn-sm" method="delete"
+                    as="button" class="btn btn-danger " method="delete"
                     :href="route('profile.pds.learning_and_development.destroy', { learning_and_development: learning.id })"
                     preserve-scroll
                   >

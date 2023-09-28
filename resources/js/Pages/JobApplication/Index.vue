@@ -2,7 +2,7 @@
   <ApplicationLayout :job_posting="job_posting">
     <div class="mb-3">
       <h4>Personal Data Sheet</h4>
-      <a class="btn btn-primary btn-sm" :href="route('profile.pds.personal_information.edit')" target="_blank">
+      <a class="btn btn-primary " :href="route('profile.pds.personal_information.edit')" target="_blank">
         UPDATE PDS
       </a>
     </div>

@@ -24,15 +24,19 @@ use App\Http\Controllers\AdminController;
      Route::name('dashboard')->get('dashboard', [AdminController::class, 'index']);
 
     //  Employee
-    Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
-    Route::get('employees/create', [EmployeeController::class, 'create'])->name('employees.create');
-    Route::post('employees/store', [EmployeeController::class, 'store'])->name('employees.store');
-    Route::get('employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
-    Route::get('employees/{employee}/rewards/edit', [EmployeeController::class, 'editRewards'])->name('employees.rewards.edit');
-    Route::get('employees/{employee}/rewards/add', [EmployeeController::class, 'addReward'])->name('employees.rewards.add');
-    // Rewarding the employee
-    Route::post('employees/{user}/rewards/store', [EmployeeRewardController::class, 'store'])->name('employees.rewards.store');
-    Route::delete('employees/rewards/{reward}/destroy', [EmployeeRewardController::class, 'destroy'])->name('employees.rewards.destroy');
+    Route::prefix('employees')
+    ->name('employees.')
+    ->group(function () {
+        Route::get('/', [EmployeeController::class, 'index'])->name('index');
+        Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+        Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+        Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->name('edit');
+        Route::get('/{employee}/rewards/edit', [EmployeeController::class, 'editRewards'])->name('rewards.edit');
+        Route::get('/{employee}/rewards/add', [EmployeeController::class, 'addReward'])->name('rewards.add');
+        // Rewarding the employee
+        Route::post('{user}/rewards/store', [EmployeeRewardController::class, 'store'])->name('rewards.store');
+        Route::delete('rewards/{reward}/destroy', [EmployeeRewardController::class, 'destroy'])->name('rewards.destroy');
+    });   
 
 
      // routes for Roles and Permissions

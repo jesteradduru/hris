@@ -3,6 +3,7 @@
 use App\Http\Controllers\DailyTimeRecordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -43,10 +44,16 @@ Route::prefix('job_application')
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile/settings', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::prefix('profile')
+    ->name('profile.')
+    ->group(function () {
+        Route::get('/settings', [ProfileController::class, 'edit'])->name('edit');
+        Route::patch('/', [ProfileController::class, 'update'])->name('update');
+        Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+
+        Route::resource('rewards', RewardAndRecognitionController::class);
+    });
 
     Route::resource('daily_time_record', DailyTimeRecordController::class);
 });

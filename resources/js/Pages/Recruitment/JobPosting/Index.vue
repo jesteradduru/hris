@@ -33,7 +33,7 @@
                     job_posting: item.id
                   })
                 "
-                class="btn btn-dark"
+                class="btn btn-dark "
               >
                 Show
               </Link>

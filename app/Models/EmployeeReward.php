@@ -15,6 +15,7 @@ class EmployeeReward extends Model
     public function employee() : BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
     }
+    
     public function reward() : BelongsTo {
         return $this->belongsTo(RewardAndRecognition::class, 'reward_id');
     }

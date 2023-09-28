@@ -1,6 +1,5 @@
 <template>
   <ProfileLayout>
-    
     <PDSLayout>
       <Link :href="route('profile.pds.voluntary_work.create')" class="btn btn-success">Add Voluntary Work</Link>
       <div class="table-responsive">
@@ -25,14 +24,14 @@
               <td>
                 <div class="d-flex gap-2">
                   <Link
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary "
                     :href="route('profile.pds.voluntary_work.edit', { voluntary_work: voluntary_work.id })"
                     preserve-scroll
                   >
                     Edit
                   </Link>
                   <Link
-                    as="button" class="btn btn-danger btn-sm" method="delete"
+                    as="button" class="btn btn-danger " method="delete"
                     :href="route('profile.pds.voluntary_work.destroy', { voluntary_work: voluntary_work.id })"
                     preserve-scroll
                   >

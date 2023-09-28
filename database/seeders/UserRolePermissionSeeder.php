@@ -19,6 +19,8 @@ use Illuminate\Auth\Events\Registered;
             'Manage DTR',
             'Manage Rewards and Recognition',
             'Manage R&R of own account',
+            'Add reward to an employee',
+            'Add and delete reward of own account'
         ];
         
         $roles = ['superadmin', 'admin', 'hr', 'user', 'employee'];

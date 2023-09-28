@@ -21,9 +21,9 @@
                 <tr v-for="item in props.rewards" :key="item.id" class="">
                   <td scope="row">{{ item.reward.title }}</td>
                   <td>{{ item.reward.points }}</td>
-                  <td>{{ moment(item.reward.created_at).format('MMM d, yyyy') }}</td>
+                  <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
                   <td class="d-flex gap-2">
-                    <Link class="btn btn-danger btn-sm" method="delete" as="button" :href="route('admin.employees.rewards.destroy', {reward: item.id})">
+                    <Link class="btn btn-danger " method="delete" as="button" :href="route('admin.employees.rewards.destroy', {reward: item.id})">
                       <i class="bi-trash-fill" />
                     </Link>
                   </td>

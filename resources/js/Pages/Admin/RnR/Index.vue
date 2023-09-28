@@ -21,10 +21,10 @@
             <td>{{ item.points }}</td>
             <td class="d-flex gap-2">
               <Link class="btn btn-success btn-sm" :href="route('admin.rewards.edit', {reward: item.id})">
-                <i class="bi-pencil-fill" />
+                <i class="fa-solid fa-pencil" />
               </Link>
               <Link class="btn btn-danger btn-sm" method="delete" as="button" :href="route('admin.rewards.destroy', {reward: item.id})">
-                <i class="bi-trash-fill" />
+                <i class="fa-solid fa-trash" />
               </Link>
             </td>
           </tr>

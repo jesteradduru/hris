@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\EmployeeReward;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class EmployeeRewardController extends Controller
+class RewardAndRecognitionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return inertia('Profile/RewardsAndRecognition/Index');
     }
 
     /**
@@ -28,19 +27,15 @@ class EmployeeRewardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
-        $user->reward()->create([
-            'reward_id' => $request->reward_id
-        ]);
-
-        return back()->with('success', 'Reward has been added.');
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(EmployeeReward $employeeReward)
     {
         //
     }
@@ -48,7 +43,7 @@ class EmployeeRewardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(EmployeeReward $employeeReward)
     {
         //
     }
@@ -56,7 +51,7 @@ class EmployeeRewardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, EmployeeReward $employeeReward)
     {
         //
     }
@@ -64,12 +59,8 @@ class EmployeeRewardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeReward $reward)
+    public function destroy(EmployeeReward $employeeReward)
     {
-        $reward->delete();
-
-        return back()->with('success', 'Reward has been deleted.'); 
+        //
     }
 }
-
-

@@ -27,12 +27,12 @@
                   permission: permission.id
                 })
               "
-              class="btn btn-success"
+              class="btn btn-success btn-sm"
             >
-              <i class="bi-pencil-fill" />
+              <i class="fa-solid fa-pencil" />
             </Link>
             <Link
-              class="btn btn-danger"
+              class="btn btn-danger btn-sm"
               method="delete"
               :href="
                 route(
@@ -42,7 +42,7 @@
               "
               as="button"
             >
-              <i class="bi-trash-fill" />
+              <i class="fa-solid fa-trash" />
             </Link>
           </td>
         </tr>

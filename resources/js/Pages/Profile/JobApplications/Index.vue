@@ -22,8 +22,8 @@
             </td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn-success btn-sm"><i class="bi-pencil-fill" /></button>
-                <Link method="delete" as="button" :href="route('job_application.destroy', {job_application: application.id})" class="btn btn-danger btn-sm"><i class="bi-trash" /></Link>
+                <button class="btn btn-success "><i class="bi-pencil-fill" /></button>
+                <Link method="delete" as="button" :href="route('job_application.destroy', {job_application: application.id})" class="btn btn-danger "><i class="bi-trash" /></Link>
               </div>
             </td>
           </tr>

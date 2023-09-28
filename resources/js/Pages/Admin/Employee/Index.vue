@@ -22,8 +22,8 @@
             <td>{{ employee.name }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">
-              <Link :href="route('admin.employees.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="bi-pencil-fill" /></Link>
-              <Link class="btn btn-danger btn-sm"><i class="bi-trash-fill" /></Link>
+              <Link :href="route('admin.employees.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></Link>
+              <Link class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
             </td>
           </tr>
         </tbody>

@@ -28,14 +28,14 @@
               <td>
                 <div class="d-flex gap-2">
                   <Link
-                    class="btn btn-primary btn-sm"
+                    class="btn btn-primary "
                     :href="route('profile.pds.civil_service_eligibility.edit', { civil_service_eligibility: eligibility.id })"
                     preserve-scroll
                   >
                     Edit
                   </Link>
                   <Link
-                    as="button" class="btn btn-danger btn-sm" method="delete"
+                    as="button" class="btn btn-danger " method="delete"
                     :href="route('profile.pds.civil_service_eligibility.destroy', { civil_service_eligibility: eligibility.id })"
                     preserve-scroll
                   >

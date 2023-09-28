@@ -15,7 +15,7 @@
                   job_posting: props.job_posting.id
                 })
               "
-              class="btn btn-primary"
+              class="btn btn-primary "
             >
               Apply Now
             </Link>

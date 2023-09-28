@@ -27,18 +27,18 @@
             active: route().current('job_application.index')
           }" :href="route('job_application.index')"
         >
-          My Job Applications
+          Job Applications
         </Link>
       </li>
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <Link
           class="nav-link" :class="{
-            active: route().current('daily_time_record.index')
-          }" :href="route('daily_time_record.index')"
+            active: route().current('profile.rewards.index')
+          }" :href="route('profile.rewards.index')"
         >
-          Daily Time Record
+          Rewards and Recognition
         </Link>
-      </li> -->
+      </li>
       <li class="nav-item">
         <Link
           class="nav-link" :class="{
