@@ -2,27 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\JobPosting;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
+use Spatie\Permission\Models\Role;
 
-class JobPostingPolicy
+class RolePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
-        return true;
+        return $user->hasPermissionTo('View Role');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, JobPosting $jobPosting): bool
+    public function view(User $user, Role $role): bool
     {
-        //
-        return true;
+        return $user->hasPermissionTo('View Role');
     }
 
     /**
@@ -31,31 +30,29 @@ class JobPostingPolicy
     public function create(User $user): bool
     {
         //
-        return $user->hasPermissionTo('Add Job Vacancy');
+        return $user->hasPermissionTo('Add Role');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, JobPosting $jobPosting): bool
+    public function update(User $user, Role $role): bool
     {
-        //
-        return $user->hasPermissionTo('Edit Job Vacancy');
+        return $user->hasPermissionTo('Edit Role');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, JobPosting $jobPosting): bool
+    public function delete(User $user, Role $role): bool
     {
-        //
-        return $user->hasPermissionTo('Delete Job Vacancy');
+        return $user->hasPermissionTo('Delete Role');
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, JobPosting $jobPosting): bool
+    public function restore(User $user, Role $role): bool
     {
         //
     }
@@ -63,7 +60,7 @@ class JobPostingPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, JobPosting $jobPosting): bool
+    public function forceDelete(User $user, Role $role): bool
     {
         //
     }

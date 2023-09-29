@@ -29,7 +29,7 @@
               Employees
             </Link>
           </li>
-          <li class="nav-item">
+          <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.recruitment.job_posting.index')" :class="{
                 active: route().current(
@@ -40,7 +40,7 @@
               Recruitment, Selection and Placement
             </Link>
           </li>
-          <li class="nav-item dropdown">
+          <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item dropdown">
             <Link
               class="nav-link" :href="route('admin.role_permission.role.index')" :class="{
                 active: route().current(

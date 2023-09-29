@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="role in roles.data">
+        <tr v-for="role in roles.data" :key="role.id">
           <td>{{ role.name }}</td>
           <td class="d-flex gap-2">
             <Link

@@ -11,6 +11,25 @@ use Illuminate\Auth\Events\Registered;
         $permissions = [
             'Apply Job',
             'Access Admin', 
+            'View Roles and Permissions Page',
+            'Add Role', 
+            'Edit Role', 
+            'Delete Role', 
+            'View Role', 
+            'Add Permission', 
+            'Edit Permission', 
+            'Delete Permission', 
+            'View Permission', 
+            'View Recruitment, Selection and Placement Page',
+            'Add Job Vacancy', 
+            'Edit Job Vacancy', 
+            'Delete Job Vacancy', 
+            'View Job Vacancy', 
+            'View Reward Page', 
+            'Add Reward', 
+            'Edit Reward', 
+            'Delete Reward', 
+            'View Reward', 
             'Manage Roles and Permissions', 
             'Manage Job Vacancies', 
             'Access Job Vacancies', 
@@ -35,7 +54,14 @@ use Illuminate\Auth\Events\Registered;
             'password' => Hash::make('lanxNEDA'),
         ]);
 
+        $hruser = User::create([
+            'name' => 'human resource',
+            'username' => 'nedahr',
+            'password' => Hash::make('lanxNEDA'),
+        ]);
+
         $user->assignRole('superadmin');
+        $hruser->assignRole('hr');
 
         event(new Registered($user));
 
@@ -48,5 +74,8 @@ use Illuminate\Auth\Events\Registered;
 
             $role = Role::findByName('superadmin');
             $role->givePermissionTo($permission);
+
+            $hr = Role::findByName('hr');
+            $hr->givePermissionTo($permission);
         }
 ?>
