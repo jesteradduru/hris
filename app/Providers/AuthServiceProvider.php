@@ -5,8 +5,10 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 
 use App\Models\JobPosting;
+use App\Models\RewardAndRecognition;
 use App\Policies\JobPostingPolicy;
 use App\Policies\PermissionPolicy;
+use App\Policies\RewardAndRecognitionPolicy;
 use App\Policies\RolePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         JobPosting::class => JobPostingPolicy::class,
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
+        RewardAndRecognition::class => RewardAndRecognitionPolicy::class
     ];
 
     /**

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class AdminRewardAndRecognitionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(RewardAndRecognition::class, 'rewards');
+    }
     /**
      * Display a listing of the resource.
      */

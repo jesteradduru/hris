@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Models\EmployeeReward;
+use App\Models\RewardAndRecognition;
 use Illuminate\Http\Request;
 
 class RewardAndRecognitionController extends Controller

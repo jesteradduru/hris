@@ -25,7 +25,6 @@ use Illuminate\Auth\Events\Registered;
             'Edit Job Vacancy', 
             'Delete Job Vacancy', 
             'View Job Vacancy', 
-            'View Reward Page', 
             'Add Reward', 
             'Edit Reward', 
             'Delete Reward', 
