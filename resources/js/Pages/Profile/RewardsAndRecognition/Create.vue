@@ -1,12 +1,12 @@
 
 
 <template>
-  <Layout :employee="props.employee.id">
-    <Head title="Register" />
+  <ProfileLayout :employee="props.employee.id">
+    <Head title="Add Reward" />
     <div class="container">
       <div class="card shadow">
         <div class="card-body">
-          <Link :href="route('admin.employees.rewards.edit', {employee: props.employee.id})" class="btn  btn-secondary"><i class="bi-arrow-left" /> Back</Link>
+          <Link :href="route('profile.rewards.index')" class="btn  btn-secondary"><i class="bi-arrow-left" /> Back</Link>
           <div class="table-responsive">
             <table class="table table-compact">
               <thead>
@@ -21,9 +21,9 @@
                   <td scope="row">{{ item.title }}</td>
                   <td>{{ item.points }}</td>
                   <td class="d-flex gap-2">
-                    <button :data-id="item.id" class="btn btn-success " @click="addReward">
+                    <Link method="post" as="button" :href="route('profile.rewards.store', {reward: item.id})" class="btn btn-success " @click="addReward">
                       Add
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               </tbody>
@@ -34,36 +34,17 @@
         </div>
       </div>
     </div>
-  </Layout>
+  </ProfileLayout>
 </template>
   
 <script setup>
-import Layout from '../Layout.vue'
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import ProfileLayout from '../Layout/ProfileLayout.vue'
+import { Head, Link } from '@inertiajs/vue3'
 
-const form = useForm({
-  name: props.employee.name,
-  username: props.employee.username,
-  password: '',
-  dtr_user_id: props.employee.dtr_user_id,
-  role: props.employee.role,
-})
-  
 const props = defineProps({
-  rewards: Array,
+  rewards : Array,
   employee: Object,
 })
-  
-const addReward = (e) => {
-  const reward_id = e.target.getAttribute('data-id')
 
-  form.post(route('admin.employees.rewards.store', {
-    user: props.employee.id,
-    reward_id: reward_id,
-  }))
-}
-  
-  
-      
 </script>
   

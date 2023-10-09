@@ -9,20 +9,29 @@ use Illuminate\Http\Request;
 
 class RewardAndRecognitionController extends Controller
 {
+    public function __construct()
+    {
+        // $this->authorizeResource(RewardAndRecognition::class, 'rewards');
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return inertia('Profile/RewardsAndRecognition/Index');
+        return inertia('Profile/RewardsAndRecognition/Index', [
+            'rewards' => $request->user()->reward->load(['reward'])
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return inertia('Profile/RewardsAndRecognition/Create', [
+            'employee' => $request->user(),
+            'rewards' => RewardAndRecognition::paginate(15)
+        ]);
     }
 
     /**
@@ -30,7 +39,11 @@ class RewardAndRecognitionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->user()->reward()->create([
+            'reward_id' => $request->query('reward')
+        ]);
+
+        return back()->with('success', 'Reward has been added.');
     }
 
     /**
@@ -60,8 +73,11 @@ class RewardAndRecognitionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeReward $employeeReward)
+    public function destroy(EmployeeReward $reward)
     {
-        //
+        $reward->delete();
+
+        return back()->with('success', 'Reward has been deleted.'); 
     }
+    
 }

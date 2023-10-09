@@ -39,7 +39,7 @@
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link, usePage } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'

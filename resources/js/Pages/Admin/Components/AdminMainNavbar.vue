@@ -7,7 +7,7 @@
       </button>
       <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
-          <li v-if="permissions.includes('View Reward')" class="nav-item">
+          <li v-if="permissions.includes('View Reward Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.rewards.index')" :class="{
                 active: route().current(

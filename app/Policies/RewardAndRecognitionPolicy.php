@@ -53,7 +53,7 @@ class RewardAndRecognitionPolicy
      */
     public function restore(User $user, RewardAndRecognition $rewardAndRecognition): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class RewardAndRecognitionPolicy
      */
     public function forceDelete(User $user, RewardAndRecognition $rewardAndRecognition): bool
     {
-        //
+        return true;
     }
 }

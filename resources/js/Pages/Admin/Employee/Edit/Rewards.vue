@@ -24,7 +24,7 @@
                   <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
                   <td class="d-flex gap-2">
                     <Link class="btn btn-danger " method="delete" as="button" :href="route('admin.employees.rewards.destroy', {reward: item.id})">
-                      <i class="bi-trash-fill" />
+                      <i class="fa-solid fa-trash" />
                     </Link>
                   </td>
                 </tr>

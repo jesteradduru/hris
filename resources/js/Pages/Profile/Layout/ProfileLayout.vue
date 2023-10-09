@@ -30,13 +30,22 @@
           Job Applications
         </Link>
       </li>
-      <li class="nav-item">
+      <li v-if="permission.includes('View Reward')" class="nav-item">
         <Link
           class="nav-link" :class="{
             active: route().current('profile.rewards.index')
           }" :href="route('profile.rewards.index')"
         >
           Rewards and Recognition
+        </Link>
+      </li>
+      <li v-if="permission.includes('View Reward')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.rewards.index')
+          }" :href="route('profile.rewards.index')"
+        >
+          SPMS
         </Link>
       </li>
       <li class="nav-item">
@@ -60,6 +69,8 @@
 
 
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
+import { Head, Link, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+
+const permission = usePage().props.auth.permissions.map(p => p.name)
 </script>

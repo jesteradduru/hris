@@ -11,6 +11,7 @@ class EmployeeReward extends Model
     use HasFactory;
 
     protected $fillable = ['user_id', 'reward_id'];
+    protected $table = 'employee_rewards';
 
     public function employee() : BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
