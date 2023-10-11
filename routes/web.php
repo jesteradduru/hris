@@ -4,6 +4,7 @@ use App\Http\Controllers\DailyTimeRecordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
+use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [ProfileController::class, 'index'])->name('index');
 
         Route::resource('rewards', RewardAndRecognitionController::class);
+        Route::resource('spms', SpmsController::class);
     });
 
     Route::resource('daily_time_record', DailyTimeRecordController::class);

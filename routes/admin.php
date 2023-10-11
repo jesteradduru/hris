@@ -7,13 +7,14 @@ use App\Http\Controllers\Admin\AdminDailyTimeRecordController;
 use App\Http\Controllers\Admin\AdminJobApplicationController;
 use App\Http\Controllers\Admin\AdminJobPostingController;
 use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
+use App\Http\Controllers\Admin\AdminSpmsController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
 use App\Http\Controllers\AdminController;
- use App\Http\Controllers\PermissionController;
- use App\Http\Controllers\RoleController;
- use App\Http\Controllers\RolePermissionController;
- use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RolePermissionController;
+use Illuminate\Support\Facades\Route;
 
  Route::prefix('admin')
  ->middleware(['admin', 'auth'])
@@ -62,6 +63,8 @@ use App\Http\Controllers\AdminController;
         
     // rewards and recognition
     Route::resource('rewards', AdminRewardAndRecognitionController::class);
+    // spms
+    Route::resource('spms', AdminSpmsController::class);
     
     Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
  });

@@ -18,7 +18,7 @@
             <td>{{ item.reward.points }}</td>
             <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
             <td class="d-flex gap-2">
-              <Link v-if="permission.includes('Delete Reward')" class="btn btn-danger " method="delete" as="button" :href="route('profile.rewards.destroy', {reward: item.id})">
+              <Link v-if="permission.includes('Delete Reward')" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.rewards.destroy', {reward: item.id})">
                 <i class="fa-solid fa-trash" />
               </Link>
             </td>

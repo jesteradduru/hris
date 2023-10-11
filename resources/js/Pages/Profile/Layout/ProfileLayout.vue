@@ -39,11 +39,11 @@
           Rewards and Recognition
         </Link>
       </li>
-      <li v-if="permission.includes('View Reward')" class="nav-item">
+      <li v-if="permission.includes('View SPMS')" class="nav-item">
         <Link
           class="nav-link" :class="{
-            active: route().current('profile.rewards.index')
-          }" :href="route('profile.rewards.index')"
+            active: route().current('profile.spms.*')
+          }" :href="route('profile.spms.index')"
         >
           SPMS
         </Link>

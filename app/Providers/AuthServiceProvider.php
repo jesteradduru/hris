@@ -4,12 +4,16 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 
+use App\Models\EmployeeReward;
 use App\Models\JobPosting;
 use App\Models\RewardAndRecognition;
+use App\Models\SpmsForm;
+use App\Policies\EmployeeRewardPolicy;
 use App\Policies\JobPostingPolicy;
 use App\Policies\PermissionPolicy;
 use App\Policies\RewardAndRecognitionPolicy;
 use App\Policies\RolePolicy;
+use App\Policies\SpmsFormPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 use Spatie\Permission\Models\Permission;
@@ -26,7 +30,9 @@ class AuthServiceProvider extends ServiceProvider
         JobPosting::class => JobPostingPolicy::class,
         Role::class => RolePolicy::class,
         Permission::class => PermissionPolicy::class,
-        RewardAndRecognition::class => RewardAndRecognitionPolicy::class
+        RewardAndRecognition::class => RewardAndRecognitionPolicy::class,
+        EmployeeReward::class => EmployeeRewardPolicy::class,
+        SpmsForm::class => SpmsFormPolicy::class
     ];
 
     /**

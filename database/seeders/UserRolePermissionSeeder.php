@@ -29,7 +29,11 @@ use Illuminate\Auth\Events\Registered;
             'Add Reward', 
             'Edit Reward', 
             'Delete Reward', 
-            'View Reward', 
+            'View Reward',
+            'Add SPMS', 
+            'Edit SPMS', 
+            'Delete SPMS', 
+            'View SPMS',
             'Manage Roles and Permissions', 
             'Manage Job Vacancies', 
             'Access Job Vacancies', 
@@ -60,8 +64,15 @@ use Illuminate\Auth\Events\Registered;
             'password' => Hash::make('lanxNEDA'),
         ]);
 
+        $employee = User::create([
+            'name' => 'Jester Adduru',
+            'username' => 'jcadduru',
+            'password' => Hash::make('12341234'),
+        ]);
+
         $user->assignRole('superadmin');
         $hruser->assignRole('hr');
+        $employee->assignRole('employee');
 
         event(new Registered($user));
 

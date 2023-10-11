@@ -97,4 +97,9 @@ class User extends Authenticatable
         return $this->hasMany(EmployeeReward::class, 'user_id');
     }
 
+    //spms
+    public function spms() : HasMany {
+        return $this->hasMany(SpmsForm::class, 'user_id');
+    }
+
 }

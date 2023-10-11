@@ -2,26 +2,26 @@
 
 namespace App\Policies;
 
+use App\Models\SpmsForm;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
-use Spatie\Permission\Models\Role;
 
-class RolePolicy
+class SpmsFormPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('View Role');
+        return $user->hasPermissionTo('View SPMS');
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Role $role): bool
+    public function view(User $user, SpmsForm $spmsForm): bool
     {
-        return $user->hasPermissionTo('View Role');
+        return $user->hasPermissionTo('View SPMS');
     }
 
     /**
@@ -29,23 +29,26 @@ class RolePolicy
      */
     public function create(User $user): bool
     {
-        //
-        return $user->hasPermissionTo('Add Role');
+        return $user->hasPermissionTo('Add SPMS');
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Role $role): bool
+    public function update(User $user): bool
     {
-        return $user->hasPermissionTo('Edit Role');
+        return $user->hasPermissionTo('Edit SPMS');
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Role $role): bool
+    public function delete(User $user): bool
     {
-        return $user->hasPermissionTo('Delete Role');
+        return $user->hasPermissionTo('Delete SPMS');
     }
+
+    /**
+     * Determine whether the user can restore the model.
+     */
 }

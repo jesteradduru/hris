@@ -270,7 +270,7 @@ class DailyTimeRecord extends Model
 
                 $user_dtr = DB::table('daily_time_record')->select('date_time')
                 ->where('user_id', $user_id)
-                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $days_before->format('Y-m-d'))
+                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%d')"), $days_before->format('Y-m-d'))
                 ->get();
 
                 if($i == 0){

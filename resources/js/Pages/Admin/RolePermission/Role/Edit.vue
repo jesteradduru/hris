@@ -17,13 +17,28 @@
       </div>
       <h4>Permissions</h4>
       <div class="mb-3">
+        <div class="form-check">
+          <input
+            id="all"
+            class="form-check-input"
+            type="checkbox"
+            @change="selectAll"
+          />
+          <label
+            class="form-check-label"
+            for="all"
+          >
+            Select All
+          </label>
+        </div>
         <div
           v-for="permission in props.all_permissions"
+          :key="permission.id"
           class="form-check"
         >
           <input
             :id="`permissionId${permission.id}`"
-            class="form-check-input"
+            class="form-check-input chk-others"
             type="checkbox"
             :value="permission.name"
             :checked="form.permissions?.includes(permission.name)"
@@ -92,4 +107,20 @@ const update = () =>
   form.put(
     route('admin.role_permission.role.update', { role: props.role.id }),
   )
+
+const selectAll = (e) => {
+  const chkboxes = document.querySelectorAll('.chk-others')
+  
+  if(!e.target.checked){
+    chkboxes.forEach(chk => {
+      chk.checked = false
+      form.permissions.push(chk.value)
+    })
+  }else{
+    chkboxes.forEach(chk => {
+      chk.checked = true
+      form.permissions.push(chk.value)
+    })
+  }
+}
 </script>

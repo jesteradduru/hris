@@ -53,6 +53,17 @@
           </li>
           <li class="nav-item dropdown">
             <Link
+              class="nav-link" :href="route('admin.spms.index')" :class="{
+                active: route().current(
+                  'admin.spms.*'
+                )
+              }"
+            >
+              SPMS
+            </Link>
+          </li>
+          <li class="nav-item dropdown">
+            <Link
               class="nav-link" :href="route('admin.daily_time_record.index')" :class="{
                 active: route().current(
                   'admin.daily_time_record.*'

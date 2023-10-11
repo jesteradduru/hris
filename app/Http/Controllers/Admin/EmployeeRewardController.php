@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class EmployeeRewardController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(EmployeeReward::class, 'reward');
+    }
     /**
      * Display a listing of the resource.
      */
