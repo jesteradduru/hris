@@ -182,13 +182,13 @@
                 :href="route('profile.pds.personal_information.edit')" type="button" :disabled="form.isDirty"
                 class="btn btn-dark"
               >
-                <i class="bi-arrow-left" />
+                <i class="fa-solid fa-arrow-left" />
               </Link>
               <Link
                 :href="route('profile.pds.educational_background.edit')" type="button" :disabled="form.isDirty"
                 class="btn btn-dark"
               >
-                <i class="bi-arrow-right" />
+                <i class="fa-solid fa-arrow-right" />
               </Link>
             </div>
           </div>

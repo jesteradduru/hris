@@ -104,7 +104,7 @@
             :href="route('profile.pds.page_four_questions.edit')" type="button"
             class="btn btn-dark"
           >
-            <i class="bi-arrow-left" />
+            <i class="fa-solid fa-arrow-left" />
           </Link>
         </div>
       </div>

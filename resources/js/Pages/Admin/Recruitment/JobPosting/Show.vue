@@ -29,6 +29,7 @@
               Edit
             </Link>
             <Link
+              :onBefore="confirm"
               :href="
                 route('admin.recruitment.job_posting.destroy', {
                   job_posting: props.job_posting.id
@@ -110,4 +111,6 @@ const crumbs = computed(() => [
     label: props.job_posting.position,
   },
 ])
+
+const confirm = () => window.confirm('Are you sure to delete this job posting?')
 </script>

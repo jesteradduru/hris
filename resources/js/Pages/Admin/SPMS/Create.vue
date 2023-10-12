@@ -1,7 +1,7 @@
 <template>
   <Head title="SPMS" />
   <AdminLayout>
-    <Link class="btn btn-secondary col btn-sm" :href="route('admin.spms.index')"><i class="fa-solid fa-arrow-left" /></Link>
+    <Link class="btn btn-secondary col btn-sm mb-3" :href="route('admin.spms.index')"><i class="fa-solid fa-arrow-left" /></Link>
     <h3>Add SPMS</h3>
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -26,17 +26,18 @@
           </tr>
         </tbody>
       </table>
+      <div v-if="formLists.forms.length === 0" class="text-muted text-center">No Data</div>
     </div>
-    <button class="btn btn-success" :disabled="formLists.processing" @click="submitForms">
+    <button v-if="formLists.forms.length > 0" class="btn btn-success" :disabled="formLists.processing" @click="submitForms">
       <Spinner :processing="formLists.processing" />
-      Submit Forms
+      Submit
     </button>
-    <form class="row border p-2 mt-3 mb-3" @submit.prevent="addFormIntoList">
+    <form class="row border p-2 mt-5 mb-3 shadow" @submit.prevent="addFormIntoList">
       <div class="col-4">
         <label for="" class="form-label">Employee</label>
         <select id="" v-model="addForm.user" name="" class="form-control" required="true">
           <option value="">Select one</option>
-          <option v-for="employee in users" :key="employee.id" :value="employee">{{ employee.name }}</option>
+          <option v-for="employee in props.users" :key="employee.id" :value="employee">{{ employee.name }}</option>
         </select>
         <InputError :message="addForm.errors.user" />
       </div>
@@ -101,8 +102,7 @@
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 import {useForm, Link, Head} from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
-import moment from 'moment'
-import { ref } from 'vue'    
+import moment from 'moment'  
 import Spinner from '@/Components/Spinner.vue'
 
 const props = defineProps({
@@ -140,11 +140,13 @@ const removeFromList = (form_id) => {
 }
 
 const submitForms = () => {
-  formLists.post(route('admin.spms.store'),{
-    onSuccess: () => {
-      formLists.forms = []
-    },
-  })
+  if(window.confirm('Are you sure to submit the forms?')){
+    formLists.post(route('admin.spms.store'),{
+      onSuccess: () => {
+        formLists.forms = []
+      },
+    })
+  }
 }
      
 </script>

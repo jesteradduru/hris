@@ -10,7 +10,7 @@ class AdminRewardAndRecognitionController extends Controller
 {
     public function __construct()
     {
-        $this->authorizeResource(RewardAndRecognition::class, 'rewards');
+        $this->authorizeResource(RewardAndRecognition::class, 'reward');
     }
     /**
      * Display a listing of the resource.

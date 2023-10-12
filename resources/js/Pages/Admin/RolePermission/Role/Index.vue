@@ -41,6 +41,7 @@
                 })
               "
               as="button"
+              :onBefore="confirm"
             >
               <i class="fa-solid fa-trash" />
             </Link>
@@ -118,4 +119,6 @@ const addRole = () =>
       addForm.role_name = null
     },
   })
+
+const confirm = () => window.confirm('Are you sure to delete this role?')
 </script>

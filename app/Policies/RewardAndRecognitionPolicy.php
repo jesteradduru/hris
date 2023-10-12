@@ -43,9 +43,17 @@ class RewardAndRecognitionPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, RewardAndRecognition $rewardAndRecognition): bool
+    public function delete(User $user, RewardAndRecognition $rewardAndRecognition)
     {
-        return $user->hasPermissionTo('Delete Reward');
+        if(!$user->hasPermissionTo('Delete Reward')){
+            return Response::deny('You do not have permission to delete this data.');
+        }
+
+        if(!$rewardAndRecognition->employee()->exists()){
+            return Response::deny('This reward exists to an employee.');
+        }
+
+        return Response::allow();
     }
 
     /**

@@ -23,7 +23,7 @@
               <Link class="btn btn-success btn-sm" :href="route('admin.rewards.edit', {reward: item.id})">
                 <i class="fa-solid fa-pencil" />
               </Link>
-              <Link class="btn btn-danger btn-sm" method="delete" as="button" :href="route('admin.rewards.destroy', {reward: item.id})">
+              <Link class="btn btn-danger btn-sm" :onBefore="confirm" method="delete" as="button" :href="route('admin.rewards.destroy', {reward: item.id})">
                 <i class="fa-solid fa-trash" />
               </Link>
             </td>
@@ -58,5 +58,9 @@ const crumbs = computed(() => [
   },
 ])
       
+
+const confirm = () => {
+  return window.confirm('Are you sure to delete this reward?')
+}
 </script>
       

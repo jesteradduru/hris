@@ -352,13 +352,13 @@
               :href="route('profile.pds.other_information.index')" type="button"
               class="btn btn-dark"
             >
-              <i class="bi-arrow-left" />
+              <i class="fa-solid fa-arrow-left" />
             </Link>
             <Link
               :href="route('profile.pds.reference_id.index')" type="button"
               class="btn btn-dark"
             >
-              <i class="bi-arrow-right" />
+              <i class="fa-solid fa-arrow-right" />
             </Link>
           </div>
         </div>

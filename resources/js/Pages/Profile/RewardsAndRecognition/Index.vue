@@ -18,7 +18,7 @@
             <td>{{ item.reward.points }}</td>
             <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
             <td class="d-flex gap-2">
-              <Link v-if="permission.includes('Delete Reward')" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.rewards.destroy', {reward: item.id})">
+              <Link v-if="permission.includes('Delete Reward')" :onBefore="confirm" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.rewards.destroy', {reward: item.id})">
                 <i class="fa-solid fa-trash" />
               </Link>
             </td>
@@ -39,4 +39,8 @@ const props = defineProps({
 })
 
 const permission = usePage().props.auth.permissions.map(p => p.name)
+
+const confirm = () => {
+  return window.confirm('Are you sure to delete this reward?')
+}
 </script>

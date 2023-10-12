@@ -49,13 +49,13 @@
           :href="route('profile.pds.work_experience.index')" type="button"
           class="btn btn-dark"
         >
-          <i class="bi-arrow-left" />
+          <i class="fa-solid fa-arrow-left" />
         </Link>
         <Link
           :href="route('profile.pds.learning_and_development.index')" type="button"
           class="btn btn-dark"
         >
-          <i class="bi-arrow-right" />
+          <i class="fa-solid fa-arrow-right" />
         </Link>
       </div>
       <Pagination

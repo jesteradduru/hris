@@ -483,7 +483,7 @@
                   :href="route('profile.pds.family_background.edit')" as="button"
                   :disabled="form.isDirty" class="btn btn-dark"
                 >
-                  <i v-if="!form.processing" class="bi-arrow-right" />
+                  <i v-if="!form.processing" class="fa-solid fa-arrow-right" />
                 </Link>
               </div>
             </div>

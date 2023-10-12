@@ -6,7 +6,7 @@
     <div class="container">
       <div class="card shadow">
         <div class="card-body">
-          <Link :href="route('admin.employees.rewards.edit', {employee: props.employee.id})" class="btn  btn-secondary"><i class="bi-arrow-left" /> Back</Link>
+          <Link :href="route('admin.employees.rewards.edit', {employee: props.employee.id})" class="btn  btn-secondary"><i class="fa-solid fa-arrow-left" /> Back</Link>
           <div class="table-responsive">
             <table class="table table-compact">
               <thead>

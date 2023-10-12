@@ -4,7 +4,7 @@
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Employees</h3>
-    <Link :href="route('admin.employees.create')" class="btn btn-primary">Create Account</Link>
+    <Link :href="route('admin.employees.create')" class="btn btn-primary">Create Employee Account</Link>
 
     <div class="table-responsive">
       <table class="table table-compact">
