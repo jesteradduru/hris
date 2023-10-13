@@ -15,7 +15,7 @@
         Job Vacancies
       </Link>
     </li>
-    <li v-if="user" class="nav-item">
+    <li v-if="user && permissions.includes('View DTR')" class="nav-item">
       <Link
         class="nav-link text-info" :class="{
           active: route().current(
@@ -35,10 +35,6 @@ import nedalogo from '@/Assets/neda-logo.png'
 import { computed } from 'vue'
 
 const user = computed(() => usePage().props.auth.user)
-const admin = computed(() => {
-  const isAdmin = usePage()
-    .props.auth.permissions?.map((perm) => perm.name)
-    .includes('Access Admin')
-  return isAdmin
-})
+const permissions = usePage()
+  .props.auth.permissions?.map((perm) => perm.name)
 </script>

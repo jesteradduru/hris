@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminJobApplicationController extends Controller
@@ -12,11 +13,35 @@ class AdminJobApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(JobPosting $job_posting)
+    public function index(Request $request)
     {
-        return inertia('Admin/Recruitment/JobApplication/Index', [
-            "applications" => $job_posting->job_application()->with(['document', 'user'])->paginate()->withQueryString(),
-            "posting" => $job_posting
+        
+        $job_posting = JobPosting::all();
+        $job_application = [];
+        $applicant = null;
+
+        // dd($request->applicant);
+
+        if($request->job_posting){
+            $job_application = JobApplication::with(['user'])->where('job_posting_id', $request->job_posting)->get();
+        }
+        if($request->applicant){
+            $applicant = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information'
+            ]);
+        }
+        // dd($applicant);
+        return inertia('Admin/Recruitment/Selection/Index', [
+            // "applications" => $job_posting->job_application()->with(['document', 'user'])->paginate()->withQueryString(),
+            "posting" => $job_posting,
+            "application" => $job_application,
+            "posting_id" => $request->job_posting,
+            "applicant" => $applicant
         ]);
     }
 

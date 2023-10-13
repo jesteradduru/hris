@@ -35,7 +35,10 @@ class EmployeeController extends Controller
         });
 
         $request->validate([
-            'name' => 'required|string|max:255',
+            "surname" => "required|string|max:255",
+            "first_name" =>"required|string|max:255",
+            "middle_name" =>"required|string|max:255",
+            "name_extension" =>"string|max:255|nullable",
             'username' => 'required|string|valid_username|max:255|unique:'.User::class,
             'dtr_user_id' => 'required|integer|unique:users,dtr_user_id',
             'password' => ['required', 'confirmed', Password::defaults()],
@@ -45,7 +48,10 @@ class EmployeeController extends Controller
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            "surname" =>  $request->surname,
+            "first_name" => $request->first_name,
+            "middle_name" => $request->middle_name,
+            "name_extension" => $request->name_extension,
             'username' => $request->username,
             'dtr_user_id' => $request->dtr_user_id,
             'password' => Hash::make($request->password),

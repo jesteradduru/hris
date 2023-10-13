@@ -10,16 +10,32 @@ use Illuminate\Support\Facades\Storage;
 
 class JobApplicationController extends Controller
 {
-
-    public function create(Request $request, JobPosting $job_posting)
+    public function __construct()
     {
-        
-        return inertia('JobApplication/Index', [
+        $this->authorizeResource(JobApplication::class, 'job_application');
+    }
+
+    public function create(Request $request)
+    {
+        $job_posting = JobPosting::find($request->input('job_posting'));
+
+        // $user_application = JobApplication::with([
+        //     'job_posting' => fn($query) => $query->where('id', $request->input('job_posting')),
+        //     'user' => fn($query) => $query->where('id', $request->user()->id),
+        // ]);
+        $user_application = $request->user()->job_application()
+        ->with('document')
+        ->where('job_posting_id', $request->input('job_posting'))->get();
+
+
+        return inertia('JobApplication/Create', [
             "job_posting" => $job_posting,
+            "application" => $user_application
         ]);
     }
 
-    public function store(Request $request, JobPosting $job_posting) {
+    public function store(Request $request) {
+        $job_posting = JobPosting::find($request->input('job_posting'));
         // check if user already applied
         $user_application = JobPosting::whereRelation(
             'job_application', 'user_id', '=', $request->user()->id
@@ -32,9 +48,10 @@ class JobApplicationController extends Controller
         // validate the files
         $request->validate([
             'documents' => 'required|array|min:1',
-            'documents.*'=> 'required|mimes:png,jpg,jpeg,pdf|max:5000' 
+            'documents.*'=> 'required|mimes:pdf|max:15000' 
         ], [
-            'documents.*.mimes' => 'Only image and pdf format is accepted.',
+            'documents.*.mimes' => 'Only pdf format is accepted.',
+            'documents.*.max' => 'Document must not be greater than 15MB.',
             'documents.required' => 'Please upload the required documents.'
         ]);
 
@@ -73,7 +90,7 @@ class JobApplicationController extends Controller
         $job_application->document()->delete();
         $job_application->delete();
 
-        return back()->with('success', 'Application has been deleted.');
+        return back()->with('success', 'Application has been canceled.');
     }
 
 }

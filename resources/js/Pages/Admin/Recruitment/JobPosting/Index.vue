@@ -1,7 +1,6 @@
 <template>
   <Head title="Job Vacancies" />
-
-  <AdminLayout>
+  <RecruitmentLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Job Vacancies</h3>
     <div class="d-flex justify-content-between align-items-center">
@@ -35,7 +34,7 @@
             <td>{{ item.plantilla_item_no }}</td>
             <td>{{ moment(item.posting_date).format('LL') }}</td>
             <td>{{ moment(item.closing_date).format('LL') }}</td>
-            <td><Link :href="route('admin.recruitment.job_application.index', {job_posting: item.id})">{{ item.job_application_count }}</Link></td>
+            <td>{{ item.job_application_count }}</td>
             <td>
               <Link
                 :href="
@@ -63,12 +62,12 @@
       v-if="props.job_vacancies.data.length"
       :links="props.job_vacancies.links"
     />
-  </AdminLayout>
+  </RecruitmentLayout>
 </template>
 
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
-import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
+import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'

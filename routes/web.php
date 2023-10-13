@@ -29,18 +29,20 @@ Route::prefix('recruitment')
 ->name('recruitment.')
 ->group(function () {
     Route::resource('job_posting', JobPostingController::class)->only(['index', 'show']);
-    Route::name('job_posting.apply')->get('/job_posting/{job_posting}/apply', [JobApplicationController::class, 'create']);
+    //Route::name('job_posting.apply')->get('/job_posting/{job_posting}/apply', [JobApplicationController::class, 'create']);
 });
 
 // Job Application
-Route::prefix('job_application')
-->middleware(['auth'])
-->name('job_application.')
-->group(function () {
-    Route::name('store')->post('/job_posting/{job_posting}/job_application/submit', [JobApplicationController::class, 'store']);
-    Route::name('index')->get('/profile/job_application/', [JobApplicationController::class, 'index']);
-    Route::name('destroy')->delete('/profile/job_application/{job_application}/destroy', [JobApplicationController::class, 'destroy']);
-});
+Route::resource('job_application', JobApplicationController::class)->middleware(['auth']);
+
+// Route::prefix('job_application')
+// ->middleware(['auth'])
+// ->name('job_application.')
+// ->group(function () {
+    // Route::name('store')->post('/job_posting/{job_posting}/job_application/submit', [JobApplicationController::class, 'store']);
+    // Route::name('index')->get('/profile/job_application/', [JobApplicationController::class, 'index']);
+    // Route::name('destroy')->delete('/profile/job_application/{job_application}/destroy', [JobApplicationController::class, 'destroy']);
+// });
 
 
 

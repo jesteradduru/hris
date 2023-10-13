@@ -21,7 +21,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        "surname",
+        "first_name" ,
+        "middle_name" ,
+        "name_extension" ,
         'username',
         'dtr_user_id',
         'password',
@@ -46,6 +49,16 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $appends = ['name', 'role_name'];
+
+    public function getNameAttribute() {
+        return "{$this->surname}, {$this->first_name}, {$this->middle_name}";
+    }
+
+    public function getRoleNameAttribute() {
+        return $this->getRoleNames();
+    }
 
     public function job_posting() : HasMany {
         return $this->hasMany(JobPosting::class, 'by_user_id');
@@ -101,5 +114,6 @@ class User extends Authenticatable
     public function spms() : HasMany {
         return $this->hasMany(SpmsForm::class, 'user_id');
     }
+    
 
 }

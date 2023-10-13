@@ -9,15 +9,15 @@
           <h3>{{ props.job_posting.position }}</h3>
           <div class="d-flex gap-2">
             <Link
-              v-if="permissions && permissions.includes('Apply Job')"
+              v-if="permissions && permissions.includes('Add Application')"
               :href="
-                route('recruitment.job_posting.apply', {
+                route('job_application.create', {
                   job_posting: props.job_posting.id
                 })
               "
               class="btn btn-primary "
             >
-              Apply Now
+              Apply
             </Link>
           </div>
         </div>

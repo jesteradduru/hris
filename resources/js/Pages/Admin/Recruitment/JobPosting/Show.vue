@@ -8,16 +8,16 @@
         <div class="d-flex justify-content-between align-items-center">
           <h3>{{ props.job_posting.position }}</h3>
           <div class="d-flex gap-2">
-            <Link
+            <!-- <Link
               :href="
                 route('admin.recruitment.job_application.index', {
                   job_posting: props.job_posting.id
                 })
               "
-              class="btn btn-success"
+              class="btn btn-success d-none"
             >
               View Applications
-            </Link>
+            </Link> -->
             <Link
               :href="
                 route('admin.recruitment.job_posting.edit', {

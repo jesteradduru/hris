@@ -56,7 +56,14 @@ class PersonalInformation extends Model
     "same_address",
     ];
 
+    protected $appends = ['address'];
+
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
     }
+
+    public function getAddressAttribute (){
+        return "{$this->r_address_house_block_lot_number} {$this->r_address_street}, {$this->r_address_barangay}, {$this->r_address_city_municipality}, {$this->r_address_province}";
+    }
+    
 }

@@ -9,7 +9,10 @@ import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import { computed } from 'vue'
 
 const form = useForm({
-  name: '',
+  surname: '',
+  first_name: '',
+  name_extension: '',
+  middle_name: '',
   username: '',
   password: '',
   dtr_user_id: '',
@@ -53,45 +56,83 @@ const crumbs = computed(() => [
     <div class="container">
       <div class="card shadow">
         <div class="card-body">
-          <form @submit.prevent="submit">
-            <div>
-              <InputLabel for="name" value="Name" />
+          <form class="row" @submit.prevent="submit">
+            <div class="col-6 mb-2">
+              <InputLabel for="surname" value="Surname" />
 
               <TextInput
-                id="name"
-                v-model="form.name"
+                id="surname"
+                v-model="form.surname"
                 type="text"
                 class="mt-1 block w-full"
                 
                 autofocus
-                autocomplete="name"
+                autocomplete="surname"
               />
 
               <InputError
                 class="mt-2"
-                :message="form.errors.name"
+                :message="form.errors.surname"
               />
             </div>
-
-            <div class="mt-4">
-              <InputLabel for="username" value="Username" />
+            
+            <div class="col-6 mb-2">
+              <InputLabel for="first_name" value="First Name" />
 
               <TextInput
-                id="username"
-                v-model="form.username"
-                type="string"
+                id="first_name"
+                v-model="form.first_name"
+                type="text"
                 class="mt-1 block w-full"
                 
-                autocomplete="username"
+                autofocus
+                autocomplete="first_name"
               />
 
               <InputError
                 class="mt-2"
-                :message="form.errors.username"
+                :message="form.errors.first_name"
               />
             </div>
 
-            <div class="mt-4">
+            <div class="col-6 mb-2">
+              <InputLabel for="middle_name" value="Middle Name" />
+
+              <TextInput
+                id="middle_name"
+                v-model="form.middle_name"
+                type="text"
+                class="mt-1 block w-full"
+                
+                autofocus
+                autocomplete="middle_name"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.middle_name"
+              />
+            </div>
+
+            <div class="col-6 mb-2">
+              <InputLabel for="name_extension" value="Name Extension" />
+
+              <TextInput
+                id="name_extension"
+                v-model="form.name_extension"
+                type="text"
+                class="mt-1 block w-full"
+                autofocus
+                autocomplete="name_extension"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.name_extension"
+              />
+            </div>
+
+            <div class="col-12 mb-2">
               <InputLabel for="dtr_user_id" value="DTR User ID" />
 
               <TextInput
@@ -109,8 +150,7 @@ const crumbs = computed(() => [
               />
             </div>
 
-
-            <div class="mt-4">
+            <div class="col-12 mb-2">
               <InputLabel for="role" value="Role" />
               <select id="" v-model="form.role" class="form-select" name="">
                 <option v-for="item in props.roles" :key="item" :value="item">{{ item }}</option>
@@ -121,7 +161,25 @@ const crumbs = computed(() => [
               />
             </div>
 
-            <div class="mt-4">
+            <div class="col-12 mb-2">
+              <InputLabel for="username" value="Username" />
+
+              <TextInput
+                id="username"
+                v-model="form.username"
+                type="string"
+                class="mt-1 block w-full"
+                
+                autocomplete="username"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.username"
+              />
+            </div>
+
+            <div class="col mb-2">
               <InputLabel for="password" value="Password" />
 
               <TextInput
@@ -139,7 +197,7 @@ const crumbs = computed(() => [
               />
             </div>
 
-            <div class="mt-4">
+            <div class="col mb-4">
               <InputLabel
                 for="password_confirmation"
                 value="Confirm Password"
@@ -161,7 +219,7 @@ const crumbs = computed(() => [
             </div>
 
             <div
-              class="d-flex align-items-center justify-content-end mt-4 gap-3"
+              class="d-flex align-items-center justify-content-end col-12 gap-3"
             >
               <PrimaryButton
                 class="ml-4"

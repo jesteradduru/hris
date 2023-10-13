@@ -34,10 +34,16 @@ use Illuminate\Auth\Events\Registered;
             'Edit SPMS', 
             'Delete SPMS', 
             'View SPMS',
+            
+            'View DTR',
+            "Add Application",
+            "Edit Application",
+            "Delete Application",
+            "View Application",
+
             'Manage Roles and Permissions', 
             'Manage Job Vacancies', 
             'Access Job Vacancies', 
-            'Access DTR',
             'Manage Employees',
             'Manage DTR',
             'Manage Rewards and Recognition',
@@ -53,20 +59,26 @@ use Illuminate\Auth\Events\Registered;
         }
 
         $user = User::create([
-            'name' => 'superadmin',
             'username' => 'nedaict',
+            'middle_name' => 'ICT',
+            'first_name' => 'RO2',
+            'surname' => 'NEDA',
             'password' => Hash::make('lanxNEDA'),
         ]);
 
         $hruser = User::create([
-            'name' => 'human resource',
             'username' => 'nedahr',
+            'middle_name' => 'HR',
+            'first_name' => 'RO2',
+            'surname' => 'NEDA',
             'password' => Hash::make('lanxNEDA'),
         ]);
 
         $employee = User::create([
-            'name' => 'Jester Adduru',
             'username' => 'jcadduru',
+            'middle_name' => 'Clores',
+            'first_name' => 'Jester',
+            'surname' => 'Adduru',
             'password' => Hash::make('12341234'),
         ]);
 

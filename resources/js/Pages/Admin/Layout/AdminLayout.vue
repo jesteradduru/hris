@@ -9,7 +9,7 @@
 
       <!-- Page Content -->
       <main>
-        <div class="container mt-3">
+        <div :class="`${fluid ? 'container-fluid' : 'container'} mt-3`">
           <div
             v-if="$page.props.ziggy.flash.success"
             class="alert alert-success"
@@ -26,4 +26,7 @@
 <script setup>
 import AdminMainNavbar from '../Components/AdminMainNavbar.vue'
 
+defineProps({
+  fluid: Boolean,
+})
 </script>

@@ -2,7 +2,7 @@
   <Head title="Application" />
   <AuthenticatedLayout>
     <BreadCrumbs :crumbs="crumbs" />
-    <div class="container rounded p-4" style="background: #ebebeb">
+    <div class="container rounded p-4 bg-light border">
       <slot />
     </div>
   </AuthenticatedLayout>
@@ -29,7 +29,7 @@ const crumbs = computed(() => [
     link: route('recruitment.job_posting.index'),
   },
   {
-    label: props.job_posting.plantilla_item_no,
+    label: props.job_posting.position,
     link: route('recruitment.job_posting.show', {
       job_posting: props.job_posting.id,
     }),

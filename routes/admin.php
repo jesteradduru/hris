@@ -56,8 +56,9 @@ use Illuminate\Support\Facades\Route;
          Route::resource('job_posting', AdminJobPostingController::class);
 
         //  viewing of job applications for vacancies
-         Route::get('job_posting/{job_posting}/job_application', [AdminJobApplicationController::class, 'index'])->name('job_application.index');
-         Route::get('job_posting/job_application/{job_application}', [AdminJobApplicationController::class, 'show'])->name('job_application.show');
+        Route::resource('selection', AdminJobApplicationController::class)->only(['index', 'show']);
+        //  Route::get('job_posting/{job_posting}/job_application', [AdminJobApplicationController::class, 'index'])->name('job_application.index');
+        //  Route::get('job_posting/job_application/{job_application}', [AdminJobApplicationController::class, 'show'])->name('job_application.show');
 
     });
         
