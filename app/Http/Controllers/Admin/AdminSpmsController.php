@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SpmsForm;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class AdminSpmsController extends Controller
         return inertia('Admin/SPMS/Index', [
             'spms' => SpmsForm::with(['user'])->filter($filters)->paginate(20)->withQueryString(),
             'years' => DB::table('spms_forms')->selectRaw('year')->distinct()->pluck('year'),
-            'users' => DB::table('users')->select(['name', 'id'])->get()
+            'users' => User::get()
         ]);
     }
 
@@ -33,7 +34,7 @@ class AdminSpmsController extends Controller
     public function create(Request $request)
     {
         return inertia('Admin/SPMS/Create', [
-            'users' => DB::table('users')->select(['name', 'id'])->get()
+            'users' => User::get()
         ]);
     }
 

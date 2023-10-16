@@ -65,6 +65,7 @@ class EmployeeController extends Controller
     public function edit(User $employee){
         return inertia('Admin/Employee/Edit/Profile', [
             'employee' => $employee,
+            'roles' => Role::all()->pluck('name')
         ]);
     }
 

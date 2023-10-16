@@ -28,9 +28,6 @@ const submit = () => {
     },
   })
 }
-
-
-    
 </script>
 
 <template>
@@ -153,7 +150,7 @@ const submit = () => {
                 :class="{ 'opacity-25': form.processing }"
                 :disabled="form.processing"
               >
-                Register
+                Update
               </PrimaryButton>
             </div>
           </form>
