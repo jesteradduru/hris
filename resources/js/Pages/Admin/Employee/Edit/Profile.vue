@@ -12,7 +12,7 @@ const form = useForm({
   password: '',
   dtr_user_id: props.employee.dtr_user_id,
   password_confirmation: '',
-  role: props.employee.role,
+  role: props.employee.role_name[0],
 })
 
 const props = defineProps({

@@ -2,11 +2,12 @@
   <div
     :id="props.modal_id"
     class="modal fade"
+    :class="{'modal-xl': props.modalXl}"
     tabindex="-1"
     :aria-labelledby="props.modal_id + 'Label'"
     aria-hidden="true"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog" :class="{'modal-max-width': props.modalMaxWidth}">
       <div class="modal-content">
         <div class="modal-header">
           <slot name="header" />
@@ -31,5 +32,7 @@
 <script setup>
 const props = defineProps({
   modal_id: String,
+  modalXl: Boolean,
+  modalMaxWidth: Boolean,
 })
 </script>

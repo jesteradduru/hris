@@ -32,7 +32,8 @@ class AdminJobApplicationController extends Controller
                 'civil_service_eligibility',
                 'work_experience',
                 'learning_and_development',
-                'other_information'
+                'other_information',
+                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)->with('document')
             ]);
         }
         // dd($applicant);

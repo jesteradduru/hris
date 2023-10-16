@@ -19,7 +19,7 @@
       </dl>
     </div>
     <!-- Educational Background -->
-    <div class="mb-3">
+    <div v-if="educ" class="mb-3">
       <h5 class="text-primary">Educational BackGround</h5>
       <dl>
         <dt>Elementary:</dt>
@@ -54,25 +54,34 @@
     </div>
 
     <!-- CS Eligibility -->
+    
     <div class="mb-3">
       <h5 class="text-primary">Civil Service Eligibility</h5>
-      <dl v-for="elig in eligs" :key="elig.id">
-        <dt>{{ elig.cs_board_bar_ces_csee_barangay_drivers }}</dt>
-        <dd v-if="elig.license_number">
-          <div v-if=" elig.license_number ">
-            License No.:{{ elig.license_number }}
-          </div>
-          <div v-if="elig.rating">
-            Rating: {{ elig.rating }}
-          </div>
-        </dd>
-      </dl>
+      <div v-if="eligs.length === 0" class="text-muted text-center text-sm">
+        No Record
+      </div>
+      <div v-else>
+        <dl v-for="elig in eligs" :key="elig.id">
+          <dt>{{ elig.cs_board_bar_ces_csee_barangay_drivers }}</dt>
+          <dd v-if="elig.license_number">
+            <div v-if=" elig.license_number ">
+              License No.:{{ elig.license_number }}
+            </div>
+            <div v-if="elig.rating">
+              Rating: {{ elig.rating }}
+            </div>
+          </dd>
+        </dl>
+      </div>
     </div>
 
     <!-- work experience -->
     <div class="mb-3">
       <h5 class="text-primary">Work Experience</h5>
-      <div class="table-responsive">
+      <div v-if="works.length === 0" class="text-muted text-center text-sm">
+        No Record
+      </div>
+      <div v-else class="table-responsive">
         <table class="table table-bordered table-sm">
           <thead>
             <tr>
@@ -81,7 +90,7 @@
               <th scope="col">Inclusive Date</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="works">
             <tr v-for="work in works" :key="work.id" class="">
               <td scope="row">{{ work.position_title }}</td>
               <td>{{ work.dept_agency_office_company }}</td>
@@ -97,7 +106,10 @@
     <!-- learning and development -->
     <div class="mb-3">
       <h5 class="text-primary">Learning and Development</h5>
-      <div class="table-responsive">
+      <div v-if="lnds.length === 0" class="text-muted text-center text-sm">
+        No Record
+      </div>
+      <div v-else class="table-responsive">
         <table class="table table-bordered table-sm">
           <thead>
             <tr>
@@ -127,20 +139,55 @@
     <!-- special skills and hobbies -->
     <div class="mb-3">
       <h5 class="text-primary">Special Skills and Hobbies</h5>
-      <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
-      <div v-if="skills.special_skills_hobbies === 0" class="text-muted text-center text-sm">
+      <div v-if="skills">
+        <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
+      </div>
+      <div v-else class="text-muted text-center text-sm">
         No Record
       </div>
     </div>
+    <!-- documents -->
+    <div class="mb-3">
+      <h5 class="text-primary">Attached Documents</h5>
+      <div v-if="applicant.job_application">
+        <span 
+          v-for="doc in applicant.job_application[0].document" 
+          :key="doc.id" data-bs-toggle="modal" data-bs-target="#viewAttachment" 
+          :href="doc.src" @click="() => showPdf(doc.src)"
+        >{{ doc.filename }}</span>
+        <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
+      </div>
+      <div v-else class="text-muted text-center text-sm">
+        No Record
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <Modal modal-max-width="true" modal_id="viewAttachment" modal-xl="true">
+      <template #header>View Attachment</template>
+      <template #body>
+        <embed
+          :src="pdf" class="w-100" style="height: 85vh;"
+          type="application/pdf"
+        />
+      </template>
+    </Modal>
     <!-- end of line -->
   </div>
 </template>
 
 <script setup>
 import moment from 'moment'
+import Modal from '@/Components/Modal.vue'
+import { ref } from 'vue'
+
 const props = defineProps({
   applicant: Object,
 })
+
+const pdf = ref('dffd')
+const showPdf = (src) => pdf.value = src
+
 
 const {
   educational_background:educ,

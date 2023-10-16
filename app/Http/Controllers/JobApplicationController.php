@@ -35,6 +35,13 @@ class JobApplicationController extends Controller
     }
 
     public function store(Request $request) {
+        $user = $request->user();
+
+        if(!$user->personal_information()->exists()){
+            abort(403, 'Please update your Personal Data Sheet');
+        }
+
+
         $job_posting = JobPosting::find($request->input('job_posting'));
         // check if user already applied
         $user_application = JobPosting::whereRelation(

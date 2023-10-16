@@ -3,7 +3,7 @@
     <BreadCrumbs :crumbs="crumbs" />
     <div class="tabbable">
       <ul class="nav nav-tabs" role="tablist">
-        <!-- <li class="nav-item">
+        <li class="nav-item">
           <Link
             preserve-state :href="route('admin.employees.edit', {employee: props.employee})" class="nav-link"
             :class="{ active: route().current('admin.employees.edit') } "
@@ -20,7 +20,7 @@
           >
             Rewards and Recognition
           </Link>
-        </li> -->
+        </li>
       </ul>
       <br />
       <div class="container">

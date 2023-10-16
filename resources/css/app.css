@@ -52,6 +52,10 @@
   width: 50px;
 }
 
+.modal-max-width {
+  min-width: 90%;
+}
+
 @media only screen and (max-width: 1700px) {
   .side-nav-col {
     display: none;
