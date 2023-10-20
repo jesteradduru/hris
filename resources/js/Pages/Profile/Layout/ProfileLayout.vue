@@ -11,7 +11,7 @@
           Profile
         </Link>
       </li>
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <Link
           class="nav-link" :class="{
             active: route().current('profile.pds.*')
@@ -47,7 +47,7 @@
         >
           SPMS
         </Link>
-      </li>
+      </li> -->
       <li class="nav-item">
         <Link
           class="nav-link" :class="{

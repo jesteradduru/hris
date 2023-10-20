@@ -7,26 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class LearningAndDevelopment extends Model
+class LndForm extends Model
 {
     use HasFactory;
 
-    protected $table = 'learning_and_development';
-
     protected $fillable = [
-        "title_of_learning",
-        "inclusive_date_from",
-        "inclusive_date_to",
-        "number_of_hours",
-        "type_of_ld",
-        "conducted_sponsored_by",
+        'filepath',
+        'user_id',
+        'type',
+        'year'
+
     ];
+    
+    protected $appends = ['src'];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
+    } 
+
+    public function getSrcAttribute()
+    {
+        return asset("storage/{$this->filepath}");
     }
 
     public function lnd_training() : HasMany {
-        return $this->hasMany(LndTrainingsAttended::class, 'training_id');
+        return $this->hasMany(LndTrainingsAttended::class, 'lnd_form_id');
     }
+
+
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\DailyTimeRecordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\LndFormController;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
@@ -58,6 +59,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('rewards', RewardAndRecognitionController::class);
         Route::resource('spms', SpmsController::class);
     });
+
+    // lnd forms
+    Route::resource('lnd_forms', LndFormController::class);
 
     Route::resource('daily_time_record', DailyTimeRecordController::class);
 });

@@ -6,10 +6,13 @@
 use App\Http\Controllers\Admin\AdminDailyTimeRecordController;
 use App\Http\Controllers\Admin\AdminJobApplicationController;
 use App\Http\Controllers\Admin\AdminJobPostingController;
+use App\Http\Controllers\Admin\AdminLearningAndDevelopmentController;
 use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
 use App\Http\Controllers\Admin\AdminSpmsController;
+use App\Http\Controllers\Admin\CompetencyGapController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
+use App\Http\Controllers\Admin\LndTrainingsAttendedController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -66,6 +69,10 @@ use Illuminate\Support\Facades\Route;
     Route::resource('rewards', AdminRewardAndRecognitionController::class);
     // spms
     Route::resource('spms', AdminSpmsController::class);
+    // lnd
+    Route::resource('lnd', AdminLearningAndDevelopmentController::class);
+    Route::resource('competency_gap', CompetencyGapController::class);
+    Route::resource('competency_training', LndTrainingsAttendedController::class);
     
     Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
  });

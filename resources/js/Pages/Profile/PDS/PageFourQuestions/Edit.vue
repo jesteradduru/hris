@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="form.isDirty">
       <form @submit.prevent="save">
         <!-- Some borders are removed -->
@@ -364,7 +364,7 @@
         </div>
       </form>
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
   
 <script setup>
@@ -372,7 +372,7 @@ import Spinner from '@/Components/Spinner.vue'
 import { useForm, Link } from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
 import ListBadge from '@/Components/ListBadge.vue'
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 import { computed } from 'vue'
   

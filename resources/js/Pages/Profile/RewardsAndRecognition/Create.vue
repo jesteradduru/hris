@@ -1,9 +1,9 @@
 
 
 <template>
-  <ProfileLayout :employee="props.employee.id">
+  <AuthenticatedLayout>
     <Head title="Add Reward" />
-    <div class="container">
+    <div class="container-fluid">
       <div class="card shadow">
         <div class="card-body">
           <Link :href="route('profile.rewards.index')" class="btn  btn-secondary"><i class="fa-solid fa-arrow-left" /> Back</Link>
@@ -34,11 +34,11 @@
         </div>
       </div>
     </div>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
   
 <script setup>
-import ProfileLayout from '../Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head, Link } from '@inertiajs/vue3'
 
 const props = defineProps({

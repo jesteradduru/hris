@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm bg-light shadow-sm navbar-light">
+  <nav class="navbar navbar-expand-sm bg-light shadow-sm navbar-light" style="text-transform: uppercase;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">HRIS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -38,6 +38,17 @@
               }"
             >
               Recruitment, Selection and Placement
+            </Link>
+          </li>
+          <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
+            <Link
+              class="nav-link" :href="route('admin.lnd.index')" :class="{
+                active: route().current(
+                  'admin.lnd.*'
+                )
+              }"
+            >
+              Learning and Development
             </Link>
           </li>
           <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item dropdown">

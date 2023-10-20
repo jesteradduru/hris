@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav text-light flex-column gap-2 shadow p-4 side-nav bg-primary" style="z-index: 1;">
+  <ul class="nav text-light flex-column gap-2 shadow p-4 side-nav bg-primary" style="z-index: 1; text-transform:">
     <li class="nav-item  d-flex align-center gap-2">
       <img :src="nedalogo" alt="" class="img-fluid side-nav-logo" />
       <b>NRO2 Human Resource Information System</b>
@@ -13,6 +13,52 @@
         }" :href="route('recruitment.job_posting.index')"
       >
         Job Vacancies
+      </Link>
+    </li>
+    <li class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('profile.pds.*')
+        }" :href="route('profile.pds.personal_information.edit')"
+      >
+        Personal
+        Data Sheet
+      </Link>
+    </li>
+    <li v-if="user && permissions.includes('View Application')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('job_application.index')
+        }" :href="route('job_application.index')"
+      >
+        Job Applications
+      </Link>
+    </li>
+    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('lnd_forms.*')
+        }" :href="route('lnd_forms.index')"
+      >
+        Learning and Development
+      </Link>
+    </li>
+    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('profile.rewards.*')
+        }" :href="route('profile.rewards.index')"
+      >
+        Rewards and Recognition
+      </Link>
+    </li>
+    <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('profile.spms.*')
+        }" :href="route('profile.spms.index')"
+      >
+        SPMS
       </Link>
     </li>
     <li v-if="user && permissions.includes('View DTR')" class="nav-item">

@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout>
       <div class="table-responsive">
         <table class="table table-sm mt-3">
@@ -37,11 +37,11 @@
         </div>
       </div>
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
     
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 import { useForm, Link } from '@inertiajs/vue3'
 import BulletedList from '@/Components/BulletedList.vue'

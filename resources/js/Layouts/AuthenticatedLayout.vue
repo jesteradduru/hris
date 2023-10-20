@@ -7,7 +7,7 @@
         <SideNav />
       </div>
       <div class="col">
-        <div class="container">
+        <div class="container-fluid">
           <br />
           <br />
           <br />

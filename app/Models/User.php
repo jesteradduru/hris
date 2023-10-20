@@ -115,5 +115,14 @@ class User extends Authenticatable
         return $this->hasMany(SpmsForm::class, 'user_id');
     }
     
+    //lnd
+    public function lnd_form() : HasMany {
+        return $this->hasMany(LndForm::class, 'user_id');
+    }
+
+    public function priority_for_training() : HasMany {
+        return $this->hasMany(LndTargettedStaff::class, 'user_id');
+    }
+    
 
 }

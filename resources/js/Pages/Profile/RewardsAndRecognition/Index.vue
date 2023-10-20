@@ -1,9 +1,9 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <h3>Rewards and Recognition</h3>
     <Link v-if="permission.includes('Add Reward')" :href="route('profile.rewards.create')" class="btn btn-primary">Add reward</Link>
     <div class="table-responsive">
-      <table class="table table-bordered mt-3">
+      <table class="table table-bordered mt-3 table-sm">
         <thead>
           <tr>
             <th scope="col">Title</th>
@@ -26,11 +26,11 @@
         </tbody>
       </table>
     </div>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link, usePage } from '@inertiajs/vue3'
 import moment from 'moment'
 

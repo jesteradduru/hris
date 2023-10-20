@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <Link class="btn btn-secondary mb-3 btn-sm" :href="route('profile.spms.index')"><i class="fa-solid fa-arrow-left" /></Link>
     <h3>Edit {{ props.spms.type }}</h3>
     <div class="mb-3">
@@ -53,11 +53,11 @@
       <InputError :message="form.errors.rating" />
     </div>
     <button class="btn btn-primary" :disabled="form.processing" @click="onSubmit">Submit</button>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
     
 <script setup>
-import ProfileLayout from '../Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import {useForm, Link} from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
   
@@ -66,6 +66,7 @@ const props = defineProps({
 })
 
 const form = useForm({
+  _method: 'put',
   semester: props.spms.semester, 
   type: props.spms.type,
   year: props.spms.year,
@@ -77,7 +78,7 @@ const addFile = (e) => {
   form.file = e.target.files
 }
   
-const onSubmit = () => form.patch(route('profile.spms.update', {spm: props.spms.id}), {
+const onSubmit = () => form.post(route('profile.spms.update', {spm: props.spms.id}), {
   onSuccess: () => {
     form.file = null
   },

@@ -49,7 +49,13 @@ use Illuminate\Auth\Events\Registered;
             'Manage Rewards and Recognition',
             'Manage R&R of own account',
             'Add reward to an employee',
-            'Add and delete reward of own account'
+            'Add and delete reward of own account',
+
+            'Add L&D Form',
+            'Edit L&D Form',
+            'Delete L&D Form',
+            'View L&D Form',
+            
         ];
         
         $roles = ['superadmin', 'admin', 'hr', 'user', 'employee'];

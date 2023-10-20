@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout>
       <form @submit.prevent="add">
         <div class="row">
@@ -109,14 +109,14 @@
         </div>
       </form>
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
 import Spinner from '@/Components/Spinner.vue'
 import { useForm, Link } from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 
 const form = useForm({

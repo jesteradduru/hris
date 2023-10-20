@@ -56,6 +56,43 @@
           Job Vacancies
         </Link>
       </li>
+      <li class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.pds.*')
+          }" :href="route('profile.pds.personal_information.edit')"
+        >
+          Personal
+          Data Sheet
+        </Link>
+      </li>
+      <li v-if="user && permissions.includes('View Application')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('job_application.index')
+          }" :href="route('job_application.index')"
+        >
+          Job Applications
+        </Link>
+      </li>
+      <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.rewards.index')
+          }" :href="route('profile.rewards.index')"
+        >
+          Rewards and Recognition
+        </Link>
+      </li>
+      <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.spms.*')
+          }" :href="route('profile.spms.index')"
+        >
+          SPMS
+        </Link>
+      </li>
       <li v-if="user && permissions.includes('View DTR')" class="nav-item">
         <Link
           class="nav-link text-info" :class="{

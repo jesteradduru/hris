@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout>
       <Link :href="route('profile.pds.civil_service_eligibility.create')" class="btn btn-success">Add Eligibility</Link>
 
@@ -67,11 +67,11 @@
         :links="props.eligibilities.links"
       />
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 import { useForm, Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'

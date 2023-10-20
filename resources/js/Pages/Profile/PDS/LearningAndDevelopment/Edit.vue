@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout>
       <form @submit.prevent="update">
         <div class="row">
@@ -109,7 +109,7 @@
         </div>
       </form>
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
@@ -118,6 +118,7 @@ import { useForm, Link } from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
 import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 
 const props = defineProps({
   learning_and_development: Object,

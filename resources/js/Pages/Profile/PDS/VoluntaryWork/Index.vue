@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout>
       <Link :href="route('profile.pds.voluntary_work.create')" class="btn btn-success">Add Voluntary Work</Link>
       <div class="table-responsive">
@@ -63,11 +63,11 @@
         :links="props.voluntary_works.links"
       />
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
   
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 import { useForm, Link } from '@inertiajs/vue3'
 import Pagination from '@/Components/Pagination.vue'

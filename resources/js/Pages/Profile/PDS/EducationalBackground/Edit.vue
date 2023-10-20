@@ -1,5 +1,5 @@
 <template>
-  <ProfileLayout>
+  <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="form.isDirty">
       <form @submit.prevent="createUpdateEducationalBackground">
         <div class="row">
@@ -392,11 +392,11 @@
         </div>
       </form>
     </PDSLayout>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import PDSLayout from '@/Pages/Profile/PDS/Layout/PDSLayout.vue'
 import Spinner from '@/Components/Spinner.vue'
 import { useForm, Link } from '@inertiajs/vue3'
