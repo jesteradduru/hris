@@ -22,6 +22,7 @@
               <th scope="col">NAME</th>
               <th scope="col">COMPETENCY GAP ASSESSMENT</th>
               <th scope="col">TRAININGS ATTENDED</th>
+              <th>ACTION</th>
             </tr>
           </thead>
           <tbody v-for="employee in props.report.target_staff" :key="employee.id" class="">
@@ -33,10 +34,10 @@
                 </a>
               </td>
               <td>
-                <ul>
+                <ul v-if="lndForm.lnd_training.length > 0">
                   <li v-for="training in lndForm.lnd_training" :key="training.id">
                     {{ 
-                      `${training.training.title_of_learning} (${moment(training.training.inclusive_date_from).format('MMM D, YYYY')} - ${moment(training.training.inclusive_date_to).format('MMM D, YYYY')})`
+                      getTraining(training.training)
                     }}
                   </li>
                 </ul>
@@ -48,11 +49,24 @@
                   <i class="fa-solid fa-plus" />
                 </Link>
               </td>
+              <td>
+                <Link
+                  as="button"
+                  method="delete"
+                  :onBefore="confirm"
+                  :href="route('admin.competency_gap.removePriority', 
+                               {target_staff: employee.id})" 
+                  class="btn btn-sm btn-danger"
+                >
+                  <i class="fa-solid fa-trash" />
+                </Link>
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
       
+      <hr />
       
       <div class="mb-3">
         <h6>Employees</h6>
@@ -65,12 +79,10 @@
         <ul class="list-group">
           <li v-for="employee in searchResult" :key="employee.id" class="list-group-item">
             {{ employee.name }}
-            <button class="btn btn-sm btn-success" :data-emp-id="employee.id" @click="onAddEmployee"><i style="pointer-events: none;" class="fa-solid fa-plus" /></button>
+            <Link method="post" as="button" :href="route('admin.competency_gap.addPriority', {report_id: props.report.id, user_id: employee.id})" class="btn btn-sm btn-success" :data-emp-id="employee.id" @click="onAddEmployee"><i style="pointer-events: none;" class="fa-solid fa-plus" :only="['report']" /></Link>
           </li>
         </ul>
       </div>
-
-      <button type="button" class="btn btn-primary" @click="onSubmit">Save Report</button>
     </div>
   </LndLayout>
 </template>
@@ -89,7 +101,6 @@ const props = defineProps({
 })
 
 const form = useForm({
-  targettedEmployees: [],
   year: props.report.year,
 })
 
@@ -98,7 +109,7 @@ const textSearch = ref('')
 
 const searchResult = computed(() => {
   return props.employees.filter(emp => {
-    const target = form.targettedEmployees.map(t => t.id)
+    const target = props.report.target_staff.map(t => t.user.id)
     return emp.name.toLowerCase().includes(textSearch.value.toLowerCase()) && !target.includes(emp.id)
   })
 })
@@ -106,30 +117,15 @@ const searchResult = computed(() => {
 
 const onSearchChange = (e) => textSearch.value = e.target.value
 
-const onAddEmployee = (e) => {
-  const employee = props.employees.filter(emp => emp.id == e.target.getAttribute('data-emp-id'))
-  if(employee.length > 0){
-    form.targettedEmployees.push({
-      id: employee[0].id,
-      name: employee[0].name,
-    })
+
+const getTraining = (training) => {
+  if(training.inclusive_date_from && training.inclusive_date_to){
+    return `${training.title_of_learning} (${moment(training.inclusive_date_from).format('MMM D, YYYY')} - ${moment(training.inclusive_date_to).format('MMM D, YYYY')})`
+  }else{
+    return `${training.title_of_learning}`
   }
-
-}
-
-const onRemoveEmployee = (e) => {
-  const id = e.target.getAttribute('data-emp-id')
-  form.targettedEmployees = form.targettedEmployees.filter(t => {
-    return t.id != id
-  })
-
 }
 
 
-
-const onSubmit = () => {
-  form.post(route('admin.competency_gap.store'), {
-    onSuccess: form.reset(),
-  })
-}
+const confirm = () => window.confirm('Are you sure to remove this staff from priority list?')
 </script>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,5 +29,18 @@ class LearningAndDevelopment extends Model
 
     public function lnd_training() : HasMany {
         return $this->hasMany(LndTrainingsAttended::class, 'training_id');
+    }
+
+    public function scopeFilter(Builder $query, array $filters) : Builder {
+        return $query
+            ->when(
+                $filters['from'] ?? false,
+                fn ($query, $value) => $query->where('inclusive_date_from', '>=', $filters['from'])
+            )
+            ->when(
+                $filters['to'] ?? false,
+                fn ($query, $value) => $query->where('inclusive_date_to', '<=', $filters['to'])
+            )
+            ;
     }
 }

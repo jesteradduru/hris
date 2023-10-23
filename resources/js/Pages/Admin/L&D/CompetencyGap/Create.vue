@@ -96,7 +96,7 @@ const onRemoveEmployee = (e) => {
 
 const onSubmit = () => {
   form.post(route('admin.competency_gap.store'), {
-    onSuccess: form.reset(),
+    onSuccess: () => form.reset(),
   })
 }
 </script>

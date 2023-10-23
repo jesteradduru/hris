@@ -7,6 +7,7 @@ use App\Models\LearningAndDevelopment;
 use App\Models\LndForm;
 use App\Models\LndTrainingsAttended;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class LndTrainingsAttendedController extends Controller
@@ -26,10 +27,18 @@ class LndTrainingsAttendedController extends Controller
     {
         
         $lndForm = LndForm::find($request->lnd_form);
+
+        $filters = $request->only(['from', 'to']);
+
         return inertia('Admin/L&D/CompetencyGap/TrainingsAttended/Create', [
             'report_id' => $request->report_id,
             'lnd_form' => $lndForm->load(['lnd_training']),
-            'trainings' => LearningAndDevelopment::whereDoesntHave('lnd_training')->where('user_id', $request->user_id)->get()
+            'trainings' => LearningAndDevelopment::filter($filters)
+            ->where('user_id', $request->user_id)
+            ->whereDoesntHave('lnd_training', fn (Builder $query)
+                => $query->where('lnd_form_id', $request->lnd_form)
+            )
+            ->get()
         ]);
     }
 
@@ -73,8 +82,10 @@ class LndTrainingsAttendedController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LndTrainingsAttended $competency_training)
     {
-        //
+        $competency_training->delete();
+
+        return back()->with('success', 'Removed Successfully.');
     }
 }

@@ -10,6 +10,7 @@
             <h5 class="card-title">{{ `CY ${report.year} Learning and Development Program Monitoring` }}</h5>
             <p class="card-text d-flex justify-content-end">
               <Link :href="route('admin.competency_gap.edit', {competency_gap: report.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pen" /></Link>
+              <Link method="delete" as="button" :onBefore="confirm" :href="route('admin.competency_gap.destroy', {competency_gap: report.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
             </p>
           </div>
         </div>
@@ -26,4 +27,6 @@ import {Link} from '@inertiajs/vue3'
 const props = defineProps({
   reports: Array,
 })
+
+const confirm = () => window.confirm('Are you sure to delete this report?')
 </script>

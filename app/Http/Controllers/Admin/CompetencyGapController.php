@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LndMonitoringReport;
 use App\Models\LndTargettedStaff;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CompetencyGapController extends Controller
@@ -27,7 +28,9 @@ class CompetencyGapController extends Controller
     {
         
         return inertia('Admin/L&D/CompetencyGap/Create', [
-            'employees' => User::role('employee')->get()
+            'employees' => User::role('employee')->whereHas('lnd_form', function (Builder $query) {
+                $query->where('type', 'COMPETENCY GAP ASSESSMENT');
+            })->get()
         ]);
     }
 
@@ -75,34 +78,59 @@ class CompetencyGapController extends Controller
             'target_staff' => fn($query) => $query->with(
                     [
                         'user' => fn($query) => $query->with(
-                            [
-                                'learning_and_development', 
-                                'lnd_form' => fn($query) => $query->with(['lnd_training'])->where('type', 'COMPETENCY GAP ASSESSMENT')->where('year', $competencyGap->year)
-                            ]
-                        )
+                                        [
+                                            'learning_and_development', 
+                                            'lnd_form' => fn($query) => $query->with(['lnd_training'])->where('type', 'COMPETENCY GAP ASSESSMENT')->where('year', $competencyGap->year)
+                                        ]
+                                    )
                     ]
                 )
         ]);
 
+        $users = User::role('employee');
+
         return inertia('Admin/L&D/CompetencyGap/Edit', [
-            'report' => $report,
-            'employees' => User::role('employee')->get()
-        ]);
+                    'report' => $report,
+                    'employees' => $users
+                                    ->whereHas('lnd_form', function (Builder $query) {
+                                        $query->where('type', 'COMPETENCY GAP ASSESSMENT');
+                                    })
+                                    ->with([
+                                            'learning_and_development', 
+                                            'lnd_form' => fn($query) => $query->with(['lnd_training'])
+                                        ])->get()
+                ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $competencyGap)
     {
-        //
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(LndMonitoringReport $competencyGap)
     {
-        //
+        
+        $competencyGap->target_staff()->delete();
+        $competencyGap->delete();
+    }
+
+    public function addPriority(Request $request){
+        LndTargettedStaff::create([
+            'report_id' => $request->report_id,
+            'user_id' => $request->user_id
+        ]);
+
+        return back()->with('success', 'Employee has been added to priority.');
+    }
+    public function removePriority(LndTargettedStaff $targetStaff){
+        $targetStaff->delete();
+
+        return back()->with('success', 'Employee has been removed from priority.');
     }
 }

@@ -73,7 +73,10 @@ use Illuminate\Support\Facades\Route;
     Route::resource('lnd', AdminLearningAndDevelopmentController::class);
     Route::resource('competency_gap', CompetencyGapController::class);
     Route::resource('competency_training', LndTrainingsAttendedController::class);
-    
+
+    Route::name('competency_gap.addPriority')->post('/compentency_gap/{report_id}/addPriority', [CompetencyGapController::class, 'addPriority']);
+    Route::name('competency_gap.removePriority')->delete('/compentency_gap/removePriority/{target_staff}', [CompetencyGapController::class, 'removePriority']);
+
     Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
  });
 

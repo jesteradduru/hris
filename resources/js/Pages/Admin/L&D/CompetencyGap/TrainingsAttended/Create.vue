@@ -9,50 +9,121 @@
       </div>
       <div class="col-2">
         <b> Competency Gaps Trainings Attended</b>
-        <ul>
-          <li v-for="training in props.lnd_form.lnd_training" :key="training.id">
-            {{ 
-              `${training.training.title_of_learning} (${moment(training.training.inclusive_date_from).format('MMM D, YYYY')} - ${moment(training.training.inclusive_date_to).format('MMM D, YYYY')})`
-            }}
-          </li>
-        </ul>
+        <div v-if="props.lnd_form.lnd_training.length > 0">
+          <ul>
+            <li v-for="training in props.lnd_form.lnd_training" :key="training.id" class="mt-2">
+              <div class="d-flex justify-content-between">
+                <div>
+                  {{ 
+                    getTraining(training.training)
+                  }}
+                </div>
+                <div>
+                  <Link as="button" :onBefore="confirm" method="delete" class="text-danger border-0" :href="route('admin.competency_training.destroy', {competency_training: training.id})"><i class="fa-solid fa-x" /></Link>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div v-else>
+          <span class="text-muted">No records</span>
+        </div>
+
+        <br />
+        
         <b> Trainings Attended</b>
-        <ul>
+
+        <!-- filter form -->
+        <div class="mb-3">
+          <label for="" class="form-label">From</label>
+          <input
+            id=""
+            v-model="filterForm.from" type="date" class="form-control" name="" aria-describedby="helpId"
+            placeholder=""
+          />
+        </div>
+        <div class="mb-3">
+          <label for="" class="form-label">To</label>
+          <input
+            id=""
+            v-model="filterForm.to" type="date" class="form-control" name="" aria-describedby="helpId" placeholder=""
+          />
+        </div>
+        <button @click="filter">Filter</button>
+
+        <!-- end of filter form -->
+        
+        <ul v-if="props.trainings.length > 0" class="mt-3">
           <li v-for="training in props.trainings" :key="training.id">
-            {{ 
-              `${training.title_of_learning} (${moment(training.inclusive_date_from).format('MMM D, YYYY')} - ${moment(training.inclusive_date_to).format('MMM D, YYYY')})`
-            }}
-            <Link
-              class="btn btn-success btn-sm"
-              :href="route('admin.competency_training.store', {
-                training_id: training.id,
-                lnd_form_id: props.lnd_form.id
-              })"
-              method="post"
-              as="button"
-              :only="['lnd_form', 'trainings']"
-            >
-              <i class="fa-solid fa-plus" />
-            </Link>
+            <div class="d-flex justify-content-between">
+              <div>
+                {{ 
+                  getTraining(training)
+                }}
+              </div>
+              <div>
+                <Link
+                  class="text-success border-0"
+                  :href="route('admin.competency_training.store', {
+                    training_id: training.id,
+                    lnd_form_id: props.lnd_form.id
+                  })"
+                  method="post"
+                  as="button"
+                  :only="['lnd_form', 'trainings']"
+                >
+                  <i class="fa-solid fa-plus" />
+                </Link>
+              </div>
+            </div>
           </li>
         </ul>
+
+        <div v-else>
+          <span class="text-muted">No records</span>
+        </div>
       </div>
     </div>
   </LndLayout>
 </template>
       
 <script setup>
-import {Head, useForm} from '@inertiajs/vue3'
+import {Head} from '@inertiajs/vue3'
 import LndLayout from '@/Pages/Admin/L&D/Layout/LndLayout.vue'
-import {Link} from '@inertiajs/vue3'
+import {Link, useForm} from '@inertiajs/vue3'
 import moment from 'moment'
-import InputError from '@/Components/InputError.vue'
   
 const props = defineProps({
   trainings: Array,
-  report_id: Number,
+  report_id: String,
   lnd_form: Object,
-  trainings: Array,
 })
+
+const getTraining = (training) => {
+  if(training.inclusive_date_from && training.inclusive_date_to){
+    return `${training.title_of_learning} (${moment(training.inclusive_date_from).format('MMM D, YYYY')} - ${moment(training.inclusive_date_to).format('MMM D, YYYY')})`
+  }else{
+    return `${training.title_of_learning}`
+  }
+}
+
+const confirm = ( ) => window.confirm('Are you sure to remove this training?')
+
+const filterForm = useForm({
+  from: null,
+  to: null,
+})
+
+const filter = () => {
+  filterForm.get(route('admin.competency_training.create', {
+    report_id: props.report_id,
+    lnd_form: props.lnd_form.id,
+    user_id: props.lnd_form.user_id,
+  }), {
+    preserveScroll: true,
+    preserveState: true,
+  })
+}
   
 </script>

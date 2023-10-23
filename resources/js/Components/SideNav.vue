@@ -34,7 +34,7 @@
         Job Applications
       </Link>
     </li>
-    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+    <li v-if="user && permissions.includes('View L&D Form')" class="nav-item">
       <Link
         class="nav-link" :class="{
           active: route().current('lnd_forms.*')
