@@ -17,7 +17,7 @@ class CompetencyGapController extends Controller
     public function index()
     {
         return inertia('Admin/L&D/CompetencyGap/Index', [
-            'reports' => LndMonitoringReport::get()
+            'reports' => LndMonitoringReport::with(['target_staff' => fn($query) => $query->withCount('target_staff_training')])->get()
         ]);
     }
 
@@ -53,7 +53,7 @@ class CompetencyGapController extends Controller
         foreach($validate['targettedEmployees'] as $employee){
             LndTargettedStaff::create([
                 'report_id' => $report->id,
-                'user_id' => $employee['id']
+                'user_id' => $employee['id'],
             ]);
         }
 

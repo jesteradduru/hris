@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
+            $table->foreignIdFor(LndTargettedStaff::class, 'target_staff_id')->constrained('lnd_targetted_staff');
             $table->foreignIdFor(LearningAndDevelopment::class, 'training_id')->constrained('learning_and_development');
             $table->foreignIdFor(LndForm::class, 'lnd_form_id')->constrained('lnd_forms');
         });

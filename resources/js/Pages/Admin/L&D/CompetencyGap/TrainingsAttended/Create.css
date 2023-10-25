@@ -1,0 +1,33 @@
+.training-competency-container{
+    display: flex;
+    padding-right: 20px;
+}
+
+.competency-gap{
+    transition: width .3s ease;
+    width: 250%;
+}
+
+.training{
+    transition: width .3s ease;
+    overflow: hidden;
+    width: 70%;
+    filter: blur(.8px);
+    position: relative;
+    margin-left: 20px;
+}
+
+
+.training:hover{
+    width: 200%;
+    filter: blur(0px);
+}
+
+.training-content{
+    width: 500px;
+    margin: 20px auto 20px auto;
+    border: .4px solid #b4b4b4;
+    padding: 20px;
+    border-radius: 5px;
+}
+

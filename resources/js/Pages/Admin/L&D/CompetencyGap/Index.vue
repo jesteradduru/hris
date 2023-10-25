@@ -8,10 +8,21 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">{{ `CY ${report.year} Learning and Development Program Monitoring` }}</h5>
-            <p class="card-text d-flex justify-content-end">
+
+            <!-- count -->
+            <div class="d-flex justify-content-between">
+              <div><i class="fa-solid fa-users" /> {{ report.status.total_targetted_staff }}</div>
+              <div><i class="fa-solid fa-certificate" /> {{ report.status.total_learning_intervention }}</div>
+              <div>{{ report.status.percentage }} <i class="fa-solid fa-percentage" /> </div>
+            </div>
+            <!-- count -->
+
+
+
+            <div class="d-flex justify-content-end">
               <Link :href="route('admin.competency_gap.edit', {competency_gap: report.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pen" /></Link>
               <Link method="delete" as="button" :onBefore="confirm" :href="route('admin.competency_gap.destroy', {competency_gap: report.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -24,9 +35,11 @@ import {Head} from '@inertiajs/vue3'
 import LndLayout from '@/Pages/Admin/L&D/Layout/LndLayout.vue'
 import {Link} from '@inertiajs/vue3'
 
+
 const props = defineProps({
   reports: Array,
 })
+
 
 const confirm = () => window.confirm('Are you sure to delete this report?')
 </script>

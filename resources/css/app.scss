@@ -78,6 +78,10 @@ $theme-colors: (
     min-width: 90%;
 }
 
+.uppercase{
+    text-transform: uppercase;
+}
+
 @media only screen and (max-width: 1700px)  {
     .side-nav-col{
         display: none;

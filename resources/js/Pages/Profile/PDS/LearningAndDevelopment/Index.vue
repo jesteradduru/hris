@@ -36,6 +36,7 @@
                     as="button" class="btn btn-danger " method="delete"
                     :href="route('profile.pds.learning_and_development.destroy', { learning_and_development: learning.id })"
                     preserve-scroll
+                    :onBefore="confirm"
                   >
                     Delete
                   </Link>
@@ -77,5 +78,7 @@ import Pagination from '@/Components/Pagination.vue'
 const props = defineProps({
   learning_and_development: Object,
 })
+
+const confirm = () => window.confirm('Are you sure to delete this training?')
     
 </script>

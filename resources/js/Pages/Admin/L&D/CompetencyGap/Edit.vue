@@ -2,20 +2,10 @@
   <Head title="L&D Competency Gap" />
   <LndLayout>
     <Link :href="route('admin.competency_gap.index')" class="btn btn-secondary btn-sm"><i class="fa-solid fa-arrow-left" /></Link>
-    <h3 class="mt-3">Edit Report</h3>
+    <h3 class="mt-3">CY {{ form.year }} Learning and Development Program Monitoring</h3>
     <div class="mt-3">
-      <div class="mb-3">
-        <label for="" class="form-label">Year</label>
-        <input
-          id=""
-          v-model="form.year" type="text" class="form-control" name="" aria-describedby="helpId"
-          placeholder=""
-        />
-        <InputError :message="form.errors.year" />
-      </div>
-
       <h6>Priority List</h6>
-      <div class="table-responsive">
+      <div class="table-responsive uppercase">
         <table class="table table-bordered table-sm">
           <thead>
             <tr>
@@ -42,11 +32,11 @@
                   </li>
                 </ul>
                 <Link
-                  :href="route('admin.competency_training.create', 
-                               {report_id: props.report.id, lnd_form: lndForm.id, user_id: employee.user.id})" 
-                  class="btn btn-sm btn-success"
+                  :href="route('admin.competency_training.create')" 
+                  :data="{report_id: props.report.id, lnd_form: lndForm.id, user_id: employee.user.id, target_staff_id: employee.id}"
+                  class="btn btn-sm btn-secondary"
                 >
-                  <i class="fa-solid fa-plus" />
+                  <i class="fa-solid fa-pen" />&nbsp;&nbsp;EDIT TRAININGS
                 </Link>
               </td>
               <td>
@@ -65,23 +55,43 @@
           </tbody>
         </table>
       </div>
-      
+      <div class="row">
+        <div class="col">
+          <div> Total Number of Targeted Staff	</div>
+          <i class="fa-solid fa-users" /> {{ report.status.total_targetted_staff }}
+        </div>
+        <div class="col">
+          <div>
+            Total Number of Staff with Learning Intervention
+          </div>
+          <i class="fa-solid fa-certificate" /> {{ report.status.total_learning_intervention }}
+        </div>
+        <div class="col">
+          <div>
+            Percentage 
+          </div>{{ report.status.percentage }} <i class="fa-solid fa-percentage" />
+        </div>
+      </div>
+
       <hr />
       
-      <div class="mb-3">
-        <h6>Employees</h6>
-        <div class="mb-3">
+      <div class="row mb-3">
+        <h6 class="col-12">Employees</h6>
+        <div class="mb-3 col-3">
           <input
             id=""
             type="text" class="form-control" name="" aria-describedby="helpId" placeholder="Search" @keyup="onSearchChange"
           />
         </div>
-        <ul class="list-group">
+        <ul v-if="searchResult.length" class="list-group px-3">
           <li v-for="employee in searchResult" :key="employee.id" class="list-group-item">
             {{ employee.name }}
             <Link method="post" as="button" :href="route('admin.competency_gap.addPriority', {report_id: props.report.id, user_id: employee.id})" class="btn btn-sm btn-success" :data-emp-id="employee.id" @click="onAddEmployee"><i style="pointer-events: none;" class="fa-solid fa-plus" :only="['report']" /></Link>
           </li>
         </ul>
+        <div v-else class="text-muted text-secondary">
+          No records
+        </div>
       </div>
     </div>
   </LndLayout>
@@ -93,7 +103,6 @@ import LndLayout from '@/Pages/Admin/L&D/Layout/LndLayout.vue'
 import {Link} from '@inertiajs/vue3'
 import {computed, ref} from 'vue'
 import moment from 'moment'
-import InputError from '@/Components/InputError.vue'
 
 const props = defineProps({
   employees: Array,
@@ -128,4 +137,6 @@ const getTraining = (training) => {
 
 
 const confirm = () => window.confirm('Are you sure to remove this staff from priority list?')
+
+
 </script>

@@ -38,7 +38,8 @@ class LndTrainingsAttendedController extends Controller
             ->whereDoesntHave('lnd_training', fn (Builder $query)
                 => $query->where('lnd_form_id', $request->lnd_form)
             )
-            ->get()
+            ->get(),
+            'target_staff_id' => $request->target_staff_id
         ]);
     }
 
@@ -49,9 +50,9 @@ class LndTrainingsAttendedController extends Controller
     {
         LndTrainingsAttended::create([
             'lnd_form_id' => $request->lnd_form_id,
-            'training_id' => $request->training_id
+            'training_id' => $request->training_id,
+            'target_staff_id' => $request->target_staff_id
         ]);
-
         return back()->with('success', 'Training Added.');
     }
 

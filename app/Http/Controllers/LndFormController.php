@@ -112,6 +112,9 @@ class LndFormController extends Controller
     public function destroy(LndForm $lndForm)
     {
         Storage::disk('public')->delete($lndForm->filepath);
+        if($lndForm->lnd_training()->exists()){
+            return abort(403, 'You cannot delete this because it is related to another model.');
+        }
         $lndForm->delete();
 
         return back()->with('success', 'Form has been deleted.');

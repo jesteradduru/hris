@@ -87,6 +87,9 @@ class LearningAndDevelopmentController extends Controller
      */
     public function destroy(LearningAndDevelopment $learningAndDevelopment)
     {
+        if($learningAndDevelopment->lnd_training()->exists()){
+            return abort(403, 'You cannot delete this data.');
+        }
         $learningAndDevelopment->delete();
 
         return back()->with('success', 'Record has been deleted.');
