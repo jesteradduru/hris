@@ -19,12 +19,12 @@
           class="nav-link"
           :class="{
             active: route().current(
-              'admin.role_permission.permission.*'
+              'admin.idp.*'
             )
           }"
-          :href="route('admin.role_permission.permission.index')"
+          :href="route('admin.idp.index')"
         >
-          Permissions
+          Individual Development Plan
         </Link>
       </li>
     </ul>

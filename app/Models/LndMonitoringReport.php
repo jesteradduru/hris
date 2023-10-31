@@ -34,7 +34,7 @@ class LndMonitoringReport extends Model
         return [
             'total_targetted_staff' => count($employees),
             'total_learning_intervention' => $learning_intervention,
-            'percentage' => count($employees) / $learning_intervention * 100
+            'percentage' => ($learning_intervention / count($employees) ) * 100
         ];
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -124,5 +126,12 @@ class User extends Authenticatable
         return $this->hasMany(LndTargettedStaff::class, 'user_id');
     }
     
-
+    public function scopeFilter(Builder $query, array $filters):Builder{
+        return $query->when(
+            $filters['name'] ?? false,
+            fn($query, $value) => $query->where('first_name','LIKE','%'.$filters['name'].'%')
+                ->orWhere('middle_name','LIKE','%'.$filters['name'].'%')
+                ->orWhere('surname','LIKE','%'.$filters['name'].'%')
+        );
+    }
 }

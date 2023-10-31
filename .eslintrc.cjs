@@ -31,5 +31,6 @@ module.exports = {
       },
     ],
     'vue/no-v-text-v-html-on-component': 'off',
+    'vue/attribute-hyphenation': 'off',
   },
 }

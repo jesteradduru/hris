@@ -45,6 +45,10 @@
               class="nav-link" :href="route('admin.lnd.index')" :class="{
                 active: route().current(
                   'admin.lnd.*'
+                ) || route().current(
+                  'admin.idp.*'
+                ) || route().current(
+                  'admin.lnd.*'
                 )
               }"
             >
