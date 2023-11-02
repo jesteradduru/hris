@@ -8,7 +8,7 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },  
-  "workbench.colorTheme": "Default Dark+",
+  "workbench.colorTheme": "Default Dark Modern",
   "editor.fontFamily": "Cascadia Code",
   "editor.fontWeight": "400",
  // "eslint.options": { "overrideConfigFile": "C:/Users/JESTER/Documents/Web Development Projects/hris/.eslintrc.cjs" }

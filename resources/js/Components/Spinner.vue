@@ -6,10 +6,12 @@
   >
     <span class="visually-hidden">Loading...</span>
   </div>
+  <span v-if="processing">{{ text }}</span>
 </template>
 
 <script setup>
 defineProps({
   processing: Boolean,
+  text: String,
 })
 </script>

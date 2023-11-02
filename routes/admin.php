@@ -9,12 +9,15 @@ use App\Http\Controllers\Admin\AdminJobPostingController;
 use App\Http\Controllers\Admin\AdminLearningAndDevelopmentController;
 use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
 use App\Http\Controllers\Admin\AdminSpmsController;
+use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\CompetencyGapController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
 use App\Http\Controllers\Admin\IdpController;
 use App\Http\Controllers\Admin\LndTrainingsAttendedController;
+use App\Http\Controllers\Admin\PublishHiringResultController;
+use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -62,8 +65,13 @@ use Illuminate\Support\Facades\Route;
 
         //  viewing of job applications for vacancies
         Route::resource('selection', AdminJobApplicationController::class)->only(['index', 'show']);
-        //  Route::get('job_posting/{job_posting}/job_application', [AdminJobApplicationController::class, 'index'])->name('job_application.index');
-        //  Route::get('job_posting/job_application/{job_application}', [AdminJobApplicationController::class, 'show'])->name('job_application.show');
+       
+        Route::name('application_result.store')->post('application_result/store', [ApplicationResultController::class, 'store']);
+        Route::name('application_result.updateNotes')->put('application_result/updateNotes', [ApplicationResultController::class, 'updateNotes']);
+
+        Route::name('application_result.publish')->put('application_result/{results}/publish', PublishHiringResultController::class);
+
+        Route::name('neda_exam.set')->put('neda_exam/{result}/setShedule', SetExamScheduleController::class);
 
     });
         

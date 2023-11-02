@@ -28,7 +28,7 @@
     <li v-if="user && permissions.includes('View Application')" class="nav-item">
       <Link
         class="nav-link" :class="{
-          active: route().current('job_application.index')
+          active: route().current('job_application.*')
         }" :href="route('job_application.index')"
       >
         Job Applications

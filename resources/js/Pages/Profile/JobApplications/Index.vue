@@ -1,8 +1,7 @@
 <template>
-  <ProfileLayout>
-    <template #header>
-      <h3>My Job Applications</h3>
-    </template>
+  <AuthenticatedLayout>
+    <BreadCrumbs :crumbs="crumbs" />
+    <h3>Job Applications</h3>
     <div class="table-responsive">
       <table class="table table-compact table-hover table-striped">
         <thead>
@@ -22,7 +21,7 @@
             </td>
             <td>
               <div class="d-flex gap-2">
-                <button class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></button>
+                <Link :href="route('job_application.show', {job_application: application.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-eye" /></Link>
                 <Link method="delete" as="button" :href="route('job_application.destroy', {job_application: application.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
               </div>
             </td>
@@ -30,12 +29,22 @@
         </tbody>
       </table>
     </div>
-  </ProfileLayout>
+  </AuthenticatedLayout>
 </template>
 
 <script setup>
-import ProfileLayout from '@/Pages/Profile/Layout/ProfileLayout.vue'
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Link } from '@inertiajs/vue3'
+import BreadCrumbs from '@/Components/BreadCrumbs.vue'
+import {computed} from 'vue'
+
+const crumbs = computed(() => [
+  {
+    label: 'My Job Applications',
+    link: route('job_application.index'),
+  },
+])
+
 const props = defineProps({
   job_applications: Array,
 })

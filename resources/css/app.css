@@ -71,4 +71,7 @@
     position: relative;
     width: 100%;
   }
+}
+.text-through {
+  text-decoration: line-through;
 }/*# sourceMappingURL=app.css.map */

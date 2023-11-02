@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +25,10 @@ class JobPosting extends Model
         return $this->hasMany(JobApplication::class, 'job_posting_id');
     }
 
+    public function results() : HasMany {
+        return $this->hasMany(JobApplicationResults::class, 'job_posting_id');
+    }
+
     public function scopeFilter(Builder $query, array $filters) : Builder {
         return $query
             ->when(
@@ -41,5 +46,10 @@ class JobPosting extends Model
                 fn ($query, $value) => $query->orderBy($value, $filters['order'])
             )
             ;
+    }
+
+    public function scopeOpen(Builder $query) : Builder {
+        // return $query;
+        return $query->where('closing_date', '>=', Carbon::now()->format('Y-m-d'));
     }
 }

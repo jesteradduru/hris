@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApplicationResult;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminJobApplicationController extends Controller
 {
@@ -16,55 +18,49 @@ class AdminJobApplicationController extends Controller
     public function index(Request $request)
     {
         
-        $job_posting = JobPosting::all();
-        $job_application = [];
-        $applicant = null;
-
-        // dd($request->applicant);
+        $job_vacancy_status = null;
 
         if($request->job_posting){
-            $job_application = JobApplication::with(['user'])->where('job_posting_id', $request->job_posting)->get();
+            $job_vacancy = JobPosting::find($request->job_posting);
+            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
         }
-        if($request->applicant){
-            $applicant = User::find($request->applicant)->load([
-                'personal_information',
-                'educational_background',
-                'civil_service_eligibility',
-                'work_experience',
-                'learning_and_development',
-                'other_information',
-                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)->with('document')
+
+        if($request->job_posting && $job_vacancy_status->phase === 'INITIAL_SCREENING'){
+            return self::initial_screening($request, $job_vacancy_status);
+        }
+        // NEDA EXAM SCHEDULE
+        else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM_SCHEDULE'){
+            return self::neda_exam_schedule($request);
+        }
+        // NEDA EXAM
+        else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM'){
+            return self::neda_exam($request);
+        }
+        // INTERVIEW SCHEDULE
+        else if($request->job_posting && $job_vacancy_status->phase === 'INTERVIEW_SCHEDULE'){
+            return self::interview_schedule($request);
+        }
+        // INTERVIEW
+        else if($request->job_posting && $job_vacancy_status->phase === 'FOR_INTERVIEW'){
+            return self::interview($request);
+        }
+        // FINAL
+        else if($request->job_posting && $job_vacancy_status->phase === 'FINAL'){
+            return self::final($request);
+        }
+        // NO SELECTED JOB VACANCY
+        else{
+            $job_vacancies = JobPosting::get();
+
+            return inertia('Admin/Recruitment/Selection/Index', [
+                "job_vacancies" => $job_vacancies,
+                "posting_id" => null,
             ]);
         }
-        // dd($applicant);
-        return inertia('Admin/Recruitment/Selection/Index', [
-            // "applications" => $job_posting->job_application()->with(['document', 'user'])->paginate()->withQueryString(),
-            "posting" => $job_posting,
-            "application" => $job_application,
-            "posting_id" => $request->job_posting,
-            "applicant" => $applicant
-        ]);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(JobApplication $jobApplication)
     {
         return inertia('Admin/Recruitment/JobApplication/Show', [
@@ -74,27 +70,235 @@ class AdminJobApplicationController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(JobApplication $jobApplication)
-    {
-        //
+    // INITIAL SCREENING
+    private static function initial_screening(Request $request, $job_vacancy_status){
+        // dd('initial_screen');
+        $job_vacancies = JobPosting::get();
+        $job_applications = [];
+        $applicant_details = null;
+
+        if($request->applicant){
+            $applicant_details = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information',
+                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+            ]);
+        }
+
+        $job_applications = JobApplication::with(
+            [
+                'result',
+                'user' => fn($query) => $query->orderBy('surname', 'desc')
+            ])->where('job_posting_id', $request->job_posting)->get();
+
+        return inertia('Admin/Recruitment/Selection/InitialScreening/Index', [
+            "job_applications" => $job_applications,
+            "job_vacancies" => $job_vacancies,
+            "job_vacancy_status" => $job_vacancy_status,
+            "posting_id" => $request->job_posting,
+            "applicant_details" => $applicant_details,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, JobApplication $jobApplication)
-    {
-        //
+
+
+    // NEDA EXAM SCHEDULE
+    private static function neda_exam_schedule(Request $request){
+            $job_vacancies = JobPosting::get();
+            $job_applications = [];
+            $applicant_details = null;
+            
+
+            // dd($job_vacancies);
+
+            if($request->job_posting){
+                $job_vacancy = JobPosting::find($request->job_posting);
+                $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+            }
+
+            if($request->applicant){
+                $applicant_details = User::find($request->applicant)->load([
+                    'personal_information',
+                    'educational_background',
+                    'civil_service_eligibility',
+                    'work_experience',
+                    'learning_and_development',
+                    'other_information',
+                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                ]);
+            }
+
+            $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+            
+            return inertia('Admin/Recruitment/Selection/ExamSchedule/Index', [
+                "job_applications" => $job_applications,
+                "job_vacancies" => $job_vacancies,
+                "job_vacancy_status" => $job_vacancy_status,
+                "posting_id" => $request->job_posting,
+                "applicant_details" => $applicant_details,
+                "qualified_applicants" => $latest_result,
+            ]);
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(JobApplication $jobApplication)
-    {
-        //
+
+    // NEDA EXAM
+    private static function neda_exam(Request $request){
+            $job_vacancies = JobPosting::get();
+            $job_applications = [];
+            $applicant_details = null;
+            
+
+            // dd($job_vacancies);
+
+            if($request->job_posting){
+                $job_vacancy = JobPosting::find($request->job_posting);
+                $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+            }
+
+            if($request->applicant){
+                $applicant_details = User::find($request->applicant)->load([
+                    'personal_information',
+                    'educational_background',
+                    'civil_service_eligibility',
+                    'work_experience',
+                    'learning_and_development',
+                    'other_information',
+                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                ]);
+            }
+
+            $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+
+            return inertia('Admin/Recruitment/Selection/Exam/Index', [
+                "job_applications" => $job_applications,
+                "job_vacancies" => $job_vacancies,
+                "job_vacancy_status" => $job_vacancy_status,
+                "posting_id" => $request->job_posting,
+                "applicant_details" => $applicant_details,
+                "qualified_applicants" => $latest_result,
+            ]);
+
+    }
+
+    // INTERVIEW SCHEDULE
+    private static function interview_schedule(Request $request){
+            $job_vacancies = JobPosting::get();
+            $job_applications = [];
+            $applicant_details = null;
+            
+
+            // dd($job_vacancies);
+
+            if($request->job_posting){
+                $job_vacancy = JobPosting::find($request->job_posting);
+                $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+            }
+
+            if($request->applicant){
+                $applicant_details = User::find($request->applicant)->load([
+                    'personal_information',
+                    'educational_background',
+                    'civil_service_eligibility',
+                    'work_experience',
+                    'learning_and_development',
+                    'other_information',
+                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                ]);
+            }
+
+            $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+            
+            return inertia('Admin/Recruitment/Selection/InterviewSchedule/Index', [
+                "job_applications" => $job_applications,
+                "job_vacancies" => $job_vacancies,
+                "job_vacancy_status" => $job_vacancy_status,
+                "posting_id" => $request->job_posting,
+                "applicant_details" => $applicant_details,
+                "qualified_applicants" => $latest_result,
+            ]);
+
+    }
+
+    // INTERVIEW
+    private static function interview(Request $request){
+        $job_vacancies = JobPosting::get();
+        $job_applications = [];
+        $applicant_details = null;
+        
+
+        // dd($job_vacancies);
+
+        if($request->job_posting){
+            $job_vacancy = JobPosting::find($request->job_posting);
+            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+        }
+
+        if($request->applicant){
+            $applicant_details = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information',
+                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+            ]);
+        }
+
+        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+            
+        return inertia('Admin/Recruitment/Selection/Interview/Index', [
+            "job_applications" => $job_applications,
+            "job_vacancies" => $job_vacancies,
+            "job_vacancy_status" => $job_vacancy_status,
+            "posting_id" => $request->job_posting,
+            "applicant_details" => $applicant_details,
+            "qualified_applicants" => $latest_result,
+        ]);
+
+    }
+
+    // FINAL
+    private static function final(Request $request){
+        $job_vacancies = JobPosting::get();
+        $job_applications = [];
+        $applicant_details = null;
+        
+
+        // dd($job_vacancies);
+
+        if($request->job_posting){
+            $job_vacancy = JobPosting::find($request->job_posting);
+            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+        }
+
+        if($request->applicant){
+            $applicant_details = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information',
+                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+            ]);
+        }
+
+        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+        
+        return inertia('Admin/Recruitment/Selection/Final/Index', [
+            "job_applications" => $job_applications,
+            "job_vacancies" => $job_vacancies,
+            "job_vacancy_status" => $job_vacancy_status,
+            "posting_id" => $request->job_posting,
+            "applicant_details" => $applicant_details,
+            "qualified_applicants" => $latest_result,
+        ]);
+
     }
 }

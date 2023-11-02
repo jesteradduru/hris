@@ -4,7 +4,7 @@ use App\Models\JobPosting;
 use Illuminate\Support\Facades\Config;
 
 if(Config::get('app.debug')){
-    JobPosting::create([
+    $jobPosting1 = JobPosting::create([
         "place_of_assignment" => "NEDA Region 2",
         "plantilla_item_no" => "QWETY123",
         "position" => "Economic Development Specialist I",
@@ -20,7 +20,7 @@ if(Config::get('app.debug')){
         "by_user_id" => 1
     ]);
 
-    JobPosting::create([
+    $jobPosting2 = JobPosting::create([
         "place_of_assignment" => "NEDA Region 2",
         "plantilla_item_no" => "1234124",
         "position" => "Senior Economic Development Specialist",
@@ -34,6 +34,13 @@ if(Config::get('app.debug')){
         "posting_date" => now(),
         "closing_date" => now(),
         "by_user_id" => 1
+    ]);
+
+    $jobPosting2->results()->create([
+        'phase' => 'INITIAL_SCREENING'
+    ]);
+    $jobPosting1->results()->create([
+        'phase' => 'INITIAL_SCREENING'
     ]);
 }
 

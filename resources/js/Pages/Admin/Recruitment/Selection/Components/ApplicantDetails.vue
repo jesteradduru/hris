@@ -63,14 +63,12 @@
       <div v-else>
         <dl v-for="elig in eligs" :key="elig.id">
           <dt>{{ elig.cs_board_bar_ces_csee_barangay_drivers }}</dt>
-          <dd v-if="elig.license_number">
-            <div v-if=" elig.license_number ">
-              License No.:{{ elig.license_number }}
-            </div>
-            <div v-if="elig.rating">
-              Rating: {{ elig.rating }}
-            </div>
-          </dd>
+          <div v-if=" elig.license_number ">
+            License No.:{{ elig.license_number }}
+          </div>
+          <div v-if="elig.rating">
+            Rating: {{ elig.rating }}
+          </div>
         </dl>
       </div>
     </div>

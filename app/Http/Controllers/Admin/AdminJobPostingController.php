@@ -60,6 +60,9 @@ class AdminJobPostingController extends Controller
         ]);
 
         $request->user()->job_posting()->create($validateData);
+        $request->user()->job_posting()->results()->create([
+            'phase' => 'INITIAL_SCREENING'
+        ]);
 
         return back()->with('success', 'Record added successfully!');
     }

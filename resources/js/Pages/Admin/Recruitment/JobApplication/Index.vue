@@ -38,7 +38,6 @@
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import ApplicantDetails from '@/Pages/Admin/Recruitment/JobApplication/Components/ApplicantDetails.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'

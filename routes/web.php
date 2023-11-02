@@ -4,6 +4,8 @@ use App\Http\Controllers\DailyTimeRecordController;
 use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\LndFormController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationSeenController;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
@@ -48,6 +50,12 @@ Route::resource('job_application', JobApplicationController::class)->middleware(
 
 
 Route::middleware('auth')->group(function () {
+    // notifications
+    Route::resource('notification', NotificationController::class)->only(['index']);
+    Route::name('notification.seen')->put('notification/{notification}/seen', NotificationSeenController::class);
+    // end of notifications
+
+    
     Route::prefix('profile')
     ->name('profile.')
     ->group(function () {

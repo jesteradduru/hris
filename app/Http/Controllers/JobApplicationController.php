@@ -43,16 +43,7 @@ class JobApplicationController extends Controller
 
 
         $job_posting = JobPosting::find($request->input('job_posting'));
-        // check if user already applied
-        $user_application = JobPosting::whereRelation(
-            'job_application', 'user_id', '=', $request->user()->id
-        )->get();
 
-        if(count($user_application) > 0){
-            return redirect()->back()->with('warning', 'You have already submitted your application.');
-        }
-
-        // validate the files
         $request->validate([
             'documents' => 'required|array|min:1',
             'documents.*'=> 'required|mimes:pdf|max:15000' 
@@ -87,6 +78,18 @@ class JobApplicationController extends Controller
             'job_applications' => $request->user()->job_application()->with(['document', 'job_posting'])->get()
         ]);
     }
+
+
+    public function show(JobApplication $job_application) {
+        return inertia('Profile/JobApplications/Show', [
+            'job_application' => $job_application->load([
+                'document',
+                'result' => fn($query) => $query->with('results')->published()->latest(),
+                'job_posting'
+            ])
+        ]);
+    }
+
 
     public function destroy(JobApplication $job_application){
         $documents = $job_application->document;
