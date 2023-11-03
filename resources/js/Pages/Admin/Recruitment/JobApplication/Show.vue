@@ -1,7 +1,7 @@
 <template>
   <Head title="Job Vacancies" />
   
-  <AdminLayout>
+  <RecruitmentLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <div style="text-transform: capitalize;">
       <h4>{{ `${user.personal_information.first_name} ${user.personal_information.middle_name} ${user.personal_information.surname}` }}</h4>
@@ -11,14 +11,14 @@
         <a v-for="doc in props.application.document" :key="doc.id" :href="doc.src" target="_blank">{{ doc.filename }}</a>
       </div>
     </div>
-  </AdminLayout>
+  </RecruitmentLayout>
 </template>
 
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
-import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
+import RecruitmentLayout from '../Layout/RecruitmentLayout.vue'
 
 const props = defineProps({
   application: Object,

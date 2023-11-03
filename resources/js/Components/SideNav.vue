@@ -8,6 +8,17 @@
       <Link
         class="nav-link text-info" :class="{
           active: route().current(
+            'notification.*'
+          )
+        }" :href="route('notification.index')"
+      >
+        Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
+      </Link>
+    </li>
+    <li class="nav-item">
+      <Link
+        class="nav-link text-info" :class="{
+          active: route().current(
             'recruitment.job_posting.*'
           )
         }" :href="route('recruitment.job_posting.index')"

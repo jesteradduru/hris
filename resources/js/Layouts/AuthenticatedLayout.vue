@@ -11,7 +11,7 @@
           <br />
           <br />
           <br />
-          <Notifications :flash="$page.props.ziggy.flash" />
+          <Notifications :flash="$page.props.flash" />
           <slot />
         </div>
       </div>

@@ -20,7 +20,7 @@ class AdminJobPostingController extends Controller
     
     public function index(Request $request)
     {
-        $filters = $request->only(['search', 'order_by', 'order']);
+        $filters = $request->only(['search', 'order_by', 'order', 'show']);
 
         // dd($filters);
 
@@ -126,5 +126,13 @@ class AdminJobPostingController extends Controller
         $job_posting->deleteOrFail();
 
         return redirect(route('admin.recruitment.job_posting.index'))->with('success', 'Record successfully deleted!');
+    }
+
+    public function archived(JobPosting $job_posting){
+        $job_posting->update([
+            'archived_at' => now()
+        ]);
+
+        return redirect(route('admin.recruitment.selection.index'))->with('success', 'Job vacancy has been archived.');
     }
 }

@@ -15,7 +15,8 @@ class JobPosting extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['by_user_id', 'place_of_assignment', 'position', 'plantilla_item_no', 'salary_grade', 'monthly_salary', 'eligibility', 'education', 'training', 'work_experience', 'competency', 'posting_date', 'closing_date', 'documents'];
+    protected $fillable = ['archived_at', 'by_user_id', 'place_of_assignment', 'position', 'plantilla_item_no', 'salary_grade', 'monthly_salary', 'eligibility', 'education', 'training', 'work_experience', 'competency', 'posting_date', 'closing_date', 'documents'];
+    protected $appends = ['isClosed'];
 
     public function encoder() : BelongsTo {
         return $this->belongsTo(User::class);
@@ -45,11 +46,31 @@ class JobPosting extends Model
                 $filters['order_by'] ?? false,
                 fn ($query, $value) => $query->orderBy($value, $filters['order'])
             )
+            ->when(
+                $filters['show'] ?? 'open',
+                function($query, $value){
+                    if($value == 'closed'){
+                        return $query->where('closing_date', '<', 'now()');
+                    }else if($value == 'archived'){
+                        return $query->where('archived_at', 'IS NOT', null);
+                    }else{
+                        return $query->notArchived();
+                    }
+                }
+            )
             ;
     }
 
     public function scopeOpen(Builder $query) : Builder {
         // return $query;
         return $query->where('closing_date', '>=', Carbon::now()->format('Y-m-d'));
+    }
+    public function scopeNotArchived(Builder $query) : Builder {
+        // return $query;
+        return $query->where('archived_at', null);
+    }
+
+    public function getIsClosedAttribute(){
+        return $this->closing_date < now();
     }
 }

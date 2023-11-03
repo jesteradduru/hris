@@ -30,6 +30,7 @@ return new class extends Migration
             $table->date('posting_date')->nullable();
             $table->date('closing_date')->nullable();
             $table->text('documents')->nullable();
+            $table->dateTime('archived_at')->nullable();
 
         });
     }

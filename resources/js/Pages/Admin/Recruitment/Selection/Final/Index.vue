@@ -24,6 +24,7 @@
         </h3>
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
+      <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: props.posting_id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
     </div>
     <div class="row">
       <div class="col-3">
@@ -80,5 +81,7 @@ router.on('start', () => {
 router.on('finish', () => {
   loading.value = false
 })
+
+const confirm = () => window.confirm('Archive this job vacancy?')
 
 </script>

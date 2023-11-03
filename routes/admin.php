@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminJobPostingController;
 use App\Http\Controllers\Admin\AdminLearningAndDevelopmentController;
 use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
 use App\Http\Controllers\Admin\AdminSpmsController;
+use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\CompetencyGapController;
 use App\Http\Controllers\Admin\EmployeeController;
@@ -62,6 +63,9 @@ use Illuminate\Support\Facades\Route;
      ->name('recruitment.')
      ->group(function () {
          Route::resource('job_posting', AdminJobPostingController::class);
+         Route::name('job_posting.archived')->put('job_posting/{job_posting}/archived', [AdminJobPostingController::class, 'archived']);
+         Route::resource('job_posting.application_history', ApplicationHistoryController::class)->only(['index']);
+         Route::name('job_posting.application_history.show')->get('job_posting/{job_posting}/application_history/show', [ApplicationHistoryController::class, 'show']);
 
         //  viewing of job applications for vacancies
         Route::resource('selection', AdminJobApplicationController::class)->only(['index', 'show']);
@@ -70,7 +74,6 @@ use Illuminate\Support\Facades\Route;
         Route::name('application_result.updateNotes')->put('application_result/updateNotes', [ApplicationResultController::class, 'updateNotes']);
 
         Route::name('application_result.publish')->put('application_result/{results}/publish', PublishHiringResultController::class);
-
         Route::name('neda_exam.set')->put('neda_exam/{result}/setShedule', SetExamScheduleController::class);
 
     });

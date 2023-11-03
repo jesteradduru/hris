@@ -1,46 +1,50 @@
 <template>
   <Head title="Job Vacancies" />
 
-  <AdminLayout>
+  <RecruitmentLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
           <h3>{{ props.job_posting.position }}</h3>
-          <div class="d-flex gap-2">
-            <!-- <Link
-              :href="
-                route('admin.recruitment.job_application.index', {
-                  job_posting: props.job_posting.id
-                })
-              "
-              class="btn btn-success d-none"
-            >
-              View Applications
-            </Link> -->
-            <Link
-              :href="
-                route('admin.recruitment.job_posting.edit', {
-                  job_posting: props.job_posting.id
-                })
-              "
-              class="btn btn-primary"
-            >
-              Edit
-            </Link>
-            <Link
-              :onBefore="confirm"
-              :href="
-                route('admin.recruitment.job_posting.destroy', {
-                  job_posting: props.job_posting.id
-                })
-              "
-              class="btn btn-danger"
-              method="delete"
-              as="button"
-            >
-              Delete
-            </Link>
+          <div class="d-flex">
+            <div v-if="!job_posting.archived_at && !isClosed">
+              <Link
+                :href="
+                  route('admin.recruitment.job_posting.edit', {
+                    job_posting: props.job_posting.id
+                  })
+                "
+                class="btn btn-success me-2"
+              >
+                <i class="fa-solid fa-pen" />
+              </Link>
+              <Link
+                :onBefore="confirm"
+                :href="
+                  route('admin.recruitment.job_posting.destroy', {
+                    job_posting: props.job_posting.id
+                  })
+                "
+                class="btn btn-danger me-2"
+                method="delete"
+                as="button"
+              >
+                <i class="fa-solid fa-trash" />
+              </Link>
+            </div>
+            <div v-else>
+              <Link
+                :href="
+                  route('admin.recruitment.job_posting.application_history.index', {
+                    job_posting: props.job_posting.id
+                  })
+                "
+                class="btn btn-primary"
+              >
+                VIEW APPLICATION HISTORY
+              </Link>
+            </div>
           </div>
         </div>
         <hr />
@@ -82,7 +86,7 @@
         </dl>
       </div>
     </div>
-  </AdminLayout>
+  </RecruitmentLayout>
 </template>
 
 <script setup>
@@ -90,7 +94,7 @@ import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import Salary from '@/Components/Salary.vue'
 import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
-import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
+import RecruitmentLayout from '../Layout/RecruitmentLayout.vue'
 const props = defineProps({
   job_posting: Object,
 })

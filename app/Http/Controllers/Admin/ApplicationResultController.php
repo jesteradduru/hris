@@ -38,26 +38,6 @@ class ApplicationResultController extends Controller
             ]);
         }
 
-        // if($request->result == 'UNSELECT'){
-        //     DB::table('application_results')
-        //     ->where('application_id', $request->application_id)
-        //     ->where('result_id', $request->result_id)
-        //     ->update(['result' => null ]);
-        // }else{
-
-        //     DB::table('application_results')
-        //     ->where('application_id', $request->application_id)
-        //     ->where('result_id', $request->result_id)
-        //     ->delete();
-
-        //     ApplicationResult::create([
-        //         'result_id' => $request->result_id,
-        //         'application_id' => $request->application_id,
-        //         'user_id' => $request->user_id,
-        //         'result' => $request->result
-        //     ]);
-        // }
-        
         return back()->with('success', 'Transaction success.');
     }
 

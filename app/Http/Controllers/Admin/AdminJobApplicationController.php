@@ -50,7 +50,7 @@ class AdminJobApplicationController extends Controller
         }
         // NO SELECTED JOB VACANCY
         else{
-            $job_vacancies = JobPosting::get();
+            $job_vacancies = JobPosting::notArchived()->get();
 
             return inertia('Admin/Recruitment/Selection/Index', [
                 "job_vacancies" => $job_vacancies,
@@ -73,7 +73,7 @@ class AdminJobApplicationController extends Controller
     // INITIAL SCREENING
     private static function initial_screening(Request $request, $job_vacancy_status){
         // dd('initial_screen');
-        $job_vacancies = JobPosting::get();
+        $job_vacancies = JobPosting::notArchived()->get();
         $job_applications = [];
         $applicant_details = null;
 
@@ -85,7 +85,7 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
             ]);
         }
 
@@ -108,7 +108,7 @@ class AdminJobApplicationController extends Controller
 
     // NEDA EXAM SCHEDULE
     private static function neda_exam_schedule(Request $request){
-            $job_vacancies = JobPosting::get();
+            $job_vacancies = JobPosting::notArchived()->get();
             $job_applications = [];
             $applicant_details = null;
             
@@ -128,7 +128,7 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
                 ]);
             }
 
@@ -148,7 +148,7 @@ class AdminJobApplicationController extends Controller
 
     // NEDA EXAM
     private static function neda_exam(Request $request){
-            $job_vacancies = JobPosting::get();
+            $job_vacancies = JobPosting::notArchived()->get();
             $job_applications = [];
             $applicant_details = null;
             
@@ -168,7 +168,7 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
                 ]);
             }
 
@@ -187,7 +187,7 @@ class AdminJobApplicationController extends Controller
 
     // INTERVIEW SCHEDULE
     private static function interview_schedule(Request $request){
-            $job_vacancies = JobPosting::get();
+            $job_vacancies = JobPosting::notArchived()->get();
             $job_applications = [];
             $applicant_details = null;
             
@@ -207,7 +207,7 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
                 ]);
             }
 
@@ -226,7 +226,7 @@ class AdminJobApplicationController extends Controller
 
     // INTERVIEW
     private static function interview(Request $request){
-        $job_vacancies = JobPosting::get();
+        $job_vacancies = JobPosting::notArchived()->get();
         $job_applications = [];
         $applicant_details = null;
         
@@ -246,7 +246,7 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
             ]);
         }
 
@@ -265,7 +265,7 @@ class AdminJobApplicationController extends Controller
 
     // FINAL
     private static function final(Request $request){
-        $job_vacancies = JobPosting::get();
+        $job_vacancies = JobPosting::notArchived()->get();
         $job_applications = [];
         $applicant_details = null;
         
@@ -285,7 +285,7 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
             ]);
         }
 
@@ -301,4 +301,5 @@ class AdminJobApplicationController extends Controller
         ]);
 
     }
+
 }

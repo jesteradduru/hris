@@ -11,10 +11,10 @@
       <main>
         <div :class="`${fluid ? 'container-fluid' : 'container'} mt-3`">
           <div
-            v-if="$page.props.ziggy.flash.success"
+            v-if="$page.props.flash.success"
             class="alert alert-success"
           >
-            {{ $page.props.ziggy.flash.success }}
+            {{ $page.props.flash.success }}
           </div>
           <slot />
         </div>
