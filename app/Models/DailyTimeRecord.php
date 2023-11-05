@@ -289,7 +289,7 @@ class DailyTimeRecord extends Model
                 }
             }
         }
-        if($dtr_now['inAM'] && $dtr_now['outPM'] == null){
+        if($dtr_now !== null && $dtr_now['inAM'] && $dtr_now['outPM'] == null){
             $dtr_now_am = $dtr_now['inAM'];
             $inAM = Carbon::parse($dtr_now_am->format('H:i:s'));
     

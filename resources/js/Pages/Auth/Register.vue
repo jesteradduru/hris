@@ -96,7 +96,6 @@ const submit = () => {
                 v-model="form.name_extension"
                 type="text"
                 class="mt-1 block w-full"
-                required
                 autofocus
                 autocomplete="name_extension"
               />

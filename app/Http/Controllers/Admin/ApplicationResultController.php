@@ -8,23 +8,28 @@ use App\Models\JobApplicationResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use function PHPUnit\Framework\isType;
+
 class ApplicationResultController extends Controller
 {
     public function store(Request $request) {
+        $application = null;
+
         $application = ApplicationResult::where('application_id', $request->application_id)
-        ->where('result_id', $request->result_id)->get();
+        ->where('result_id', $request->result_id)->first();
 
         // IF SELECTED CHECK IF MAY NA SELECT NA
         if($request->result == 'SELECTED'){
-            $selectionDone = JobApplicationResults::find($request->result_id)->whereRelation('result', 'result', 'SELECTED')->get();
-
+            $selectionDone = ApplicationResult::where('result_id', $request->result_id)->where('result', 'SELECTED')->get();
+            // dd($selectionDone->result);
+            // isType($selectionDone->result);
             if(count($selectionDone) > 0){
                 abort(403, 'Only one candidate can be selected.');
             }
         }
 
 
-        if(count($application) > 0){
+        if($application){
             DB::table('application_results')
             ->where('application_id', $request->application_id)
             ->where('result_id', $request->result_id)

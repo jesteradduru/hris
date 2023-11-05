@@ -21,6 +21,7 @@ return new class extends Migration
                 'NEDA_EXAM',
                 'FOR_INTERVIEW',
                 'INTERVIEW',
+                'INTERVIEW_SCHEDULE',
                 'FINAL'
             ]);
             $table->dateTime('schedule')->nullable();

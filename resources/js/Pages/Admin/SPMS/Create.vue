@@ -80,13 +80,13 @@
           @change="addFile"
         />
         <small id="helpId" class="form-text text-muted">ONLY PDF FILE IS ALLOWED</small>
-        <InputError :message="addForm.errors.file" />
+        <InputError :message="addForm.errors.file" />d
       </div>
       <div class="col-4">
         <label for="" class="form-label">Rating</label>
         <input
           id=""
-          v-model="addForm.rating" type="number" class="form-control" min="1" max="5" name="" aria-describedby="helpId"
+          v-model="addForm.rating" type="decimal" class="form-control" min="1" max="5" name="" aria-describedby="helpId"
           placeholder="" required="true"
         />
         <InputError :message="addForm.errors.rating" />

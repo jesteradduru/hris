@@ -85,7 +85,7 @@
               user_id: props.applicant_details.id,
             })"
           >
-            REMOVE SELECTION
+            DESELECT
           </Link>
         </div>
         <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
