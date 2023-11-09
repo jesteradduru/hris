@@ -18,14 +18,16 @@ const form = useForm({
   dtr_user_id: '',
   password_confirmation: '',
   role: 'employee',
+  plantilla_id: '',
 })
 
 const props = defineProps({
   roles: Array,
+  positions: Array,
 })
 
 const submit = () => {
-  form.post(route('admin.employees.store'), {
+  form.post(route('admin.employees.employee.store'), {
     onFinish: () => form.reset('password', 'password_confirmation'),
     onSuccess: () => {
       form.reset()
@@ -65,7 +67,6 @@ const crumbs = computed(() => [
                 v-model="form.surname"
                 type="text"
                 class="mt-1 block w-full"
-                
                 autofocus
                 autocomplete="surname"
               />
@@ -85,7 +86,7 @@ const crumbs = computed(() => [
                 type="text"
                 class="mt-1 block w-full"
                 
-                autofocus
+               
                 autocomplete="first_name"
               />
 
@@ -104,7 +105,7 @@ const crumbs = computed(() => [
                 type="text"
                 class="mt-1 block w-full"
                 
-                autofocus
+                
                 autocomplete="middle_name"
               />
 
@@ -122,7 +123,7 @@ const crumbs = computed(() => [
                 v-model="form.name_extension"
                 type="text"
                 class="mt-1 block w-full"
-                autofocus
+                
                 autocomplete="name_extension"
               />
 
@@ -151,8 +152,20 @@ const crumbs = computed(() => [
             </div>
 
             <div class="col-12 mb-2">
+              <InputLabel for="position" value="Position" />
+              <select id="position" v-model="form.plantilla_id" class="form-select" name="">
+                <option value="">Select position</option>
+                <option v-for="item in props.positions" :key="item.id" :value="item.id">{{ `${item.title} | ${item.division.abbreviation}` }}</option>
+              </select>
+              <InputError
+                class="mt-2"
+                :message="form.errors.plantilla_id"
+              />
+            </div>
+
+            <div class="col-12 mb-2">
               <InputLabel for="role" value="Role" />
-              <select id="" v-model="form.role" class="form-select" name="">
+              <select id="role" v-model="form.role" class="form-select" name="">
                 <option v-for="item in props.roles" :key="item" :value="item">{{ item }}</option>
               </select>
               <InputError

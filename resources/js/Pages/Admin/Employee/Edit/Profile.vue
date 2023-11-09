@@ -7,21 +7,28 @@ import TextInput from '@/Components/TextInput.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 
 const form = useForm({
-  name: props.employee.name,
+  surname: props.employee.surname,
+  first_name: props.employee.first_name,
+  name_extension: props.employee.name_extension,
+  middle_name: props.employee.middle_name,
   username: props.employee.username,
   password: '',
   dtr_user_id: props.employee.dtr_user_id,
   password_confirmation: '',
   role: props.employee.role_name[0],
+  plantilla_id: props.employee.plantilla_id,
 })
 
 const props = defineProps({
   roles: Array,
   employee: Object,
+  positions: Array,
 })
 
 const submit = () => {
-  form.post(route('admin.employees.store'), {
+  form.put(route('admin.employees.employee.update', {
+    employee: props.employee.id,
+  }), {
     onFinish: () => form.reset('password', 'password_confirmation'),
     onSuccess: () => {
       form.reset()
@@ -37,25 +44,78 @@ const submit = () => {
       <div class="card shadow">
         <div class="card-body">
           <form @submit.prevent="submit">
-            <div>
-              <InputLabel for="name" value="Name" />
+            <div class="mb-3"> 
+              <InputLabel for="surname" value="Surname" />
 
               <TextInput
-                id="name"
-                v-model="form.name"
+                id="surname"
+                v-model="form.surname"
                 type="text"
                 class="mt-1 block w-full"
-                autofocus
-                autocomplete="name"
+                autocomplete="surname"
               />
 
               <InputError
                 class="mt-2"
-                :message="form.errors.name"
+                :message="form.errors.surname"
               />
             </div>
 
-            <div class="mt-4">
+            <div class="mb-3"> 
+              <InputLabel for="first_name" value="First Name" />
+
+              <TextInput
+                id="first_name"
+                v-model="form.first_name"
+                type="text"
+                class="mt-1 block w-full"
+                autofocus
+                autocomplete="first_name"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.first_name"
+              />
+            </div>
+
+            <div class="mb-3"> 
+              <InputLabel for="middle_name" value="Middle Name" />
+
+              <TextInput
+                id="middle_name"
+                v-model="form.middle_name"
+                type="text"
+                class="mt-1 block w-full"
+                autofocus
+                autocomplete="middle_name"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.middle_name"
+              />
+            </div>
+            
+            <div class="mb-3"> 
+              <InputLabel for="name_extension" value="Name Extension" />
+
+              <TextInput
+                id="name_extension"
+                v-model="form.name_extension"
+                type="text"
+                class="mt-1 block w-full"
+                autofocus
+                autocomplete="name_extension"
+              />
+
+              <InputError
+                class="mt-2"
+                :message="form.errors.name_extension"
+              />
+            </div>
+
+            <div class="mb-3">
               <InputLabel for="username" value="Username" />
 
               <TextInput
@@ -73,7 +133,7 @@ const submit = () => {
               />
             </div>
 
-            <div class="mt-4">
+            <div class="mb-3">
               <InputLabel for="dtr_user_id" value="DTR User ID" />
 
               <TextInput
@@ -92,7 +152,7 @@ const submit = () => {
             </div>
 
 
-            <div class="mt-4">
+            <div class="mb-3">
               <InputLabel for="role" value="Role" />
               <select id="" v-model="form.role" class="form-select" name="">
                 <option v-for="item in props.roles" :key="item" :value="item">{{ item }}</option>
@@ -103,7 +163,19 @@ const submit = () => {
               />
             </div>
 
-            <div class="mt-4">
+            <div class="mb-3">
+              <InputLabel for="position" value="Position" />
+              <select id="position" v-model="form.plantilla_id" class="form-select" name="">
+                <option value="">Select position</option>
+                <option v-for="item in props.positions" :key="item.id" :value="item.id">{{ `${item.title} | ${item.division.abbreviation}` }}</option>
+              </select>
+              <InputError
+                class="mt-2"
+                :message="form.errors.plantilla_id"
+              />
+            </div>
+
+            <div class="mb-3">
               <InputLabel for="password" value="Password" />
 
               <TextInput
@@ -121,7 +193,7 @@ const submit = () => {
               />
             </div>
 
-            <div class="mt-4">
+            <div class="mb-3">
               <InputLabel
                 for="password_confirmation"
                 value="Confirm Password"

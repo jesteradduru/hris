@@ -27,6 +27,19 @@
           Selection and Placement
         </Link>
       </li>
+      <li class="nav-item">
+        <Link
+          class="nav-link"
+          :class="{
+            active: route().current(
+              'admin.recruitment.plantilla.*'
+            )
+          }"
+          :href="route('admin.recruitment.plantilla.index')"
+        >
+          Plantilla Positions
+        </Link>
+      </li>
     </ul>
     <div class="mt-3">
       <slot />

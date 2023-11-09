@@ -6,6 +6,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'username',
         'dtr_user_id',
         'password',
+        'plantilla_id'
     ];
 
     /**
@@ -62,8 +64,13 @@ class User extends Authenticatable
         return $this->getRoleNames();
     }
 
+    // created job posting for admin and hr
     public function job_posting() : HasMany {
         return $this->hasMany(JobPosting::class, 'by_user_id');
+    }
+
+    public function position() : BelongsTo {
+        return $this->belongsTo(PlantillaPosition::class, 'plantilla_id');
     }
 
     // PDS
@@ -129,9 +136,16 @@ class User extends Authenticatable
     public function scopeFilter(Builder $query, array $filters):Builder{
         return $query->when(
             $filters['name'] ?? false,
-            fn($query, $value) => $query->where('first_name','LIKE','%'.$filters['name'].'%')
-                ->orWhere('middle_name','LIKE','%'.$filters['name'].'%')
-                ->orWhere('surname','LIKE','%'.$filters['name'].'%')
+            fn($query, $value) => $query->where('first_name','LIKE','%'.$value.'%')
+                ->orWhere('middle_name','LIKE','%'.$value.'%')
+                ->orWhere('surname','LIKE','%'.$value.'%')
+        )
+        ->when(
+            $filters['division'] ?? false, function($query, $value) {
+               return $query
+               ->join('plantilla_positions', 'users.plantilla_id', '=', 'plantilla_positions.id')
+               ->where('plantilla_positions.division_id', $value);;
+            }
         );
     }
 }

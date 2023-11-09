@@ -5,8 +5,8 @@
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
           <Link
-            preserve-state :href="route('admin.employees.edit', {employee: props.employee})" class="nav-link"
-            :class="{ active: route().current('admin.employees.edit') } "
+            preserve-state :href="route('admin.employees.employee.edit', {employee: props.employee})" class="nav-link"
+            :class="{ active: route().current('admin.employees.employee.edit') } "
           >
             Account Settings
           </Link>

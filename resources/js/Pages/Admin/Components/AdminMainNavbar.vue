@@ -18,17 +18,7 @@
               Rewards and Recognition
             </Link>
           </li>
-          <li class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.employees.index')" :class="{
-                active: route().current(
-                  'admin.employees.*'
-                )
-              }"
-            >
-              Employees
-            </Link>
-          </li>
+
           <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.recruitment.job_posting.index')" :class="{
@@ -40,6 +30,7 @@
               Recruitment, Selection and Placement
             </Link>
           </li>
+
           <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.lnd.index')" :class="{
@@ -55,17 +46,7 @@
               Learning and Development
             </Link>
           </li>
-          <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item dropdown">
-            <Link
-              class="nav-link" :href="route('admin.role_permission.role.index')" :class="{
-                active: route().current(
-                  'admin.role_permission.*'
-                )
-              }"
-            >
-              Roles and Permissions
-            </Link>
-          </li>
+
           <li class="nav-item dropdown">
             <Link
               class="nav-link" :href="route('admin.spms.index')" :class="{
@@ -77,6 +58,32 @@
               SPMS
             </Link>
           </li>
+
+          <li class="nav-item">
+            <Link
+              class="nav-link" :href="route('admin.employees.index')" :class="{
+                active: route().current(
+                  'admin.employees.*'
+                )
+              }"
+            >
+              Employees
+            </Link>
+          </li>
+          
+          
+          <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item dropdown">
+            <Link
+              class="nav-link" :href="route('admin.role_permission.role.index')" :class="{
+                active: route().current(
+                  'admin.role_permission.*'
+                )
+              }"
+            >
+              Roles and Permissions
+            </Link>
+          </li>
+          
           <li class="nav-item dropdown">
             <Link
               class="nav-link" :href="route('admin.daily_time_record.index')" :class="{

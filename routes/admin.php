@@ -17,7 +17,9 @@ use App\Http\Controllers\Admin\EmployeeRewardController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
 use App\Http\Controllers\Admin\IdpController;
 use App\Http\Controllers\Admin\LndTrainingsAttendedController;
+use App\Http\Controllers\Admin\PlantillaPositionController;
 use App\Http\Controllers\Admin\PublishHiringResultController;
+use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PermissionController;
@@ -38,9 +40,11 @@ use Illuminate\Support\Facades\Route;
     ->name('employees.')
     ->group(function () {
         Route::get('/', [EmployeeController::class, 'index'])->name('index');
-        Route::get('/create', [EmployeeController::class, 'create'])->name('create');
-        Route::post('/store', [EmployeeController::class, 'store'])->name('store');
-        Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->name('edit');
+        // Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+        // Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+        // Route::put('/{employee}/update', [EmployeeController::class, 'update'])->name('update');
+        // Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->name('edit');
+        Route::resource('employee', EmployeeController::class);
         Route::get('/{employee}/rewards/edit', [EmployeeController::class, 'editRewards'])->name('rewards.edit');
         Route::get('/{employee}/rewards/add', [EmployeeController::class, 'addReward'])->name('rewards.add');
         // Rewarding the employee
@@ -76,6 +80,9 @@ use Illuminate\Support\Facades\Route;
         Route::name('application_result.publish')->put('application_result/{results}/publish', PublishHiringResultController::class);
         Route::name('neda_exam.set')->put('neda_exam/{result}/setShedule', SetExamScheduleController::class);
 
+        // plantilla position
+        Route::resource('plantilla', PlantillaPositionController::class);
+        Route::resource('plantilla.rule', RuleController::class);
     });
         
     // rewards and recognition
@@ -94,6 +101,8 @@ use Illuminate\Support\Facades\Route;
     Route::resource('idp_accomplishment', IdpAccomplishmentController::class)->only(['store', 'destroy']);
 
     Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
+
+    
  });
 
 ?>

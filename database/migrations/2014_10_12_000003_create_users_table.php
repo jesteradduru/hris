@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\DailyTimeRecord;
+use App\Models\PlantillaPosition;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->integer('dtr_user_id')->nullable();
+            $table->foreignIdFor(PlantillaPosition::class, 'plantilla_id')->nullable();
             $table->timestamps();
         });
     }

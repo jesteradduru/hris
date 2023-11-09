@@ -64,13 +64,15 @@ use Illuminate\Auth\Events\Registered;
             Role::create(['name' => $role]);
         }
 
-        $user = User::create([
+        $admin = User::create([
             'username' => 'nedaict',
             'middle_name' => 'ICT',
             'first_name' => 'RO2',
             'surname' => 'NEDA',
             'password' => Hash::make('lanxNEDA'),
         ]);
+
+        $admin->assignRole('superadmin');
 
         $hruser = User::create([
             'username' => 'nedahr',
@@ -80,23 +82,53 @@ use Illuminate\Auth\Events\Registered;
             'password' => Hash::make('lanxNEDA'),
         ]);
 
-        $employee = User::create([
-            'username' => 'jcadduru',
-            'middle_name' => 'Clores',
-            'first_name' => 'Jester',
-            'surname' => 'Adduru',
+        $hruser->assignRole('hr');
+
+        $employee1 = User::create([
+            'username' => 'employee1',
+            'middle_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
             'password' => Hash::make('12341234'),
         ]);
 
-        $user->assignRole('superadmin');
-        $hruser->assignRole('hr');
-        $employee->assignRole('employee');
+        $employee1->assignRole('employee');
 
-        event(new Registered($user));
+        // employee
+        $employee2 = User::create([
+            'username' => 'employee2',
+            'middle_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
+            'password' => Hash::make('12341234'),
+        ]);
 
-        Auth::login($user);
+        $employee2->assignRole('employee');
 
+        // user
+        $user2 = User::create([
+            'username' => 'user1',
+            'middle_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
+            'password' => Hash::make('12341234'),
+        ]);
 
+        $user2->assignRole('user');
+
+        $user3 = User::create([
+            'username' => 'user2',
+            'middle_name' => fake()->lastName(),
+            'first_name' => fake()->firstName(),
+            'surname' => fake()->lastName(),
+            'password' => Hash::make('12341234'),
+        ]);
+
+        $user3->assignRole('user');
+
+        event(new Registered($admin));
+
+        Auth::login($admin);
 
         foreach($permissions as $permission){
             Permission::create(['name' => $permission]);

@@ -4,8 +4,32 @@
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Employees</h3>
-    <Link :href="route('admin.employees.create')" class="btn btn-primary">Create Employee Account</Link>
-
+    <Link :href="route('admin.employees.employee.create')" class="btn btn-primary">Create Employee Account</Link>
+    <div class="row mt-3">
+      <div class="col-4">
+        <input
+          id=""
+          v-model="filterForm.name"
+          type="text" class="form-control form-control-sm" name="" aria-describedby="helpId" placeholder="Search Name"
+        />
+      </div>
+      <div class="col-4">
+        <div class="d-flex gap-2">
+          <label for="" class="form-label">Division</label>
+          <select id="division" v-model="filterForm.division" class="form-select form-select-sm" name="">
+            <option value="" selected>All</option>
+            <option v-for="division in divisions" :key="division.id" :value="division.id">
+              {{ 
+                division.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-1 d-flex gap-2">
+        <button class="btn btn-dark btn-sm" @click="onFilter">Filter</button>
+        <button class="btn btn-secondary btn-sm" @click="onReset">Reset</button>
+      </div>
+    </div>
     <div class="table-responsive">
       <table class="table table-compact">
         <thead>
@@ -22,7 +46,7 @@
             <td>{{ employee.name }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">
-              <Link :href="route('admin.employees.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></Link>
+              <Link :href="route('admin.employees.employee.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></Link>
               <Link class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
             </td>
           </tr>
@@ -38,13 +62,34 @@ import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
-import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'
-import Filter from '@/Pages/Admin//Recruitment/JobPosting/Components/Filter.vue'
 
 const props = defineProps({
   employees: Object,
+  divisions: Array,
 })
+
+const filterForm = useForm({
+  name: '',
+  division: '',
+})
+
+const onFilter = () => {
+  filterForm.get(route('admin.employees.employee.index'), {
+    preserveScroll: true,
+    preserveState: true,
+  })
+}
+
+const onReset = () => {
+  filterForm.name = ''
+  filterForm.division = ''
+  filterForm.get(route('admin.employees.employee.index'), {
+    preserveScroll: true,
+    preserveState: true,
+  })
+}
+
 const crumbs = computed(() => [
   {
     label: 'Admin Dashboard',
