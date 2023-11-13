@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AdminSpmsController;
 use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\CompetencyGapController;
+use App\Http\Controllers\Admin\EligibilityController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
@@ -83,6 +84,8 @@ use Illuminate\Support\Facades\Route;
         // plantilla position
         Route::resource('plantilla', PlantillaPositionController::class);
         Route::resource('plantilla.rule', RuleController::class);
+
+        Route::resource('eligibility', EligibilityController::class)->only(['store', 'update', 'destroy']);
     });
         
     // rewards and recognition

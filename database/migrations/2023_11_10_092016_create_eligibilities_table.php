@@ -12,10 +12,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('plantilla_education', function (Blueprint $table) {
+        Schema::create('eligibilities', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignIdFor(PlantillaPosition::class, 'plantilla_id');
             $table->text('title');
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plantilla_education');
+        Schema::dropIfExists('eligibilities');
     }
 };
