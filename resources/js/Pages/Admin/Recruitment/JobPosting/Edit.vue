@@ -9,14 +9,13 @@
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="mb-3">
-            <label for="position" class="form-label">Position</label>
-            <input
-              id="position"
-              v-model="form.position"
-              type="text"
-              class="form-control"
-            />
-            <InputError :message="form.errors.position" />
+            <div class="d-flex gap-2">
+              <label for="" class="form-label">Plantilla</label>
+              <a target="_blank" :href="route('admin.recruitment.plantilla.create')">Add Plantilla Position</a>
+            </div>
+            <select id="" class="form-control" name="" :value="plantilla ? plantilla.id : job_posting.plantilla.id" @change="loadData">
+              <option v-for="position in positions" :key="position.id" :value="position.id">{{ `${position.position}, ${position.plantilla_item_no}, ${position.division.abbreviation}` }}</option>
+            </select>
           </div>
         </div>
         <div class="col-12 col-md-6">
@@ -27,6 +26,7 @@
               v-model="form.place_of_assignment"
               type="text"
               class="form-control"
+              disabled
             />
             <InputError
               :message="form.errors.place_of_assignment"
@@ -41,6 +41,7 @@
               v-model="form.salary_grade"
               type="number"
               class="form-control"
+              disabled
             />
             <InputError :message="form.errors.salary_grade" />
           </div>
@@ -53,6 +54,7 @@
               v-model="form.monthly_salary"
               type="number"
               class="form-control"
+              disabled
             />
             <InputError :message="form.errors.monthly_salary" />
           </div>
@@ -65,6 +67,7 @@
           v-model="form.plantilla_item_no"
           type="text"
           class="form-control"
+          disabled
         />
         <InputError :message="form.errors.plantilla_item_no" />
       </div>
@@ -75,6 +78,7 @@
           v-model="form.eligibility"
           type="text"
           class="form-control"
+          disabled
         />
         <InputError :message="form.errors.eligibility" />
       </div>
@@ -85,6 +89,7 @@
           v-model="form.education"
           type="text"
           class="form-control"
+          disabled
         />
         <InputError :message="form.errors.education" />
       </div>
@@ -95,6 +100,7 @@
           v-model="form.training"
           type="text"
           class="form-control"
+          disabled
         />
         <InputError :message="form.errors.training" />
       </div>
@@ -105,6 +111,7 @@
           v-model="form.work_experience"
           type="text"
           class="form-control"
+          disabled
         />
         <InputError :message="form.errors.work_experience" />
       </div>
@@ -117,6 +124,7 @@
           class="form-control"
           rows="4"
           style="white-space: pre-wrap"
+          disabled
         />
         <InputError :message="form.errors.competency" />
       </div>
@@ -171,7 +179,7 @@
 </template>
 
 <script setup>
-import { Head, Link, useForm } from '@inertiajs/vue3'
+import { Head, Link, router, useForm } from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import InputError from '@/Components/InputError.vue'
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
@@ -180,22 +188,33 @@ import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 
 const props = defineProps({
   job_posting: Object,
+  positions: Array,
+  plantilla: Object,
 })
 
+const loadData = (e) => {
+  const id = e.target.value
+
+  router.visit(route('admin.recruitment.job_posting.edit', {job_posting: props.job_posting.id,plantilla: id}), {
+    method: 'get',
+  })
+}
+
 const form = useForm({
-  place_of_assignment: props.job_posting.place_of_assignment,
-  position: props.job_posting.position,
-  salary_grade: props.job_posting.salary_grade,
-  monthly_salary: props.job_posting.monthly_salary,
-  eligibility: props.job_posting.eligibility,
-  education: props.job_posting.education,
-  training: props.job_posting.training,
-  work_experience: props.job_posting.work_experience,
-  competency: props.job_posting.competency,
+  place_of_assignment: props.plantilla ? props.plantilla.place_of_assignment : props.job_posting.plantilla.place_of_assignment,
+  position: props.plantilla ? props.plantilla.position : props.job_posting.plantilla.position,
+  salary_grade: props.plantilla ? props.plantilla.salary_grade : props.job_posting.plantilla.salary_grade,
+  monthly_salary: props.plantilla ? props.plantilla.monthly_salary : props.job_posting.plantilla.monthly_salary,
+  eligibility: props.plantilla ? props.plantilla.eligibility : props.job_posting.plantilla.eligibility,
+  education: props.plantilla ? props.plantilla.education : props.job_posting.plantilla.education,
+  training: props.plantilla ? props.plantilla.training : props.job_posting.plantilla.training,
+  work_experience: props.plantilla ? props.plantilla.work_experience : props.job_posting.plantilla.work_experience,
+  competency: props.plantilla ? props.plantilla.competency : props.job_posting.plantilla.competency,
   posting_date: props.job_posting.posting_date,
   closing_date: props.job_posting.closing_date,
-  plantilla_item_no: props.job_posting.plantilla_item_no,
+  plantilla_item_no: props.plantilla ? props.plantilla.plantilla_item_no : props.job_posting.plantilla.plantilla_item_no,
   documents: props.job_posting.documents,
+  plantilla_id: props.plantilla ? props.plantilla.id : props.job_posting.plantilla_id,
 })
 
 const update = () =>
@@ -218,7 +237,7 @@ const crumbs = computed(() => [
     link: route('admin.recruitment.job_posting.index'),
   },
   {
-    label: props.job_posting.plantilla_item_no,
+    label: props.job_posting.plantilla.position,
     link: route('admin.recruitment.job_posting.show', {
       job_posting: props.job_posting.id,
     }),

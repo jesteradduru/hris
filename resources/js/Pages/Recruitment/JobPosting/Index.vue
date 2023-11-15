@@ -21,9 +21,9 @@
         </thead>
         <tbody>
           <tr v-for="item in props.job_vacancies.data" :key="item.id">
-            <td>{{ item.place_of_assignment }}</td>
-            <td>{{ item.position }}</td>
-            <td>{{ item.plantilla_item_no }}</td>
+            <td>{{ item.plantilla.place_of_assignment }}</td>
+            <td>{{ item.plantilla.position }}</td>
+            <td>{{ item.plantilla.plantilla_item_no }}</td>
             <td>{{ moment(item.posting_date).format('LL') }}</td>
             <td>{{ moment(item.closing_date).format('LL') }}</td>
             <td>

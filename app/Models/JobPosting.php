@@ -15,11 +15,32 @@ class JobPosting extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['archived_at', 'by_user_id', 'place_of_assignment', 'position', 'plantilla_item_no', 'salary_grade', 'monthly_salary', 'eligibility', 'education', 'training', 'work_experience', 'competency', 'posting_date', 'closing_date', 'documents'];
-    protected $appends = ['isClosed'];
+    protected $fillable = [
+        'archived_at',
+        'by_user_id', 
+        // 'place_of_assignment', 
+        // 'position', 
+        // 'plantilla_item_no', 
+        // 'salary_grade', 
+        // 'monthly_salary', 
+        // 'eligibility', 
+        // 'education', 
+        // 'training', 
+        // 'work_experience', 
+        // 'competency',
+        'plantilla_id',
+        'posting_date', 
+        'closing_date', 
+        'documents'
+    ];
+    protected $appends = ['isClosed', 'plantilla'];
 
     public function encoder() : BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public function plantilla() : BelongsTo {
+        return $this->belongsTo(PlantillaPosition::class, 'plantilla_id');
     }
 
     public function job_application() : HasMany {
@@ -34,9 +55,14 @@ class JobPosting extends Model
         return $query
             ->when(
                 $filters['search'] ?? false,
-                fn ($query, $value) => $query->where('position', 'like', '%' . $value . '%')
-                ->orWhere('place_of_assignment', 'like', '%' . $value . '%')
-                ->orWhere('plantilla_item_no', 'like', '%' . $value . '%')
+                fn ($query, $value) => $query
+                ->join('plantilla_positions', 'plantilla_positions.id', '=', 'job_postings.plantilla_id')
+                // ->join('divisions', 'divisions.id', '=', 'plantilla_positions.division_id')
+                ->where('plantilla_positions.position', 'like', '%' . $value . '%')
+                ->orWhere('plantilla_positions.place_of_assignment', 'like', '%' . $value . '%')
+                ->orWhere('plantilla_positions.plantilla_item_no', 'like', '%' . $value . '%')
+                // ->orWhere('divisions.name', 'like', '%' . $value . '%')
+                // ->orWhere('divisions.abbreviation', 'like', '%' . $value . '%')
             )
             ->unless(
                 $filters['order_by'] ?? false,
@@ -73,4 +99,8 @@ class JobPosting extends Model
     public function getIsClosedAttribute(){
         return $this->closing_date < now();
     }
+    public function getPlantillaAttribute(){
+        return PlantillaPosition::find($this->plantilla_id);
+    }
+    
 }

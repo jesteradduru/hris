@@ -1,9 +1,6 @@
 <template>
   <RecruitmentLayout>
     <Link class="btn btn-secondary btn-sm mb-3" :href="route('admin.recruitment.plantilla.index')"><i class="fa-solid fa-arrow-left" /></Link>
-    <div>
-      <a href="#" data-bs-toggle="modal" data-bs-target="#loadData">Load data from an exisiting plantilla</a>
-    </div>
     <form @submit.prevent="create">
       <div class="row">
         <div class="col-12 col-md-6">
@@ -134,39 +131,10 @@
           >
             <span class="visually-hidden">Loading...</span>
           </div>
-          Add record
+          Update record
         </button>
       </div>
     </form>
-    <Modal id="loadData">
-      <template #header>Load position data</template>
-      <template #body>
-        <div class="table-responsive">
-          <table class="table table-bordered table-sm">
-            <thead>
-              <tr>
-                <th scope="col">Plantilla</th>
-                <th scope="col">Item No</th>
-                <th scope="col">Division</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="position in positions" :key="position.id" class="">
-                <td scope="row">{{ position.position }}</td>
-                <td>{{ position.plantilla_item_no }}</td>
-                <td>{{ position.division?.name }}</td>
-                <td class="d-flex ">
-                  <div data-bs-toggle="modal" data-bs-target="#loadData">
-                    <Link class="btn btn-success btn-sm" :href="route('admin.recruitment.plantilla.create', {plantilla: position.id })">Load</Link>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </template>
-    </Modal>
   </RecruitmentLayout>
 </template>
 
@@ -178,44 +146,27 @@ import { Link, useForm } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 
 const props = defineProps({
+  plantilla: Array,
   divisions: Array,
-  positions: Array,
-  plantilla: Object,
 })
 
 const form = useForm({
-  place_of_assignment: props.plantilla ? props.plantilla.place_of_assignment : 'NEDA Region 2',
-  position: props.plantilla ? props.plantilla.position : null,
-  salary_grade: props.plantilla ? props.plantilla.salary_grade : null,
-  monthly_salary: props.plantilla ? props.plantilla.monthly_salary : null,
-  eligibility: props.plantilla ? props.plantilla.eligibility : null,
-  education: props.plantilla ? props.plantilla.education : null,
-  training: props.plantilla ? props.plantilla.training : null,
-  work_experience: props.plantilla ? props.plantilla.work_experience : null,
-  competency: props.plantilla ? props.plantilla.competency : null,
-  posting_date: props.plantilla ? props.plantilla.posting_date : null,
-  closing_date: props.plantilla ? props.plantilla.closing_date : null,
-  plantilla_item_no: props.plantilla ? props.plantilla.plantilla_item_no : null,
-  documents: props.plantilla ? props.plantilla.documents : null,
-  division_id: props.plantilla ? props.plantilla.division_id : '',
+  place_of_assignment: props.plantilla.place_of_assignment,
+  position: props.plantilla.position,
+  salary_grade: props.plantilla.salary_grade,
+  monthly_salary: props.plantilla.monthly_salary,
+  eligibility: props.plantilla.eligibility,
+  education: props.plantilla.education,
+  training: props.plantilla.training,
+  work_experience: props.plantilla.work_experience,
+  competency: props.plantilla.competency,
+  posting_date: props.plantilla.posting_date,
+  closing_date: props.plantilla.closing_date,
+  plantilla_item_no: props.plantilla.plantilla_item_no,
+  documents: props.plantilla.documents,
+  division_id: props.plantilla.division_id,
 })
 
 const create = () =>
-  form.post(route('admin.recruitment.plantilla.store'), {
-    onSuccess: () => {
-      form.place_of_assignment = null
-      form.position = null
-      form.salary_grade = null
-      form.monthly_salary = null
-      form.eligibility = null
-      form.education = null
-      form.training = null
-      form.work_experience = null
-      form.competency = null
-      form.posting_date = null
-      form.closing_date = null
-      form.plantilla_item_no = null
-      form.documents = null
-    },
-  })
+  form.put(route('admin.recruitment.plantilla.update', {plantilla: props.plantilla.id}))
 </script>

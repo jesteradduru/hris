@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-12">
         <div class="d-flex justify-content-between align-items-center">
-          <h3>{{ props.job_posting.position }}</h3>
+          <h3>{{ props.job_posting.plantilla.position }}</h3>
           <div class="d-flex gap-2">
             <Link
               v-if="permissions && permissions.includes('Add Application')"
@@ -26,20 +26,20 @@
       <div class="col-12 col-md-6">
         <dl>
           <dt>Place of Assignment</dt>
-          <dd>{{ props.job_posting.place_of_assignment }}</dd>
+          <dd>{{ props.job_posting.plantilla.place_of_assignment }}</dd>
           <dt>Plantilla Item No</dt>
-          <dd>{{ props.job_posting.plantilla_item_no }}</dd>
+          <dd>{{ props.job_posting.plantilla.plantilla_item_no }}</dd>
           <dt>Salary Grade</dt>
-          <dd>{{ props.job_posting.salary_grade }}</dd>
+          <dd>{{ props.job_posting.plantilla.salary_grade }}</dd>
           <dt>Monthly Salary</dt>
           <dd>
-            <Salary :value="props.job_posting.monthly_salary" />
+            <Salary :value="props.job_posting.plantilla.monthly_salary" />
           </dd>
           <dt>Eligibility</dt>
-          <dd>{{ props.job_posting.eligibility }}</dd>
+          <dd>{{ props.job_posting.plantilla.eligibility }}</dd>
           <dt>Competency</dt>
           <dd style="white-space: pre-wrap">
-            {{ props.job_posting.competency }}
+            {{ props.job_posting.plantilla.competency }}
           </dd>
           <dt>Posting Date</dt>
           <dd>{{ props.job_posting.posting_date }}</dd>
@@ -50,11 +50,11 @@
       <div class="col-12 col-md-6">
         <dl>
           <dt>Education</dt>
-          <dd>{{ props.job_posting.education }}</dd>
+          <dd>{{ props.job_posting.plantilla.education }}</dd>
           <dt>Training</dt>
-          <dd>{{ props.job_posting.training }}</dd>
+          <dd>{{ props.job_posting.plantilla.training }}</dd>
           <dt>Work Experience</dt>
-          <dd>{{ props.job_posting.work_experience }}</dd>
+          <dd>{{ props.job_posting.plantilla.work_experience }}</dd>
           <dt>Documents</dt>
           <dd class="text-pre-wrap">{{ props.job_posting.documents }}</dd>
         </dl>
@@ -83,7 +83,7 @@ const crumbs = computed(() => [
     link: route('recruitment.job_posting.index'),
   },
   {
-    label: props.job_posting.position,
+    label: props.job_posting.plantilla.position,
   },
 ])
 

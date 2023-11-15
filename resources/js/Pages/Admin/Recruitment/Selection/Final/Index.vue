@@ -10,7 +10,7 @@
           )"
           :class="{'text-dark': item.id == posting_id}"
         >
-          {{ item.position }}
+          {{ item.plantilla.position }}
         </Link>
       </li>
     </ul>

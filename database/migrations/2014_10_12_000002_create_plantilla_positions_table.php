@@ -15,13 +15,17 @@ return new class extends Migration
         Schema::create('plantilla_positions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-
-            $table->string('title', 255);
-            $table->string('item', 255)->unique();
-            $table->integer('years_of_experience')->nullable();
-            $table->decimal('hours_of_training')->nullable();
-            $table->enum('education', ['MASTERS_DEGREE', 'BACHELORS_DEGREE', 'HIGH_SCHOOL', 'ELEMENTARY'])->nullable();
-            $table->foreignIdFor(Division::class, 'division_id')->constrained('divisions');
+            $table->string('place_of_assignment')->nullable();
+            $table->string('position')->nullable();
+            $table->string('plantilla_item_no')->nullable()->unique();
+            $table->string('salary_grade')->nullable();
+            $table->string('monthly_salary')->nullable();
+            $table->string('eligibility')->nullable();
+            $table->string('education')->nullable();
+            $table->string('training')->nullable();
+            $table->string('work_experience')->nullable();
+            $table->string('competency')->nullable();
+            $table->foreignIdFor(Division::class, 'division_id')->nullable();
         });
     }
 

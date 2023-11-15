@@ -9,7 +9,13 @@
           Position
         </dt>
         <dd>
-          {{ job_application.job_posting.position }}
+          {{ job_application.job_posting.plantilla.position }}
+        </dd>
+        <dt>
+          Document/s Submitted
+        </dt>
+        <dd>
+          <span v-for="file in job_application.document" :key="file.id"><a :href="file.src" target="_blank">{{ file.filename }}</a></span>
         </dd>
         <dt>
           Status
@@ -54,7 +60,7 @@ const crumbs = computed(() => [
     link: route('job_application.index'),
   },
   {
-    label: props.job_application.job_posting.position,
+    label: props.job_application.job_posting.plantilla.position,
   },
 ])
 

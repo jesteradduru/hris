@@ -11,9 +11,13 @@ class AdminDailyTimeRecordController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return inertia('Admin/DailyTimeRecord/Index');
+        $filters = $request->only(['user_id']);
+        return inertia('Admin/DailyTimeRecord/Index', [
+            'dtrs' => DailyTimeRecord::with('user')->filter($filters)->paginate()->withQueryString(),
+            'filters' => $filters
+        ]);
     }
 
     /**

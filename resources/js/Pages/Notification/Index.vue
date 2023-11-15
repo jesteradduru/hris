@@ -8,7 +8,9 @@
           <div>
             <span v-if="notification.type === 'App\\Notifications\\PublishApplicationResult'">
               {{ notification.data.message }}
-              <Link :href="route('job_application.show', {job_application: notification.data.result?.application_id })">See details</Link>
+              <b @click="() => seenNotification(notification.id, notification.data.result?.application_id )">
+                See details
+              </b>
             </span>
           </div>
           <div>
@@ -32,9 +34,18 @@
     
 <script setup>
 import Pagination from '@/Components/Pagination.vue'
-import { Link, usePage } from '@inertiajs/vue3'
+import { Link, router, usePage } from '@inertiajs/vue3'
 import AuthenticatedLayoutVue from '@/Layouts/AuthenticatedLayout.vue'
 defineProps({
   notifications: Object,
 })
+
+const seenNotification = (id, job_posting) => {
+  router.visit(route('notification.seen', {notification: id}), {
+    method: 'put',
+    onSuccess: () => {
+      router.visit(route('job_application.show', {job_application: job_posting}), {method: 'get'})
+    },
+  })
+} 
 </script>

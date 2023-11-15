@@ -5,32 +5,37 @@
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
-            <th scope="col">Position</th>
-            <th scope="col">Item</th>
+            <th scope="col">Plantilla</th>
+            <th scope="col">Item No</th>
             <th scope="col">Division</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="">
-            <td scope="row">Information Systems Analyst 1</td>
-            <td>R1C2</td>
-            <td>Finance Administrative Division</td>
-            <td><Link :href="route('admin.recruitment.plantilla.edit', {plantilla: 1})"><i class="fa-solid fa-pen" />Edit</Link></td>
-          </tr>
-          <tr class="">
-            <td scope="row">Information Systems Analyst 1</td>
-            <td>R1C2</td>
-            <td>Finance Administrative Division</td>
-            <td><Link :href="route('admin.recruitment.plantilla.edit', {plantilla: 1})"><i class="fa-solid fa-pen" />Edit</Link></td>
+          <tr v-for="position in positions.data" :key="position.id" class="">
+            <td scope="row">{{ position.position }}</td>
+            <td>{{ position.plantilla_item_no }}</td>
+            <td>{{ position.division?.name }}</td>
+            <td class="d-flex ">
+              <Link class="btn btn-success btn-sm" :href="route('admin.recruitment.plantilla.edit', {plantilla: position.id })"><i class="fa-solid fa-pen" /></Link>
+              <Link :onBefore="confirm" as="button" method="delete" class="btn btn-danger btn-sm" :href="route('admin.recruitment.plantilla.destroy', {plantilla: position.id })"><i class="fa-solid fa-trash" /></Link>
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <Pagination :links="positions.links" />
   </RecruitmentLayout>
 </template>
 
 <script setup>
+import Pagination from '@/Components/Pagination.vue'
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
 import { Link } from '@inertiajs/vue3'
+
+const props = defineProps({
+  positions: Object,
+})
+
+const confirm = () => window.confirm('Are you sure to delete this plantilla?')
 </script>

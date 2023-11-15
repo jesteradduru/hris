@@ -29,7 +29,7 @@ class JobPostingController extends Controller
     public function show(JobPosting $job_posting)
     {
         return inertia('Recruitment/JobPosting/Show', [
-            'job_posting' => $job_posting
+            'job_posting' => $job_posting->load(['plantilla'])
         ]);
     }
 }

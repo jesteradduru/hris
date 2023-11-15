@@ -30,9 +30,6 @@ const submit = () => {
     employee: props.employee.id,
   }), {
     onFinish: () => form.reset('password', 'password_confirmation'),
-    onSuccess: () => {
-      form.reset()
-    },
   })
 }
 </script>
@@ -167,7 +164,7 @@ const submit = () => {
               <InputLabel for="position" value="Position" />
               <select id="position" v-model="form.plantilla_id" class="form-select" name="">
                 <option value="">Select position</option>
-                <option v-for="item in props.positions" :key="item.id" :value="item.id">{{ `${item.title} | ${item.division.abbreviation}` }}</option>
+                <option v-for="item in props.positions" :key="item.id" :value="item.id">{{ `${item.position}, ${item.plantilla_item_no}, ${item.division.abbreviation}` }}</option>
               </select>
               <InputError
                 class="mt-2"

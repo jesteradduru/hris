@@ -75,7 +75,7 @@ class EmployeeController extends Controller
         return inertia('Admin/Employee/Edit/Profile', [
             'employee' => $employee->load(['position']),
             'roles' => Role::all()->pluck('name'),
-            'positions' => PlantillaPosition::doesntHave('user')->with(['division'])->get()
+            'positions' => PlantillaPosition::with(['division'])->get()
         ]);
     }
 
@@ -100,7 +100,8 @@ class EmployeeController extends Controller
             'plantilla_id' => ['required', 'integer', Rule::unique('users')->ignore($employee->id)],
             'role' => 'required|string|max:255',
         ], [ 
-            'username.valid_username' => 'Invalid Username.'
+            'username.valid_username' => 'Invalid Username.',
+            'plantilla_id.unique' => 'Plantilla is already assigned to an employee.'
         ]);
         
         if($request->password){

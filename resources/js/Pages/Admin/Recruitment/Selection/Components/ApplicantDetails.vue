@@ -21,6 +21,12 @@
     <!-- Educational Background -->
     <div v-if="educ" class="mb-3">
       <h5 class="text-primary">Educational BackGround</h5>
+      <div v-if="plantilla" class="alert alert-primary">
+        <div>
+          <b>Educational Requirement</b>
+        </div>
+        {{ plantilla.education }}
+      </div>
       <dl>
         <dt>Elementary:</dt>
         <dd>
@@ -57,6 +63,12 @@
     
     <div class="mb-3">
       <h5 class="text-primary">Civil Service Eligibility</h5>
+      <div v-if="plantilla" class="alert alert-primary">
+        <div>
+          <b>Eligibility Requirement</b>
+        </div>
+        {{ plantilla.eligibility }}
+      </div>
       <div v-if="eligs.length === 0" class="text-muted text-center text-sm">
         No Record
       </div>
@@ -76,6 +88,12 @@
     <!-- work experience -->
     <div class="mb-3">
       <h5 class="text-primary">Work Experience</h5>
+      <div v-if="plantilla" class="alert alert-primary">
+        <div>
+          <b>Work Experience Requirement</b>
+        </div>
+        {{ plantilla.work_experience }}
+      </div>
       <div v-if="works.length === 0" class="text-muted text-center text-sm">
         No Record
       </div>
@@ -104,6 +122,12 @@
     <!-- learning and development -->
     <div class="mb-3">
       <h5 class="text-primary">Learning and Development</h5>
+      <div v-if="plantilla" class="alert alert-primary">
+        <div>
+          <b>Training Requirement</b>
+        </div>
+        {{ plantilla.training }}
+      </div>
       <div v-if="lnds.length === 0" class="text-muted text-center text-sm">
         No Record
       </div>
@@ -137,6 +161,12 @@
     <!-- special skills and hobbies -->
     <div class="mb-3">
       <h5 class="text-primary">Special Skills and Hobbies</h5>
+      <div v-if="plantilla" class="alert alert-primary">
+        <div>
+          <b>Competency Requirement</b>
+        </div>
+        {{ plantilla.competency }}
+      </div>
       <div v-if="skills">
         <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
       </div>
@@ -181,6 +211,7 @@ import { ref } from 'vue'
 
 const props = defineProps({
   applicant: Object,
+  plantilla: Object,
 })
 
 const pdf = ref('dffd')

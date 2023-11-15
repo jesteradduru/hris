@@ -14,7 +14,8 @@ class PersonalInformationController extends Controller
 
     public function edit(Request $request){
         return inertia('Profile/PDS/PersonalInformation/Edit', [
-            "personal_information" => $request->user()->personal_information
+            "personal_information" => $request->user()->personal_information,
+            "profile" => $request->user()
         ]);
     }
     

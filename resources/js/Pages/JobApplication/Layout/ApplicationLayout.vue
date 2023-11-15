@@ -29,7 +29,7 @@ const crumbs = computed(() => [
     link: route('recruitment.job_posting.index'),
   },
   {
-    label: props.job_posting.position,
+    label: props.job_posting.plantilla.position,
     link: route('recruitment.job_posting.show', {
       job_posting: props.job_posting.id,
     }),

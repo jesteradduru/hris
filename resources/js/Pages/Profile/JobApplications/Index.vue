@@ -7,15 +7,15 @@
         <thead>
           <tr>
             <th scope="col">Position</th>
-            <th scope="col">Status</th>
+            <!-- <th scope="col">Status</th> -->
             <th scope="col">Files</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="application in job_applications" :key="application.id" class="">
-            <td scope="row">{{ application.job_posting.position }}</td>
-            <td>Pending</td>
+            <td scope="row">{{ application.job_posting.plantilla.position }}</td>
+            <!-- <td>Pending</td> -->
             <td>
               <span v-for="file in application.document" :key="file.id"><a :href="file.src" target="_blank">{{ file.filename }}</a></span>
             </td>

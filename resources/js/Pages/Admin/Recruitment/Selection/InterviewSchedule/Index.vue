@@ -8,9 +8,9 @@
           :href="route('admin.recruitment.selection.index', 
                        {job_posting: item.id}
           )"
-          :class="{'text-dark': item.id == posting_id}"
+          :class="{'text-dark': item.id == posting.id}"
         >
-          {{ item.position }}
+          {{ item.plantilla.position }}
         </Link>
       </li>
     </ul>
@@ -90,7 +90,7 @@
             <Link
               :class="{
                 'text-dark': applicant_details?.id === item.user.id,
-              }" :href="route('admin.recruitment.selection.index', {job_posting: posting_id, applicant: item.user.id})"
+              }" :href="route('admin.recruitment.selection.index', {job_posting: posting.id, applicant: item.user.id})"
             >
               {{ item.user.name }}
             </Link>
@@ -101,7 +101,7 @@
         </small>
       </div>
       <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" :plantilla="props.posting.plantilla" />
       </div>
     </div>
   </RecruitmentLayout>
@@ -118,7 +118,7 @@ import InputError from '@/Components/InputError.vue'
 
 const props = defineProps({
   job_vacancies: Array,
-  posting_id: String,
+  posting: String,
   applicant_details: Object,
   job_vacancy_status: Object,
   qualified_applicants: Array,

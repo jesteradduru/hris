@@ -95,11 +95,12 @@ class AdminJobApplicationController extends Controller
                 'user' => fn($query) => $query->orderBy('surname', 'desc')
             ])->where('job_posting_id', $request->job_posting)->get();
 
+           
         return inertia('Admin/Recruitment/Selection/InitialScreening/Index', [
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting_id" => $request->job_posting,
+            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
             "applicant_details" => $applicant_details,
         ]);
     }

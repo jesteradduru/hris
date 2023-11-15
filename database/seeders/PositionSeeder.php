@@ -3,27 +3,36 @@ use App\Models\PlantillaPosition;
 
     $positions = [
         [
-            'Senior Economic Development Specialist',
-            'ODGB-SREDS-173-1998',
-            '5'
+            "place_of_assignment" => "NEDA Region 2",
+            "plantilla_item_no" => "QWETY123",
+            "position" => "Economic Development Specialist I",
+            "salary_grade" => "12",
+            "monthly_salary" => "3210",
+            "eligibility" => "Civil Service Eligibility or equivalent",
+            "education" => "Bachelor of Science in Economics",
+            "training" => "None Required",
+            "work_experience" => "None Required",
+            "competency" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error excepturi eum laudantium.",
+            'division_id' => 3,
+            
         ],
         [
-            'Economic Development Specialist I',
-            'ODGB-EDS1-27-2018',
-            '3'
-        ],
-        [
-            'Economic Development Specialist II',
-            'ODGB-EDS2-5-1998',
-            '4'
+            "place_of_assignment" => "NEDA Region 2",
+            "plantilla_item_no" => "1234124",
+            "position" => "Senior Economic Development Specialist",
+            "salary_grade" => "18",
+            "monthly_salary" => "50000",
+            "eligibility" => "Civil Service Eligibility or equivalent",
+            "education" => "Bachelor of Science in Economics",
+            "training" => "None Required",
+            "work_experience" => "None Required",
+            "competency" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error excepturi eum laudantium.",
+            'division_id' => 4,
+            
         ],
     ];
 
     foreach($positions as $position){
-        PlantillaPosition::create([
-            'title' => $position[0],
-            'item' => $position[1],
-            'division_id' => $position[2]
-        ]);
+        PlantillaPosition::create($position);
     }
 ?>

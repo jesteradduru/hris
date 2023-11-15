@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 
 class DailyTimeRecord extends Model
@@ -14,6 +15,14 @@ class DailyTimeRecord extends Model
 
     protected $table = 'daily_time_record';
     protected $fillable = ['user_id', 'date_time'];
+
+    public function scopeLatestDtr(Builder $query){
+        return $query->orderBy('date_time', 'DESC');
+    }
+
+    public function user() : HasOne {
+        return $this->hasOne(User::class, 'dtr_user_id', 'user_id');
+    }
 
     public function scopeFilter(Builder $query, $filters = []) {
         return $query
@@ -31,8 +40,9 @@ class DailyTimeRecord extends Model
         )
         
         ->when( // order date_time descending
-            $filters['order'] ?? 'desc', 
-            fn($query, $value) => $query->orderBy('date_time', $value)
+            $filters['order'] ?? false, 
+            fn($query, $value) => $query->orderBy('date_time', $value),
+            fn($query, $value) => $query->orderBy('date_time', "DESC"),
         );
     }
 

@@ -79,6 +79,7 @@ use Illuminate\Auth\Events\Registered;
             'middle_name' => 'HR',
             'first_name' => 'RO2',
             'surname' => 'NEDA',
+            'dtr_user_id' => 3,
             'password' => Hash::make('lanxNEDA'),
         ]);
 

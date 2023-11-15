@@ -13,16 +13,25 @@ class PlantillaPosition extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
-        'item',
-        'years_of_experience',
-        'hours_of_training',
+        'place_of_assignment',
+        'position',
+        'plantilla_item_no',
+        'salary_grade',
+        'monthly_salary',
+        'eligibility',
         'education',
+        'training',
+        'work_experience',
+        'competency',
         'division_id'
     ];
 
     public function user() : HasOne {
         return $this->hasOne(User::class, 'plantilla_id');
+    }
+
+    public function job_posting() : HasMany {
+        return $this->hasMany(JobPosting::class, 'plantilla_id');
     }
 
     public function division() : BelongsTo {

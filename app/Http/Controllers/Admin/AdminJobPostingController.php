@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobPosting;
+use App\Models\PlantillaPosition;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -25,7 +26,7 @@ class AdminJobPostingController extends Controller
         // dd($filters);
 
         return inertia('Admin/Recruitment/JobPosting/Index', [
-            'job_vacancies' => JobPosting::withCount(['job_application'])->filter($filters)->paginate(15)->withQueryString(),
+            'job_vacancies' => JobPosting::withCount(['job_application'])->with(['plantilla'])->filter($filters)->paginate(15)->withQueryString(),
             'filters' => $filters
         ]);
     }
@@ -33,9 +34,18 @@ class AdminJobPostingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return inertia('Admin/Recruitment/JobPosting/Create');
+        $plantilla = null;
+        
+        if($request->plantilla){
+            $plantilla = PlantillaPosition::find($request->plantilla);
+        }
+
+        return inertia('Admin/Recruitment/JobPosting/Create', [
+            'plantilla' => $plantilla,
+            'positions' => PlantillaPosition::doesntHave('user')->with('division')->get(),
+        ]);
     }
 
     /**
@@ -44,23 +54,21 @@ class AdminJobPostingController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            "place_of_assignment" => "required|string|max:255",
-            "plantilla_item_no" => "required|string|max:255|unique:job_postings,plantilla_item_no",
-            "position" => "required|string|max:255",
-            "salary_grade" => "required|integer",
-            "monthly_salary" => "required|integer",
-            "eligibility" => "required|string|max:255",
-            "education" => "required|string|max:255",
-            "training" => "required|string|max:255",
-            "work_experience" => "required|string|max:500",
-            "competency" => "required|string|max:500",
-            "documents" => "string|max:500|nullable",
+            "documents" => "required|string|max:500|nullable",
             "posting_date" => "required|date",
             "closing_date" => "required|date"
+        ], [
+            'documents.required' => 'The requirements field is required.'
         ]);
 
-        $request->user()->job_posting()->create($validateData);
-        $request->user()->job_posting()->results()->create([
+        $job_posting = $request->user()->job_posting()->create([
+            "documents" => $validateData['documents'],
+            "posting_date" => $validateData['posting_date'],
+            "closing_date" => $validateData['closing_date'],
+            "plantilla_id" => $request->plantilla
+        ]);
+        
+        $job_posting->results()->create([
             'phase' => 'INITIAL_SCREENING'
         ]);
 
@@ -73,17 +81,25 @@ class AdminJobPostingController extends Controller
     public function show(JobPosting $job_posting)
     {
         return inertia('Admin/Recruitment/JobPosting/Show', [
-            'job_posting' => $job_posting
+            'job_posting' => $job_posting->load(['plantilla'])
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(JobPosting $job_posting)
+    public function edit(Request $request, JobPosting $job_posting)
     {
+        $plantilla = null;
+        
+        if($request->plantilla){
+            $plantilla = PlantillaPosition::find($request->plantilla);
+        }
+
         return inertia('Admin/Recruitment/JobPosting/Edit', [
-            'job_posting' => $job_posting
+            'plantilla' => $plantilla,
+            'job_posting' => $job_posting->load(['plantilla']),
+            'positions' => PlantillaPosition::doesntHave('user')->with('division')->get(),
         ]);
     }
 
@@ -97,19 +113,10 @@ class AdminJobPostingController extends Controller
         ];
 
         $validated = Validator::make($request->all(), [
-            "place_of_assignment" => "required|string|max:255",
-            "plantilla_item_no" => ["required", "string", Rule::unique('job_postings')->ignore($job_posting->id)],
-            "position" => "required|string|max:255",
-            "salary_grade" => "required|integer",
-            "monthly_salary" => "required|integer",
-            "eligibility" => "required|string|max:255",
-            "education" => "required|string|max:255",
-            "training" => "required|string|max:255",
-            "work_experience" => "required|string|max:500",
-            "competency" => "required|string|max:500",
             "documents" => "string|max:500|nullable",
             "posting_date" => "required|date",
-            "closing_date" => "required|date"
+            "closing_date" => "required|date",
+            "plantilla_id" => "required|integer"
         ], $messages)->validate();
         
         $job_posting->update($validated);

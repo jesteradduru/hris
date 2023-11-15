@@ -64,6 +64,10 @@ class User extends Authenticatable
         return $this->getRoleNames();
     }
 
+    public function dtr() : BelongsTo {
+        return $this->belongsTo(DailyTimeRecord::class, 'user_id', 'dtr_user_id');
+    }
+
     // created job posting for admin and hr
     public function job_posting() : HasMany {
         return $this->hasMany(JobPosting::class, 'by_user_id');
@@ -144,7 +148,7 @@ class User extends Authenticatable
             $filters['division'] ?? false, function($query, $value) {
                return $query
                ->join('plantilla_positions', 'users.plantilla_id', '=', 'plantilla_positions.id')
-               ->where('plantilla_positions.division_id', $value);;
+               ->where('plantilla_positions.division_id', $value);
             }
         );
     }

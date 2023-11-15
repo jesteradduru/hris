@@ -9,8 +9,10 @@ class NotificationSeenController extends Controller
 {
     public function __invoke(DatabaseNotification $notification)
     {
-        $notification->markAsRead();
+        if(!$notification->read_at){
+            $notification->markAsRead();
+        }
 
-        return redirect()->back()->with('success', 'Notification mark as read');
+        return back();
     }
 }
