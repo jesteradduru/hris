@@ -8,7 +8,7 @@
           <div>
             <span v-if="notification.type === 'App\\Notifications\\PublishApplicationResult'">
               {{ notification.data.message }}
-              <b @click="() => seenNotification(notification.id, notification.data.result?.application_id )">
+              <b style="cursor: pointer;" @click="() => seenNotification(notification.id, notification.data.result?.application_id )">
                 See details
               </b>
             </span>

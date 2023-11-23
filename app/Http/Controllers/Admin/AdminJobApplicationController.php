@@ -85,7 +85,10 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                'spms',
+                'reward' => ['reward'],
+                'position'
             ]);
         }
 
@@ -129,7 +132,10 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                    'spms',
+                    'reward' => ['reward'],
+                    'position'
                 ]);
             }
 
@@ -139,7 +145,7 @@ class AdminJobApplicationController extends Controller
                 "job_applications" => $job_applications,
                 "job_vacancies" => $job_vacancies,
                 "job_vacancy_status" => $job_vacancy_status,
-                "posting_id" => $request->job_posting,
+                "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
                 "applicant_details" => $applicant_details,
                 "qualified_applicants" => $latest_result,
             ]);
@@ -169,7 +175,11 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                    'spms',
+                    'reward' => ['reward'],
+                    'position'
+                    
                 ]);
             }
 
@@ -179,7 +189,7 @@ class AdminJobApplicationController extends Controller
                 "job_applications" => $job_applications,
                 "job_vacancies" => $job_vacancies,
                 "job_vacancy_status" => $job_vacancy_status,
-                "posting_id" => $request->job_posting,
+                "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
                 "applicant_details" => $applicant_details,
                 "qualified_applicants" => $latest_result,
             ]);
@@ -208,7 +218,10 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                    'spms',
+                    'reward' => ['reward'],
+                    'position'
                 ]);
             }
 
@@ -218,7 +231,7 @@ class AdminJobApplicationController extends Controller
                 "job_applications" => $job_applications,
                 "job_vacancies" => $job_vacancies,
                 "job_vacancy_status" => $job_vacancy_status,
-                "posting_id" => $request->job_posting,
+                "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
                 "applicant_details" => $applicant_details,
                 "qualified_applicants" => $latest_result,
             ]);
@@ -257,7 +270,7 @@ class AdminJobApplicationController extends Controller
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting_id" => $request->job_posting,
+            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
         ]);
@@ -296,7 +309,7 @@ class AdminJobApplicationController extends Controller
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting_id" => $request->job_posting,
+            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
         ]);

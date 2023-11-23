@@ -100,3 +100,23 @@ $theme-colors: (
 .text-through{
     text-decoration: line-through;
 }
+
+#job_vacancies{
+    font-size: 1.09em;
+    div {
+        padding-left: 8px;
+    }
+
+    a:hover{
+        color: $blue-900;
+    }
+
+
+    .active{
+        border-left:4px solid $blue-500 ;
+        a{
+            color: $blue-900;
+            font-size: 1.05em;
+        }
+    }
+}

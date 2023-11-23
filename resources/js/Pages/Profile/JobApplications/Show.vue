@@ -18,7 +18,7 @@
           <span v-for="file in job_application.document" :key="file.id"><a :href="file.src" target="_blank">{{ file.filename }}</a></span>
         </dd>
         <dt>
-          Status
+          History
         </dt>
         <dd>
           <ul>
@@ -33,7 +33,15 @@
                   </span>
                   <span v-else>{{ result.result }}</span>
                 </div>
-                <i class="text-muted">{{ moment( result.created_at ).format('MMM D, YYYY') }}</i>
+                <i class="text-muted">{{ moment( result.created_at ).format('MMM D, YYYY hh:mm a') }}</i>
+              </li>
+            </div>
+            <div>
+              <li :class="{'text-success' : job_application.result.length === 0}">
+                <div>
+                  Application Submitted
+                </div>
+                <span class="text-muted">{{ moment( job_application.created_at ).format('MMM D, YYYY hh:mm a') }}</span>
               </li>
             </div>
           </ul>
@@ -66,7 +74,7 @@ const crumbs = computed(() => [
 
 const getDateTime = (schedule, start_time, end_time) => {
   const date = moment(schedule).format('MMM D, Y')
-  const time = start_time + ' - ' + end_time 
+  const time = moment(start_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') + ' - ' + moment(end_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') 
   return `${date} ${time}`
 }
 

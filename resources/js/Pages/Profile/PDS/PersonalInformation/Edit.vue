@@ -438,7 +438,7 @@
           <div class="col-12 col-md-3">
             <div class="mb-3">
               <label class="form-label">Telephone No.</label>
-              <input v-model="form.telephone_number" type="number" class="form-control form-control-sm" />
+              <input v-model="form.telephone_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.telephone_number" />
             </div>
           </div>
@@ -446,7 +446,7 @@
           <div class="col-12 col-md-3">
             <div class="mb-3">
               <label class="form-label">Mobile No.</label>
-              <input v-model="form.mobile_number" type="number" class="form-control form-control-sm" />
+              <input v-model="form.mobile_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.mobile_number" />
             </div>
           </div>

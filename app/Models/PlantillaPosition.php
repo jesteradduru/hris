@@ -26,6 +26,8 @@ class PlantillaPosition extends Model
         'division_id'
     ];
 
+    protected $appends = ['division'];
+
     public function user() : HasOne {
         return $this->hasOne(User::class, 'plantilla_id');
     }
@@ -40,5 +42,9 @@ class PlantillaPosition extends Model
 
     public function eligibility() : HasMany {
         return $this->hasMany(PlantillaEligibilty::class, 'plantilla_id');
+    }
+
+    public function getDivisionAttribute(){
+        return Division::find($this->division_id);
     }
 }

@@ -74,4 +74,21 @@
 }
 .text-through {
   text-decoration: line-through;
+}
+
+#job_vacancies {
+  font-size: 1.09em;
+}
+#job_vacancies div {
+  padding-left: 8px;
+}
+#job_vacancies a:hover {
+  color: #031633;
+}
+#job_vacancies .active {
+  border-left: 4px solid #0d6efd;
+}
+#job_vacancies .active a {
+  color: #031633;
+  font-size: 1.05em;
 }/*# sourceMappingURL=app.css.map */

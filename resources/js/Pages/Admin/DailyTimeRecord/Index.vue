@@ -1,10 +1,9 @@
 <template>
-  <Head title="Job Vacancies" />
+  <Head title="Daily Time Record" />
   
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Daily Time Record</h3>
-
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="mb-3">
@@ -15,7 +14,7 @@
         </div>
       </div>
     </div>
-
+    <Link class="btn btn-secondary btn-sm mb-3 ms-auto d-block" as="button" method="post" :href="route('admin.daily_time_record.getDtr')"><i class="fa-solid fa-refresh" /> Refresh DTR</Link>
     <div class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
@@ -40,13 +39,12 @@
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import { Head, Link, router, useForm } from '@inertiajs/vue3'
+import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'
 import {debounce} from 'lodash'
-// import Filter from '@/Pages/Admin//Recruitment/JobPosting/Components/Filter.vue'
-  
+
 const crumbs = computed(() => [
   {
     label: 'Admin Dashboard',

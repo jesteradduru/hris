@@ -2,19 +2,7 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <b>VACANCIES</b>
-    <ul>
-      <li v-for="item in props.job_vacancies" :key="item.id">
-        <Link
-          :href="route('admin.recruitment.selection.index', 
-                       {job_posting: item.id}
-          )"
-          :class="{'text-dark': item.id == posting.id}"
-        >
-          {{ item.plantilla.position }}
-        </Link>
-      </li>
-    </ul>
-
+    <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
     <hr />
 
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -35,7 +23,7 @@
             :href="route('admin.recruitment.application_result.publish', {
               results: props.job_vacancy_status.id,
             })"
-            :disabled="!scheduleForm.wasSuccessful"
+            :disabled="!scheduleForm.wasSuccessful && scheduleForm.schedule === null"
           >
             PUBLISH
           </Link>
@@ -84,21 +72,7 @@
         </div>
       </div>
       <div class="col-3">
-        <b>APPLICANTS</b>
-        <ol v-if="props.qualified_applicants.length !== 0">
-          <li v-for="(item) in props.qualified_applicants" :key="item.id">
-            <Link
-              :class="{
-                'text-dark': applicant_details?.id === item.user.id,
-              }" :href="route('admin.recruitment.selection.index', {job_posting: posting.id, applicant: item.user.id})"
-            >
-              {{ item.user.name }}
-            </Link>
-          </li>
-        </ol>
-        <small v-else class="text-muted d-block">
-          No Applications
-        </small>
+        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
         <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" :plantilla="props.posting.plantilla" />
@@ -115,10 +89,11 @@ import { ref } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
 import {debounce} from 'lodash'
 import InputError from '@/Components/InputError.vue'
+import JobVacancies from '../Components/JobVacancies.vue'
 
 const props = defineProps({
   job_vacancies: Array,
-  posting: String,
+  posting: Object,
   applicant_details: Object,
   job_vacancy_status: Object,
   qualified_applicants: Array,
@@ -126,7 +101,7 @@ const props = defineProps({
 
 const scheduleForm = useForm({
   _method: 'put',
-  schedule: props.job_vacancy_status.schedule,
+  schedule: moment(props.job_vacancy_status.schedule).format('Y-M-D'),
   start_time: props.job_vacancy_status.start_time,
   end_time: props.job_vacancy_status.end_time,
 })
@@ -140,6 +115,7 @@ const setSchedule = debounce(() => {
 
 import { router } from '@inertiajs/vue3'
 import moment from 'moment'
+import ApplicantsList from '../Components/ApplicantsList.vue'
 
 const loading = ref(false)
 

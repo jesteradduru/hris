@@ -13,6 +13,7 @@ class JobApplication extends Model
     use HasFactory;
 
     protected $fillable = ['job_application_id', 'job_posting_id'];
+    protected $appends = ['latest_result'];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
@@ -31,5 +32,9 @@ class JobApplication extends Model
     public function result() : HasMany
     {
         return $this->hasMany(ApplicationResult::class, 'application_id');
+    }
+
+    public function getLatestResultAttribute(){
+        return Applicationresult::latest()->where('application_id', $this->id)->first();
     }
 }

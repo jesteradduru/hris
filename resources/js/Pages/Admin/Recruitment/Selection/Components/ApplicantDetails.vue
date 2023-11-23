@@ -16,6 +16,76 @@
         <dd>{{ applicant.personal_information.civil_status }}</dd>
         <dt>Address:</dt>
         <dd>{{ applicant.personal_information.address }}</dd>
+        <dt>Contact:</dt>
+        <dd><i class="fa-solid fa-mobile" />&nbsp;{{ applicant.personal_information.mobile_number }}</dd>
+        <dd><i class="fa-solid fa-phone" />&nbsp;{{ applicant.personal_information.telephone_number }}</dd>
+        <dd style="text-transform: lowercase;"><i class="fa-solid fa-envelope" />&nbsp;{{ applicant.personal_information.email_address }}</dd>
+      </dl>
+    </div>
+    <!-- EMPLOYEE RECORDS -->
+    <div v-if="applicant.position" class="mb-3">
+      <h5 class="text-primary">Employment Records</h5>
+      <dl>
+        <dt>
+          Current Position
+        </dt>
+        <dd>{{ applicant.position.position }}</dd>
+        <dt>SPMS:</dt>
+        <dd>
+          <div v-if="applicant.spms.length > 0" class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">File</th>
+                  <th scope="col">Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(spmsForm) in applicant.spms" :key="spmsForm.id">
+                  <td><a :href="spmsForm.src" target="_blank">{{ `${spmsForm.year} ${spmsForm.semester} SEMESTER ${spmsForm.type}` }} <i class="fa-solid fa-up-right-from-square" /></a></td>
+                  <td>
+                    {{ spmsForm.rating }}
+                    <b>
+                      {{ spmsForm.rating == 5 ? 'Outstanding' : null }}
+                      {{ spmsForm.rating < 5 && spmsForm.rating >= 4 ? 'Very Satisfactory' : null }}
+                      {{ spmsForm.rating < 4 && spmsForm.rating >= 3 ? 'Satisfactory' : null }}
+                      {{ spmsForm.rating < 3 && spmsForm.rating >= 2 ? 'Unsatisfactory' : null }}
+                      {{ spmsForm.rating < 2 && spmsForm.rating >= 1 ? 'Poor' : null }}
+                    </b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="text-muted text-center text-sm">
+            No Record
+          </div>
+        </dd>
+        <!-- REWARDS -->
+        <dt>rewards:</dt>
+        <dd>
+          <div v-if="applicant.reward.length > 0" class="table-responsive">
+            <table class="table table-bordered mt-3 table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Points</th>
+                  <th scope="col">Date Awarded</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="item in applicant.reward" :key="item.id" class="">
+                  <td scope="row">{{ item.reward.title }}</td>
+                  <td>{{ item.reward.points }}</td>
+                  <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-else class="text-muted text-center text-sm">
+            No Record
+          </div>
+        </dd>
       </dl>
     </div>
     <!-- Educational Background -->
@@ -178,11 +248,12 @@
     <div class="mb-3">
       <h5 class="text-primary">Attached Documents</h5>
       <div v-if="applicant.job_application">
-        <span 
-          v-for="doc in applicant.job_application[0].document" 
-          :key="doc.id" data-bs-toggle="modal" data-bs-target="#viewAttachment" 
-          :href="doc.src" @click="() => showPdf(doc.src)"
-        >{{ doc.filename }}</span>
+        <a 
+          v-for="doc in applicant.job_application[0].document"
+          :key="doc.id" 
+          data-bs-toggle="modal" data-bs-target="#viewAttachment" 
+          href="#" @click="() => showPdf(doc.src)"
+        >{{ doc.filename }}</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
       </div>
       <div v-else class="text-muted text-center text-sm">

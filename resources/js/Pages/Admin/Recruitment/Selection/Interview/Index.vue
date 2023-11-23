@@ -2,18 +2,7 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <b>VACANCIES</b>
-    <ul>
-      <li v-for="item in props.job_vacancies" :key="item.id">
-        <Link
-          :href="route('admin.recruitment.selection.index', 
-                       {job_posting: item.id}
-          )"
-          :class="{'text-dark': item.id == posting_id}"
-        >
-          {{ item.plantilla.position }}
-        </Link>
-      </li>
-    </ul>
+    <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
   
     <hr />
   
@@ -38,24 +27,7 @@
     </div>
     <div class="row">
       <div class="col-3">
-        <b>APPLICANTS</b>
-        <ol v-if="props.qualified_applicants.length !== 0">
-          <li v-for="(item) in props.qualified_applicants" :key="item.id">
-            <Link
-              :class="{
-                'text-dark': applicant_details?.id === item.user.id,
-              }" :href="route('admin.recruitment.selection.index', {job_posting: posting_id, applicant: item.user.id})"
-            >
-              {{ item.user.name }}
-            </Link>
-            <span v-if="item.result === 'SELECTED'" class="badge rounded-pill text-bg-success">
-              <i class="fa-solid fa-check" />
-            </span>
-          </li>
-        </ol>
-        <small v-else class="text-muted d-block">
-          No Applications
-        </small>
+        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
         <div v-if="props.applicant_details" class="d-flex gap-2 mb-3">
@@ -108,16 +80,18 @@ import {Head, Link, useForm, usePage} from '@inertiajs/vue3'
 import { ref, computed } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
 import {debounce} from 'lodash'
+import JobVacancies from '../Components/JobVacancies.vue'
 
 const props = defineProps({
   job_vacancies: Array,
-  posting_id: String,
+  posting: Object,
   applicant_details: Object,
   job_vacancy_status: Object,
   qualified_applicants: Array,
 })
   
 import { router } from '@inertiajs/vue3'
+import ApplicantsList from '../Components/ApplicantsList.vue'
   
 const loading = ref(false)
 

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use Rats\Zkteco\Lib\ZKTeco;
+
 
 class DailyTimeRecord extends Model
 {
@@ -23,6 +25,40 @@ class DailyTimeRecord extends Model
     public function user() : HasOne {
         return $this->hasOne(User::class, 'dtr_user_id', 'user_id');
     }
+
+    // update dtr
+    public static function getDtr(){
+        set_time_limit(120);
+        $zk = new ZKTeco('192.168.222.4', 4370);
+            
+        $zk->connect();
+
+        $dtrs = $zk->getAttendance();
+
+        $latestRecord = DB::table('daily_time_record')->max('date_time');
+        
+        foreach($dtrs as $dtr){
+            $dtr_timestamp = Carbon::parse($dtr['timestamp']);
+
+            if($latestRecord){
+                if($dtr_timestamp->greaterThan(Carbon::parse($latestRecord))){
+                    DB::table('daily_time_record')->insert([
+                        'user_id' => $dtr['id'],
+                        'date_time' => $dtr['timestamp'],
+                    ]);
+                }
+            }else{
+                DB::table('daily_time_record')->insert([
+                    'user_id' => $dtr['id'],
+                    'date_time' => $dtr['timestamp'],
+                ]);
+            }
+        }
+
+        $zk->disconnect();
+
+    
+    } 
 
     public function scopeFilter(Builder $query, $filters = []) {
         return $query

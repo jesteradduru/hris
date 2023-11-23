@@ -10,12 +10,7 @@
       <!-- Page Content -->
       <main>
         <div :class="`${fluid ? 'container-fluid' : 'container'} mt-3`">
-          <div
-            v-if="$page.props.flash.success"
-            class="alert alert-success"
-          >
-            {{ $page.props.flash.success }}
-          </div>
+          <Notifications :flash="$page.props.flash" />
           <slot />
         </div>
       </main>
@@ -24,6 +19,7 @@
 </template>
 
 <script setup>
+import Notifications from '@/Components/Notifications.vue'
 import AdminMainNavbar from '../Components/AdminMainNavbar.vue'
 
 defineProps({

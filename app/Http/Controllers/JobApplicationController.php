@@ -60,6 +60,7 @@ class JobApplicationController extends Controller
                     'job_posting_id' => $job_posting->id,
                 ]
             );
+
             foreach ($request->file('documents') as $file){
                 $path = $file->store('documents', 'public');
 

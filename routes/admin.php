@@ -104,6 +104,7 @@ use Illuminate\Support\Facades\Route;
     Route::resource('idp_accomplishment', IdpAccomplishmentController::class)->only(['store', 'destroy']);
 
     Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
+    Route::post('daily_time_record/getDtr', [AdminDailyTimeRecordController::class, 'getDtr'])->name('daily_time_record.getDtr');
 
     
  });

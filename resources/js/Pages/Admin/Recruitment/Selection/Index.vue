@@ -2,21 +2,7 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <b>VACANCIES</b>
-    <ul>
-      <li v-for="item in props.job_vacancies" :key="item.id">
-        <Link
-          :href="route('admin.recruitment.selection.index', 
-                       {job_posting: item.id}
-          )"
-          :class="{'text-dark': item.id == posting_id}"
-        >
-          {{ item.plantilla.position }}
-        </Link>
-      </li>
-    </ul>
-
-    <hr />
-
+    <JobVacancies :job_vacancies="job_vacancies" />
     <!-- <div class="row">
       <div class="col-3">
         <b>APPLICANTS</b>
@@ -40,12 +26,12 @@
 
 <script setup>
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
-import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
+import JobVacancies from './Components/JobVacancies.vue'
 import {Head, Link, usePage} from '@inertiajs/vue3'
 
 const props = defineProps({
   job_vacancies: Array,
-  posting_id: String,
+  posting: Object,
 })
 
 </script>

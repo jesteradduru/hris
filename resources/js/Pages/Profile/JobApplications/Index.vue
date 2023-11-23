@@ -41,7 +41,6 @@ import {computed} from 'vue'
 const crumbs = computed(() => [
   {
     label: 'My Job Applications',
-    link: route('job_application.index'),
   },
 ])
 

@@ -67,4 +67,12 @@ class AdminDailyTimeRecordController extends Controller
     {
         //
     }
+
+    public function getDtr(){
+
+        DailyTimeRecord::getDtr();
+
+        return back()->with('success', 'DTR loaded successfully.');
+
+    }
 }
