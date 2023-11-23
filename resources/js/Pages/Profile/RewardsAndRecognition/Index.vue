@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <h3>Rewards and Recognition</h3>
     <Link v-if="permission.includes('Add Reward')" :href="route('profile.rewards.create')" class="btn btn-primary">Add reward</Link>
-    <div class="table-responsive">
+    <div v-if="props.rewards.length > 0" class="table-responsive">
       <table class="table table-bordered mt-3 table-sm">
         <thead>
           <tr>
@@ -25,6 +25,9 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="text-center bg-light mt-4 p-4 rounded">
+      No Records
     </div>
   </AuthenticatedLayout>
 </template>

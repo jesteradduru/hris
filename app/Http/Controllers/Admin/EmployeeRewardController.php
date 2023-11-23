@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Division;
 use App\Models\EmployeeReward;
+use App\Models\RewardAndRecognition;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -24,9 +26,14 @@ class EmployeeRewardController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request, RewardAndRecognition $reward)
     {
-        //
+        $filters = $request->only(['name', 'division']);
+        return inertia('Admin/RnR/EmployeeReward/Create', [
+            'reward' => $reward,
+            'divisions' => Division::all(),
+            'employees' => User::role('employee')->filter($filters)->paginate(15)->withQueryString()
+        ]);
     }
 
     /**

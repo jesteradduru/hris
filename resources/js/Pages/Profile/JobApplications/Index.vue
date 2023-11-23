@@ -1,7 +1,7 @@
 <template>
   <AuthenticatedLayout>
+    <h3>My Job Applications</h3>
     <BreadCrumbs :crumbs="crumbs" />
-    <h3>Job Applications</h3>
     <div class="table-responsive">
       <table class="table table-compact table-hover table-striped">
         <thead>

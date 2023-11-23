@@ -1,9 +1,9 @@
 <template>
-  <Head title="Job Vacancies" />
+  <Head title="Rewards and Recognition" />
       
   <AdminLayout>
-    <BreadCrumbs :crumbs="crumbs" />
     <h3>Rewards and Recognition</h3>
+    <BreadCrumbs :crumbs="crumbs" />
     <Link class="btn  btn-primary" :href="route('admin.rewards.create')">Create Reward/Recognition</Link>
   
     <div class="table-responsive">
@@ -20,6 +20,9 @@
             <td scope="row">{{ item.title }}</td>
             <td>{{ item.points }}</td>
             <td class="d-flex gap-2">
+              <Link class="btn btn-primary btn-sm" :href="route('admin.rewards.show', {reward: item.id})">
+                <i class="fa-solid fa-award" />
+              </Link>
               <Link class="btn btn-success btn-sm" :href="route('admin.rewards.edit', {reward: item.id})">
                 <i class="fa-solid fa-pencil" />
               </Link>
@@ -39,7 +42,7 @@
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import { Head, Link, usePage } from '@inertiajs/vue3'
+import { Head, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'

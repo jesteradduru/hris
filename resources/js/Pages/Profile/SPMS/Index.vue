@@ -2,48 +2,53 @@
   <AuthenticatedLayout>
     <h3>SPMS</h3>
     <button v-if="permission.includes('Add SPMS')" class="btn btn-primary" data-bs-target="#uploadSpmsForm" data-bs-toggle="modal">Add SPMS</button>
-    <div v-for="(spmsForm, index) in years" :id="`accordion${index}`" :key="index" class="accordion mt-3">
-      <div class="accordion-item">
-        <h2 id="headingOne" class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${spmsForm.year}`" aria-expanded="false" aria-controls="collapseOne">
-            <b>{{ spmsForm.year }}</b>
-          </button>
-        </h2>
-        <div :id="`${spmsForm.year}`" class="accordion-collapse collapse" aria-labelledby="headingOne" :data-bs-parent="`#accordion${index}`">
-          <div class="accordion-body">
-            <div class="table-responsive">
-              <table class="table table-bordered mt-3">
-                <thead>
-                  <tr>
-                    <th scope="col">SEMESTER</th>
-                    <th scope="col">RATING</th>
-                    <th scope="col">ACTION</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="item in spmsForm.forms" :key="item.id">
-                    <td><a :href="item.src" target="_blank">{{ `${item.semester} SEMESTER ${item.type}` }} <i class="fa-solid fa-up-right-from-square" /></a></td>
-                    <td>
-                      {{ item.rating }}
-                      <b>
-                        {{ item.rating == 5 ? 'Outstanding' : null }}
-                        {{ item.rating < 5 && item.rating >= 4 ? 'Very Satisfactory' : null }}
-                        {{ item.rating < 4 && item.rating >= 3 ? 'Satisfactory' : null }}
-                        {{ item.rating < 3 && item.rating >= 2 ? 'Unsatisfactory' : null }}
-                        {{ item.rating < 2 && item.rating >= 1 ? 'Poor' : null }}
-                      </b>
-                    </td>
-                    <td>
-                      <Link v-if="permission.includes('Edit SPMS')" class="btn btn-success btn-sm" :href="route('profile.spms.edit', {spm: item.id})"><i class="fa-solid fa-pen" /></Link>
-                      <Link v-if="permission.includes('Delete SPMS')" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.spms.destroy', {spm: item.id})"><i class="fa-solid fa-trash" /></Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+    <div v-if="years.length > 0">
+      <div v-for="(spmsForm, index) in years" :id="`accordion${index}`" :key="index" class="accordion mt-3">
+        <div class="accordion-item">
+          <h2 id="headingOne" class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" :data-bs-target="`#${spmsForm.year}`" aria-expanded="false" aria-controls="collapseOne">
+              <b>{{ spmsForm.year }}</b>
+            </button>
+          </h2>
+          <div :id="`${spmsForm.year}`" class="accordion-collapse collapse" aria-labelledby="headingOne" :data-bs-parent="`#accordion${index}`">
+            <div class="accordion-body">
+              <div class="table-responsive">
+                <table class="table table-bordered mt-3">
+                  <thead>
+                    <tr>
+                      <th scope="col">SEMESTER</th>
+                      <th scope="col">RATING</th>
+                      <th scope="col">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in spmsForm.forms" :key="item.id">
+                      <td><a :href="item.src" target="_blank">{{ `${item.semester} SEMESTER ${item.type}` }} <i class="fa-solid fa-up-right-from-square" /></a></td>
+                      <td>
+                        {{ item.rating }}
+                        <b>
+                          {{ item.rating == 5 ? 'Outstanding' : null }}
+                          {{ item.rating < 5 && item.rating >= 4 ? 'Very Satisfactory' : null }}
+                          {{ item.rating < 4 && item.rating >= 3 ? 'Satisfactory' : null }}
+                          {{ item.rating < 3 && item.rating >= 2 ? 'Unsatisfactory' : null }}
+                          {{ item.rating < 2 && item.rating >= 1 ? 'Poor' : null }}
+                        </b>
+                      </td>
+                      <td>
+                        <Link v-if="permission.includes('Edit SPMS')" class="btn btn-success btn-sm" :href="route('profile.spms.edit', {spm: item.id})"><i class="fa-solid fa-pen" /></Link>
+                        <Link v-if="permission.includes('Delete SPMS')" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.spms.destroy', {spm: item.id})"><i class="fa-solid fa-trash" /></Link>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div v-else class="text-center bg-light mt-4 p-4 rounded">
+      No Records
     </div>
     
     <Modal id="uploadSpmsForm">

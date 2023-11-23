@@ -48,9 +48,11 @@ class AdminRewardAndRecognitionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RewardAndRecognition $rewardAndRecognition)
+    public function show(RewardAndRecognition $reward)
     {
-        //
+        return inertia('Admin/RnR/Show', [
+            'reward' => $reward->load(['employee' => ['employee']])
+        ]);
     }
 
     /**
