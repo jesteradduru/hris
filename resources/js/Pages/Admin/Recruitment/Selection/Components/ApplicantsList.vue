@@ -14,7 +14,6 @@
             :class="{
               'text-dark': applicant_details?.id === item.user.id,
             }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
-            :preserve-state="true"
           >
             {{ item.user.name }}
           </Link>
@@ -25,10 +24,10 @@
             <span v-if="item.result.length > 0 && item.result[0].result ==='QUALIFIED'" class="badge rounded-pill text-bg-success">
               <i class="fa-solid fa-check" />
             </span>
-            <span v-if="item.result === 'EXAM_FAILED'" class="badge rounded-pill text-bg-warning">
+            <span v-if="item.result === 'EXAM_FAILED' || item.result === 'UNLISTED'" class="badge rounded-pill text-bg-warning">
               <i class="fa-solid fa-x " />
             </span>
-            <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED'" class="badge rounded-pill text-bg-success">
+            <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED' || item.result === 'SHORTLISTED'" class="badge rounded-pill text-bg-success">
               <i class="fa-solid fa-check" />
             </span>
           </div>
@@ -47,7 +46,6 @@
           :class="{
             'text-dark': applicant_details?.id === item.user.id,
           }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
-          :preserve-state="true"
         >
           {{ item.user.name }}
         </Link>
@@ -58,10 +56,10 @@
           <span v-if="item.result.length > 0 && item.result[0].result ==='QUALIFIED'" class="badge rounded-pill text-bg-success">
             <i class="fa-solid fa-check" />
           </span>
-          <span v-if="item.result === 'EXAM_FAILED'" class="badge rounded-pill text-bg-warning">
+          <span v-if="item.result === 'EXAM_FAILED' || item.result === 'UNLISTED'" class="badge rounded-pill text-bg-warning">
             <i class="fa-solid fa-x " />
           </span>
-          <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED'" class="badge rounded-pill text-bg-success">
+          <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED' || item.result === 'SHORTLISTED'" class="badge rounded-pill text-bg-success">
             <i class="fa-solid fa-check" />
           </span>
         </div>
@@ -82,7 +80,6 @@
           :class="{
             'text-dark': applicant_details?.id === item.user.id,
           }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
-          :preserve-state="true"
         >
           {{ item.user.name }}
         </Link>
@@ -93,10 +90,10 @@
           <span v-if="item.result.length > 0 && item.result[0].result ==='QUALIFIED'" class="badge rounded-pill text-bg-success">
             <i class="fa-solid fa-check" />
           </span>
-          <span v-if="item.result === 'EXAM_FAILED'" class="badge rounded-pill text-bg-warning">
+          <span v-if="item.result === 'EXAM_FAILED' || item.result === 'UNLISTED'" class="badge rounded-pill text-bg-warning">
             <i class="fa-solid fa-x " />
           </span>
-          <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED'" class="badge rounded-pill text-bg-success">
+          <span v-if="item.result === 'EXAM_PASSED' || item.result === 'SELECTED' || item.result === 'SHORTLISTED'" class="badge rounded-pill text-bg-success">
             <i class="fa-solid fa-check" />
           </span>
         </div>

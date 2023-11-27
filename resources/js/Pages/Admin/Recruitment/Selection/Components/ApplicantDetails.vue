@@ -30,7 +30,7 @@
           Current Position
         </dt>
         <dd>{{ applicant.position.position }}</dd>
-        <dt>SPMS:</dt>
+        <dt>Performance Management:</dt>
         <dd>
           <div v-if="applicant.spms.length > 0" class="table-responsive">
             <table class="table table-sm table-bordered">

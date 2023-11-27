@@ -102,5 +102,13 @@ class JobPosting extends Model
     public function getPlantillaAttribute(){
         return PlantillaPosition::find($this->plantilla_id);
     }
+
+    public function scopeSortByRank(Builder $query) {
+        return $query
+        ->join('job_applications', 'job_applications.job_posting_id', '=', 'job_postings.id')
+        ->join('users', 'job_applications.user_id', '=', 'users.id')
+        ->join('application_scores', 'application_scores.job_application_id', '=', 'job_applications.id')
+        ->orderBy('application_scores.total', 'desc');
+    }
     
 }

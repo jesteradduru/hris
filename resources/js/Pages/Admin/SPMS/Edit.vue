@@ -1,5 +1,5 @@
 <template>
-  <Head title="SPMS" />
+  <Head title="Performance Management" />
   <AdminLayout>
     <Link class="btn btn-secondary mb-3 btn-sm" :href="route('admin.spms.index')"><i class="fa-solid fa-arrow-left" /></Link>
     <h3>Edit {{ props.spms.type }}</h3>

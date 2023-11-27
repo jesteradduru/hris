@@ -7,18 +7,6 @@
       </button>
       <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
-          <li v-if="permissions.includes('View Reward Page')" class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.rewards.index')" :class="{
-                active: route().current(
-                  'admin.rewards.*'
-                )
-              }"
-            >
-              Rewards and Recognition
-            </Link>
-          </li>
-
           <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.recruitment.job_posting.index')" :class="{
@@ -46,8 +34,8 @@
               Learning and Development
             </Link>
           </li>
-
-          <li class="nav-item dropdown">
+          
+          <li class="nav-item">
             <Link
               class="nav-link" :href="route('admin.spms.index')" :class="{
                 active: route().current(
@@ -55,9 +43,25 @@
                 )
               }"
             >
-              SPMS
+              Performance Management
             </Link>
           </li>
+
+
+          <li v-if="permissions.includes('View Reward Page')" class="nav-item">
+            <Link
+              class="nav-link" :href="route('admin.rewards.index')" :class="{
+                active: route().current(
+                  'admin.rewards.*'
+                )
+              }"
+            >
+              Rewards and Recognition
+            </Link>
+          </li>
+
+
+
 
           <li class="nav-item">
             <Link
@@ -72,7 +76,7 @@
           </li>
           
           
-          <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item dropdown">
+          <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.role_permission.role.index')" :class="{
                 active: route().current(
@@ -84,7 +88,7 @@
             </Link>
           </li>
           
-          <li class="nav-item dropdown">
+          <li class="nav-item">
             <Link
               class="nav-link" :href="route('admin.daily_time_record.index')" :class="{
                 active: route().current(

@@ -17,12 +17,14 @@ return new class extends Migration
             $table->timestamps();
             $table->enum('phase', [
                 'INITIAL_SCREENING',
+                'SHORTLISTING',
                 'NEDA_EXAM_SCHEDULE',
                 'NEDA_EXAM',
+                'INTERVIEW_SCHEDULE',
                 'FOR_INTERVIEW',
                 'INTERVIEW',
-                'INTERVIEW_SCHEDULE',
-                'FINAL'
+                'FINAL',
+                'SELECTION',
             ]);
             $table->dateTime('schedule')->nullable();
             $table->time('start_time')->nullable();

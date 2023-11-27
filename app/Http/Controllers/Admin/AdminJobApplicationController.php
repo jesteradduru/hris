@@ -28,6 +28,10 @@ class AdminJobApplicationController extends Controller
         if($request->job_posting && $job_vacancy_status->phase === 'INITIAL_SCREENING'){
             return self::initial_screening($request, $job_vacancy_status);
         }
+        // SHORTLISTING
+        else if($request->job_posting && $job_vacancy_status->phase === 'SHORTLISTING'){
+            return self::shortlisting($request);
+        }
         // NEDA EXAM SCHEDULE
         else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM_SCHEDULE'){
             return self::neda_exam_schedule($request);
@@ -46,6 +50,10 @@ class AdminJobApplicationController extends Controller
         }
         // FINAL
         else if($request->job_posting && $job_vacancy_status->phase === 'FINAL'){
+            return self::final($request);
+        }
+        // SELECTION
+        else if($request->job_posting && $job_vacancy_status->phase === 'SELECTION'){
             return self::final($request);
         }
         // NO SELECTED JOB VACANCY
@@ -107,6 +115,50 @@ class AdminJobApplicationController extends Controller
             "applicant_details" => $applicant_details,
         ]);
     }
+
+
+    // SHORTLISTING
+    private static function shortlisting(Request $request){
+        $job_vacancies = JobPosting::notArchived()->get();
+        $job_applications = [];
+        $applicant_details = null;
+        
+
+        // dd($job_vacancies);
+
+        if($request->job_posting){
+            $job_vacancy = JobPosting::find($request->job_posting);
+            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+        }
+
+        if($request->applicant){
+            $applicant_details = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information',
+                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                'spms',
+                'reward' => ['reward'],
+                'position'
+                
+            ]);
+        }
+
+        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+
+        return inertia('Admin/Recruitment/Selection/Shortlisting/Index', [
+            "job_applications" => $job_applications,
+            "job_vacancies" => $job_vacancies,
+            "job_vacancy_status" => $job_vacancy_status,
+            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
+            "applicant_details" => $applicant_details,
+            "qualified_applicants" => $latest_result,
+        ]);
+
+}
 
 
 
@@ -260,7 +312,46 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with(['document', 'score'])->where('job_posting_id', $request->job_posting)
+            ]);
+        }
+
+        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+            
+        return inertia('Admin/Recruitment/Selection/Interview/Index', [
+            "job_applications" => $job_applications,
+            "job_vacancies" => $job_vacancies,
+            "job_vacancy_status" => $job_vacancy_status,
+            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
+            "applicant_details" => $applicant_details,
+            "qualified_applicants" => $latest_result,
+        ]);
+
+    }
+
+    // SELECTION
+    private static function selection(Request $request){
+        $job_vacancies = JobPosting::notArchived()->get();
+        $job_applications = [];
+        $applicant_details = null;
+        
+
+        // dd($job_vacancies);
+
+        if($request->job_posting){
+            $job_vacancy = JobPosting::find($request->job_posting);
+            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+        }
+
+        if($request->applicant){
+            $applicant_details = User::find($request->applicant)->load([
+                'personal_information',
+                'educational_background',
+                'civil_service_eligibility',
+                'work_experience',
+                'learning_and_development',
+                'other_information',
+                'job_application' => fn($query) => $query->with(['document', 'score'])->where('job_posting_id', $request->job_posting)
             ]);
         }
 
@@ -304,12 +395,25 @@ class AdminJobApplicationController extends Controller
         }
 
         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
-        
+
+        // dd(JobPosting::find($request->job_posting)->load(['job_application' => [
+        //     'result',
+        //     'user',
+        //     'score' => fn($query) => $query->orderBy('total', 'desc'),
+        // ]])->get());
+
+
         return inertia('Admin/Recruitment/Selection/Final/Index', [
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
+            "posting" => JobPosting::find($request->job_posting)->sortByRank()->with([
+                'job_application' => 
+                [
+                    'user',
+                    'result',
+                    'score'
+                ]])->get(),
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
         ]);

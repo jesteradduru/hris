@@ -103,7 +103,7 @@ const props = defineProps({
 
 const examScheduleForm = useForm({
   _method: 'put',
-  schedule: moment(props.job_vacancy_status.schedule).format('Y-M-D'),
+  schedule: props.job_vacancy_status.schedule ? moment(props.job_vacancy_status.schedule).format('Y-M-D') : null,
   start_time: props.job_vacancy_status.start_time,
   end_time: props.job_vacancy_status.end_time,
 })

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
 use App\Http\Controllers\Admin\AdminSpmsController;
 use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
+use App\Http\Controllers\Admin\ApplicationScoreController;
 use App\Http\Controllers\Admin\CompetencyGapController;
 use App\Http\Controllers\Admin\EligibilityController;
 use App\Http\Controllers\Admin\EmployeeController;
@@ -81,6 +82,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::name('application_result.publish')->put('application_result/{results}/publish', PublishHiringResultController::class);
         Route::name('neda_exam.set')->put('neda_exam/{result}/setShedule', SetExamScheduleController::class);
+
+        // application scores
+        Route::resource('application_score', ApplicationScoreController::class);
 
         // plantilla position
         Route::resource('plantilla', PlantillaPositionController::class);

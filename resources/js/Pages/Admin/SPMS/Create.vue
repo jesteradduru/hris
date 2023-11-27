@@ -1,8 +1,8 @@
 <template>
-  <Head title="SPMS" />
+  <Head title="Performance Management" />
   <AdminLayout>
     <Link class="btn btn-secondary col btn-sm mb-3" :href="route('admin.spms.index')"><i class="fa-solid fa-arrow-left" /></Link>
-    <h3>Add SPMS</h3>
+    <h3>Add Performance Management</h3>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>

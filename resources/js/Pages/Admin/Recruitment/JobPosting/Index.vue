@@ -10,7 +10,7 @@
           :href="route('admin.recruitment.job_posting.create')"
           class="btn btn-primary"
         >
-          Add Item
+          Add Job Vacancy
         </Link>
       </div>
     </div>

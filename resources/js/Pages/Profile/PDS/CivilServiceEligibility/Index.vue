@@ -8,7 +8,7 @@
         <table class="table table-sm table-bordered mt-3">
           <thead>
             <tr>
-              <th scope="col">CAREER SERVICE/RA1080</th>
+              <th scope="col">ELIGIBIILITY</th>
               <th scope="col">RATING(If applicable)</th>
               <th scope="col">DATE OF EXAMINATION</th>
               <th scope="col">PLACE OF EXAMINATION</th>

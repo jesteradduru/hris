@@ -1,6 +1,6 @@
 <template>
   <AuthenticatedLayout>
-    <h3>SPMS</h3>
+    <h3>Performance Management</h3>
     <button v-if="permission.includes('Add SPMS')" class="btn btn-primary" data-bs-target="#uploadSpmsForm" data-bs-toggle="modal">Add SPMS</button>
     <div v-if="years.length > 0">
       <div v-for="(spmsForm, index) in years" :id="`accordion${index}`" :key="index" class="accordion mt-3">
@@ -53,7 +53,7 @@
     
     <Modal id="uploadSpmsForm">
       <template #header>
-        <h5>Add SPMS</h5>
+        <h5>Add Performance Management</h5>
       </template>
       <template #body>
         <div class="mb-3">

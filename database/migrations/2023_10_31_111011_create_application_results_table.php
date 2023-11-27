@@ -25,11 +25,15 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
             $table->enum('result', [
                 'QUALIFIED',
+                'SHORTLISTING',
+                'SHORTLISTED',
+                'UNLISTED',
                 'UNQUALIFIED',
                 'FOR_EXAM',
                 'EXAM_PASSED',
                 'EXAM_FAILED',
                 'FOR_INTERVIEW',
+                'SELECTION',
                 'SELECTED',
             ])->nullable();
         });

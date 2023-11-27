@@ -45,18 +45,59 @@
       <li class="nav-item">
         <b>Menu</b>
       </li>
-      <li class="nav-item">
+      <li v-if="user" class="nav-item mt-4">
         <Link
           class="nav-link text-info" :class="{
             active: route().current(
-              'recruitment.job_posting.*'
+              'notification.*'
             )
+          }" :href="route('notification.index')"
+        >
+          Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
+        </Link>
+      </li>
+      <li :class="{'mt-3': !user}" class="nav-item">
+        <Link
+        
+          class="nav-link text-info" :class="{
+            active: route().current(
+              'recruitment.job_posting.*'
+            ) || route().current('job_application.create')
           }" :href="route('recruitment.job_posting.index')"
         >
           Job Vacancies
         </Link>
       </li>
-      <li class="nav-item">
+      <li v-if="user && permissions.includes('View L&D Form')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('lnd_forms.*')
+          }" :href="route('lnd_forms.index')"
+        >
+          Learning and Development
+        </Link>
+      </li>
+    
+      <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.spms.*')
+          }" :href="route('profile.spms.index')"
+        >
+          Performance Management
+        </Link>
+      </li>
+
+      <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+        <Link
+          class="nav-link" :class="{
+            active: route().current('profile.rewards.*')
+          }" :href="route('profile.rewards.index')"
+        >
+          Rewards and Recognition
+        </Link>
+      </li>
+      <li v-if="user" class="nav-item">
         <Link
           class="nav-link" :class="{
             active: route().current('profile.pds.*')
@@ -69,28 +110,10 @@
       <li v-if="user && permissions.includes('View Application')" class="nav-item">
         <Link
           class="nav-link" :class="{
-            active: route().current('job_application.index')
+            active: route().current('job_application.*') && !route().current('job_application.create') 
           }" :href="route('job_application.index')"
         >
           Job Applications
-        </Link>
-      </li>
-      <li v-if="user && permissions.includes('View Reward')" class="nav-item">
-        <Link
-          class="nav-link" :class="{
-            active: route().current('profile.rewards.index')
-          }" :href="route('profile.rewards.index')"
-        >
-          Rewards and Recognition
-        </Link>
-      </li>
-      <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
-        <Link
-          class="nav-link" :class="{
-            active: route().current('profile.spms.*')
-          }" :href="route('profile.spms.index')"
-        >
-          SPMS
         </Link>
       </li>
       <li v-if="user && permissions.includes('View DTR')" class="nav-item">

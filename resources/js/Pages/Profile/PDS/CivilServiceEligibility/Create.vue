@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-12">
             <div class="mb-3">
-              <label class="form-label">CAREER SERVICE/ RA 1080 (BOARD/ BAR) UNDER SPECIAL LAWS/ CES/ CSEE BARANGAY ELIGIBILITY / DRIVER'S LICENSE</label>
+              <label class="form-label">Eligibility</label>
               <input v-model="eligibilityForm.cs_board_bar_ces_csee_barangay_drivers" type="text" class="form-control form-control-sm" />
               <InputError :message="eligibilityForm.errors.cs_board_bar_ces_csee_barangay_drivers" />
             </div>

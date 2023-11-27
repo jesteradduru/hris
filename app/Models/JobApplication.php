@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JobApplication extends Model
 {
@@ -32,6 +34,11 @@ class JobApplication extends Model
     public function result() : HasMany
     {
         return $this->hasMany(ApplicationResult::class, 'application_id');
+    }
+
+    public function score() : HasOne
+    {
+        return $this->hasOne(ApplicationScore::class, 'job_application_id');
     }
 
     public function getLatestResultAttribute(){

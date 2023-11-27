@@ -84,7 +84,7 @@
 <script setup>
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
 import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
-import {Head, Link, useForm, usePage} from '@inertiajs/vue3'
+import {Head, Link, useForm} from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
 import {debounce} from 'lodash'
@@ -101,7 +101,7 @@ const props = defineProps({
 
 const scheduleForm = useForm({
   _method: 'put',
-  schedule: moment(props.job_vacancy_status.schedule).format('Y-M-D'),
+  schedule: props.job_vacancy_status.schedule ? moment(props.job_vacancy_status.schedule).format('Y-M-D') : null,
   start_time: props.job_vacancy_status.start_time,
   end_time: props.job_vacancy_status.end_time,
 })

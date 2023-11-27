@@ -1,5 +1,5 @@
 <template>
-  <Head title="SPMS" />
+  <Head title="Performance Management" />
   <AuthenticatedLayout>
     <Link class="btn btn-secondary mb-3 btn-sm" :href="route('lnd_forms.index')"><i class="fa-solid fa-arrow-left" /></Link>
     <h3>EDIT {{ props.lndForm.type }}</h3>

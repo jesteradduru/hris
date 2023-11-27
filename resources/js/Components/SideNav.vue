@@ -27,6 +27,35 @@
         Job Vacancies
       </Link>
     </li>
+    <li v-if="user && permissions.includes('View L&D Form')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('lnd_forms.*')
+        }" :href="route('lnd_forms.index')"
+      >
+        Learning and Development
+      </Link>
+    </li>
+    
+    <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('profile.spms.*')
+        }" :href="route('profile.spms.index')"
+      >
+        Performance Management
+      </Link>
+    </li>
+
+    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+      <Link
+        class="nav-link" :class="{
+          active: route().current('profile.rewards.*')
+        }" :href="route('profile.rewards.index')"
+      >
+        Rewards and Recognition
+      </Link>
+    </li>
     <li v-if="user" class="nav-item">
       <Link
         class="nav-link" :class="{
@@ -44,33 +73,6 @@
         }" :href="route('job_application.index')"
       >
         Job Applications
-      </Link>
-    </li>
-    <li v-if="user && permissions.includes('View L&D Form')" class="nav-item">
-      <Link
-        class="nav-link" :class="{
-          active: route().current('lnd_forms.*')
-        }" :href="route('lnd_forms.index')"
-      >
-        Learning and Development
-      </Link>
-    </li>
-    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
-      <Link
-        class="nav-link" :class="{
-          active: route().current('profile.rewards.*')
-        }" :href="route('profile.rewards.index')"
-      >
-        Rewards and Recognition
-      </Link>
-    </li>
-    <li v-if="user && permissions.includes('View SPMS')" class="nav-item">
-      <Link
-        class="nav-link" :class="{
-          active: route().current('profile.spms.*')
-        }" :href="route('profile.spms.index')"
-      >
-        SPMS
       </Link>
     </li>
     <li v-if="user && permissions.includes('View DTR')" class="nav-item">

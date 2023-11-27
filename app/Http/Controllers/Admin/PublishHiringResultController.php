@@ -17,6 +17,11 @@ class PublishHiringResultController extends Controller
 
         // create new result
        switch($results->phase){
+                case 'SHORTLISTING':
+                    $newResult = $job->results()->create([
+                        'phase' => 'NEDA_EXAM_SCHEDULE'
+                    ]);
+                break;
                 case 'NEDA_EXAM_SCHEDULE':
                     $newResult = $job->results()->create([
                         'phase' => 'NEDA_EXAM'
@@ -37,9 +42,14 @@ class PublishHiringResultController extends Controller
                         'phase' => 'FINAL'
                     ]);
                 break;
+                case 'FINAL':
+                    $newResult = $job->results()->create([
+                        'phase' => 'SELECTION'
+                    ]);
+                break;
                 default:
                     $newResult = $job->results()->create([
-                        'phase' => 'NEDA_EXAM_SCHEDULE'
+                        'phase' => 'SHORTLISTING'
                     ]);
                 break;
         }
@@ -57,6 +67,14 @@ class PublishHiringResultController extends Controller
             switch($currentResult->result){
 
                 case 'QUALIFIED':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
+
+                case 'SHORTLISTED':
                     $currentResult->create([
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
@@ -87,9 +105,18 @@ class PublishHiringResultController extends Controller
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
                         'user_id' => $currentResult->user_id,
+                        'result' => 'SELECTION'
                     ]);
                 break;
                 
+                case 'SELECTION':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
+
                 case 'SELECTED':
                     $currentResult->create([
                         'result_id' => $newResult->id,

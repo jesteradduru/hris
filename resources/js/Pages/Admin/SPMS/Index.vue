@@ -1,7 +1,7 @@
 <template>
-  <Head title="SPMS" />
+  <Head title="Performance Management" />
   <AdminLayout>
-    <h3>SPMS</h3>
+    <h3>Performance Management</h3>
     <div class="container border p-4 rounded">
       <div class="row">
         <div class="col">
