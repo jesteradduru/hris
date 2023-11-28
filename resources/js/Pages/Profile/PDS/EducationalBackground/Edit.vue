@@ -232,6 +232,7 @@
                       <th scope="col">UNITS EARNED</th>
                       <th scope="col">YEAR GRADUATED </th>
                       <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
+                      <th scope="col">FILES</th>
                       <th scope="col">ACTION</th>
                     </tr>
                   </thead>
@@ -243,6 +244,13 @@
                       <td>{{ college.highest_lvl_units_earned }}</td>
                       <td>{{ college.year_graduated }}</td>
                       <td>{{ college.scholarship_academic_honors }}</td>
+                      <td>
+                        <ul>
+                          <li v-for="file in college.files" :key="file.id">
+                            <a target="_blank" :href="file.src">{{ file.filename }}</a>
+                          </li>
+                        </ul>
+                      </td>
                       <td>
                         <div class="d-flex gap-2">
                           <button
@@ -294,6 +302,7 @@
                       <th scope="col">UNITS EARNED</th>
                       <th scope="col">YEAR GRADUATED </th>
                       <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
+                      <th scope="col">FILES</th>
                       <th scope="col">ACTION</th>
                     </tr>
                   </thead>
@@ -305,6 +314,13 @@
                       <td>{{ college.highest_lvl_units_earned }}</td>
                       <td>{{ college.year_graduated }}</td>
                       <td>{{ college.scholarship_academic_honors }}</td>
+                      <td>
+                        <ul>
+                          <li v-for="file in college.files" :key="file.id">
+                            <a target="_blank" :href="file.src">{{ file.filename }}</a>
+                          </li>
+                        </ul>
+                      </td>
                       <td>
                         <div class="d-flex gap-2">
                           <button
@@ -456,8 +472,8 @@
               <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
               <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
               <small class="form-text text-muted">Accepted file formats: pdf</small>
-              <InputError :message="form.errors['documents']" />
-              <InputError :message="form.errors['documents.0']" />
+              <InputError :message="addForm.errors['documents']" />
+              <InputError :message="addForm.errors['documents.0']" />
             </div>
           </div>
           
@@ -541,6 +557,16 @@
               <label class="form-label">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</label>
               <input v-model="editForm.scholarship_academic_honors" type="text" class="form-control form-control-sm" />
               <InputError :message="editForm.errors.scholarship_academic_honors" />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="mb-3">
+              <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
+              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addEditDocument" />
+              <small class="form-text text-muted">Accepted file formats: pdf</small>
+              <InputError :message="editForm.errors['documents']" />
+              <InputError :message="editForm.errors['documents.0']" />
             </div>
           </div>
 
@@ -645,6 +671,7 @@ const editId = ref(null)
 
 
 const editForm = useForm({
+  _method: 'put',
   type: 'COLLEGE',
   name_of_school: null,
   basic_ed_degree_course: null,
@@ -653,6 +680,7 @@ const editForm = useForm({
   highest_lvl_units_earned: null,
   year_graduated: null,
   scholarship_academic_honors: null,
+  documents: [],
 })
 
 
@@ -683,7 +711,7 @@ const onAddCollegeGraduate = () => {
 }
 
 const onUpdateCollegeGraduate = () => {
-  editForm.put(route('profile.pds.college_graduate_study.update', {educational_background: props.educational_background?.id, college_graduate_study: editId.value}), {
+  editForm.post(route('profile.pds.college_graduate_study.update', {educational_background: props.educational_background?.id, college_graduate_study: editId.value}), {
     preserveScroll: true,
   })
 }
@@ -698,9 +726,16 @@ const graduate_studies = computed(() => {
 const confirm = () => window.confirm('Are you sure to delete this?')
 
 const addDocument = (e) => {
-  addForm.reset()
+  addForm.documents = []
   for(const file of e.target.files){
     addForm.documents.push(file)
+  }
+}
+
+const addEditDocument = (e) => {
+  editForm.documents = []
+  for(const file of e.target.files){
+    editForm.documents.push(file)
   }
 }
 

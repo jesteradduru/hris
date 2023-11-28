@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\EducationalBackgroundCollegeGraduateStudy;
 use Illuminate\Http\Request;
 
@@ -44,12 +45,25 @@ class CollegeGraduateStudyController extends Controller
             'documents.required' => 'Please upload the required documents.'
         ]);
 
-        $request->user()->college_graduate_studies()->create(
+        
+
+        $course = $request->user()->college_graduate_studies()->create(
             [
                 ...$validate,
                 'type' => $request->type
             ]
         );
+
+        foreach ($request->file('documents') as $file){
+ 
+            $path = $file->store('documents', 'public');
+            
+
+            $course->files()->save(new Document([
+                'filename' => $file->getClientOriginalName(),
+                'filepath' => $path
+            ]));
+        }
 
         return back()->with('success', 'Added Successfully');
     }
@@ -73,8 +87,9 @@ class CollegeGraduateStudyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EducationalBackgroundCollegeGraduateStudy $educationalBackgroundCollegeGraduateStudy)
+    public function update(Request $request)
     {
+
        
         $validate = $request->validate([
             "name_of_school" => "required|string|max:255",
@@ -84,16 +99,43 @@ class CollegeGraduateStudyController extends Controller
             "highest_lvl_units_earned" => "nullable|integer",
             "year_graduated" => "required|integer",
             "scholarship_academic_honors" => "required|string|max:255",
+            'documents' => 'required|array|min:1',
+            'documents.*'=> 'required|mimes:pdf|max:15000',
+        ], [
+            'documents.*.mimes' => 'Only pdf format is accepted.',
+            'documents.*.max' => 'Document must not be greater than 15MB.',
+            'documents.required' => 'Please upload the required documents.'
         ]);
-        $data = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
 
-        $data->update(
+        $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
+
+        $course->update(
             [
                 ...$validate,
             ]
         );
+
         
-            return back()->with('success', 'Updated Successfully');
+
+        if($request->file('documents')){
+            if($course->files()->exists()){
+                $course->files()->delete();
+            }
+            
+            foreach ($request->file('documents') as $file){
+ 
+                $path = $file->store('documents', 'public');
+                
+    
+                $course->files()->save(new Document([
+                    'filename' => $file->getClientOriginalName(),
+                    'filepath' => $path
+                ]));
+            }
+        }
+        
+        
+        return back()->with('success', 'Updated Successfully');
         
     }
 
@@ -102,7 +144,13 @@ class CollegeGraduateStudyController extends Controller
      */
     public function destroy(Request $request)
     {
-        EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study)->delete();
+        $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
+
+        if($course->files()->exists()){
+            $course->files()->delete();
+        }
+
+        $course->delete();
 
         return back()->with('success', 'Sucessfully deleted.');
     }

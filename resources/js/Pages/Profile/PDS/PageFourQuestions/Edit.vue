@@ -92,7 +92,7 @@
                       <div class="mb-3 mt-2">
                         <input
                           id=""
-                          v-model="form.thirty_five_b_if_yes_date" type="date" class="form-control" name="" aria-describedby="helpId" placeholder="DATE FILED"
+                          v-model="form.thirty_five_b_if_yes_date" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="DATE FILED"
                         />
                         <InputError :message="form.errors.thirty_five_b_if_yes_date" />
                       </div>
@@ -302,7 +302,7 @@
                     <div v-if="form.fourty_b === 'Yes'" class="mb-3 mt-2">
                       <input
                         id=""
-                        v-model="form.fourty_b_if_yes" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, give details:"
+                        v-model="form.fourty_b_if_yes" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, , please specify ID No: "
                       />
                       <InputError :message="form.errors.fourty_b_if_yes" />
                     </div>
@@ -323,7 +323,7 @@
                     <div v-if="form.fourty_c === 'Yes'" class="mb-3 mt-2">
                       <input
                         id=""
-                        v-model="form.fourty_c_if_yes" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, give details:"
+                        v-model="form.fourty_c_if_yes" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, please specify ID No:"
                       />
                       <InputError :message="form.errors.fourty_c_if_yes" />
                     </div>

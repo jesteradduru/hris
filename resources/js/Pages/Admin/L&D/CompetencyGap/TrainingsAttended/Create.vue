@@ -39,7 +39,7 @@
           <!-- filter form -->
           <div class="row">
             <div class="col-12">
-              <b> Trainings Attended</b>
+              <b> LND Interventions</b>
             </div>
             <div class="col">
               <div class="mb-3">

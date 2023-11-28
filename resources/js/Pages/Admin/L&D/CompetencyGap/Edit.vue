@@ -11,7 +11,7 @@
             <tr>
               <th scope="col">NAME</th>
               <th scope="col">COMPETENCY GAP ASSESSMENT</th>
-              <th scope="col">TRAININGS ATTENDED</th>
+              <th scope="col">LND Interventions</th>
               <th>ACTION</th>
             </tr>
           </thead>
