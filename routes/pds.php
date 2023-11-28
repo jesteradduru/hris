@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CollegeGraduateStudyController;
 use App\Http\Controllers\PDS\OtherInformationController;
 use App\Http\Controllers\PDS\CivilServiceEligibilityController;
 use App\Http\Controllers\PDS\EducationalBackgroundController;
@@ -32,6 +33,7 @@ Route::prefix('profile/pds')
     // educational background
     Route::name('educational_background.edit')->get('/educational_background/edit', [EducationalBackgroundController::class, 'edit']);
     Route::name('educational_background.store_or_update')->post('/educational_background/store_or_update', [EducationalBackgroundController::class, 'store_or_update']);
+    Route::resource('college_graduate_study', CollegeGraduateStudyController::class);
 
     // civil service eligiblity
     Route::resource('civil_service_eligibility', CivilServiceEligibilityController::class)->only(['index', 'store', 'destroy', 'create', 'edit', 'update']);

@@ -38,20 +38,6 @@ return new class extends Migration
             $table->string('vocational_highest_lvl_units_earned', 255)->nullable();
             $table->integer('vocational_year_graduated')->nullable();
             $table->string('vocational_scholarship_academic_honors', 255)->nullable();
-            $table->string('college_name_of_school', 255)->nullable();
-            $table->string('college_basic_ed_degree_course', 255)->nullable();
-            $table->string('college_period_from', 255)->nullable();
-            $table->string('college_period_to', 255)->nullable();
-            $table->string('college_highest_lvl_units_earned', 255)->nullable();
-            $table->integer('college_year_graduated')->nullable();
-            $table->string('college_scholarship_academic_honors', 255)->nullable();
-            $table->string('graduate_name_of_school', 255)->nullable();
-            $table->string('graduate_basic_ed_degree_course', 255)->nullable();
-            $table->string('graduate_period_from', 255)->nullable();
-            $table->string('graduate_period_to', 255)->nullable();
-            $table->string('graduate_highest_lvl_units_earned', 255)->nullable();
-            $table->integer('graduate_year_graduated')->nullable();
-            $table->string('graduate_scholarship_academic_honors', 255)->nullable();
         });
     }
 

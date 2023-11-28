@@ -16,7 +16,7 @@ import { Head } from '@inertiajs/vue3'
             alt=""
           />
           <div>
-            <h1>Welcome to NEDA-HRIS</h1>
+            <h1>Welcome to NRO2-HRIS</h1>
             <p>Human Resource Information System</p>
           </div>
         </div>

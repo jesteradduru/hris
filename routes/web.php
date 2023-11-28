@@ -38,15 +38,6 @@ Route::prefix('recruitment')
 // Job Application
 Route::resource('job_application', JobApplicationController::class)->middleware(['auth']);
 
-// Route::prefix('job_application')
-// ->middleware(['auth'])
-// ->name('job_application.')
-// ->group(function () {
-    // Route::name('store')->post('/job_posting/{job_posting}/job_application/submit', [JobApplicationController::class, 'store']);
-    // Route::name('index')->get('/profile/job_application/', [JobApplicationController::class, 'index']);
-    // Route::name('destroy')->delete('/profile/job_application/{job_application}/destroy', [JobApplicationController::class, 'destroy']);
-// });
-
 
 
 Route::middleware('auth')->group(function () {

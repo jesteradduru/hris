@@ -87,6 +87,9 @@ class User extends Authenticatable
     public function children() : HasMany {
         return $this->hasMany(Children::class, 'user_id');
     }
+    public function college_graduate_studies() : HasMany {
+        return $this->hasMany(EducationalBackgroundCollegeGraduateStudy::class, 'user_id');
+    }
     public function educational_background() : HasOne {
         return $this->hasOne(EducationalBackground::class, 'user_id');
     }
