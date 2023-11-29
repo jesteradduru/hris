@@ -136,6 +136,17 @@
           </div>
         </div>
 
+        <div class="col-12 col-md-4">
+          <div class="mb-3">
+            <label class="form-label">SCANNED COPY</label>
+            <!-- <a target="_blank" :href="references_and_id?.files[0].src"> {{ references_and_id?.files[0].filename }}</a> -->
+            <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" @input="addDocument" />
+            <small class="form-text text-muted">Accepted file formats: pdf</small>
+            <InputError :message="form.errors['documents']" />
+            <InputError :message="form.errors['documents.0']" />
+          </div>
+        </div>
+
 
         <div class="d-flex gap-2">
           <div class="d-flex align-items-center">
@@ -183,11 +194,23 @@ const form = useForm({
   co_id_license_passport_number: props.references_and_id?.co_id_license_passport_number,
   co_date_place_of_issuance: props.references_and_id?.co_date_place_of_issuance,
   photo: props.references_and_id?.photo,
+  documents: [],
 })
+
 
 const save = () => {
   form.post(route('profile.pds.reference_id.store_or_update'), {
     preserveScroll: true,
   })
 }
+
+
+const addDocument = (e) => {
+  form.documents = []
+  for(const file of e.target.files){
+    form.documents.push(file)
+  }
+}
+
+
 </script>

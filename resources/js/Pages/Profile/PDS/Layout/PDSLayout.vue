@@ -39,7 +39,7 @@
           preserve-state :href="route('profile.pds.civil_service_eligibility.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.civil_service_eligibility.*') }"
         >
-          Civil Service Eligibility
+          Eligibility
         </Link>
       </li>
 

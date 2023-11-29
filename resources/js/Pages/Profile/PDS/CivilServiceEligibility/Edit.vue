@@ -55,6 +55,16 @@
               <InputError :message="eligibilityForm.errors.license_date_of_validity" />
             </div>
           </div>
+
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label">ATTACHMENT (e.g. Certificate of Eligibility)</label>
+              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              <small class="form-text text-muted">Accepted file formats: pdf</small>
+              <InputError :message="eligibilityForm.errors['documents']" />
+              <InputError :message="eligibilityForm.errors['documents.0']" />
+            </div>
+          </div>
           
           
           <div class="col-12">
@@ -82,19 +92,27 @@ const props = defineProps({
 })
   
 const eligibilityForm = useForm({
+  _method: 'put',
   cs_board_bar_ces_csee_barangay_drivers: props.civil_service_eligibility.cs_board_bar_ces_csee_barangay_drivers,
   rating: props.civil_service_eligibility.rating,
   date_of_exam_conferment: props.civil_service_eligibility.date_of_exam_conferment,
   place_of_exam_conferment: props.civil_service_eligibility.place_of_exam_conferment,
   license_number: props.civil_service_eligibility.license_number,
   license_date_of_validity: props.civil_service_eligibility.license_date_of_validity,
+  documents: [],
 })
     
 const addEligibility = () => {
-  eligibilityForm.put(route('profile.pds.civil_service_eligibility.update', {civil_service_eligibility: props.civil_service_eligibility.id}), {
+  eligibilityForm.post(route('profile.pds.civil_service_eligibility.update', {civil_service_eligibility: props.civil_service_eligibility.id}), {
     preserveScroll: true,
-    onSuccess: () => eligibilityForm.reset(),
+    preserveState: true,
   })
+}
+const addDocument = (e) => {
+  eligibilityForm.documents = []
+  for(const file of e.target.files){
+    eligibilityForm.documents.push(file)
+  }
 }
     
     

@@ -12,6 +12,7 @@
               <th scope="col">NUMBER OF HOURS</th>
               <th scope="col">TYPE OF LD</th>
               <th>CONDUCTED/ SPONSORED BY</th>
+              <th>ATTACHMENTS</th>
               <th>ACTION</th>
             </tr>
           </thead>
@@ -23,6 +24,13 @@
               <td>{{ learning.number_of_hours }}</td>
               <td>{{ learning.type_of_ld }}</td>
               <td>{{ learning.conducted_sponsored_by }}</td>
+              <td>
+                <ul>
+                  <li v-for="file in learning.files" :key="file.id">
+                    <a target="_blank" :href="file.src">{{ file.filename }}</a>
+                  </li>
+                </ul>
+              </td>
               <td>
                 <div class="d-flex gap-2">
                   <Link

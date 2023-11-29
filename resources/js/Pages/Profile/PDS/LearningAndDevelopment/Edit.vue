@@ -91,6 +91,17 @@
           </div>
 
 
+          <div class="col-12 col-md-6">
+            <div class="mb-3">
+              <label class="form-label">ATTACHMENT (e.g. Certificates)</label>
+              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              <small class="form-text text-muted">Accepted file formats: pdf</small>
+              <InputError :message="form.errors['documents']" />
+              <InputError :message="form.errors['documents.0']" />
+            </div>
+          </div>
+
+
           <div class="col-12">
             <div class="d-flex gap-2">
               <div class="d-flex align-items-center">
@@ -125,17 +136,25 @@ const props = defineProps({
 })
 
 const form = useForm({
+  _method: 'put',
   title_of_learning: props.learning_and_development.title_of_learning,
   inclusive_date_from: props.learning_and_development.inclusive_date_from,
   inclusive_date_to: props.learning_and_development.inclusive_date_to,
   number_of_hours: props.learning_and_development.number_of_hours,
   type_of_ld: props.learning_and_development.type_of_ld,
-  conducted_sponsored_by: props.learning_and_development.conducted_sponsored_by
-  ,
+  conducted_sponsored_by: props.learning_and_development.conducted_sponsored_by,
+  documents: [],
 })
 
+const addDocument = (e) => {
+  form.documents = []
+  for(const file of e.target.files){
+    form.documents.push(file)
+  }
+}
+
 const update = () => {
-  form.put(route('profile.pds.learning_and_development.update', {learning_and_development: props.learning_and_development.id}), {
+  form.post(route('profile.pds.learning_and_development.update', {learning_and_development: props.learning_and_development.id}), {
     preserveScroll: true,
   })
 }

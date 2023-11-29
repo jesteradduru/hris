@@ -37,20 +37,6 @@ class EducationalBackgroundController extends Controller
             "vocational_highest_lvl_units_earned" => "integer|nullable",
             "vocational_year_graduated" => "integer|nullable",
             "vocational_scholarship_academic_honors" => "string|max:255|nullable",
-            // "college_name_of_school" => "string|max:255|nullable",
-            // "college_basic_ed_degree_course" => "string|max:255|nullable",
-            // "college_period_from" => "integer|nullable",
-            // "college_period_to" => "integer|nullable",
-            // "college_highest_lvl_units_earned" => "integer|nullable",
-            // "college_year_graduated" => "integer|nullable",
-            // "college_scholarship_academic_honors" => "string|max:255|nullable",
-            // "graduate_name_of_school" => "string|max:255|nullable",
-            // "graduate_basic_ed_degree_course" => "string|max:255|nullable",
-            // "graduate_period_from" => "integer|nullable",
-            // "graduate_period_to" => "integer|nullable",
-            // "graduate_highest_lvl_units_earned" => "integer|nullable",
-            // "graduate_year_graduated" => "integer|nullable",
-            // "graduate_scholarship_academic_honors" => "string|max:255|nullable",
         ]);
 
         if(!$request->user()->educational_background()->exists()){

@@ -89,71 +89,11 @@
       </dl>
     </div>
     <!-- Educational Background -->
-    <div v-if="educ" class="mb-3">
-      <h5 class="text-primary">Educational BackGround</h5>
-      <div v-if="plantilla" class="alert alert-primary">
-        <div>
-          <b>Educational Requirement</b>
-        </div>
-        {{ plantilla.education }}
-      </div>
-      <dl>
-        <dt>Elementary:</dt>
-        <dd>
-          {{ `${educ.elem_name_of_school} (${educ.elem_period_from} - ${educ.elem_period_to})` }}
-        </dd>
-        <dd v-if="educ.elem_scholarship_academic_honors">{{ educ.elem_scholarship_academic_honors }}</dd>
-        <dt>Secondary:</dt>
-        <dd>
-          {{ `${educ.second_name_of_school} (${educ.second_period_from} - ${educ.second_period_to})` }}
-        </dd>
-        <dd v-if="educ.second_scholarship_academic_honors">{{ educ.second_scholarship_academic_honors }}</dd>
-        <dt>College:</dt>
-        <dd>
-          <span v-if="educ.college_basic_ed_degree_course">
-            {{ educ.college_basic_ed_degree_course }},
-          </span>
-          {{ `${educ.college_name_of_school} (${educ.college_period_from} - ${educ.college_period_to})` }}
-        </dd>
-        <dd v-if="educ.college_scholarship_academic_honors">{{ educ.college_scholarship_academic_honors }}</dd>
-        <div v-if="educ.vocational_name_of_school">
-          <dt>Vocational:</dt>
-          <dd>
-            <span v-if="educ.vocational_basic_ed_degree_course">
-              {{ educ.vocational_basic_ed_degree_course }},
-            </span>
-            {{ `${educ.vocational_name_of_school} (${educ.vocational_period_from} - ${educ.vocational_period_to})` }}
-          </dd>
-          <dd v-if="educ.vocational_scholarship_academic_honors">{{ educ.vocational_scholarship_academic_honors }}</dd>
-        </div>
-      </dl>
-    </div>
+    <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" />
+    
 
     <!-- CS Eligibility -->
-    
-    <div class="mb-3">
-      <h5 class="text-primary">Civil Service Eligibility</h5>
-      <div v-if="plantilla" class="alert alert-primary">
-        <div>
-          <b>Eligibility Requirement</b>
-        </div>
-        {{ plantilla.eligibility }}
-      </div>
-      <div v-if="eligs.length === 0" class="text-muted text-center text-sm">
-        No Record
-      </div>
-      <div v-else>
-        <dl v-for="elig in eligs" :key="elig.id">
-          <dt>{{ elig.cs_board_bar_ces_csee_barangay_drivers }}</dt>
-          <div v-if=" elig.license_number ">
-            License No.:{{ elig.license_number }}
-          </div>
-          <div v-if="elig.rating">
-            Rating: {{ elig.rating }}
-          </div>
-        </dl>
-      </div>
-    </div>
+    <Eligibility :eligs="eligs" :plantilla="plantilla" />
 
     <!-- work experience -->
     <div class="mb-3">
@@ -189,44 +129,10 @@
         </div>
       </div>
     </div>
+
+
     <!-- learning and development -->
-    <div class="mb-3">
-      <h5 class="text-primary">Learning and Development</h5>
-      <div v-if="plantilla" class="alert alert-primary">
-        <div>
-          <b>Training Requirement</b>
-        </div>
-        {{ plantilla.training }}
-      </div>
-      <div v-if="lnds.length === 0" class="text-muted text-center text-sm">
-        No Record
-      </div>
-      <div v-else class="table-responsive">
-        <table class="table table-bordered table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Training</th>
-              <th scope="col">Inclusive Date</th>
-              <th scope="col">Hours</th>
-              <th scope="col">Type of LD</th>
-              <th scope="col">CONDUCTED/ SPONSORED BY</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="lnd in lnds" :key="lnd.id" class="">
-              <td scope="row">{{ lnd.title_of_learning }}</td>
-              <td>{{ `${simplifyDate(lnd.inclusive_date_from)} - ${simplifyDate(lnd.inclusive_date_to)}` }}</td>
-              <td>{{ lnd.number_of_hours }}</td>
-              <td>{{ lnd.type_of_ld }}</td>
-              <td>{{ lnd.conducted_sponsored_by }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="works.length === 0" class="text-muted text-center text-sm">
-          No Record
-        </div>
-      </div>
-    </div>
+    <Learning :plantilla="plantilla" :lnds="lnds" />
 
     <!-- special skills and hobbies -->
     <div class="mb-3">
@@ -278,6 +184,9 @@
 <script setup>
 import moment from 'moment'
 import Modal from '@/Components/Modal.vue'
+import EducationalBackground from '../Components/ApplicantDetails/EducationalBackground.vue'
+import Eligibility from '../Components/ApplicantDetails/Eligibility.vue'
+import Learning from '../Components/ApplicantDetails/Learning.vue'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -285,7 +194,7 @@ const props = defineProps({
   plantilla: Object,
 })
 
-const pdf = ref('dffd')
+const pdf = ref('')
 const showPdf = (src) => pdf.value = src
 
 
@@ -295,7 +204,9 @@ const {
   work_experience: works,
   learning_and_development: lnds,
   other_information: skills,
+  college_graduate_studies: college,
 } = props.applicant
+
 
 const simplifyDate = (date) => moment(date).format('MMM D, YYYY')
 </script>

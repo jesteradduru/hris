@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\PDS;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use App\Models\PageFourReferencesId;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PageFourReferencesIdController extends Controller
 {
@@ -14,7 +16,7 @@ class PageFourReferencesIdController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/PageFourReferencesId/Index', [
-            'reference_id' => $request->user()->references_id
+            'reference_id' => $request->user()->references_id->load(['files'])
         ]);
     }
 
@@ -54,9 +56,53 @@ class PageFourReferencesIdController extends Controller
         ]);
 
         if(!$user->references_id()->exists()){
-            $user->references_id()->create($validate);
+            $validate_scanned = $request->validate([
+                'documents' => 'required|array|min:1',
+                'documents.*'=> 'required|mimes:pdf|max:15000',
+            ], [
+                'documents.*.mimes' => 'Only pdf format is accepted.',
+                'documents.*.max' => 'Document must not be greater than 15MB.',
+                'documents.required' => 'Please upload the required documents.'
+            ]);
+
+            
+            $referenceid = $user->references_id()->create($validate);
+
+            foreach ($request->file('documents') as $file){
+ 
+                $path = $file->store('ids', 'public');
+                
+    
+                $referenceid->files()->save(new Document([
+                    'filename' => $file->getClientOriginalName(),
+                    'filepath' => $path
+                ]));
+            }
+
         }else{
             $user->references_id()->update($validate);
+
+            if($request->file('documents')){
+                if($user->references_id->files()->exists()){
+                    $files = $user->references_id->files;
+        
+                    foreach($files as $file){
+                        Storage::disk('public')->delete($file->filepath);
+                    }
+                    $user->references_id->files()->delete();
+                }
+                
+                foreach ($request->file('documents') as $file){
+     
+                    $path = $file->store('ids', 'public');
+                    
+        
+                    $user->references_id->files()->save(new Document([
+                        'filename' => $file->getClientOriginalName(),
+                        'filepath' => $path
+                    ]));
+                }
+            }
         }
         
         return back()->with('success', 'Record saved.');

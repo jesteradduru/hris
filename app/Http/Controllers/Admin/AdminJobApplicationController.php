@@ -88,8 +88,9 @@ class AdminJobApplicationController extends Controller
         if($request->applicant){
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
-                'educational_background' => ['college_graduate_studies'],
-                'civil_service_eligibility',
+                'educational_background',
+                'college_graduate_studies' => ['files'],
+                'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',
@@ -135,7 +136,8 @@ class AdminJobApplicationController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'civil_service_eligibility',
+                'college_graduate_studies' => ['files'],
+                'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',

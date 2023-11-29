@@ -55,6 +55,16 @@
               <InputError :message="eligibilityForm.errors.license_date_of_validity" />
             </div>
           </div>
+
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label">ATTACHMENT (e.g. Certificate of Eligibility)</label>
+              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              <small class="form-text text-muted">Accepted file formats: pdf</small>
+              <InputError :message="eligibilityForm.errors['documents']" />
+              <InputError :message="eligibilityForm.errors['documents.0']" />
+            </div>
+          </div>
         
         
           <div class="col-12">
@@ -83,6 +93,7 @@ const eligibilityForm = useForm({
   place_of_exam_conferment: null,
   license_number: null,
   license_date_of_validity: null,
+  documents: [],
 })
   
 const addEligibility = () => {
@@ -91,6 +102,12 @@ const addEligibility = () => {
     onSuccess: () => eligibilityForm.reset(),
   })
 }
-  
+
+const addDocument = (e) => {
+  eligibilityForm.documents = []
+  for(const file of e.target.files){
+    eligibilityForm.documents.push(file)
+  }
+}
   
 </script>

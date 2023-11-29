@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Document;
 use App\Models\EducationalBackgroundCollegeGraduateStudy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CollegeGraduateStudyController extends Controller
 {
@@ -56,7 +57,7 @@ class CollegeGraduateStudyController extends Controller
 
         foreach ($request->file('documents') as $file){
  
-            $path = $file->store('documents', 'public');
+            $path = $file->store('education', 'public');
             
 
             $course->files()->save(new Document([
@@ -99,12 +100,6 @@ class CollegeGraduateStudyController extends Controller
             "highest_lvl_units_earned" => "nullable|integer",
             "year_graduated" => "required|integer",
             "scholarship_academic_honors" => "required|string|max:255",
-            'documents' => 'required|array|min:1',
-            'documents.*'=> 'required|mimes:pdf|max:15000',
-        ], [
-            'documents.*.mimes' => 'Only pdf format is accepted.',
-            'documents.*.max' => 'Document must not be greater than 15MB.',
-            'documents.required' => 'Please upload the required documents.'
         ]);
 
         $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
@@ -119,12 +114,17 @@ class CollegeGraduateStudyController extends Controller
 
         if($request->file('documents')){
             if($course->files()->exists()){
+                $files = $course->files;
+    
+                foreach($files as $file){
+                    Storage::disk('public')->delete($file->filepath);
+                }
                 $course->files()->delete();
             }
             
             foreach ($request->file('documents') as $file){
  
-                $path = $file->store('documents', 'public');
+                $path = $file->store('education', 'public');
                 
     
                 $course->files()->save(new Document([
@@ -146,7 +146,14 @@ class CollegeGraduateStudyController extends Controller
     {
         $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
 
+        
+
         if($course->files()->exists()){
+            $files = $course->files;
+
+            foreach($files as $file){
+                Storage::disk('public')->delete($file->filepath);
+            }
             $course->files()->delete();
         }
 

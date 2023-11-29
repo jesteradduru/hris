@@ -92,6 +92,12 @@
                 <span v-if="!props.reference_id?.date_place_of_issuance">-</span>
               </td>
             </tr>
+            <tr>
+              <td>Scanned Copy</td>
+              <td>
+                <a target="_blank" :href="reference_id?.files[0].src"> {{ reference_id?.files[0].filename }}</a>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>

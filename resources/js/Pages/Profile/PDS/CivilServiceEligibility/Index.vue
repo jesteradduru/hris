@@ -14,6 +14,7 @@
               <th scope="col">PLACE OF EXAMINATION</th>
               <th scope="col">LICENSE NUMBER</th>
               <th scope="col">DATE OF VALIDITY</th>
+              <th scope="col">FILES</th>
               <th scope="col">ACTION</th>
             </tr>
           </thead>
@@ -25,6 +26,13 @@
               <td>{{ eligibility.place_of_exam_conferment }}</td>
               <td>{{ eligibility.license_number }}</td>
               <td>{{ eligibility.license_date_of_validity }}</td>
+              <td>
+                <ul>
+                  <li v-for="file in eligibility.files" :key="file.id">
+                    <a target="_blank" :href="file.src">{{ file.filename }}</a>
+                  </li>
+                </ul>
+              </td>
               <td>
                 <div class="d-flex gap-2">
                   <Link
@@ -38,6 +46,7 @@
                     as="button" class="btn btn-danger " method="delete"
                     :href="route('profile.pds.civil_service_eligibility.destroy', { civil_service_eligibility: eligibility.id })"
                     preserve-scroll
+                    :onBefore="confirm"
                   >
                     Delete
                   </Link>
@@ -80,4 +89,5 @@ const props = defineProps({
   eligibilities: Object,
 })
 
+const confirm = () => window.confirm('Are you sure you want to delete this?')
 </script>

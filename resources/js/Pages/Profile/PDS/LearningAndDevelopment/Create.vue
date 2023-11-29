@@ -90,6 +90,16 @@
             </div>
           </div>
 
+          <div class="col-12 col-md-6">
+            <div class="mb-3">
+              <label class="form-label">ATTACHMENT (e.g. Certificates)</label>
+              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              <small class="form-text text-muted">Accepted file formats: pdf</small>
+              <InputError :message="form.errors['documents']" />
+              <InputError :message="form.errors['documents.0']" />
+            </div>
+          </div>
+
 
           <div class="col-12">
             <div class="d-flex gap-2">
@@ -126,6 +136,7 @@ const form = useForm({
   number_of_hours: null,
   type_of_ld: null,
   conducted_sponsored_by: null,
+  documents: [],
 })
 
 const add = () => {
@@ -135,5 +146,12 @@ const add = () => {
       form.reset()
     },
   })
+}
+
+const addDocument = (e) => {
+  form.documents = []
+  for(const file of e.target.files){
+    form.documents.push(file)
+  }
 }
 </script>

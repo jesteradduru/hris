@@ -27,7 +27,6 @@
     </div>
     <div class="row">
       <div class="col-3">
-        <b>APPLICANTS</b>
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
