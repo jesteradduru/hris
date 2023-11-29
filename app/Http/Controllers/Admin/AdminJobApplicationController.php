@@ -33,9 +33,9 @@ class AdminJobApplicationController extends Controller
             return self::shortlisting($request);
         }
         // NEDA EXAM SCHEDULE
-        else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM_SCHEDULE'){
-            return self::neda_exam_schedule($request);
-        }
+        // else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM_SCHEDULE'){
+        //     return self::neda_exam_schedule($request);
+        // }
         // NEDA EXAM
         else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM'){
             return self::neda_exam($request);
@@ -182,7 +182,8 @@ class AdminJobApplicationController extends Controller
                 $applicant_details = User::find($request->applicant)->load([
                     'personal_information',
                     'educational_background',
-                    'civil_service_eligibility',
+                    'college_graduate_studies' => ['files'],
+                    'civil_service_eligibility'  => ['files'],
                     'work_experience',
                     'learning_and_development',
                     'other_information',
@@ -225,7 +226,8 @@ class AdminJobApplicationController extends Controller
                 $applicant_details = User::find($request->applicant)->load([
                     'personal_information',
                     'educational_background',
-                    'civil_service_eligibility',
+                    'college_graduate_studies' => ['files'],
+                    'civil_service_eligibility'  => ['files'],
                     'work_experience',
                     'learning_and_development',
                     'other_information',
@@ -268,7 +270,8 @@ class AdminJobApplicationController extends Controller
                 $applicant_details = User::find($request->applicant)->load([
                     'personal_information',
                     'educational_background',
-                    'civil_service_eligibility',
+                    'college_graduate_studies' => ['files'],
+                    'civil_service_eligibility'  => ['files'],
                     'work_experience',
                     'learning_and_development',
                     'other_information',
@@ -310,7 +313,8 @@ class AdminJobApplicationController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'civil_service_eligibility',
+                'college_graduate_studies' => ['files'],
+                'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',
@@ -409,13 +413,7 @@ class AdminJobApplicationController extends Controller
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting" => JobPosting::find($request->job_posting)->sortByRank()->with([
-                'job_application' => 
-                [
-                    'user',
-                    'result',
-                    'score'
-                ]])->get(),
+            "posting" => JobPosting::find($request->job_posting),
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
         ]);

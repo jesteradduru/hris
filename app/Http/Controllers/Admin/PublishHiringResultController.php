@@ -19,14 +19,14 @@ class PublishHiringResultController extends Controller
        switch($results->phase){
                 case 'SHORTLISTING':
                     $newResult = $job->results()->create([
-                        'phase' => 'NEDA_EXAM_SCHEDULE'
-                    ]);
-                break;
-                case 'NEDA_EXAM_SCHEDULE':
-                    $newResult = $job->results()->create([
                         'phase' => 'NEDA_EXAM'
                     ]);
                 break;
+                // case 'NEDA_EXAM_SCHEDULE':
+                //     $newResult = $job->results()->create([
+                //         'phase' => 'NEDA_EXAM'
+                //     ]);
+                // break;
                 case 'NEDA_EXAM':
                     $newResult = $job->results()->create([
                         'phase' => 'INTERVIEW_SCHEDULE'
@@ -79,17 +79,16 @@ class PublishHiringResultController extends Controller
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
                         'user_id' => $currentResult->user_id,
-                        'result' => 'FOR_EXAM'
                     ]);
                 break;
 
-                case 'FOR_EXAM':
-                    $currentResult->create([
-                        'result_id' => $newResult->id,
-                        'application_id' => $currentResult->application_id,
-                        'user_id' => $currentResult->user_id,
-                    ]);
-                break;
+                // case 'FOR_EXAM':
+                //     $currentResult->create([
+                //         'result_id' => $newResult->id,
+                //         'application_id' => $currentResult->application_id,
+                //         'user_id' => $currentResult->user_id,
+                //     ]);
+                // break;
 
                 case 'EXAM_PASSED':
                     $currentResult->create([

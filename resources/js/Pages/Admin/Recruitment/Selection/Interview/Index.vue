@@ -21,7 +21,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          PUBLISH
+          PROCEED TO SELECTION OF APPLICANT
         </Link>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <form class="table-responsive" @submit.prevent="() => onSaveScore(applicant_details.job_application[0]?.id)">
+        <form class="table-responsive">
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
@@ -44,15 +44,15 @@
             </thead>
             <tbody>
               <tr class="">
-                <td scope="row"><input v-model="scoreForm.performance" type="text" style="width: 100%;" /><InputError :message="scoreForm.errors.performance" /></td>
-                <td><input v-model="scoreForm.education" type="text" style="width: 100%;" /><InputError :message="scoreForm.errors.education" /></td>
-                <td><input v-model="scoreForm.experience" type="text" style="width: 100%;" /><InputError :message="scoreForm.errors.experience" /></td>
-                <td><input v-model="scoreForm.personality" type="text" style="width: 100%;" /><InputError :message="scoreForm.errors.personality" /></td>
-                <td><input v-model="scoreForm.potential" type="text" style="width: 100%;" /><InputError :message="scoreForm.errors.potential" /></td>
-                <td class="text-info"><b>{{ props.applicant_details?.job_application[0]?.score?.total }}</b></td>
+                <td scope="row">19.51</td>
+                <td>15.55</td>
+                <td>18.63</td>
+                <td>10.16</td>
+                <td>10.90</td>
+                <td class="text-info"><b>74.74</b></td>
               </tr>
             </tbody>
-            <button :disabled="!scoreForm.isDirty" type="submit" class="btn btn-success btn-sm mt-2">Save Score</button>
+            <!-- <button :disabled="!scoreForm.isDirty" type="submit" class="btn btn-success btn-sm mt-2">Save Score</button> -->
           </table>
         </form>
 
@@ -154,13 +154,6 @@ router.on('finish', () => {
 })
 
 
-const scoreForm =  useForm({
-  performance: props.applicant_details ? props.applicant_details.job_application[0].score.performance : null,
-  education: props.applicant_details ? props.applicant_details.job_application[0].score.education : null,
-  experience: props.applicant_details ? props.applicant_details.job_application[0].score.experience : null,
-  personality: props.applicant_details ? props.applicant_details.job_application[0].score.personality : null,
-  potential: props.applicant_details ? props.applicant_details.job_application[0].score.potential : null,
-})
 
 const onSaveScore = (application_id) => {
 

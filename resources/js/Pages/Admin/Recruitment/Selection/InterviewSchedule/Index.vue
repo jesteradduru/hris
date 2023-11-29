@@ -46,7 +46,7 @@
           </div>
           <div class="col-4">
             <div class="mb-3">
-              <label for="" class="form-label">FROM</label>
+              <label for="" class="form-label">TIME</label>
               <input
                 id=""
                 v-model="scheduleForm.start_time" type="time" class="form-control" name="" aria-describedby="helpId"
@@ -55,7 +55,7 @@
               <InputError :message="scheduleForm.errors.start_time" />
             </div>
           </div>
-          <div class="col-4">
+          <!-- <div class="col-4">
             <div class="mb-3">
               <label for="" class="form-label">TO</label>
               <input
@@ -65,8 +65,8 @@
               />
               <InputError :message="scheduleForm.errors.end_time" />
             </div>
-          </div>
-          <div class="col-3">
+          </div> -->
+          <div class="col-3 d-flex align-items-center pt-3">
             <button class="btn btn-primary btn-sm" @click="setSchedule">Set Schedule</button>
           </div>
         </div>

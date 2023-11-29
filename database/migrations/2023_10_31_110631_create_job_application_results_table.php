@@ -18,7 +18,6 @@ return new class extends Migration
             $table->enum('phase', [
                 'INITIAL_SCREENING',
                 'SHORTLISTING',
-                'NEDA_EXAM_SCHEDULE',
                 'NEDA_EXAM',
                 'INTERVIEW_SCHEDULE',
                 'FOR_INTERVIEW',

@@ -14,7 +14,7 @@ class SetExamScheduleController extends Controller
         $validate = $request->validate([
             'schedule' => 'required|date',
             'start_time' => 'required',
-            'end_time' => 'required',
+            // 'end_time' => 'required',
         ]);
 
         $result->update($validate);

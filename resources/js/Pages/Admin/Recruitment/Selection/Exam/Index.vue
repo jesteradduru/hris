@@ -27,10 +27,16 @@
     </div>
     <div class="row">
       <div class="col-3">
-        <b>APPLICANTS</b>
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
+        <div class="mb-3">
+          <label for="" class="form-label">Date of Exam</label>
+          <input
+            id=""
+            type="date" class="form-control" name="" aria-describedby="helpId" placeholder=""
+          />
+        </div>
         <div v-if="props.applicant_details" class="d-flex gap-2 mb-3">
           <Link 
             as="button"

@@ -29,7 +29,6 @@ return new class extends Migration
                 'SHORTLISTED',
                 'UNLISTED',
                 'UNQUALIFIED',
-                'FOR_EXAM',
                 'EXAM_PASSED',
                 'EXAM_FAILED',
                 'FOR_INTERVIEW',
