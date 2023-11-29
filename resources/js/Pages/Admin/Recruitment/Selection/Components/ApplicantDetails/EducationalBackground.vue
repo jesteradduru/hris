@@ -36,6 +36,7 @@
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
+                <th v-if="withControls" scope="col" />
                 <th scope="col">NAME OF SCHOOL</th>
                 <th scope="col">DEGREE/COURSE</th>
                 <th scope="col">PERIOD OF ATTENDANCE</th>
@@ -46,7 +47,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in colleges" :key="course.id" class="">
+              <tr v-for="course in colleges" :id="`course${course.id}`" :key="course.id" class="">
+                <td v-if="withControls">
+                  <input type="checkbox" :data-id="`course${course.id}`" @input="onInclude" />
+                </td>
                 <td scope="row">{{ course.name_of_school }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
                 <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
@@ -72,6 +76,8 @@
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
+                <th v-if="withControls" scope="col" />
+                
                 <th scope="col">NAME OF SCHOOL</th>
                 <th scope="col">DEGREE/COURSE</th>
                 <th scope="col">PERIOD OF ATTENDANCE</th>
@@ -82,7 +88,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in graduate_studies" :key="course.id" class="">
+              <tr v-for="course in graduate_studies" :id="`grad${course.id}`" :key="course.id" class="">
+                <td v-if="withControls">
+                  <input type="checkbox" :data-id="`grad${course.id}`" @input="onInclude" />
+                </td>
                 <td scope="row">{{ course.name_of_school }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
                 <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
@@ -113,7 +122,19 @@ const props = defineProps({
   educ: Object,
   college_graduate_studies: Object,
   plantilla: Object,
+  withControls: Boolean,
 })
+
+const onInclude = (e) => {
+  const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
+  if(e.target.checked){
+    elem.classList.add('table-success')
+  }else{
+    elem.classList.remove('table-success')
+  }
+  
+  
+}
 
 const colleges = computed(() => {
   return props.college_graduate_studies.filter(ed => ed.type === 'COLLEGE')

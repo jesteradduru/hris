@@ -89,50 +89,20 @@
       </dl>
     </div>
     <!-- Educational Background -->
-    <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" />
+    <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" :withControls="withControls" />
     
 
     <!-- CS Eligibility -->
     <Eligibility :eligs="eligs" :plantilla="plantilla" />
 
     <!-- work experience -->
-    <div class="mb-3">
-      <h5 class="text-primary">Work Experience</h5>
-      <div v-if="plantilla" class="alert alert-primary">
-        <div>
-          <b>Work Experience Requirement</b>
-        </div>
-        {{ plantilla.work_experience }}
-      </div>
-      <div v-if="works.length === 0" class="text-muted text-center text-sm">
-        No Record
-      </div>
-      <div v-else class="table-responsive">
-        <table class="table table-bordered table-sm">
-          <thead>
-            <tr>
-              <th scope="col">Position</th>
-              <th scope="col">Agency</th>
-              <th scope="col">Inclusive Date</th>
-            </tr>
-          </thead>
-          <tbody v-if="works">
-            <tr v-for="work in works" :key="work.id" class="">
-              <td scope="row">{{ work.position_title }}</td>
-              <td>{{ work.dept_agency_office_company }}</td>
-              <td>{{ `${simplifyDate(work.inclusive_date_from)} - ${simplifyDate(work.inclusive_date_to)}` }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <div v-if="works.length === 0" class="text-muted text-center text-sm">
-          No work experience
-        </div>
-      </div>
-    </div>
+    <WorkExperience :works="works" :plantilla="plantilla" :with-controls="withControls" />
+    
+    
 
 
     <!-- learning and development -->
-    <Learning :plantilla="plantilla" :lnds="lnds" />
+    <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
 
     <!-- special skills and hobbies -->
     <div class="mb-3">
@@ -187,11 +157,13 @@ import Modal from '@/Components/Modal.vue'
 import EducationalBackground from '../Components/ApplicantDetails/EducationalBackground.vue'
 import Eligibility from '../Components/ApplicantDetails/Eligibility.vue'
 import Learning from '../Components/ApplicantDetails/Learning.vue'
+import WorkExperience from '../Components/ApplicantDetails/WorkExperience.vue'
 import { ref } from 'vue'
 
 const props = defineProps({
   applicant: Object,
   plantilla: Object,
+  withControls: Boolean,
 })
 
 const pdf = ref('')
@@ -208,5 +180,5 @@ const {
 } = props.applicant
 
 
-const simplifyDate = (date) => moment(date).format('MMM D, YYYY')
+
 </script>

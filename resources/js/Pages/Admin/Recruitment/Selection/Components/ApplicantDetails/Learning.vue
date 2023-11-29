@@ -11,6 +11,7 @@
       <table class="table table-sm table-bordered mt-3">
         <thead>
           <tr>
+            <th v-if="withControls" scope="col" />
             <th scope="col">LEARNING AND DEVELOPMENT</th>
             <th scope="col">FROM</th>
             <th scope="col">TO</th>
@@ -21,7 +22,10 @@
           </tr>
         </thead>
         <tbody v-if="props.lnds.length" style="text-transform: uppercase;">
-          <tr v-for="learning in props.lnds" :key="learning.id">
+          <tr v-for="learning in props.lnds" :id="`learning${learning.id}`" :key="learning.id">
+            <td v-if="withControls">
+              <input type="checkbox" :data-id="`learning${learning.id}`" @input="onInclude" />
+            </td>
             <td scope="row">{{ learning.title_of_learning }}</td>
             <td>{{ learning.inclusive_date_from }}</td>
             <td>{{ learning.inclusive_date_to }}</td>
@@ -50,5 +54,15 @@ import {  computed } from 'vue'
 const props = defineProps({
   lnds: Object,
   plantilla: Object,
+  withControls: Object,
 })
+
+const onInclude = (e) => {
+  const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
+  if(e.target.checked){
+    elem.classList.add('table-success')
+  }else{
+    elem.classList.remove('table-success')
+  }
+}
 </script>
