@@ -16,7 +16,7 @@ class PageFourReferencesIdController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/PageFourReferencesId/Index', [
-            'reference_id' => $request->user()->references_id->load(['files'])
+            'reference_id' => $request->user()->references_id ? $request->user()->references_id->load(['files']) : null
         ]);
     }
 

@@ -122,4 +122,5 @@ const none_academic_distinctions = computed(() => {
 const membership_in_assoc_org = computed(() => {
   return form.membership_in_assoc_org ? form.membership_in_assoc_org.split(',') : []
 })
+
 </script>

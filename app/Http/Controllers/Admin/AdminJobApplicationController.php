@@ -165,47 +165,47 @@ class AdminJobApplicationController extends Controller
 
 
     // NEDA EXAM SCHEDULE
-    private static function neda_exam_schedule(Request $request){
-            $job_vacancies = JobPosting::notArchived()->get();
-            $job_applications = [];
-            $applicant_details = null;
+    // private static function neda_exam_schedule(Request $request){
+    //         $job_vacancies = JobPosting::notArchived()->get();
+    //         $job_applications = [];
+    //         $applicant_details = null;
             
 
-            // dd($job_vacancies);
+    //         // dd($job_vacancies);
 
-            if($request->job_posting){
-                $job_vacancy = JobPosting::find($request->job_posting);
-                $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
-            }
+    //         if($request->job_posting){
+    //             $job_vacancy = JobPosting::find($request->job_posting);
+    //             $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+    //         }
 
-            if($request->applicant){
-                $applicant_details = User::find($request->applicant)->load([
-                    'personal_information',
-                    'educational_background',
-                    'college_graduate_studies' => ['files'],
-                    'civil_service_eligibility'  => ['files'],
-                    'work_experience',
-                    'learning_and_development',
-                    'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
-                    'spms',
-                    'reward' => ['reward'],
-                    'position'
-                ]);
-            }
+    //         if($request->applicant){
+    //             $applicant_details = User::find($request->applicant)->load([
+    //                 'personal_information',
+    //                 'educational_background',
+    //                 'college_graduate_studies' => ['files'],
+    //                 'civil_service_eligibility'  => ['files'],
+    //                 'work_experience',
+    //                 'learning_and_development',
+    //                 'other_information',
+    //                 'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+    //                 'spms',
+    //                 'reward' => ['reward'],
+    //                 'position'
+    //             ]);
+    //         }
 
-            $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+    //         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
             
-            return inertia('Admin/Recruitment/Selection/ExamSchedule/Index', [
-                "job_applications" => $job_applications,
-                "job_vacancies" => $job_vacancies,
-                "job_vacancy_status" => $job_vacancy_status,
-                "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
-                "applicant_details" => $applicant_details,
-                "qualified_applicants" => $latest_result,
-            ]);
+    //         return inertia('Admin/Recruitment/Selection/ExamSchedule/Index', [
+    //             "job_applications" => $job_applications,
+    //             "job_vacancies" => $job_vacancies,
+    //             "job_vacancy_status" => $job_vacancy_status,
+    //             "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
+    //             "applicant_details" => $applicant_details,
+    //             "qualified_applicants" => $latest_result,
+    //         ]);
 
-    }
+    // }
 
 
     // NEDA EXAM

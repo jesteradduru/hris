@@ -52,14 +52,23 @@ const props = defineProps({
 })
     
 const skills = computed(() => {
-  return props.other_information?.special_skills_hobbies ? props.other_information.special_skills_hobbies.split(',') : []
+  return props.other_information?.special_skills_hobbies ? props.other_information.special_skills_hobbies.split(',').filter((list) => {
+    const trimList = list.trim()
+    return trimList !== ''
+  }) : []
 })
 
 const none_academic_distinctions = computed(() => {
-  return props.other_information?.none_academic_distinctions ? props.other_information.none_academic_distinctions.split(',') : []
+  return props.other_information?.none_academic_distinctions ? props.other_information.none_academic_distinctions.split(',').filter((list) => {
+    const trimList = list.trim()
+    return trimList !== ''
+  }) : []
 })
 
 const membership_in_assoc_org = computed(() => {
-  return props.other_information?.membership_in_assoc_org ? props.other_information.membership_in_assoc_org.split(',') : []
+  return props.other_information?.membership_in_assoc_org ? props.other_information.membership_in_assoc_org.split(',').filter((list) => {
+    const trimList = list.trim()
+    return trimList !== ''
+  }) : []
 })
 </script>
