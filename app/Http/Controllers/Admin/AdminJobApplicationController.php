@@ -32,10 +32,6 @@ class AdminJobApplicationController extends Controller
         else if($request->job_posting && $job_vacancy_status->phase === 'SHORTLISTING'){
             return self::shortlisting($request);
         }
-        // NEDA EXAM SCHEDULE
-        // else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM_SCHEDULE'){
-        //     return self::neda_exam_schedule($request);
-        // }
         // NEDA EXAM
         else if($request->job_posting && $job_vacancy_status->phase === 'NEDA_EXAM'){
             return self::neda_exam($request);
@@ -161,51 +157,6 @@ class AdminJobApplicationController extends Controller
         ]);
 
 }
-
-
-
-    // NEDA EXAM SCHEDULE
-    // private static function neda_exam_schedule(Request $request){
-    //         $job_vacancies = JobPosting::notArchived()->get();
-    //         $job_applications = [];
-    //         $applicant_details = null;
-            
-
-    //         // dd($job_vacancies);
-
-    //         if($request->job_posting){
-    //             $job_vacancy = JobPosting::find($request->job_posting);
-    //             $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
-    //         }
-
-    //         if($request->applicant){
-    //             $applicant_details = User::find($request->applicant)->load([
-    //                 'personal_information',
-    //                 'educational_background',
-    //                 'college_graduate_studies' => ['files'],
-    //                 'civil_service_eligibility'  => ['files'],
-    //                 'work_experience',
-    //                 'learning_and_development',
-    //                 'other_information',
-    //                 'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
-    //                 'spms',
-    //                 'reward' => ['reward'],
-    //                 'position'
-    //             ]);
-    //         }
-
-    //         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
-            
-    //         return inertia('Admin/Recruitment/Selection/ExamSchedule/Index', [
-    //             "job_applications" => $job_applications,
-    //             "job_vacancies" => $job_vacancies,
-    //             "job_vacancy_status" => $job_vacancy_status,
-    //             "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
-    //             "applicant_details" => $applicant_details,
-    //             "qualified_applicants" => $latest_result,
-    //         ]);
-
-    // }
 
 
     // NEDA EXAM
@@ -401,12 +352,6 @@ class AdminJobApplicationController extends Controller
         }
 
         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
-
-        // dd(JobPosting::find($request->job_posting)->load(['job_application' => [
-        //     'result',
-        //     'user',
-        //     'score' => fn($query) => $query->orderBy('total', 'desc'),
-        // ]])->get());
 
 
         return inertia('Admin/Recruitment/Selection/Final/Index', [
