@@ -79,6 +79,15 @@
           preserve-state :href="route('profile.pds.other_information.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.other_information.*') }"
         >
+          NON-ACADEMIC DISTINCTIONS / RECOGNITION
+        </Link>
+      </li>
+
+      <li class="nav-item">
+        <Link
+          preserve-state :href="route('profile.pds.other_information.index')" class="nav-link"
+          :class="{ active: route().current('profile.pds.other_information.*') }"
+        >
           Other Information
         </Link>
       </li>

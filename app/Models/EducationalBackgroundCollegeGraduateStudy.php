@@ -31,4 +31,9 @@ class EducationalBackgroundCollegeGraduateStudy extends Model
     {
         return $this->morphMany(Document::class, 'fileable');
     }
+
+    public function academic_rewards(): MorphMany
+    {
+        return $this->morphMany(UserRewards::class, 'rewardable');
+    }
 }

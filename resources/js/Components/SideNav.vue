@@ -47,7 +47,7 @@
       </Link>
     </li>
 
-    <li v-if="user && permissions.includes('View Reward')" class="nav-item">
+    <!-- <li v-if="user && permissions.includes('View Reward')" class="nav-item">
       <Link
         class="nav-link" :class="{
           active: route().current('profile.rewards.*')
@@ -55,7 +55,7 @@
       >
         Rewards and Recognition
       </Link>
-    </li>
+    </li> -->
     <li v-if="user" class="nav-item">
       <Link
         class="nav-link" :class="{

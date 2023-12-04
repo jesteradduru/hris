@@ -122,9 +122,9 @@ class User extends Authenticatable
     
 
     //reward and recognition
-    public function reward() : HasMany {
-        return $this->hasMany(EmployeeReward::class, 'user_id');
-    }
+    // public function reward() : HasMany {
+    //     return $this->hasMany(EmployeeReward::class, 'user_id');
+    // }
 
     //spms
     public function spms() : HasMany {
