@@ -114,6 +114,9 @@ class User extends Authenticatable
     public function references_id() : HasOne {
         return $this->hasOne(PageFourReferencesId::class, 'user_id');
     }
+    public function non_academic_distinction() : HasMany {
+        return $this->hasMany(NonAcademicDistinction::class, 'user_id');
+    }
 
     // job applications 
     public function job_application() : HasMany {

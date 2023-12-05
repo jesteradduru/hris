@@ -26,7 +26,7 @@
       <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.educational_background.edit')" class="nav-link"
-          :class="{ active: route().current('profile.pds.educational_background.edit') }"
+          :class="{ active: route().current('profile.pds.educational_background.*') }"
         >
           Educational Background
           <i v-if="props.isFormDirty && route().current('profile.pds.educational_background.edit')" class="bi-record-fill text-secondary" />
@@ -76,8 +76,8 @@
 
       <li class="nav-item">
         <Link
-          preserve-state :href="route('profile.pds.other_information.index')" class="nav-link"
-          :class="{ active: route().current('profile.pds.other_information.*') }"
+          preserve-state :href="route('profile.pds.non_academic_distinctions.index')" class="nav-link"
+          :class="{ active: route().current('profile.pds.non_academic_distinctions.*') }"
         >
           NON-ACADEMIC DISTINCTIONS / RECOGNITION
         </Link>

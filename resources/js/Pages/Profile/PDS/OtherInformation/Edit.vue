@@ -20,7 +20,7 @@
           </div>
 
 
-          <div class="form-group col-12">
+          <!-- <div class="form-group col-12">
             <div class="mb-3">
               <label for="" class="form-label">NON-ACADEMIC DISTINCTIONS / RECOGNITION</label>
               <ListBadge v-if="none_academic_distinctions" :lists="none_academic_distinctions" class="mb-3" />
@@ -34,7 +34,7 @@
               </p>
               <InputError :message="form.errors.none_academic_distinctions" />
             </div>
-          </div>
+          </div> -->
 
 
           <div class="form-group col-12">
@@ -115,9 +115,9 @@ const skills = computed(() => {
   return form.special_skills_hobbies ? form.special_skills_hobbies.split(',') : []
 })
 
-const none_academic_distinctions = computed(() => {
-  return form.none_academic_distinctions ? form.none_academic_distinctions.split(',') : []
-})
+// const none_academic_distinctions = computed(() => {
+//   return form.none_academic_distinctions ? form.none_academic_distinctions.split(',') : []
+// })
 
 const membership_in_assoc_org = computed(() => {
   return form.membership_in_assoc_org ? form.membership_in_assoc_org.split(',') : []

@@ -6,6 +6,7 @@ use App\Http\Controllers\PDS\CivilServiceEligibilityController;
 use App\Http\Controllers\PDS\EducationalBackgroundController;
 use App\Http\Controllers\PDS\FamilyBackgroundController;
 use App\Http\Controllers\PDS\LearningAndDevelopmentController;
+use App\Http\Controllers\PDS\NonAcademicDistinctionController;
 use App\Http\Controllers\PDS\PageFourQuestionsController;
 use App\Http\Controllers\PDS\PageFourReferencesIdController;
 use App\Http\Controllers\PDS\PersonalInformationController;
@@ -33,7 +34,13 @@ Route::prefix('profile/pds')
     // educational background
     Route::name('educational_background.edit')->get('/educational_background/edit', [EducationalBackgroundController::class, 'edit']);
     Route::name('educational_background.store_or_update')->post('/educational_background/store_or_update', [EducationalBackgroundController::class, 'store_or_update']);
-    Route::resource('college_graduate_study', CollegeGraduateStudyController::class);
+
+    Route::prefix('educational_background')
+    ->middleware('auth')
+    ->name('educational_background.')
+    ->group(function() {
+        Route::resource('college_graduate_study', CollegeGraduateStudyController::class);
+    });
 
     // civil service eligiblity
     Route::resource('civil_service_eligibility', CivilServiceEligibilityController::class)->only(['index', 'store', 'destroy', 'create', 'edit', 'update']);
@@ -61,6 +68,9 @@ Route::prefix('profile/pds')
     Route::name('reference_id.edit')->get('/reference_id/edit', [PageFourReferencesIdController::class, 'edit']);
     Route::name('reference_id.index')->get('/reference_id', [PageFourReferencesIdController::class, 'index']);
     Route::name('reference_id.store_or_update')->post('/reference_id/store_or_update', [PageFourReferencesIdController::class, 'store_or_update']);
+
+    // non academic distinctions
+    Route::resource('non_academic_distinctions', NonAcademicDistinctionController::class);
     
 });
 

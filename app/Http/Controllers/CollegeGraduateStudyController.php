@@ -20,9 +20,19 @@ class CollegeGraduateStudyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if($request->type == 'COLLEGE'){
+            return inertia('Profile/PDS/EducationalBackground/College/Create');
+        }
+
+        else if($request->type == 'GRADUATE'){
+            return inertia('Profile/PDS/EducationalBackground/Graduate/Create');
+        }
+
+        else{
+            return abort(404);
+        }
     }
 
     /**

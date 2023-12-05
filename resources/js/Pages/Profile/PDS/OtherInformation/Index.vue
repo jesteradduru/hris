@@ -6,14 +6,14 @@
           <thead>
             <tr>
               <th scope="col">SPECIAL SKILLS and HOBBIES</th>
-              <th scope="col">NON-ACADEMIC DISTINCTIONS / RECOGNITION</th>
+              <!-- <th scope="col">NON-ACADEMIC DISTINCTIONS / RECOGNITION</th> -->
               <th scope="col">MEMBERSHIP IN ASSOCIATION/ORGANIZATION</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td class="p-2"><BulletedList :lists="skills" /></td>
-              <td class="p-2"><BulletedList :lists="none_academic_distinctions" /></td>
+              <!-- <td class="p-2"><BulletedList :lists="none_academic_distinctions" /></td> -->
               <td class="p-2"><BulletedList :lists="membership_in_assoc_org" /></td>
             </tr>
           </tbody>

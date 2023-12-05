@@ -219,9 +219,11 @@
           <div class="col-12">
             <h5>College</h5>
             <div>
-              <button data-type="COLLEGE" type="button" class="btn btn-secondary  mb-3" data-bs-toggle="modal" data-bs-target="#addCollege" @click="onToggleAddForm">
+              <!-- <button data-type="COLLEGE" type="button" class="btn btn-secondary  mb-3" data-bs-toggle="modal" data-bs-target="#addCollege" @click="onToggleAddForm">
                 Add
-              </button>
+              </button> -->
+
+              <Link class="btn btn-secondary  mb-3" :href="route('profile.pds.educational_background.college_graduate_study.create')" :data="{type: 'COLLEGE'}">Add</Link>
               <div class="table-responsive">
                 <table class="table table-bordered table-sm">
                   <thead>
@@ -266,7 +268,7 @@
                             as="button" class="btn btn-danger btn-sm" method="delete"
                             preserve-scroll
                             :onBefore="confirm"
-                            :href="route('profile.pds.college_graduate_study.destroy', {
+                            :href="route('profile.pds.educational_background.college_graduate_study.destroy', {
                               college_graduate_study: college.id
                             })"
                           >
@@ -292,6 +294,7 @@
               <button data-type="GRADUATE" type="button" class="btn btn-secondary  mb-3" data-bs-toggle="modal" data-bs-target="#addCollege" @click="onToggleAddForm">
                 Add
               </button>
+              
               <div class="table-responsive">
                 <table class="table table-bordered table-sm">
                   <thead>

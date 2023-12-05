@@ -104,6 +104,9 @@
     <!-- learning and development -->
     <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
 
+    <!-- outstanding accomplishments -->
+    <OutstandingAccomplishments :withControls="withControls" />
+
     <!-- special skills and hobbies -->
     <div class="mb-3">
       <h5 class="text-primary">Special Skills and Hobbies</h5>
@@ -120,6 +123,9 @@
         No Record
       </div>
     </div>
+
+    
+
     <!-- documents -->
     <div class="mb-3">
       <h5 class="text-primary">Attached Documents</h5>
@@ -157,6 +163,7 @@ import Modal from '@/Components/Modal.vue'
 import EducationalBackground from '../Components/ApplicantDetails/EducationalBackground.vue'
 import Eligibility from '../Components/ApplicantDetails/Eligibility.vue'
 import Learning from '../Components/ApplicantDetails/Learning.vue'
+import OutstandingAccomplishments from '../Components/ApplicantDetails/OutstandingAccomplishments.vue'
 import WorkExperience from '../Components/ApplicantDetails/WorkExperience.vue'
 import { ref } from 'vue'
 

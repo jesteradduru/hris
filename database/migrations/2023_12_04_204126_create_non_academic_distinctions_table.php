@@ -20,14 +20,17 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
             $table->foreignIdFor(RewardAndRecognition::class, 'reward_id')->nullable();
 
-            $table->string('others');
+            $table->string('title')->nullable();
+            $table->string('office')->nullable();
+            $table->date('date_awarded')->nullable();
 
             $table->enum('category', [
                 'MAJOR_NATIONAL',
                 'MAJOR_LOCAL',
+                'SPECIAL'
             ])->nullable();
 
-            $table->enum('category_type', [
+            $table->enum('classification', [
                 'MAJOR',
                 'MINOR',
             ])->nullable();

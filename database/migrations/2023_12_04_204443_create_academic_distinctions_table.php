@@ -19,6 +19,8 @@ return new class extends Migration
             $table->foreignIdFor(EducationalBackgroundCollegeGraduateStudy::class, 'educ_id')->constrained('educational_background_college_graduate_studies');
             $table->string('title');
 
+            $table->date('date_awarded')->nullable();
+
             $table->enum('category', [
                 'ACADEMIC',
                 'SCHOLARSHIP',
