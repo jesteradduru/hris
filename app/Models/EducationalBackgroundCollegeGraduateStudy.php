@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class EducationalBackgroundCollegeGraduateStudy extends Model
@@ -18,7 +19,6 @@ class EducationalBackgroundCollegeGraduateStudy extends Model
         'period_to',
         'highest_lvl_units_earned',
         'year_graduated',
-        'scholarship_academic_honors',
         'type',
         'user_id',
     ];
@@ -32,8 +32,8 @@ class EducationalBackgroundCollegeGraduateStudy extends Model
         return $this->morphMany(Document::class, 'fileable');
     }
 
-    public function academic_rewards(): MorphMany
+    public function academic_award(): HasMany
     {
-        return $this->morphMany(UserRewards::class, 'rewardable');
+        return $this->hasMany(AcademicDistinction::class, 'educ_id');
     }
 }

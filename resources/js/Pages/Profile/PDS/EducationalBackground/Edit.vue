@@ -219,10 +219,6 @@
           <div class="col-12">
             <h5>College</h5>
             <div>
-              <!-- <button data-type="COLLEGE" type="button" class="btn btn-secondary  mb-3" data-bs-toggle="modal" data-bs-target="#addCollege" @click="onToggleAddForm">
-                Add
-              </button> -->
-
               <Link class="btn btn-secondary  mb-3" :href="route('profile.pds.educational_background.college_graduate_study.create')" :data="{type: 'COLLEGE'}">Add</Link>
               <div class="table-responsive">
                 <table class="table table-bordered table-sm">
@@ -245,7 +241,13 @@
                       <td>{{ `${college.period_from} - ${college.period_to}` }}</td>
                       <td>{{ college.highest_lvl_units_earned }}</td>
                       <td>{{ college.year_graduated }}</td>
-                      <td>{{ college.scholarship_academic_honors }}</td>
+                      <td>
+                        <ul>
+                          <li v-for="award in college.academic_award" :key="award.id">
+                            <span>{{ award.title }}</span>
+                          </li>
+                        </ul>
+                      </td>
                       <td>
                         <ul>
                           <li v-for="file in college.files" :key="file.id">
@@ -255,15 +257,15 @@
                       </td>
                       <td>
                         <div class="d-flex gap-2">
-                          <button
-                            class="btn btn-primary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#editCollege"
-                            :data-id="college.id"
-                            @click="onToggleEditForm"
+                          <Link
+                            class="btn btn-secondary btn-sm"
+                            preserve-scroll
+                            :href="route('profile.pds.educational_background.college_graduate_study.edit', {
+                              college_graduate_study: college.id
+                            })"
                           >
                             Edit
-                          </button>
+                          </Link>
                           <Link
                             as="button" class="btn btn-danger btn-sm" method="delete"
                             preserve-scroll
@@ -291,9 +293,7 @@
           <div class="col-12">
             <h5>Graduate Studies</h5>
             <div>
-              <button data-type="GRADUATE" type="button" class="btn btn-secondary  mb-3" data-bs-toggle="modal" data-bs-target="#addCollege" @click="onToggleAddForm">
-                Add
-              </button>
+              <Link class="btn btn-secondary  mb-3" :href="route('profile.pds.educational_background.college_graduate_study.create')" :data="{type: 'GRADUATE'}">Add</Link>
               
               <div class="table-responsive">
                 <table class="table table-bordered table-sm">
@@ -316,7 +316,13 @@
                       <td>{{ `${college.period_from} - ${college.period_to}` }}</td>
                       <td>{{ college.highest_lvl_units_earned }}</td>
                       <td>{{ college.year_graduated }}</td>
-                      <td>{{ college.scholarship_academic_honors }}</td>
+                      <td>
+                        <ul>
+                          <li v-for="award in college.academic_award" :key="award.id">
+                            <span>{{ award.title }}</span>
+                          </li>
+                        </ul>
+                      </td>
                       <td>
                         <ul>
                           <li v-for="file in college.files" :key="file.id">
@@ -326,20 +332,20 @@
                       </td>
                       <td>
                         <div class="d-flex gap-2">
-                          <button
-                            class="btn btn-primary btn-sm"
-                            data-bs-toggle="modal"
-                            data-bs-target="#editCollege"
-                            :data-id="college.id"
-                            @click="onToggleEditForm"
+                          <Link
+                            class="btn btn-secondary btn-sm"
+                            preserve-scroll
+                            :href="route('profile.pds.educational_background.college_graduate_study.edit', {
+                              college_graduate_study: college.id
+                            })"
                           >
                             Edit
-                          </button>
+                          </Link>
                           <Link
                             as="button" class="btn btn-danger btn-sm" method="delete"
                             preserve-scroll
                             :onBefore="confirm"
-                            :href="route('profile.pds.college_graduate_study.destroy', {
+                            :href="route('profile.pds.educational_background.college_graduate_study.destroy', {
                               college_graduate_study: college.id
                             })"
                           >
@@ -351,6 +357,7 @@
                   </tbody>
                 </table>
               </div>
+              <!-- END OF TABLE -->
             </div>
           </div>
 
@@ -393,195 +400,6 @@
         </div>
       </form>
     </PDSLayout>
-
-    <!-- add education -->
-    <Modal id="addCollege" :modal-xl="true">
-      <template #header>
-        <h5>ADD {{ addForm.type }}</h5>
-      </template>
-      <template #body>
-        <div class="row">
-          <div class="col-12">
-            <div v-if="addForm.recentlySuccessful" class="alert alert-success">Saved</div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">NAME OF SCHOOL</label>
-              <input v-model="addForm.name_of_school" type="text" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.name_of_school" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">BASIC EDUCATION/DEGREE/COURSE</label>
-              <input v-model="addForm.basic_ed_degree_course" type="text" class="form-control form-control-sm" />
-              <p class="form-text text-muted">
-                Write in full
-              </p>
-              <InputError :message="addForm.errors.basic_ed_degree_course" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">From</label>
-              <input v-model="addForm.period_from" type="number" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.period_from" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">To</label>
-              <input v-model="addForm.period_to" type="number" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.period_to" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">HIGHEST LEVEL/UNITS EARNED (if not graduated)</label>
-              <input v-model="addForm.highest_lvl_units_earned" type="number" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.highest_lvl_units_earned" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">YEAR GRADUATED</label>
-              <input v-model="addForm.year_graduated" type="number" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.year_graduated" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</label>
-              <input v-model="addForm.scholarship_academic_honors" type="text" class="form-control form-control-sm" />
-              <InputError :message="addForm.errors.scholarship_academic_honors" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
-              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
-              <small class="form-text text-muted">Accepted file formats: pdf</small>
-              <InputError :message="addForm.errors['documents']" />
-              <InputError :message="addForm.errors['documents.0']" />
-            </div>
-          </div>
-          
-          <div class="col-12">
-            <button type="button" class="btn btn-success  mb-3" @click="onAddCollegeGraduate">
-              Add
-            </button>
-          </div>
-        </div>
-      </template>
-    </Modal>
-    <!-- EDIT COLLEGE -->
-    <Modal id="editCollege" :modal-xl="true">
-      <template #header>
-        <h5>EDIT {{ editForm.type }}</h5>
-      </template>
-      <template #body>
-        <div class="row">
-          <div class="col-12">
-            <div v-if="editForm.recentlySuccessful" class="alert alert-success">Saved</div>
-          </div>
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">NAME OF SCHOOL</label>
-              <input v-model="editForm.name_of_school" type="text" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.name_of_school" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">BASIC EDUCATION/DEGREE/COURSE</label>
-              <input v-model="editForm.basic_ed_degree_course" type="text" class="form-control form-control-sm" />
-              <p class="form-text text-muted">
-                Write in full
-              </p>
-              <InputError :message="editForm.errors.basic_ed_degree_course" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">From</label>
-              <input v-model="editForm.period_from" type="number" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.period_from" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">To</label>
-              <input v-model="editForm.period_to" type="number" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.period_to" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">HIGHEST LEVEL/UNITS EARNED (if not graduated)</label>
-              <input v-model="editForm.highest_lvl_units_earned" type="number" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.highest_lvl_units_earned" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">YEAR GRADUATED</label>
-              <input v-model="editForm.year_graduated" type="number" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.year_graduated" />
-            </div>
-          </div>
-
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</label>
-              <input v-model="editForm.scholarship_academic_honors" type="text" class="form-control form-control-sm" />
-              <InputError :message="editForm.errors.scholarship_academic_honors" />
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6">
-            <div class="mb-3">
-              <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
-              <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addEditDocument" />
-              <small class="form-text text-muted">Accepted file formats: pdf</small>
-              <InputError :message="editForm.errors['documents']" />
-              <InputError :message="editForm.errors['documents.0']" />
-            </div>
-          </div>
-
-          <div class="col-12">
-            <button type="button" class="btn btn-success  mb-3" @click="onUpdateCollegeGraduate">
-              Update
-            </button>
-          </div>
-        </div>
-      </template>
-    </Modal>
-    <!-- END OF EDIT COLLEGE GRADUATE -->
   </AuthenticatedLayout>
 </template>
 
@@ -688,37 +506,6 @@ const editForm = useForm({
 
 
 
-const onToggleAddForm = (e) => {
-  const type = e.target.getAttribute('data-type')
-  addForm.type = type
-}
-
-const onToggleEditForm = (e) => {
-  const id  = e.target.getAttribute('data-id')
-  const data = props.college_graduate_studies.filter(ed => ed.id == id)[0]
-  editForm.type = data.type
-  editForm.name_of_school = data.name_of_school
-  editForm.basic_ed_degree_course = data.basic_ed_degree_course
-  editForm.period_from = data.period_from
-  editForm.period_to = data.period_to
-  editForm.highest_lvl_units_earned = data.highest_lvl_units_earned
-  editForm.year_graduated = data.year_graduated
-  editForm.scholarship_academic_honors = data.scholarship_academic_honors
-  editId.value = id
-}
-
-const onAddCollegeGraduate = () => {
-  addForm.post(route('profile.pds.college_graduate_study.store', {educational_background: props.educational_background?.id}), {
-    preserveScroll: true,
-  })
-}
-
-const onUpdateCollegeGraduate = () => {
-  editForm.post(route('profile.pds.college_graduate_study.update', {educational_background: props.educational_background?.id, college_graduate_study: editId.value}), {
-    preserveScroll: true,
-  })
-}
-
 const colleges = computed(() => {
   return props.college_graduate_studies.filter(ed => ed.type === 'COLLEGE')
 })
@@ -727,20 +514,5 @@ const graduate_studies = computed(() => {
 })
 
 const confirm = () => window.confirm('Are you sure to delete this?')
-
-const addDocument = (e) => {
-  addForm.documents = []
-  for(const file of e.target.files){
-    addForm.documents.push(file)
-  }
-}
-
-const addEditDocument = (e) => {
-  editForm.documents = []
-  for(const file of e.target.files){
-    editForm.documents.push(file)
-  }
-}
-
 
 </script>

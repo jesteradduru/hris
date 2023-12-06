@@ -1,27 +1,7 @@
 <template>
   <div style="text-transform: uppercase" class="row">
     <!-- Personal Information -->
-    <div class="mb-3">
-      <h5 class="text-primary">Personal Information</h5>
-      <dl>
-        <dt>
-          Name
-        </dt>
-        <dd>{{ applicant.name }}</dd>
-        <dt>Date of Birth:</dt>
-        <dd>{{ moment(applicant.personal_information.date_of_birth).format('MMM D, YYYY') }}</dd>
-        <dt>Sex:</dt>
-        <dd>{{ applicant.personal_information.sex }}</dd>
-        <dt>Civil Status:</dt>
-        <dd>{{ applicant.personal_information.civil_status }}</dd>
-        <dt>Address:</dt>
-        <dd>{{ applicant.personal_information.address }}</dd>
-        <dt>Contact:</dt>
-        <dd><i class="fa-solid fa-mobile" />&nbsp;{{ applicant.personal_information.mobile_number }}</dd>
-        <dd><i class="fa-solid fa-phone" />&nbsp;{{ applicant.personal_information.telephone_number }}</dd>
-        <dd style="text-transform: lowercase;"><i class="fa-solid fa-envelope" />&nbsp;{{ applicant.personal_information.email_address }}</dd>
-      </dl>
-    </div>
+    <PersonalInformation :applicant="applicant" />
     <!-- EMPLOYEE RECORDS -->
     <div v-if="applicant.position" class="mb-3">
       <h5 class="text-primary">Employment Records</h5>
@@ -105,44 +85,46 @@
     <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
 
     <!-- outstanding accomplishments -->
-    <OutstandingAccomplishments :withControls="withControls" />
+    <OutstandingAccomplishments :withControls="withControls" :academic_distinctions="applicant.academic_distinction" :non_academic_distinctions="applicant.non_academic_distinction" />
 
-    <!-- special skills and hobbies -->
-    <div class="mb-3">
-      <h5 class="text-primary">Special Skills and Hobbies</h5>
-      <div v-if="plantilla" class="alert alert-primary">
+
+    <Box>
+      <!-- special skills and hobbies -->
+      <div class="mb-3">
+        <h5 class="text-primary">Special Skills and Hobbies</h5>
+        <!-- <div v-if="plantilla" class="alert alert-primary">
         <div>
           <b>Competency Requirement</b>
         </div>
         {{ plantilla.competency }}
+      </div> -->
+        <div v-if="skills">
+          <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
+        </div>
+        <div v-else class="text-muted text-center text-sm">
+          No Record
+        </div>
       </div>
-      <div v-if="skills">
-        <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
-      </div>
-      <div v-else class="text-muted text-center text-sm">
-        No Record
-      </div>
-    </div>
 
     
 
-    <!-- documents -->
-    <div class="mb-3">
-      <h5 class="text-primary">Attached Documents</h5>
-      <div v-if="applicant.job_application">
-        <a 
-          v-for="doc in applicant.job_application[0].document"
-          :key="doc.id" 
-          data-bs-toggle="modal" data-bs-target="#viewAttachment" 
-          href="#" @click="() => showPdf(doc.src)"
-        >{{ doc.filename }}</a>
+      <!-- documents -->
+      <div class="mb-3">
+        <h5 class="text-primary">Attached Documents</h5>
+        <div v-if="applicant.job_application">
+          <a 
+            v-for="doc in applicant.job_application[0].document"
+            :key="doc.id" 
+            data-bs-toggle="modal" data-bs-target="#viewAttachment" 
+            href="#" @click="() => showPdf(doc.src)"
+          >{{ doc.filename }}</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
+        </div>
+        <div v-else class="text-muted text-center text-sm">
+          No Record
+        </div>
       </div>
-      <div v-else class="text-muted text-center text-sm">
-        No Record
-      </div>
-    </div>
-
+    </Box>
     <!-- Modal -->
     <Modal modal-max-width="true" modal_id="viewAttachment" modal-xl="true">
       <template #header>View Attachment</template>
@@ -164,8 +146,10 @@ import EducationalBackground from '../Components/ApplicantDetails/EducationalBac
 import Eligibility from '../Components/ApplicantDetails/Eligibility.vue'
 import Learning from '../Components/ApplicantDetails/Learning.vue'
 import OutstandingAccomplishments from '../Components/ApplicantDetails/OutstandingAccomplishments.vue'
+import PersonalInformation from '../Components/ApplicantDetails/PersonalInformation.vue'
 import WorkExperience from '../Components/ApplicantDetails/WorkExperience.vue'
 import { ref } from 'vue'
+import Box from './UI/Box.vue'
 
 const props = defineProps({
   applicant: Object,

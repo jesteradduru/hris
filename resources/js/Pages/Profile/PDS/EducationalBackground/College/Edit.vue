@@ -1,7 +1,6 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="addForm.isDirty">
-      <h5>Add College</h5>
       <div class="row">
         <div class="col-12 col-md-6">
           <div class="mb-3">
@@ -73,12 +72,26 @@
                 </tr>
               </thead>
               <tbody>
+                <!-- current list -->
                 <tr v-for="(award, index) in addForm.scholarship_academic_honors" :key="award.id" class="">
                   <td scope="row">{{ award.title }}</td>
                   <td>{{ award.category }}</td>
-                  <td>{{ award.attachment[0].name }}</td>
                   <td>
-                    <a href="#" class="text-danger" @click="() => removeFromList(index)">Remove</a>
+                    <a v-if="award.files" target="_blank" :href="award.files[0].src">{{ award.files[0].filename }}</a>
+                  </td>
+                  <td>
+                    <Link :onBefore="confirm" :href="route('profile.pds.academic_distinctions.destroy', {academic_distinction: award.id})" class="btn btn-danger btn-sm" as="button" method="delete">Remove</Link>
+                  </td>
+                </tr>
+                <!-- new list -->
+                <tr v-for="(award, index) in addForm.scholarship_academic_honors_new" :key="award.id" class="">
+                  <td scope="row">{{ award.title }}</td>
+                  <td>{{ award.category }}</td>
+                  <td>
+                    <span>{{ award.attachment[0].name }}</span>
+                  </td>
+                  <td>
+                    <a href="#" class="btn btn-danger btn-sm" @click="() => removeFromList(index)">Remove</a>
                   </td>
                 </tr>
               </tbody>
@@ -171,17 +184,22 @@ import Modal from '@/Components/Modal.vue'
 import {ref, computed} from 'vue'
   
   
-  
+const props = defineProps({
+  education:Object,
+})
+
 const addForm = useForm({
-  type: 'COLLEGE',
-  name_of_school: null,
-  basic_ed_degree_course: null,
-  period_from: null,
-  period_to: null,
-  highest_lvl_units_earned: null,
-  year_graduated: null,
-  scholarship_academic_honors: null,
-  documents: null,
+  _method: 'put',
+  type: props.education.type,
+  name_of_school: props.education.name_of_school,
+  basic_ed_degree_course: props.education.basic_ed_degree_course,
+  period_from: props.education.period_from,
+  period_to: props.education.period_to,
+  highest_lvl_units_earned: props.education.highest_lvl_units_earned,
+  year_graduated: props.education.year_graduated,
+  scholarship_academic_honors: props.education.academic_award,
+  scholarship_academic_honors_new: null,
+  documents: props.education.documents,
 })
 
 const distinctionForm = useForm({
@@ -193,7 +211,7 @@ const distinctionForm = useForm({
   
 
 const onAddCollegeGraduate = () => {
-  addForm.post(route('profile.pds.educational_background.college_graduate_study.store'), {
+  addForm.post(route('profile.pds.educational_background.college_graduate_study.update', {college_graduate_study: props.education.id}), {
     preserveScroll: true,
   })
 }
@@ -209,15 +227,15 @@ const addDistinctionDocument = (e) => {
 
 
 const onAddDistinction = () => {
-  if(addForm.scholarship_academic_honors === null){
-    addForm.scholarship_academic_honors = []
+  if(addForm.scholarship_academic_honors_new === null){
+    addForm.scholarship_academic_honors_new = []
   }
-  addForm.scholarship_academic_honors.push(distinctionForm.data())
+  addForm.scholarship_academic_honors_new.push(distinctionForm.data())
 }
 
 const removeFromList = (award_id) => {
-  addForm.scholarship_academic_honors = addForm.scholarship_academic_honors.filter((award, index) => index !== award_id)
+  addForm.scholarship_academic_honors_new = addForm.scholarship_academic_honors_new.filter((award, index) => index !== award_id)
 }
 
-
+const confirm = () => window.confirm('Are you sure to remove this award?')
 </script>

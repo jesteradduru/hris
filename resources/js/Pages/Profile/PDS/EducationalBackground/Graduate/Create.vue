@@ -1,10 +1,8 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="addForm.isDirty">
+      <h5>Add Graduate Studies</h5>
       <div class="row">
-        <div class="col-12">
-          <div v-if="addForm.recentlySuccessful" class="alert alert-success">Saved</div>
-        </div>
         <div class="col-12 col-md-6">
           <div class="mb-3">
             <label class="form-label">NAME OF SCHOOL</label>
@@ -62,11 +60,29 @@
         </div>
   
   
-        <div class="col-12 col-md-6">
-          <div class="mb-3">
-            <label class="form-label">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</label>
-            <input v-model="addForm.scholarship_academic_honors" type="text" class="form-control form-control-sm" />
-            <InputError :message="addForm.errors.scholarship_academic_honors" />
+        <div class="col-12">
+          <button class="btn btn-secondary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addDistinction">Add Award</button>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Awards</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">File</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(award, index) in addForm.scholarship_academic_honors" :key="award.id" class="">
+                  <td scope="row">{{ award.title }}</td>
+                  <td>{{ award.category }}</td>
+                  <td>{{ award.attachment[0].name }}</td>
+                  <td>
+                    <a href="#" class="text-danger" @click="() => removeFromList(index)">Remove</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
   
@@ -82,12 +98,65 @@
         </div>
             
         <div class="col-12">
-          <button type="button" class="btn btn-success  mb-3" @click="onAddCollegeGraduate">
-            Add
+          <Link :href="route('profile.pds.educational_background.edit')" class="btn btn-secondary me-2">
+            Back
+          </Link>
+          <button type="button" class="btn btn-success" @click="onAddCollegeGraduate">
+            Save
           </button>
         </div>
       </div>
     </PDSLayout>
+    <Modal id="addDistinction">
+      <template #header>
+        <h5>ADD SCHOLARSHIP/ACADEMIC HONORS RECEIVED</h5>
+      </template>
+      <template #body>
+        <form class="row" @submit.prevent="onAddDistinction">
+          <div class="col-12">
+            <div class="mb-3">
+              <label for="" class="form-label">Award <span class="text-danger">*</span></label>
+              <input
+                id=""
+                v-model="distinctionForm.title"
+                required
+                type="text" class="form-control form-control-sm" name="" aria-describedby="helpId" placeholder=""
+              />
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">Category <span class="text-danger">*</span></label>
+              <select id="" v-model="distinctionForm.category" required class="form-select form-select-sm" name="">
+                <option value="LATIN">LATIN AWARD</option>
+                <option value="SPECIAL">SPECIAL AWARD</option>
+                <option value="SCHOLARSHIP">SCHOLARSHIP AWARD</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">Date Awarded</label>
+              <input
+                id=""
+                v-model="distinctionForm.date_awarded"
+                type="date" class="form-control form-control-sm" name="" aria-describedby="helpId" placeholder=""
+              />
+            </div>
+            <div class="mb-3">
+              <label for="" class="form-label">Attachment (e.g. Certificate of Award) <span class="text-danger">*</span></label>
+              <input
+                id=""
+                required
+                type="file" class="form-control form-control-sm" name="" aria-describedby="helpId" placeholder=""
+                @input="addDistinctionDocument"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-secondary  mb-3">
+              Add
+            </button>
+          </div>
+        </form>
+      </template>
+    </Modal>
     <!-- END OF EDIT COLLEGE GRADUATE -->
   </AuthenticatedLayout>
 </template>
@@ -112,23 +181,43 @@ const addForm = useForm({
   highest_lvl_units_earned: null,
   year_graduated: null,
   scholarship_academic_honors: null,
-  documents: [],
+  documents: null,
+})
+
+const distinctionForm = useForm({
+  title: '',
+  date_awarded: null,
+  attachment: [],
+  category: 'LATIN',
 })
   
 
 const onAddCollegeGraduate = () => {
-  addForm.post(route('profile.pds.college_graduate_study.store', {educational_background: props.educational_background?.id}), {
+  addForm.post(route('profile.pds.educational_background.college_graduate_study.store'), {
     preserveScroll: true,
   })
 }
   
   
 const addDocument = (e) => {
-  addForm.documents = []
-  for(const file of e.target.files){
-    addForm.documents.push(file)
-  }
+  addForm.documents = e.target.files
 }
 
-  
+const addDistinctionDocument = (e) => {
+  distinctionForm.attachment = e.target.files
+}
+
+
+const onAddDistinction = () => {
+  if(addForm.scholarship_academic_honors === null){
+    addForm.scholarship_academic_honors = []
+  }
+  addForm.scholarship_academic_honors.push(distinctionForm.data())
+}
+
+const removeFromList = (award_id) => {
+  addForm.scholarship_academic_honors = addForm.scholarship_academic_honors.filter((award, index) => index !== award_id)
+}
+
+
 </script>

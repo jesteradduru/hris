@@ -1,6 +1,6 @@
 <template>
-  <div v-if="educ || college_graduate_studies.length > 0" class="mb-3">
-    <h5 class="text-primary">Educational BackGround</h5>
+  <Box v-if="educ || college_graduate_studies.length > 0" class="mb-3">
+    <template #header>Educational BackGround</template>
     <div v-if="plantilla" class="alert alert-primary">
       <div>
         <b>Educational Requirement</b>
@@ -56,7 +56,13 @@
                 <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
-                <td>{{ course.scholarship_academic_honors }}</td>
+                <td>
+                  <ul>
+                    <li v-for="award in course.academic_award" :key="award.id">
+                      <span>{{ award.title }}</span>
+                    </li>
+                  </ul>
+                </td>
                 <td>
                   <ul>
                     <li v-for="file in course.files" :key="file.id">
@@ -97,7 +103,13 @@
                 <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
-                <td>{{ course.scholarship_academic_honors }}</td>
+                <td>
+                  <ul>
+                    <li v-for="award in course.academic_award" :key="award.id">
+                      <span>{{ award.title }}</span>
+                    </li>
+                  </ul>
+                </td>
                 <td>
                   <ul>
                     <li v-for="file in course.files" :key="file.id">
@@ -111,12 +123,13 @@
         </div>
       </dd>
     </dl>
-  </div>
+  </Box>
 </template>
 
 <script setup>
 
 import {  computed } from 'vue'
+import Box from '../UI/Box.vue'
 
 const props = defineProps({
   educ: Object,

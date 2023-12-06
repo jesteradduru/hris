@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('period_to', 255)->nullable();
             $table->string('highest_lvl_units_earned', 255)->nullable();
             $table->integer('year_graduated')->nullable();
-            $table->string('scholarship_academic_honors', 255)->nullable();
+            // $table->string('scholarship_academic_honors', 255)->nullable();
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
             $table->enum('type', ['COLLEGE', 'GRADUATE']);
         });

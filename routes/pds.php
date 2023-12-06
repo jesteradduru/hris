@@ -12,6 +12,7 @@ use App\Http\Controllers\PDS\PageFourReferencesIdController;
 use App\Http\Controllers\PDS\PersonalInformationController;
 use App\Http\Controllers\PDS\VoluntaryWorkController;
 use App\Http\Controllers\PDS\WorkExperienceController;
+use App\Models\AcademicDistinction;
 use Illuminate\Support\Facades\Route;
 
 
@@ -71,6 +72,8 @@ Route::prefix('profile/pds')
 
     // non academic distinctions
     Route::resource('non_academic_distinctions', NonAcademicDistinctionController::class);
+    // academic distinction
+    Route::resource('academic_distinctions', AcademicDistinction::class)->only(['destroy']);
     
 });
 

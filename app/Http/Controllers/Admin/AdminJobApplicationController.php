@@ -85,15 +85,16 @@ class AdminJobApplicationController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'college_graduate_studies' => ['files'],
                 'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',
                 'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
                 'spms',
-                'reward' => ['reward'],
-                'position'
+                'position',
+                'college_graduate_studies' => ['files', 'academic_award'],
+                'academic_distinction'=> ['files'],
+                'non_academic_distinction' => ['files'],
             ]);
         }
 
@@ -132,7 +133,6 @@ class AdminJobApplicationController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'college_graduate_studies' => ['files'],
                 'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
@@ -140,7 +140,10 @@ class AdminJobApplicationController extends Controller
                 'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
                 'spms',
                 'reward' => ['reward'],
-                'position'
+                'position',
+                'college_graduate_studies' => ['files', 'academic_award'],
+                'academic_distinction'=> ['files'],
+                'non_academic_distinction' => ['files'],
                 
             ]);
         }

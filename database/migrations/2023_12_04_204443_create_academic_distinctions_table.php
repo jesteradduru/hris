@@ -22,7 +22,7 @@ return new class extends Migration
             $table->date('date_awarded')->nullable();
 
             $table->enum('category', [
-                'ACADEMIC',
+                'LATIN',
                 'SCHOLARSHIP',
                 'SPECIAL',
             ])->nullable();

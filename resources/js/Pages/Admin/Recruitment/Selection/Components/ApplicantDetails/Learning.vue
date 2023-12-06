@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-3">
-    <h5 class="text-primary">Learning and Development</h5>
+  <Box class="mb-3">
+    <template #header>Learning and Development</template>
     <div v-if="plantilla" class="alert alert-primary">
       <div>
         <b>Training Requirement</b>
@@ -44,12 +44,12 @@
       </table>
       <div v-if="!props.lnds.length" class="text-center">No records to display</div>
     </div>
-  </div>
+  </Box>
 </template>
     
 <script setup>
     
-import {  computed } from 'vue'
+import Box from '../UI/Box.vue'
     
 const props = defineProps({
   lnds: Object,

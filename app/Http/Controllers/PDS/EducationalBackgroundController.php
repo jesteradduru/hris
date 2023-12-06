@@ -10,7 +10,7 @@ class EducationalBackgroundController extends Controller
     public function edit(Request $request) {
         return inertia('Profile/PDS/EducationalBackground/Edit', [
             "educational_background" => $request->user()->educational_background,
-            "college_graduate_studies" => $request->user()->college_graduate_studies->load('files')
+            "college_graduate_studies" => $request->user()->college_graduate_studies->load(['files', 'academic_award'])
         ]);
     }
 

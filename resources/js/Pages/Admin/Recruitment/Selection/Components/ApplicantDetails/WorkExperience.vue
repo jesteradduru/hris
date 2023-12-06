@@ -1,6 +1,6 @@
 <template>
-  <div class="mb-3">
-    <h5 class="text-primary">Work Experience</h5>
+  <Box class="mb-3">
+    <template #header>Work Experience</template>
     <div v-if="plantilla" class="alert alert-primary">
       <div>
         <b>Work Experience Requirement</b>
@@ -35,11 +35,12 @@
         No work experience
       </div>
     </div>
-  </div>
+  </Box>
 </template>
       
 <script setup>
 import moment from 'moment'
+import Box from '../UI/Box.vue'
 
 const props = defineProps({
   works: Array,
