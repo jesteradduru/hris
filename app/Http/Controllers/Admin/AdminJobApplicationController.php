@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\ApplicationResult;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\SpmsForm;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -120,6 +123,7 @@ class AdminJobApplicationController extends Controller
         $job_vacancies = JobPosting::notArchived()->get();
         $job_applications = [];
         $applicant_details = null;
+        $latestSpms = null;
         
 
         // dd($job_vacancies);
@@ -130,7 +134,34 @@ class AdminJobApplicationController extends Controller
         }
 
         if($request->applicant){
-            $applicant_details = User::find($request->applicant)->load([
+            $user = User::find($request->applicant);
+
+            if($user->hasRole('employee')){
+                $posting_date = Carbon::parse($job_vacancy->posting_date);
+
+                if($posting_date->month <= 6){
+                    $previousYear = $posting_date->year - 1;
+                    $latestSpms = $user->spms()
+                                    ->where('year', $previousYear)
+                                    ->where(function (Builder $query) {
+                                        $query->where('semester', 'FIRST')
+                                            ->orWhere('semester', 'SECOND');
+                                    })->get();
+                }else if($posting_date->month > 6 && $posting_date->month <= 12){
+                    $currentYear = $posting_date->year;
+                    $latestSpms = $user->spms()
+                                    ->where(function (Builder $query) use($currentYear) {
+                                        $query->where('semester', 'FIRST')
+                                                ->where('year', $currentYear);
+                                    })
+                                    ->orWhere(function (Builder $query) use($currentYear) {
+                                        $query->where('year', $currentYear - 1)
+                                            ->where('semester', 'SECOND');
+                                    })->get();
+                }
+            }
+
+            $applicant_details = $user->load([
                 'personal_information',
                 'educational_background',
                 'civil_service_eligibility'  => ['files'],
@@ -139,12 +170,13 @@ class AdminJobApplicationController extends Controller
                 'other_information',
                 'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
                 'spms',
-                'reward' => ['reward'],
+
+                // 'reward' => ['reward'],
                 'position',
                 'college_graduate_studies' => ['files', 'academic_award'],
                 'academic_distinction'=> ['files'],
                 'non_academic_distinction' => ['files'],
-                
+                'pes_rating',
             ]);
         }
 
@@ -157,6 +189,7 @@ class AdminJobApplicationController extends Controller
             "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
+            'latest_spms' => $latestSpms,
         ]);
 
 }

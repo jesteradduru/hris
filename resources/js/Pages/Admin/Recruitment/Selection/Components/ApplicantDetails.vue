@@ -68,24 +68,33 @@
         </dd>
       </dl>
     </div>
+
+    <!-- PERFORMANCE -->
+    <!-- outstanding accomplishments -->
+    <OutstandingAccomplishments v-if="withControls" :withControls="withControls" :academic_distinctions="applicant.academic_distinction" :non_academic_distinctions="applicant.non_academic_distinction" />
+    <PerformanceRating v-if="withControls" :applicant="applicant" :posting_id="posting_id" :withControls="withControls" :is-employee="applicant.role_name.includes('employee')" :latest_spms="latest_spms" />
+
+
+
+    <!-- EDUCATION AND TRAINING -->
     <!-- Educational Background -->
     <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" :withControls="withControls" />
+    <!-- learning and development -->
+    <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
     
+
+    <!-- EXPERIENCE -->
+    <WorkExperience :works="works" :plantilla="plantilla" :with-controls="withControls" />
+    
+
 
     <!-- CS Eligibility -->
     <Eligibility :eligs="eligs" :plantilla="plantilla" />
 
-    <!-- work experience -->
-    <WorkExperience :works="works" :plantilla="plantilla" :with-controls="withControls" />
-    
     
 
 
-    <!-- learning and development -->
-    <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
-
-    <!-- outstanding accomplishments -->
-    <OutstandingAccomplishments :withControls="withControls" :academic_distinctions="applicant.academic_distinction" :non_academic_distinctions="applicant.non_academic_distinction" />
+    
 
 
     <Box>
@@ -148,13 +157,16 @@ import Learning from '../Components/ApplicantDetails/Learning.vue'
 import OutstandingAccomplishments from '../Components/ApplicantDetails/OutstandingAccomplishments.vue'
 import PersonalInformation from '../Components/ApplicantDetails/PersonalInformation.vue'
 import WorkExperience from '../Components/ApplicantDetails/WorkExperience.vue'
+import PerformanceRating from '../Components/ApplicantDetails/PerformanceRating.vue'
 import { ref } from 'vue'
 import Box from './UI/Box.vue'
 
 const props = defineProps({
   applicant: Object,
   plantilla: Object,
+  latest_spms: Array,
   withControls: Boolean,
+  posting_id: Number,
 })
 
 const pdf = ref('')

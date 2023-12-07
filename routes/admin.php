@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\EmployeeRewardController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
 use App\Http\Controllers\Admin\IdpController;
 use App\Http\Controllers\Admin\LndTrainingsAttendedController;
+use App\Http\Controllers\Admin\PesRatingController;
 use App\Http\Controllers\Admin\PlantillaPositionController;
 use App\Http\Controllers\Admin\PublishHiringResultController;
 use App\Http\Controllers\Admin\RuleController;
@@ -91,6 +92,9 @@ use Illuminate\Support\Facades\Route;
         Route::resource('plantilla.rule', RuleController::class);
 
         Route::resource('eligibility', EligibilityController::class)->only(['store', 'update', 'destroy']);
+
+        // pes rating
+        Route::resource('pes', PesRatingController::class)->only(['store']);
     });
         
     // rewards and recognition

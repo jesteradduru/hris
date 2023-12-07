@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -134,6 +135,11 @@ class User extends Authenticatable
     // public function reward() : HasMany {
     //     return $this->hasMany(EmployeeReward::class, 'user_id');
     // }
+
+    // pes
+    public function pes_rating() : HasOneThrough {
+        return $this->hasOneThrough(PesRating::class, JobApplication::class, 'user_id', 'application_id');
+    }
 
     //spms
     public function spms() : HasMany {

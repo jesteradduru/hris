@@ -40,6 +40,10 @@ class JobApplication extends Model
     {
         return $this->hasOne(ApplicationScore::class, 'job_application_id');
     }
+    
+    public function pes_rating() : HasOne {
+        return $this->hasOne(PesRating::class, 'application_id');
+    }
 
     public function getLatestResultAttribute(){
         return Applicationresult::latest()->where('application_id', $this->id)->first();

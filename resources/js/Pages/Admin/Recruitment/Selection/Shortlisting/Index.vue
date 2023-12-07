@@ -4,8 +4,6 @@
     <b>VACANCIES</b>
     <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
 
-    <hr />
-
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
         <h3>Shortlisting of Applicants</h3>
@@ -60,7 +58,7 @@
             UNLIST
           </Link>
         </div>
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" :withControls="job_vacancy_status.phase === 'SHORTLISTING'" :plantilla="posting.plantilla" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="job_vacancy_status.phase === 'SHORTLISTING'" :posting_id="job_vacancy_status.job_posting_id" :plantilla="posting.plantilla" />
       </div>
     </div>
   </RecruitmentLayout>
@@ -79,6 +77,7 @@ const props = defineProps({
   applicant_details: Object,
   job_vacancy_status: Object,
   qualified_applicants: Array,
+  latest_spms: Array,
 })
 
 const haveResult = (id) => {
