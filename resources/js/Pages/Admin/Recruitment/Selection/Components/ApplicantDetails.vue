@@ -71,8 +71,10 @@
 
     <!-- PERFORMANCE -->
     <!-- outstanding accomplishments -->
-    <OutstandingAccomplishments v-if="withControls" :withControls="withControls" :academic_distinctions="applicant.academic_distinction" :non_academic_distinctions="applicant.non_academic_distinction" />
-    <PerformanceRating v-if="withControls" :applicant="applicant" :posting_id="posting_id" :withControls="withControls" :is-employee="applicant.role_name.includes('employee')" :latest_spms="latest_spms" />
+    <div v-if="applicant.academic_distinction && applicant.non_academic_distinction">
+      <OutstandingAccomplishments v-if="withControls" :withControls="withControls" :applicant="applicant" />
+      <PerformanceRating v-if="withControls" :applicant="applicant" :posting_id="posting_id" :withControls="withControls" :is-employee="applicant.role_name.includes('employee')" :latest_spms="latest_spms" />
+    </div>
 
 
 
@@ -135,7 +137,7 @@
       </div>
     </Box>
     <!-- Modal -->
-    <Modal modal-max-width="true" modal_id="viewAttachment" modal-xl="true">
+    <Modal :modal-max-width="true" modal_id="viewAttachment" :modal-xl="true">
       <template #header>View Attachment</template>
       <template #body>
         <embed

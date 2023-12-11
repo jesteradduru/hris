@@ -17,7 +17,7 @@
           <tbody>
             <tr v-for="ipcr in latest_spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
               <td scope="row">
-                <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
+                <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
               <td>{{ ipcr.rating }}</td>
             </tr>
@@ -42,11 +42,11 @@
           </thead>
           <tbody>
             <tr>
-              <td>FIRST</td>
+              <td>FIRST SEMESTER</td>
               <td>{{ applicant.pes_rating.first_rating }}</td>
             </tr>
             <tr>
-              <td>SECOND</td>
+              <td>SECOND SEMESTER</td>
               <td>{{ applicant.pes_rating.second_rating }}</td>
             </tr>
           </tbody>

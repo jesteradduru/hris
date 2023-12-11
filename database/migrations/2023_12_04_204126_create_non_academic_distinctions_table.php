@@ -27,8 +27,11 @@ return new class extends Migration
             $table->enum('category', [
                 'MAJOR_NATIONAL',
                 'MAJOR_LOCAL',
+                'MINOR',
                 'SPECIAL'
             ])->nullable();
+
+            $table->timestamp('used_at')->nullable();
 
             $table->enum('classification', [
                 'MAJOR',

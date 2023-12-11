@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class NonAcademicDistinction extends Model
 {
@@ -27,5 +28,9 @@ class NonAcademicDistinction extends Model
 
     public function files() : MorphMany {
         return $this->morphMany(Document::class, 'fileable');
+    }
+
+    public function included() : MorphOne {
+        return $this->morphOne(IncludedComputation::class, 'computable');
     }
 }

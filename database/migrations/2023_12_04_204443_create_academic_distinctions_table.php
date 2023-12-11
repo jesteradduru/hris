@@ -26,6 +26,8 @@ return new class extends Migration
                 'SCHOLARSHIP',
                 'SPECIAL',
             ])->nullable();
+
+            $table->timestamp('used_at')->nullable();
             
             $table->decimal('points')->nullable();
         });

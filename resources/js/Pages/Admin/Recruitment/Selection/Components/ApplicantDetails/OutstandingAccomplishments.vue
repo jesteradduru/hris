@@ -14,9 +14,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(award, index) in academic_distinctions" :id="`award${award.id}`" :key="award.id">
+            <tr v-for="(award, index) in applicant.academic_distinction" :id="`award${award.id}`" :key="award.id">
               <td v-if="withControls">
-                <input type="checkbox" :data-id="`award${award.id}`" @input="onInclude" />
+                <input type="checkbox" :data-id="award.id" @input="includeAward" />
               </td>
               <td scope="row">{{ award.title }}</td>
               <td>{{ award.category }}</td>
@@ -38,24 +38,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(award, index) in non_academic_distinctions" :id="`naward${award.id}`" :key="award.id">
-              <td v-if="withControls">
-                <input type="checkbox" :data-id="`naward${award.id}`" @input="onInclude" />
+            <tr v-for="(award, index) in applicant.non_academic_distinction" :id="`naward${award.id}`" :key="award.id">
+              <td v-if="withControls" class="d-flex gap-2">
+                <input type="checkbox" :data-id="award.id" @input="includeAward" />
                 <div>
-                  <select id="" name="">
-                    <option value="">Major Award (National)</option>
-                    <option value="">Major Award (Local)</option>
-                    <option value="">Minor Award </option>
-                    <option value="">Special</option>
+                  <select id="" name="" :data-id="award.id" :value="award.category" @change="onChangeAwardCategory">
+                    <option value="MAJOR_NATIONAL">Major Award (National)</option>
+                    <option value="MAJOR_LOCAL">Major Award (Local)</option>
+                    <option value="MINOR">Minor Award </option>
+                    <option value="SPECIAL">Special Award </option>
                   </select>
                 </div>
-                <!-- <div>
-                  <input id="major" type="radio" name="classification" />
-                  <label for="major">Major</label>
-                  &nbsp;
-                  <input id="minor" type="radio" name="classification" />
-                  <label for="minor">Minor</label>
-                </div> -->
               </td>
               <td scope="row">{{ award.title }}</td>
               <td><a :href="award.files[0].src" target="_blank">{{ award.files[0].filename }}</a></td>
@@ -70,20 +63,46 @@
 <script setup>
 
 import Box from '../UI/Box.vue'
+import {debounce} from 'lodash'
+import {router } from '@inertiajs/vue3'
 
 const props = defineProps({
   withControls: Boolean,
-  academic_distinctions: Array,
-  non_academic_distinctions: Array,
+  applicant: Object,
 })
+
   
-const onInclude = (e) => {
-  const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
-  if(e.target.checked){
-    elem.classList.add('table-success')
-  }else{
-    elem.classList.remove('table-success')
-  }
+// const onInclude = (e) => {
+//   const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
+//   const awardId = e.target.getAttribute('data-id')
+//   if(e.target.checked){
+//     elem.classList.add('table-success')
+    
+//   }else{
+//     elem.classList.remove('table-success')
+//   }
+// }
+
+const includeAward = (e) => {
+  const awardId = e.target.getAttribute('data-id')
+  router.visit(route('admin.recruitment.non_academic_distinction.includeAward', {non_academic: awardId, job_application_id: props.applicant.job_application[0].id}), {
+    method: 'post',
+    preserveScroll: true,
+  })
 }
+
+const onChangeAwardCategory = debounce((e) => {
+  const category = e.target.value
+  const awardId = e.target.getAttribute('data-id')
+
+  router.visit(route('admin.recruitment.non_academic_distinction.updateCategory', {non_academic: awardId}), {
+    method: 'put',
+    data: {
+      category: category,
+    },
+    preserveScroll: true,
+  })
+
+}, 1000)
 
 </script>

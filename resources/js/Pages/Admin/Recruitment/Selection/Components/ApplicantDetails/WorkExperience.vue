@@ -45,7 +45,7 @@ import Box from '../UI/Box.vue'
 const props = defineProps({
   works: Array,
   plantilla: Object,
-  withControls: Object,
+  withControls: Boolean,
 })
   
 const onInclude = (e) => {

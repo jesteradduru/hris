@@ -11,7 +11,7 @@
       <ol v-if="insider.length !== 0">
         <li v-for="(item) in insider" :key="item.id">
           <Link
-            preserve-state="true"
+            :preserve-state="true"
             :class="{
               'text-dark': applicant_details?.id === item.user.id,
             }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
@@ -44,7 +44,7 @@
     <ol v-if="outsider.length !== 0">
       <li v-for="(item) in outsider" :key="item.id">
         <Link
-          preserve-state="true"
+          :preserve-state="true"
           :class="{
             'text-dark': applicant_details?.id === item.user.id,
           }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
@@ -79,7 +79,7 @@
     <ol v-if="props.job_applications.length !== 0">
       <li v-for="(item) in props.job_applications" :key="item.id">
         <Link
-          preserve-state="true"
+          :preserve-state="true"
           :class="{
             'text-dark': applicant_details?.id === item.user.id,
           }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"
@@ -130,5 +130,4 @@ const outsider = computed(() => {
   return props.job_applications.filter(application => application.user.role_name.includes('user'))
 })
 
-console.log(props.job_applications)
 </script>
