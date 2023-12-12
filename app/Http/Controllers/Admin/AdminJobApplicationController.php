@@ -168,7 +168,7 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                'job_application' => fn($query) => $query->with(['document', 'included'])->where('job_posting_id', $request->job_posting),
                 'spms',
 
                 // 'reward' => ['reward'],
@@ -220,7 +220,7 @@ class AdminJobApplicationController extends Controller
                     'other_information',
                     'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
                     'spms',
-                    'reward' => ['reward'],
+                    // 'reward' => ['reward'],
                     'position'
                     
                 ]);
@@ -264,7 +264,7 @@ class AdminJobApplicationController extends Controller
                     'other_information',
                     'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
                     'spms',
-                    'reward' => ['reward'],
+                    // 'reward' => ['reward'],
                     'position'
                 ]);
             }

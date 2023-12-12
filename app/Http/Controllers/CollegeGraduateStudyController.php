@@ -44,10 +44,11 @@ class CollegeGraduateStudyController extends Controller
         $validate = $request->validate([
             "name_of_school" => "required|string|max:255",
             "basic_ed_degree_course" => "required|string|max:255",
+            "level" => "required|string|max:255",
             "period_from" => "required|integer",
-            "period_to" => "required|integer",
+            "period_to" => "integer|nullable",
             "highest_lvl_units_earned" => "nullable|integer",
-            "year_graduated" => "required|integer",
+            "year_graduated" => "integer|nullable",
             'documents' => 'required|array|min:1',
             'documents.*'=> 'required|mimes:pdf|max:15000',
         ], [
@@ -134,9 +135,10 @@ class CollegeGraduateStudyController extends Controller
             "name_of_school" => "required|string|max:255",
             "basic_ed_degree_course" => "required|string|max:255",
             "period_from" => "required|integer",
-            "period_to" => "required|integer",
-            "highest_lvl_units_earned" => "nullable|integer",
-            "year_graduated" => "required|integer",
+            "period_to" => "integer|nullable",
+            "highest_lvl_units_earned" => "integer|nullable",
+            "year_graduated" => "integer|nullable",
+            "level" => "required|string|max:255",
         ]);
 
         $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);

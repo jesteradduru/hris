@@ -19,6 +19,8 @@ class AcademicDistinction extends Model
         'points',
     ];
 
+    protected $appends = ['included'];
+
     public function educ() : BelongsTo {
         return $this->belongsTo(EducationalBackgroundCollegeGraduateStudy::class, 'educ_id');
     }
@@ -26,5 +28,13 @@ class AcademicDistinction extends Model
     public function files(): MorphMany
     {
         return $this->morphMany(Document::class, 'fileable');
+    }
+
+    public function included() : MorphMany {
+        return $this->morphMany(IncludedComputation::class, 'computable');
+    }
+
+    public function getIncludedAttribute() {
+        return $this->included()->exists();
     }
 }

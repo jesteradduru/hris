@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PesRatingController;
 use App\Http\Controllers\Admin\PlantillaPositionController;
 use App\Http\Controllers\Admin\PublishHiringResultController;
 use App\Http\Controllers\Admin\RuleController;
+use App\Http\Controllers\Admin\Selection\AcademicAwardController;
 use App\Http\Controllers\Admin\Selection\NonAcademicAwardController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
@@ -102,6 +103,9 @@ use Illuminate\Support\Facades\Route;
         // Route::resource('non_academic_distinction', NonAcademicAwardController::class);
         Route::put('non_academic_distinction/{non_academic}/updateCategory', [NonAcademicAwardController::class, 'updateCategory'])->name('non_academic_distinction.updateCategory');
         Route::post('non_academic_distinction/{non_academic}/includeAward', [NonAcademicAwardController::class, 'includeAward'])->name('non_academic_distinction.includeAward');
+
+        // selection/academic awards
+        Route::post('academic_distinction/{academic}/includeAward', [AcademicAwardController::class, 'includeAward'])->name('academic_distinction.includeAward');
     });
         
     // rewards and recognition

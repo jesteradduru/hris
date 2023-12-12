@@ -14,9 +14,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(award, index) in applicant.academic_distinction" :id="`award${award.id}`" :key="award.id">
+            <tr v-for="(award, index) in applicant.academic_distinction" :id="`award${award.id}`" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')}">
               <td v-if="withControls">
-                <input type="checkbox" :data-id="award.id" @input="includeAward" />
+                <input type="checkbox" :checked="checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')" :data-id="award.id" data-type="ACAD" @input="includeAward" />
               </td>
               <td scope="row">{{ award.title }}</td>
               <td>{{ award.category }}</td>
@@ -38,9 +38,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(award, index) in applicant.non_academic_distinction" :id="`naward${award.id}`" :key="award.id">
+            <tr v-for="(award, index) in applicant.non_academic_distinction" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')}">
               <td v-if="withControls" class="d-flex gap-2">
-                <input type="checkbox" :data-id="award.id" @input="includeAward" />
+                <input type="checkbox" :data-id="award.id" :checked="checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')" @input="includeAward" />
                 <div>
                   <select id="" name="" :data-id="award.id" :value="award.category" @change="onChangeAwardCategory">
                     <option value="MAJOR_NATIONAL">Major Award (National)</option>
@@ -65,11 +65,20 @@
 import Box from '../UI/Box.vue'
 import {debounce} from 'lodash'
 import {router } from '@inertiajs/vue3'
+import {computed} from 'vue'
 
 const props = defineProps({
   withControls: Boolean,
   applicant: Object,
 })
+
+const included = computed(() => {
+  return props.applicant.job_application[0].included.map(included => included)
+})
+
+const checkIfIncluded = (id, type) => {
+  return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
+}
 
   
 // const onInclude = (e) => {
@@ -85,10 +94,20 @@ const props = defineProps({
 
 const includeAward = (e) => {
   const awardId = e.target.getAttribute('data-id')
-  router.visit(route('admin.recruitment.non_academic_distinction.includeAward', {non_academic: awardId, job_application_id: props.applicant.job_application[0].id}), {
-    method: 'post',
-    preserveScroll: true,
-  })
+  const type = e.target.getAttribute('data-type')
+  if(type == 'ACAD') {
+    router.visit(route('admin.recruitment.academic_distinction.includeAward', {academic: awardId, job_application_id: props.applicant.job_application[0].id}), {
+      method: 'post',
+      preserveScroll: true,
+      preserveState: true,
+    })
+  }else{
+    router.visit(route('admin.recruitment.non_academic_distinction.includeAward', {non_academic: awardId, job_application_id: props.applicant.job_application[0].id}), {
+      method: 'post',
+      preserveScroll: true,
+      preserveState: true,
+    })
+  }
 }
 
 const onChangeAwardCategory = debounce((e) => {
@@ -101,6 +120,7 @@ const onChangeAwardCategory = debounce((e) => {
       category: category,
     },
     preserveScroll: true,
+    preserveState: true,
   })
 
 }, 1000)

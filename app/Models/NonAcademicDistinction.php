@@ -19,8 +19,11 @@ class NonAcademicDistinction extends Model
         'points',
         'title',
         'office',
-        'date_awarded'
+        'date_awarded',
+       
     ];
+
+    protected $appends = [ 'included' ];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class, 'user_id');
@@ -30,7 +33,11 @@ class NonAcademicDistinction extends Model
         return $this->morphMany(Document::class, 'fileable');
     }
 
-    public function included() : MorphOne {
-        return $this->morphOne(IncludedComputation::class, 'computable');
+    public function included() : MorphMany {
+        return $this->morphMany(IncludedComputation::class, 'computable');
+    }
+
+    public function getIncludedAttribute() {
+        return $this->included()->get();
     }
 }

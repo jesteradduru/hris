@@ -30,62 +30,63 @@
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <form class="table-responsive">
-          <table class="table table-bordered table-sm">
-            <thead>
-              <tr>
-                <th scope="col">Performance</th>
-                <th scope="col">Education and Training</th>
-                <th scope="col">Experience</th>
-                <th scope="col">Personality Traits & Attributes</th>
-                <th scope="col">Potential</th>
-                <th scope="col">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="">
-                <td scope="row">19.51</td>
-                <td>15.55</td>
-                <td>18.63</td>
-                <td>10.16</td>
-                <td>10.90</td>
-                <td class="text-info"><b>74.74</b></td>
-              </tr>
-            </tbody>
-            <!-- <button :disabled="!scoreForm.isDirty" type="submit" class="btn btn-success btn-sm mt-2">Save Score</button> -->
-          </table>
+        <form v-if="applicant_details.role_name.includes('employee')" class="card mb-3">
+          <div class="card-header">
+            <div class="card-title">HRMPSB Deliberation and Validation</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Performance (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Experience (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+            <div class="border p-2 mb-3">
+              <b class="mb-3">Personality (15 points)</b>
+              <div class="form-group mb-3">
+                <label for="" class="form-label">HRMPSB (80 points)</label>
+                <input type="text" class="form-control form-control-sm" />
+              </div>
+              <div class="form-group mb-3">
+                <label for="" class="form-label">Peer Review (20 points)</label>
+                <input type="text" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Potential (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+          </div>
         </form>
-
-        <!-- <div v-if="props.applicant_details" class="d-flex gap-2 mb-3">
-          <Link 
-            as="button"
-            class="btn btn-success btn-sm"
-            :onBefore="confirm"
-            method="post"
-            :href="route('admin.recruitment.application_result.store', {
-              result_id: props.job_vacancy_status.id,
-              result: 'SELECTED',
-              application_id: props.applicant_details.job_application[0].id,
-              user_id: props.applicant_details.id,
-            })"
-          >
-            SELECT
-          </Link>
-          <Link 
-            as="button"
-            class="btn btn-danger btn-sm"
-            :onBefore="confirm"
-            method="post"
-            :href="route('admin.recruitment.application_result.store', {
-              result_id: props.job_vacancy_status.id,
-              result: null,
-              application_id: props.applicant_details.job_application[0].id,
-              user_id: props.applicant_details.id,
-            })"
-          >
-            DESELECT
-          </Link>
-        </div> -->
+        <form v-else class="card mb-3">
+          <div class="card-header">
+            <div class="card-title">HRMPSB Deliberation and Validation</div>
+          </div>
+          <div class="card-body">
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Performance (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Experience (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+            <div class="border p-2 mb-3">
+              <b class="mb-3">Personality (15 points)</b>
+              <div class="form-group mb-3">
+                <label for="" class="form-label">HRMPSB (100 points)</label>
+                <input type="text" class="form-control form-control-sm" />
+              </div>
+            </div>
+            <div class="form-group mb-3">
+              <label for="" class="form-label">Potential (15 points)</label>
+              <input type="text" class="form-control form-control-sm" />
+            </div>
+          </div>
+        </form>
+        
         <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
 
         <div v-if="props.applicant_details" class="mt-2">

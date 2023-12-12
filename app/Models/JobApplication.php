@@ -45,6 +45,11 @@ class JobApplication extends Model
         return $this->hasOne(PesRating::class, 'application_id');
     }
 
+
+    public function included() : HasMany {
+        return $this->hasMany(IncludedComputation::class, 'job_application_id');
+    }
+
     public function getLatestResultAttribute(){
         return Applicationresult::latest()->where('application_id', $this->id)->first();
     }

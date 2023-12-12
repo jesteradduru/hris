@@ -2,6 +2,29 @@
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="addForm.isDirty">
       <div class="row">
+        <div class="col-12 row mb-3">
+          <div class="col-12 col-md-6">
+            <label for="" class="form-label">LEVEL (e.g. Doctorate, Masteral, Bachelor) <span class="text-danger">*</span></label>
+            <select
+              id=""
+              v-model="addForm.level"
+              class="form-select form-select-sm"
+              name=""
+            >
+              <option value="">Select One</option>
+              <option value="TWO_YEAR">Two-year Course</option>
+              <option value="BACHELOR">Bachelor's Degree</option>
+              <option value="DIPLOMA">Diploma Course</option>
+              <option value="MASTERAL">Master's Degree</option>
+              <option value="DOCTORATE">Doctorate Degree</option>
+            </select>
+            
+            
+            <InputError :message="addForm.errors.level" />
+          </div>
+        </div>
+
+
         <div class="col-12 col-md-6">
           <div class="mb-3">
             <label class="form-label">NAME OF SCHOOL</label>
@@ -103,6 +126,11 @@
         <div class="col-12 col-md-6">
           <div class="mb-3">
             <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
+            <ul>
+              <li v-for="file in education.files" :key="file.id">
+                <a target="_blank" :href="file.src">{{ file.filename }}</a>
+              </li>
+            </ul>
             <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
             <small class="form-text text-muted">Accepted file formats: pdf</small>
             <InputError :message="addForm.errors['documents']" />
@@ -200,6 +228,7 @@ const addForm = useForm({
   scholarship_academic_honors: props.education.academic_award,
   scholarship_academic_honors_new: null,
   documents: props.education.documents,
+  level: props.education.level,
 })
 
 const distinctionForm = useForm({

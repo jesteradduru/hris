@@ -3,9 +3,29 @@
     <PDSLayout :is-form-dirty="addForm.isDirty">
       <h5>Add College</h5>
       <div class="row">
+        <div class="col-12 row mb-3">
+          <div class="col-12 col-md-6">
+            <label for="" class="form-label">EDUCATIONAL LEVEL (e.g. Doctorate, Masteral, Bachelor) <span class="text-danger">*</span></label>
+            <select
+              id=""
+              v-model="addForm.level"
+              class="form-select form-select-sm"
+              name=""
+            >
+              <option value="">Select One</option>
+              <option value="BACHELOR">Bachelor's Degree</option>
+              <option value="TWO_YEAR">Two-year Course</option>
+            </select>
+            
+            
+            <InputError :message="addForm.errors.level" />
+          </div>
+        </div>
+
+
         <div class="col-12 col-md-6">
           <div class="mb-3">
-            <label class="form-label">NAME OF SCHOOL</label>
+            <label class="form-label">NAME OF SCHOOL<span class="text-danger">*</span></label>
             <input v-model="addForm.name_of_school" type="text" class="form-control form-control-sm" />
             <InputError :message="addForm.errors.name_of_school" />
           </div>
@@ -26,16 +46,31 @@
   
         <div class="col-12 col-md-6">
           <div class="mb-3">
-            <label class="form-label">From</label>
+            <label class="form-label">FROM</label>
             <input v-model="addForm.period_from" type="number" class="form-control form-control-sm" />
             <InputError :message="addForm.errors.period_from" />
           </div>
         </div>
+
+
+        <!-- <div class="col-12 col-md-6">
+          <div class="mb-3">
+            <div class="form-check form-check-inline">
+              <input
+                id=""
+                class="form-check-input"
+                type="checkbox"
+                value="option1"
+              />
+              <label class="form-check-label" for="">Graduated</label>
+            </div>
+          </div>
+        </div> -->
   
   
         <div class="col-12 col-md-6">
           <div class="mb-3">
-            <label class="form-label">To</label>
+            <label class="form-label">TO</label>
             <input v-model="addForm.period_to" type="number" class="form-control form-control-sm" />
             <InputError :message="addForm.errors.period_to" />
           </div>
@@ -182,6 +217,8 @@ const addForm = useForm({
   year_graduated: null,
   scholarship_academic_honors: null,
   documents: null,
+  level: '',
+  graduated: false,
 })
 
 const distinctionForm = useForm({

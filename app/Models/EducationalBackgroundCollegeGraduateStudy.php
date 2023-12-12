@@ -21,6 +21,7 @@ class EducationalBackgroundCollegeGraduateStudy extends Model
         'year_graduated',
         'type',
         'user_id',
+        'level'
     ];
 
     public function user() : BelongsTo {
