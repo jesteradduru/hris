@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="addForm.isDirty">
       <div class="row">
-        <div class="col-12 row mb-3">
+        <div v-if="education.type==='COLLEGE' || education.type === 'GRADUATE'" class="col-12 row mb-3">
           <div class="col-12 col-md-6">
             <label for="" class="form-label">LEVEL (e.g. Doctorate, Masteral, Bachelor) <span class="text-danger">*</span></label>
             <select

@@ -30,6 +30,16 @@ class CollegeGraduateStudyController extends Controller
             return inertia('Profile/PDS/EducationalBackground/Graduate/Create');
         }
 
+        else if($request->type == 'ELEMENTARY'){
+            return inertia('Profile/PDS/EducationalBackground/Elementary/Create');
+        }
+        else if($request->type == 'SECONDARY'){
+            return inertia('Profile/PDS/EducationalBackground/Secondary/Create');
+        }
+        else if($request->type == 'VOCATIONAL'){
+            return inertia('Profile/PDS/EducationalBackground/Vocational/Create');
+        }
+
         else{
             return abort(404);
         }
@@ -42,15 +52,16 @@ class CollegeGraduateStudyController extends Controller
     {
 
         $validate = $request->validate([
+            "type" => "required",
             "name_of_school" => "required|string|max:255",
             "basic_ed_degree_course" => "required|string|max:255",
-            "level" => "required|string|max:255",
+            "level" => "required_if:type,COLLEGE|required_if:type,GRADUATE|max:255",
             "period_from" => "required|integer",
             "period_to" => "integer|nullable",
             "highest_lvl_units_earned" => "nullable|integer",
             "year_graduated" => "integer|nullable",
-            'documents' => 'required|array|min:1',
-            'documents.*'=> 'required|mimes:pdf|max:15000',
+            'documents' => 'exclude_if:type,ELEMENTARY|exclude_if:type,SECONDARY|exclude_if:type,VOCATIONAL|array|min:1',
+            'documents.*'=> 'exclude_if:type,ELEMENTARY|exclude_if:type,SECONDARY|exclude_if:type,VOCATIONAL|mimes:pdf|max:15000',
         ], [
             'documents.*.mimes' => 'Only pdf format is accepted.',
             'documents.*.max' => 'Document must not be greater than 15MB.',

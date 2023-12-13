@@ -16,7 +16,7 @@
           <tbody>
             <tr v-for="(award, index) in applicant.academic_distinction" :id="`award${award.id}`" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')}">
               <td v-if="withControls">
-                <input type="checkbox" :checked="checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')" :data-id="award.id" data-type="ACAD" @input="includeAward" />
+                <input v-if="!award.used_at" type="checkbox" :checked="checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')" :data-id="award.id" data-type="ACAD" @input="includeAward" />
               </td>
               <td scope="row">{{ award.title }}</td>
               <td>{{ award.category }}</td>
@@ -40,7 +40,7 @@
           <tbody>
             <tr v-for="(award, index) in applicant.non_academic_distinction" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')}">
               <td v-if="withControls" class="d-flex gap-2">
-                <input type="checkbox" :data-id="award.id" :checked="checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')" @input="includeAward" />
+                <input v-if="!award.used_at" type="checkbox" :data-id="award.id" :checked="checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')" @input="includeAward" />
                 <div>
                   <select id="" name="" :data-id="award.id" :value="award.category" @change="onChangeAwardCategory">
                     <option value="MAJOR_NATIONAL">Major Award (National)</option>

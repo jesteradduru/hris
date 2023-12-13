@@ -1,29 +1,8 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="addForm.isDirty">
-      <h5>Add Graduate Studies</h5>
+      <h5>Add Elementary</h5>
       <div class="row">
-        <div class="col-12 row mb-3">
-          <div class="col-12 col-md-6">
-            <label for="" class="form-label">EDUCATIONAL LEVEL (e.g. Doctorate, Masteral, Bachelor) <span class="text-danger">*</span></label>
-            <select
-              id=""
-              v-model="addForm.level"
-              class="form-select form-select-sm"
-              name=""
-            >
-              <option value="">Select One</option>
-              <option value="DIPLOMA">Diploma Course</option>
-              <option value="MASTERAL">Masteral Degree</option>
-              <option value="DOCTORATE">Doctorate Degree</option>
-            </select>
-            
-            
-            <InputError :message="addForm.errors.level" />
-          </div>
-        </div>
-
-
         <div class="col-12 col-md-6">
           <div class="mb-3">
             <label class="form-label">NAME OF SCHOOL</label>
@@ -194,7 +173,7 @@ import {ref, computed} from 'vue'
   
   
 const addForm = useForm({
-  type: 'GRADUATE',
+  type: 'ELEMENTARY',
   name_of_school: null,
   basic_ed_degree_course: null,
   period_from: null,
@@ -203,7 +182,7 @@ const addForm = useForm({
   year_graduated: null,
   scholarship_academic_honors: null,
   documents: null,
-  level: '',
+  level: null,
 })
 
 const distinctionForm = useForm({
