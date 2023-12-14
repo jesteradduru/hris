@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\PlantillaPositionController;
 use App\Http\Controllers\Admin\PublishHiringResultController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\Selection\AcademicAwardController;
+use App\Http\Controllers\Admin\Selection\LearningAndDevelopmentController;
 use App\Http\Controllers\Admin\Selection\NonAcademicAwardController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
@@ -106,6 +107,8 @@ use Illuminate\Support\Facades\Route;
 
         // selection/academic awards
         Route::post('academic_distinction/{academic}/includeAward', [AcademicAwardController::class, 'includeAward'])->name('academic_distinction.includeAward');
+        // selection/lnd
+        Route::post('lnd/{lnd}/includeLnd', [LearningAndDevelopmentController::class, 'includeLnd'])->name('lnd.includeLnd');
     });
         
     // rewards and recognition

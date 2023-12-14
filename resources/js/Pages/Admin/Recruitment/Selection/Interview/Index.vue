@@ -87,7 +87,7 @@
           </div>
         </form>
         
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
 
         <div v-if="props.applicant_details" class="mt-2">
           <div class="mb-3">

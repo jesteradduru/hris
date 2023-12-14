@@ -80,18 +80,6 @@ const checkIfIncluded = (id, type) => {
   return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
 }
 
-  
-// const onInclude = (e) => {
-//   const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
-//   const awardId = e.target.getAttribute('data-id')
-//   if(e.target.checked){
-//     elem.classList.add('table-success')
-    
-//   }else{
-//     elem.classList.remove('table-success')
-//   }
-// }
-
 const includeAward = (e) => {
   const awardId = e.target.getAttribute('data-id')
   const type = e.target.getAttribute('data-type')

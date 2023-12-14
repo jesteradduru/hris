@@ -19,7 +19,8 @@
                 <!-- <th v-if="withControls" scope="col" /> -->
                 <th scope="col">NAME OF SCHOOL</th>
                 <th scope="col">DEGREE/COURSE</th>
-                <th scope="col">PERIOD OF ATTENDANCE</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
                 <th scope="col">UNITS EARNED</th>
                 <th scope="col">YEAR GRADUATED </th>
                 <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
@@ -33,7 +34,8 @@
                 </td> -->
                 <td scope="row">{{ course.name_of_school }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
-                <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
+                <td>{{ course.period_from }}</td>
+                <td>{{ course.period_to }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
                 <td>
@@ -67,7 +69,8 @@
                 <!-- <th v-if="withControls" scope="col" /> -->
                 <th scope="col">NAME OF SCHOOL</th>
                 <th scope="col">DEGREE/COURSE</th>
-                <th scope="col">PERIOD OF ATTENDANCE</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
                 <th scope="col">UNITS EARNED</th>
                 <th scope="col">YEAR GRADUATED </th>
                 <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
@@ -81,7 +84,8 @@
                 </td> -->
                 <td scope="row">{{ course.name_of_school }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
-                <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
+                <td>{{ course.period_from }}</td>
+                <td>{{ course.period_to }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
                 <td>
@@ -114,7 +118,8 @@
                 <!-- <th v-if="withControls" scope="col" /> -->
                 <th scope="col">NAME OF SCHOOL</th>
                 <th scope="col">DEGREE/COURSE</th>
-                <th scope="col">PERIOD OF ATTENDANCE</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
                 <th scope="col">UNITS EARNED</th>
                 <th scope="col">YEAR GRADUATED </th>
                 <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
@@ -128,7 +133,8 @@
                 </td> -->
                 <td scope="row">{{ course.name_of_school }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
-                <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
+                <td>{{ course.period_from }}</td>
+                <td>{{ course.period_to }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
                 <td>
@@ -157,10 +163,12 @@
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
-                <th v-if="withControls" scope="col" />
+                <!-- <th v-if="withControls" scope="col" /> -->
                 <th scope="col">NAME OF SCHOOL</th>
+                <th scope="col">LEVEL</th>
                 <th scope="col">DEGREE/COURSE</th>
-                <th scope="col">PERIOD OF ATTENDANCE</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
                 <th scope="col">UNITS EARNED</th>
                 <th scope="col">YEAR GRADUATED </th>
                 <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
@@ -169,12 +177,14 @@
             </thead>
             <tbody>
               <tr v-for="course in colleges" :id="`course${course.id}`" :key="course.id" class="">
-                <td v-if="withControls">
+                <!-- <td v-if="withControls">
                   <input type="checkbox" :data-id="`course${course.id}`" @input="onInclude" />
-                </td>
+                </td> -->
                 <td scope="row">{{ course.name_of_school }}</td>
+                <td>{{ course.level }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
-                <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
+                <td>{{ course.period_from }}</td>
+                <td>{{ course.period_to }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
                 <td>
@@ -202,11 +212,12 @@
           <table class="table table-bordered table-sm">
             <thead>
               <tr>
-                <th v-if="withControls" scope="col" />
-                
+                <!-- <th v-if="withControls" scope="col" /> -->
                 <th scope="col">NAME OF SCHOOL</th>
+                <th scope="col">LEVEL</th>
                 <th scope="col">DEGREE/COURSE</th>
-                <th scope="col">PERIOD OF ATTENDANCE</th>
+                <th scope="col">FROM</th>
+                <th scope="col">TO</th>
                 <th scope="col">UNITS EARNED</th>
                 <th scope="col">YEAR GRADUATED </th>
                 <th scope="col">SCHOLARSHIP/ACADEMIC HONORS RECEIVED</th>
@@ -215,12 +226,14 @@
             </thead>
             <tbody>
               <tr v-for="course in graduate_studies" :id="`grad${course.id}`" :key="course.id" class="">
-                <td v-if="withControls">
+                <!-- <td v-if="withControls">
                   <input type="checkbox" :data-id="`grad${course.id}`" @input="onInclude" />
-                </td>
+                </td> -->
                 <td scope="row">{{ course.name_of_school }}</td>
+                <td>{{ course.level }}</td>
                 <td>{{ course.basic_ed_degree_course }}</td>
-                <td>{{ `${course.period_from} - ${course.period_to}` }}</td>
+                <td>{{ course.period_from }}</td>
+                <td>{{ course.period_to }}</td>
                 <td>{{ course.highest_lvl_units_earned }}</td>
                 <td>{{ course.year_graduated }}</td>
                 <td>

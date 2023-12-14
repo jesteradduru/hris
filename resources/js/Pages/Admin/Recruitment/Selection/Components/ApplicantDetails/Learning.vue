@@ -22,9 +22,9 @@
           </tr>
         </thead>
         <tbody v-if="props.lnds.length" style="text-transform: uppercase;">
-          <tr v-for="learning in props.lnds" :id="`learning${learning.id}`" :key="learning.id">
+          <tr v-for="learning in props.lnds" :id="`learning${learning.id}`" :key="learning.id" :class="{'table-success': checkIfIncluded(learning.id, 'App\\Models\\LearningAndDevelopment')}">
             <td v-if="withControls">
-              <input type="checkbox" :data-id="`learning${learning.id}`" @input="onInclude" />
+              <input type="checkbox" :data-id="learning.id" :checked="checkIfIncluded(learning.id, 'App\\Models\\LearningAndDevelopment')" @input="includeLnd" />
             </td>
             <td scope="row">{{ learning.title_of_learning }}</td>
             <td>{{ learning.inclusive_date_from }}</td>
@@ -50,19 +50,31 @@
 <script setup>
     
 import Box from '../UI/Box.vue'
+import {router} from '@inertiajs/vue3'
+import {computed} from 'vue'
     
 const props = defineProps({
   lnds: Object,
   plantilla: Object,
   withControls: Boolean,
+  applicant: Object,
 })
 
-const onInclude = (e) => {
-  const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
-  if(e.target.checked){
-    elem.classList.add('table-success')
-  }else{
-    elem.classList.remove('table-success')
-  }
+const included = computed(() => {
+  return props.applicant?.job_application[0].included.map(included => included)
+})
+
+const checkIfIncluded = (id, type) => {
+  return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
+}
+
+const includeLnd = (e) => {
+  const lndID = e.target.getAttribute('data-id')
+
+  router.visit(route('admin.recruitment.lnd.includeLnd', {lnd: lndID, job_application_id: props.applicant.job_application[0].id}), {
+    method: 'post',
+    preserveScroll: true,
+    preserveState: true,
+  })
 }
 </script>

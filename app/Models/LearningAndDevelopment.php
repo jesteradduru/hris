@@ -49,4 +49,9 @@ class LearningAndDevelopment extends Model
         return $this->morphMany(Document::class, 'fileable');
     }
 
+    public function included() : MorphMany {
+        return $this->morphMany(IncludedComputation::class, 'computable');
+    }
+
+
 }

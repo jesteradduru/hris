@@ -13,12 +13,10 @@ class SetExamScheduleController extends Controller
 
         $validate = $request->validate([
             'schedule' => 'required|date',
-            'start_time' => 'required',
-            // 'end_time' => 'required',
         ]);
 
         $result->update($validate);
 
-        return back()->with('success', 'NEDA EXAM schedule has been updated.');
+        return back()->with('success', 'Exam date has been updated.');
     }
 }

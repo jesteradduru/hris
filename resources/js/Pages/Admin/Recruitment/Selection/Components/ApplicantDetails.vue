@@ -82,7 +82,7 @@
     <!-- Educational Background -->
     <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" :withControls="withControls" />
     <!-- learning and development -->
-    <Learning :plantilla="plantilla" :lnds="lnds" :withControls="withControls" />
+    <Learning :plantilla="plantilla" :lnds="lnds" :applicant="applicant" :withControls="withControls" />
     
 
     <!-- EXPERIENCE -->

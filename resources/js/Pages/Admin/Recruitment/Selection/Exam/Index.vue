@@ -26,17 +26,19 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3">
-        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
-      </div>
-      <div class="col-9">
+      <div class="col-12">
         <div class="mb-3">
           <label for="" class="form-label">Date of Exam</label>
           <input
             id=""
-            type="date" class="form-control" name="" aria-describedby="helpId" placeholder=""
+            type="date" class="form-control" name="" aria-describedby="helpId" placeholder="" :value="moment(job_vacancy_status.schedule).format('Y-M-D')" @input="setSchedule"
           />
         </div>
+      </div>
+      <div class="col-3">
+        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
+      </div>
+      <div class="col-9">
         <div v-if="props.applicant_details" class="d-flex gap-2 mb-3">
           <Link 
             as="button"
@@ -67,7 +69,7 @@
             FAILED
           </Link>
         </div>
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
       </div>
     </div>
   </RecruitmentLayout>
@@ -76,10 +78,14 @@
 <script setup>
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
 import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
-import {Head, Link} from '@inertiajs/vue3'
+import {Head, Link,  router} from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
 import JobVacancies from '../Components/JobVacancies.vue'
+import {debounce} from 'lodash'
+import moment from 'moment'
+
+
 const props = defineProps({
   job_vacancies: Array,
   posting: Object,
@@ -99,7 +105,14 @@ const examPassed = (id) => {
   return applicantPassed.length > 0 
 }
 
-import { router } from '@inertiajs/vue3'
+const setSchedule = debounce((e) => {
+  const date = e.target.value
+  if(window.confirm('Are you sure?')){
+    router.put(route('admin.recruitment.neda_exam.set', {result: props.job_vacancy_status.id, schedule: date}))
+  }
+}, 200)
+
+
 import ApplicantsList from '../Components/ApplicantsList.vue'
 
 const loading = ref(false)

@@ -218,10 +218,14 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                    'job_application' => fn($query) => $query->with(['document','included'])->where('job_posting_id', $request->job_posting),
                     'spms',
                     // 'reward' => ['reward'],
-                    'position'
+                    'position',
+                    'college_graduate_studies' => ['files', 'academic_award'],
+                    'academic_distinction'=> ['files'],
+                    'non_academic_distinction' => ['files'],
+                    'pes_rating',
                     
                 ]);
             }
@@ -262,10 +266,14 @@ class AdminJobApplicationController extends Controller
                     'work_experience',
                     'learning_and_development',
                     'other_information',
-                    'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting),
+                    'job_application' => fn($query) => $query->with(['document', 'included'])->where('job_posting_id', $request->job_posting),
                     'spms',
                     // 'reward' => ['reward'],
-                    'position'
+                    'position',
+                    'college_graduate_studies' => ['files', 'academic_award'],
+                    'academic_distinction'=> ['files'],
+                    'non_academic_distinction' => ['files'],
+                    'pes_rating',
                 ]);
             }
 
@@ -305,7 +313,15 @@ class AdminJobApplicationController extends Controller
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with(['document', 'score'])->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with(['document', 'included'])->where('job_posting_id', $request->job_posting),
+                'spms',
+                // 'reward' => ['reward'],
+                'position',
+                'college_graduate_studies' => ['files', 'academic_award'],
+                'academic_distinction'=> ['files'],
+                'non_academic_distinction' => ['files'],
+                'pes_rating',
+                
             ]);
         }
 
