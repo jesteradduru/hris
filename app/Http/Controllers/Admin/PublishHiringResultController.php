@@ -62,6 +62,8 @@ class PublishHiringResultController extends Controller
 
             $user = $currentResult->user;
 
+            // dd($user->psb_point());
+
             self::notifyPublishResult($user, $currentResult);
 
             switch($currentResult->result){
@@ -81,14 +83,6 @@ class PublishHiringResultController extends Controller
                         'user_id' => $currentResult->user_id,
                     ]);
                 break;
-
-                // case 'FOR_EXAM':
-                //     $currentResult->create([
-                //         'result_id' => $newResult->id,
-                //         'application_id' => $currentResult->application_id,
-                //         'user_id' => $currentResult->user_id,
-                //     ]);
-                // break;
 
                 case 'EXAM_PASSED':
                     $currentResult->create([
@@ -134,6 +128,12 @@ class PublishHiringResultController extends Controller
     }
 
     private static function notifyPublishResult($user, $currentResult){
+        $user->notify(new PublishApplicationResult($currentResult, "Job hiring result released."));
+    }
+
+
+    private static function compute($user, $currentResult){
+        
         $user->notify(new PublishApplicationResult($currentResult, "Job hiring result released."));
     }
 

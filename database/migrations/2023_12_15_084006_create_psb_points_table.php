@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('applicant_deliberation_points', function (Blueprint $table) {
+        Schema::create('psb_points', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
@@ -23,7 +23,6 @@ return new class extends Migration
             $table->decimal('personality_hrmpsb');
             $table->decimal('personality_peer');
             $table->decimal('potential');
-
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('applicant_deliberation_points');
+        Schema::dropIfExists('psb_points');
     }
 };

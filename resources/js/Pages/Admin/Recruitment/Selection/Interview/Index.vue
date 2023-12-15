@@ -3,7 +3,7 @@
   <RecruitmentLayout>
     <b>VACANCIES</b>
     <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
-  
+
     <hr />
   
     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -30,63 +30,7 @@
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <form v-if="applicant_details.role_name.includes('employee')" class="card mb-3">
-          <div class="card-header">
-            <div class="card-title">HRMPSB Deliberation and Validation</div>
-          </div>
-          <div class="card-body">
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Performance (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Experience (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-            <div class="border p-2 mb-3">
-              <b class="mb-3">Personality (15 points)</b>
-              <div class="form-group mb-3">
-                <label for="" class="form-label">HRMPSB (80 points)</label>
-                <input type="text" class="form-control form-control-sm" />
-              </div>
-              <div class="form-group mb-3">
-                <label for="" class="form-label">Peer Review (20 points)</label>
-                <input type="text" class="form-control form-control-sm" />
-              </div>
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Potential (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-          </div>
-        </form>
-        <form v-else class="card mb-3">
-          <div class="card-header">
-            <div class="card-title">HRMPSB Deliberation and Validation</div>
-          </div>
-          <div class="card-body">
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Performance (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Experience (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-            <div class="border p-2 mb-3">
-              <b class="mb-3">Personality (15 points)</b>
-              <div class="form-group mb-3">
-                <label for="" class="form-label">HRMPSB (100 points)</label>
-                <input type="text" class="form-control form-control-sm" />
-              </div>
-            </div>
-            <div class="form-group mb-3">
-              <label for="" class="form-label">Potential (15 points)</label>
-              <input type="text" class="form-control form-control-sm" />
-            </div>
-          </div>
-        </form>
-        
+        <PsbPoints :applicant_details="applicant_details" />
         <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
 
         <div v-if="props.applicant_details" class="mt-2">
@@ -109,6 +53,7 @@ import Spinner from '@/Components/Spinner.vue'
 import {debounce} from 'lodash'
 import InputError from '@/Components/InputError.vue'
 import JobVacancies from '../Components/JobVacancies.vue'
+import PsbPoints from '../Components/ApplicantDetails/PsbPoints.vue'
 
 const props = defineProps({
   job_vacancies: Array,
