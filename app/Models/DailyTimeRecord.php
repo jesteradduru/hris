@@ -188,9 +188,16 @@ class DailyTimeRecord extends Model
         }
 
         $inAM = $logTimeBetween7to11[0] ?? null;
-        $outAM = $logTimeBetween11to3[0] ?? null;
-        $inPM = $logTimeBetween11to3[1] ?? null;
+        $outAM = count($logTimeBetween11to3) > 1 ? $logTimeBetween11to3[0]: null;
+        $inPM =  null;
         $outPM = $logTimeBetween3onwards[0] ?? null;
+
+        // IN PM LOGIC
+        if(count($logTimeBetween11to3) == 1){
+            $inPM = $logTimeBetween11to3[0];
+        }else if(count($logTimeBetween11to3) > 1 ){
+            $inPM = $logTimeBetween11to3[1];
+        }
 
         return [
             'inAM' => $inAM,
