@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('performance');
             $table->decimal('experience');
             $table->decimal('personality_hrmpsb');
-            $table->decimal('personality_peer');
+            $table->decimal('personality_peer')->nullable();
             $table->decimal('potential');
         });
     }

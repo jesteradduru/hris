@@ -76,9 +76,11 @@ class JobPosting extends Model
                 $filters['show'] ?? 'open',
                 function($query, $value){
                     if($value == 'closed'){
-                        return $query->where('closing_date', '<', 'now()');
+                        return $query->where('closing_date', '<=', Carbon::now()->format('Y-m-d'));
                     }else if($value == 'archived'){
                         return $query->where('archived_at', 'IS NOT', null);
+                    }else if($value == 'open'){
+                        return $query->where('closing_date', '>=', Carbon::now()->format('Y-m-d'));
                     }else{
                         return $query->notArchived();
                     }

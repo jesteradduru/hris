@@ -19,9 +19,14 @@
           <div class="form-group col-6">
             <div class="mb-3">
               <label for="" class="form-label">TO</label>
+              <div class="form-check">
+                <input id="training" v-model="workForm.to_present" class="form-check-input" type="checkbox" value="" />
+                <label class="form-check-label" for="training"> Present </label>
+              </div>
               <input
                 id=""
-                v-model="workForm.inclusive_date_to" type="date" class="form-control form-control-sm" name=""
+                v-model="workForm.inclusive_date_to"
+                :disabled="workForm.to_present" type="date" class="form-control form-control-sm" name=""
                 placeholder=""
               />
               <InputError :message="workForm.errors.inclusive_date_to" />
@@ -214,7 +219,7 @@ const props = defineProps({
 
 const workForm = useForm({
   inclusive_date_from: props.work_experience.inclusive_date_from,
-  inclusive_date_to:  props.work_experience.inclusive_date_to,
+  inclusive_date_to:  props.work_experience.inclusive_date_to ? props.work_experience.inclusive_date_to : null,
   position_title:  props.work_experience.position_title,
   dept_agency_office_company:  props.work_experience.dept_agency_office_company,
   name_of_office_unit:  props.work_experience.name_of_office_unit,
@@ -226,9 +231,13 @@ const workForm = useForm({
   govt_service:  props.work_experience.govt_service,
   list_of_accomplishments:  props.work_experience.list_of_accomplishments,
   summary_of_duties:  props.work_experience.summary_of_duties,
+  to_present: props.work_experience.to_present == 1,
 })
 
 const saveWork = () => {
+  if(workForm.to_present){
+    workForm.inclusive_date_to = null
+  }
   workForm.put(route('profile.pds.work_experience.update', {work_experience: props.work_experience.id}), {
     preserveScroll: true,
   })

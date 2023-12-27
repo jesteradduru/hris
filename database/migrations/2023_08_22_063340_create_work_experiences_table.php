@@ -27,6 +27,7 @@ return new class extends Migration
             $table->decimal('monthly_salary',18,2)->default('0.00'); // pds
             $table->string('paygrade', 255)->nullable(); // pds
             $table->string('status_of_appointment', 255)->nullable(); // pds
+            $table->boolean('to_present')->default(false);
             // $table->decimal('service_record_salary',18,2)->default('0.00');
             // $table->string('agency_type', 255)->nullable();
             // $table->string('pay', 255)->nullable();

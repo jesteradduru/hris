@@ -52,9 +52,15 @@
           <dt>Education</dt>
           <dd>{{ props.job_posting.plantilla.education }}</dd>
           <dt>Training</dt>
-          <dd>{{ props.job_posting.plantilla.training }}</dd>
+          <dd>
+            {{ props.job_posting.plantilla.training }}
+            <span v-if="job_posting.plantilla.training == null">None Required</span>
+          </dd>
           <dt>Work Experience</dt>
-          <dd>{{ props.job_posting.plantilla.work_experience }}</dd>
+          <dd>
+            {{ props.job_posting.plantilla.work_experience }}
+            <span v-if="job_posting.plantilla.work_experience == null">None Required</span>
+          </dd>
           <dt>Documents</dt>
           <dd class="text-pre-wrap">{{ props.job_posting.documents }}</dd>
         </dl>

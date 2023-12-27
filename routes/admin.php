@@ -26,6 +26,8 @@ use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\Selection\AcademicAwardController;
 use App\Http\Controllers\Admin\Selection\LearningAndDevelopmentController;
 use App\Http\Controllers\Admin\Selection\NonAcademicAwardController;
+use App\Http\Controllers\Admin\Selection\PsbPointController;
+use App\Http\Controllers\Admin\Selection\WorkExperienceController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PDS\NonAcademicDistinctionController;
@@ -109,6 +111,11 @@ use Illuminate\Support\Facades\Route;
         Route::post('academic_distinction/{academic}/includeAward', [AcademicAwardController::class, 'includeAward'])->name('academic_distinction.includeAward');
         // selection/lnd
         Route::post('lnd/{lnd}/includeLnd', [LearningAndDevelopmentController::class, 'includeLnd'])->name('lnd.includeLnd');
+        // selection/work experience
+        Route::post('work/{work}/includeWork', [WorkExperienceController::class, 'includeWork'])->name('work.includeWork');
+
+        // selection/psbpoints
+        Route::post('psb_point/{job_application}/save', [PsbPointController::class, 'save'])->name('psb_point.save');
     });
         
     // rewards and recognition

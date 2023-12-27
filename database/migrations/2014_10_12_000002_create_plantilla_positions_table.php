@@ -22,8 +22,8 @@ return new class extends Migration
             $table->string('monthly_salary')->nullable();
             $table->string('eligibility')->nullable();
             $table->string('education')->nullable();
-            $table->string('training')->nullable();
-            $table->string('work_experience')->nullable();
+            $table->integer('training')->nullable();
+            $table->integer('work_experience')->nullable();
             $table->string('competency')->nullable();
             $table->foreignIdFor(Division::class, 'division_id')->nullable();
         });

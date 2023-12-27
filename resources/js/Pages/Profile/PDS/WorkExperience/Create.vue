@@ -19,9 +19,14 @@
           <div class="form-group col-6">
             <div class="mb-3">
               <label for="" class="form-label">TO</label>
+              <div class="form-check">
+                <input id="training" v-model="workForm.to_present" class="form-check-input" type="checkbox" value="" />
+                <label class="form-check-label" for="training"> Present </label>
+              </div>
               <input
                 id=""
-                v-model="workForm.inclusive_date_to" type="date" class="form-control form-control-sm" name=""
+                v-model="workForm.inclusive_date_to"
+                :disabled="workForm.to_present" type="date" class="form-control form-control-sm" name=""
                 placeholder=""
               />
               <InputError :message="workForm.errors.inclusive_date_to" />
@@ -230,9 +235,13 @@ const workForm = useForm({
   govt_service: null,
   list_of_accomplishments: null,
   summary_of_duties: null,
+  to_present: false,
 })
 
 const addWork = () => {
+  if(workForm.to_present){
+    workForm.inclusive_date_to = null
+  }
   workForm.post(route('profile.pds.work_experience.store'), {
     preserveScroll: true,
     onSuccess: () => {

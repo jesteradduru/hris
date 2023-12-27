@@ -17,8 +17,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreignIdFor(JobApplication::class, 'application_id')->constrained('job_applications');
-            $table->decimal('first_rating');
-            $table->decimal('second_rating');
+            $table->decimal('first_rating')->nullable();
+            $table->decimal('second_rating')->nullable();
         });
     }
 

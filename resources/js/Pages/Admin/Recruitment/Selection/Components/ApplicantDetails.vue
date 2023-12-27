@@ -86,7 +86,7 @@
     
 
     <!-- EXPERIENCE -->
-    <WorkExperience :works="works" :plantilla="plantilla" :with-controls="withControls" />
+    <WorkExperience :works="works" :plantilla="plantilla" :with-controls="withControls" :applicant="applicant" />
     
 
 

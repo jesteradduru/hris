@@ -78,9 +78,15 @@
           <dt>Education</dt>
           <dd>{{ job_posting.plantilla.education }}</dd>
           <dt>Training</dt>
-          <dd>{{ job_posting.plantilla.training }}</dd>
+          <dd>
+            {{ job_posting.plantilla.training }}
+            <span v-if="job_posting.plantilla.training == null">None Required</span>
+          </dd>
           <dt>Work Experience</dt>
-          <dd>{{ job_posting.plantilla.work_experience }}</dd>
+          <dd>
+            {{ job_posting.plantilla.work_experience }}
+            <span v-if="job_posting.plantilla.work_experience == null">None Required</span>
+          </dd>
           <dt>Required Documents</dt>
           <dd class="text-pre-wrap">{{ job_posting.documents }}</dd>
         </dl>

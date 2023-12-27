@@ -18,7 +18,10 @@
           <tbody v-if="props.work_experiences.data.length" style="text-transform: uppercase;">
             <tr v-for="work_experience in props.work_experiences.data" :key="work_experience.id">
               <td scope="row">{{ work_experience.inclusive_date_from }}</td>
-              <td>{{ work_experience.inclusive_date_to }}</td>
+              <td>
+                {{ work_experience.inclusive_date_to }}
+                <span v-if="work_experience.to_present">PRESENT</span>
+              </td>
               <td>{{ work_experience.position_title }}</td>
               <td>{{ work_experience.dept_agency_office_company }}</td>
               <td>{{ work_experience.monthly_salary }}</td>

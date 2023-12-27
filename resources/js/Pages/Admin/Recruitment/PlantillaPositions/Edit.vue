@@ -91,22 +91,33 @@
         <InputError :message="form.errors.education" />
       </div>
       <div class="mb-3">
-        <label for="training" class="form-label">Training</label>
+        <label for="training" class="form-label">Training (no. of hours)</label>
+        <div class="form-check">
+          <input id="training" v-model="form.training_none_required" class="form-check-input" type="checkbox" value="" />
+          <label class="form-check-label" for="training"> None Required </label>
+        </div>
+        
         <input
           id="training"
           v-model="form.training"
-          type="text"
+          type="number"
           class="form-control"
+          :disabled="form.training_none_required"
         />
         <InputError :message="form.errors.training" />
       </div>
       <div class="mb-3">
         <label for="work_experience" class="form-label">Work Experience</label>
+        <div class="form-check">
+          <input id="work" v-model="form.work_none_required" class="form-check-input" type="checkbox" value="" />
+          <label class="form-check-label" for="work"> None Required </label>
+        </div>
         <input
           id="work_experience"
           v-model="form.work_experience"
-          type="text"
+          type="number"
           class="form-control"
+          :disabled="form.work_none_required"
         />
         <InputError :message="form.errors.work_experience" />
       </div>
@@ -165,6 +176,8 @@ const form = useForm({
   plantilla_item_no: props.plantilla.plantilla_item_no,
   documents: props.plantilla.documents,
   division_id: props.plantilla.division_id,
+  training_none_required: props.plantilla.training === null,
+  work_none_required: props.plantilla.training === null,
 })
 
 const create = () =>

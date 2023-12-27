@@ -22,7 +22,7 @@ class SpmsForm extends Model
     protected $appends = ['src'];
 
     public function user() : BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     } 
 
     public function scopeFilter(Builder $query, array $filters) : Builder {

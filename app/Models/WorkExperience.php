@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class WorkExperience extends Model
 {
@@ -25,10 +26,15 @@ class WorkExperience extends Model
         "govt_service",
         "list_of_accomplishments",
         "summary_of_duties",
+        'to_present'
     ];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);
+    }
+
+    public function included() : MorphMany {
+        return $this->morphMany(IncludedComputation::class, 'computable');
     }
 
     public function scopeMostRecent(Builder $query) {

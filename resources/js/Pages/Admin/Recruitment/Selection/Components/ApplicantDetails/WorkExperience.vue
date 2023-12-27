@@ -21,13 +21,17 @@
           </tr>
         </thead>
         <tbody v-if="works">
-          <tr v-for="work in works" :id="`work${work.id}`" :key="work.id" class="">
+          <tr v-for="work in works" :id="`work${work.id}`" :key="work.id" class="" :class="{'table-success': checkIfIncluded(work.id, 'App\\Models\\WorkExperience')}">
             <td v-if="withControls">
-              <input type="checkbox" :data-id="`work${work.id}`" @input="onInclude" />
+              <input type="checkbox" :checked="checkIfIncluded(work.id, 'App\\Models\\WorkExperience')" :data-id="work.id" @input="includeAward" />
             </td>
             <td scope="row">{{ work.position_title }}</td>
             <td>{{ work.dept_agency_office_company }}</td>
-            <td>{{ `${simplifyDate(work.inclusive_date_from)} - ${simplifyDate(work.inclusive_date_to)}` }}</td>
+            <td>
+              {{ `${simplifyDate(work.inclusive_date_from)} - ` }}
+              <span v-if="work.inclusive_date_to">{{ simplifyDate(work.inclusive_date_to) }}</span>
+              <span v-else>PRESENT</span>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -41,21 +45,37 @@
 <script setup>
 import moment from 'moment'
 import Box from '../UI/Box.vue'
+import {computed} from 'vue'
+import {router} from '@inertiajs/vue3'
 
 const props = defineProps({
   works: Array,
   plantilla: Object,
   withControls: Boolean,
+  applicant: Object,
 })
-  
-const onInclude = (e) => {
-  const elem = document.querySelector('#' + e.target.getAttribute('data-id'))
-  if(e.target.checked){
-    elem.classList.add('table-success')
-  }else{
-    elem.classList.remove('table-success')
-  }
+
+const included = computed(() => {
+  return props.applicant.job_application[0].included.map(included => included)
+})
+
+const checkIfIncluded = (id, type) => {
+  return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
 }
 
+  
+const includeAward = (e) => {
+  const id = e.target.getAttribute('data-id')
+
+  router.visit(route('admin.recruitment.work.includeWork', {work: id, job_application_id: props.applicant.job_application[0].id}), {
+    method: 'post',
+    preserveScroll: true,
+    preserveState: true,
+  })
+}
+
+
 const simplifyDate = (date) => moment(date).format('MMM D, YYYY')
+
+
 </script>

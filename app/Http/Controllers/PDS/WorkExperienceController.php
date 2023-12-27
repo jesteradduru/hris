@@ -33,7 +33,7 @@ class WorkExperienceController extends Controller
     {
         $validate = $request->validate([
             "inclusive_date_from"=> "required|date",
-            "inclusive_date_to"=> "required|date",
+            "inclusive_date_to"=> "required_if:to_present,false|date|nullable",
             "position_title"=> "required|string",
             "dept_agency_office_company"=> "required|string",
             "name_of_office_unit"=> "string|nullable",
@@ -45,6 +45,7 @@ class WorkExperienceController extends Controller
             "govt_service"=> "boolean|nullable",
             "list_of_accomplishments"=> "string|nullable",
             "summary_of_duties"=> "string|nullable",
+            "to_present" => "boolean"
         ]);
 
         $request->user()->work_experience()->create($validate);
@@ -77,7 +78,7 @@ class WorkExperienceController extends Controller
     {
         $validate = $request->validate([
             "inclusive_date_from"=> "required|date",
-            "inclusive_date_to"=> "required|date",
+            "inclusive_date_to"=> "required_if:to_present,false|date|nullable",
             "position_title"=> "required|string",
             "dept_agency_office_company"=> "required|string",
             "name_of_office_unit"=> "string|nullable",
@@ -89,6 +90,7 @@ class WorkExperienceController extends Controller
             "govt_service"=> "boolean|nullable",
             "list_of_accomplishments"=> "string|nullable",
             "summary_of_duties"=> "string|nullable",
+            "to_present" => "boolean"
         ]);
 
         $workExperience->update($validate);
