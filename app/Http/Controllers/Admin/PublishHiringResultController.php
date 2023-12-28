@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApplicationScore;
 use App\Models\JobApplicationResults;
 use App\Models\SpmsForm;
 use App\Notifications\PublishApplicationResult;
@@ -17,53 +18,52 @@ class PublishHiringResultController extends Controller
        $applicationResults = $results->result;
        $job = $results->job_posting;
        $newResult = null;
-
         // create new result
-    //    switch($results->phase){
-    //             case 'SHORTLISTING':
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'NEDA_EXAM'
-    //                 ]);
-    //             break;
-    //             // case 'NEDA_EXAM_SCHEDULE':
-    //             //     $newResult = $job->results()->create([
-    //             //         'phase' => 'NEDA_EXAM'
-    //             //     ]);
-    //             // break;
-    //             case 'NEDA_EXAM':
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'INTERVIEW_SCHEDULE'
-    //                 ]);
-    //             break;
-    //             case 'INTERVIEW_SCHEDULE':
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'FOR_INTERVIEW'
-    //                 ]);
-    //             break;
-    //             case 'FOR_INTERVIEW':
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'FINAL'
-    //                 ]);
-    //             break;
-    //             case 'FINAL':
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'SELECTION'
-    //                 ]);
-    //             break;
-    //             default:
-    //                 $newResult = $job->results()->create([
-    //                     'phase' => 'SHORTLISTING'
-    //                 ]);
-    //             break;
-    //     }
+       switch($results->phase){
+                case 'SHORTLISTING':
+                    $newResult = $job->results()->create([
+                        'phase' => 'NEDA_EXAM'
+                    ]);
+                break;
+                // case 'NEDA_EXAM_SCHEDULE':
+                //     $newResult = $job->results()->create([
+                //         'phase' => 'NEDA_EXAM'
+                //     ]);
+                // break;
+                case 'NEDA_EXAM':
+                    $newResult = $job->results()->create([
+                        'phase' => 'INTERVIEW_SCHEDULE'
+                    ]);
+                break;
+                case 'INTERVIEW_SCHEDULE':
+                    $newResult = $job->results()->create([
+                        'phase' => 'FOR_INTERVIEW'
+                    ]);
+                break;
+                case 'FOR_INTERVIEW':
+                    $newResult = $job->results()->create([
+                        'phase' => 'FINAL'
+                    ]);
+                break;
+                case 'FINAL':
+                    $newResult = $job->results()->create([
+                        'phase' => 'SELECTION'
+                    ]);
+                break;
+                default:
+                    $newResult = $job->results()->create([
+                        'phase' => 'SHORTLISTING'
+                    ]);
+                break;
+        }
 
     $computeResult = [];
 
 
        foreach($applicationResults as $currentResult) {
-            // $currentResult->update([
-            //     'published' => false
-            // ]);
+            $currentResult->update([
+                'published' => false
+            ]);
 
             $user = $currentResult->user;
 
@@ -71,66 +71,83 @@ class PublishHiringResultController extends Controller
 
             // dd($user->psb_point());
 
-            // self::notifyPublishResult($user, $currentResult);
+            self::notifyPublishResult($user, $currentResult);
 
-            // switch($currentResult->result){
+            switch($currentResult->result){
 
-            //     case 'QUALIFIED':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //         ]);
-            //     break;
+                case 'QUALIFIED':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
 
-            //     case 'SHORTLISTED':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //         ]);
-            //     break;
+                case 'SHORTLISTED':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
 
-            //     case 'EXAM_PASSED':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //             'result' => 'FOR_INTERVIEW'
-            //         ]);
-            //     break;
+                case 'EXAM_PASSED':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                        'result' => 'FOR_INTERVIEW'
+                    ]);
+                break;
 
-            //     case 'FOR_INTERVIEW':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //             'result' => 'SELECTION'
-            //         ]);
-            //     break;
+                case 'FOR_INTERVIEW':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                        'result' => 'SELECTION'
+                    ]);
+                break;
                 
-            //     case 'SELECTION':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //         ]);
-            //     break;
+                case 'SELECTION':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
 
-            //     case 'SELECTED':
-            //         $currentResult->create([
-            //             'result_id' => $newResult->id,
-            //             'application_id' => $currentResult->application_id,
-            //             'user_id' => $currentResult->user_id,
-            //         ]);
-            //     break;
+                case 'SELECTED':
+                    $currentResult->create([
+                        'result_id' => $newResult->id,
+                        'application_id' => $currentResult->application_id,
+                        'user_id' => $currentResult->user_id,
+                    ]);
+                break;
 
-            //     default:
-            //     break;
-            // }
-
+                default:
+                break;
+            }
        }
-       dd($computeResult);
+
+    //    RANK THE SCORES
+       $score_table_column = [ 'performance', 'education', 'experience', 'personality', 'potential', 'total'];
+            foreach($score_table_column as $column ) {
+                $candidates = $results->job_posting->scores->sortByDesc($column);
+
+                $rank = 1;
+        
+                foreach ($candidates as $candidate) {
+                    // dd($candidate);
+                    $candidate->update([
+                        $column . '_rank' => $rank,
+                    ]);
+        
+                    $rank++;
+                }
+            }
+       
+    //    dd($computeResult);
 
        return back()->with('success', 'Result successfully published.');
     }
@@ -142,7 +159,8 @@ class PublishHiringResultController extends Controller
 
     private static function compute($currentResult){
         $performance_rating = self::performance($currentResult);
-        $hrmpsb_points = $currentResult->application->psb_points;
+        $application = $currentResult->application;
+        $hrmpsb_points = $application->psb_points;
         $outstanding = self::outstanding_accoplishment($currentResult);
         $education = self::compute_education($currentResult);
         $relevant_training = self::compute_training($currentResult);
@@ -159,9 +177,19 @@ class PublishHiringResultController extends Controller
             $personality_rating = ($hrmpsb_points->personality_hrmpsb + $hrmpsb_points->personality_peer) * .15;
         }
 
-        dd($personality_rating);
+        $total =  $performance_rating + $education_rating + $experience_rating + $personality_rating + $potential_rating;
+
+        $score = ApplicationScore::create([
+            "performance" => $performance_rating,
+            "education" => $education_rating,
+            "experience" => $experience_rating,
+            "personality" => $personality_rating,
+            "potential" => $hrmpsb_points->potential,
+            "total" => $total,
+            "job_application_id" => $application->id
+        ]);
         
-        return $performance_rating;
+        return $score;
     }
 
     // compute performance 
@@ -461,11 +489,11 @@ class PublishHiringResultController extends Controller
         $end = Carbon::parse($endDate);
 
         // Calculate the difference in years and months
-        $diffInYears = $start->diffInYears($end);
-        $diffInMonths = $start->diffInMonths($end) % 12;
+        $diffInDays = $start->diffInDays($end);
 
         // Convert the difference to decimal years
-        $totalYears = $diffInYears + ($diffInMonths / 12);
-        return $totalYears;
+        $totalYears = $diffInDays / 365.25;
+
+        return round($totalYears, 2);
     }
 }

@@ -17,11 +17,17 @@ return new class extends Migration
             $table->timestamps();
 
             $table->decimal('performance');
+            $table->integer('performance_rank')->nullable();
             $table->decimal('education');
+            $table->integer('education_rank')->nullable();
             $table->decimal('experience');
+            $table->integer('experience_rank')->nullable();
             $table->decimal('personality');
+            $table->integer('personality_rank')->nullable();
             $table->decimal('potential');
+            $table->integer('potential_rank')->nullable();
             $table->decimal('total');
+            $table->integer('total_rank')->nullable();
 
             $table->foreignIdFor(JobApplication::class, 'job_application_id')->constrained('job_applications');
         });

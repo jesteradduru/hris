@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationResult;
+use App\Models\ApplicationScore;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
 use App\Models\SpmsForm;
@@ -337,44 +338,6 @@ class AdminJobApplicationController extends Controller
 
     }
 
-    // SELECTION
-    private static function selection(Request $request){
-        $job_vacancies = JobPosting::notArchived()->get();
-        $job_applications = [];
-        $applicant_details = null;
-        
-
-        // dd($job_vacancies);
-
-        if($request->job_posting){
-            $job_vacancy = JobPosting::find($request->job_posting);
-            $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
-        }
-
-        if($request->applicant){
-            $applicant_details = User::find($request->applicant)->load([
-                'personal_information',
-                'educational_background',
-                'civil_service_eligibility',
-                'work_experience',
-                'learning_and_development',
-                'other_information',
-                'job_application' => fn($query) => $query->with(['document', 'score'])->where('job_posting_id', $request->job_posting)
-            ]);
-        }
-
-        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
-            
-        return inertia('Admin/Recruitment/Selection/Interview/Index', [
-            "job_applications" => $job_applications,
-            "job_vacancies" => $job_vacancies,
-            "job_vacancy_status" => $job_vacancy_status,
-            "posting" => JobPosting::find($request->job_posting)->load(['plantilla']),
-            "applicant_details" => $applicant_details,
-            "qualified_applicants" => $latest_result,
-        ]);
-
-    }
 
     // FINAL
     private static function final(Request $request){
@@ -394,22 +357,38 @@ class AdminJobApplicationController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'civil_service_eligibility',
+                'college_graduate_studies' => ['files'],
+                'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with('document')->where('job_posting_id', $request->job_posting)
+                'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $request->job_posting),
+                'spms',
+                'position',
+                'college_graduate_studies' => ['files', 'academic_award'],
+                'academic_distinction'=> ['files'],
+                'non_academic_distinction' => ['files'],
+                'pes_rating',
             ]);
         }
 
         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
 
+        $filters = $request->only(['rank_by']);
+        // dd(ApplicationScore::filter($filters)->get());
+
+        $posting_with_score =  JobPosting::find($request->job_posting)->load([
+                'job_application' => [
+                    'scores',
+                    'user'
+                ]
+        ]);
 
         return inertia('Admin/Recruitment/Selection/Final/Index', [
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
-            "posting" => JobPosting::find($request->job_posting),
+            "posting" => $posting_with_score,
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
         ]);

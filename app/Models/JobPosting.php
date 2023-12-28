@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JobPosting extends Model
@@ -49,6 +50,11 @@ class JobPosting extends Model
 
     public function results() : HasMany {
         return $this->hasMany(JobApplicationResults::class, 'job_posting_id');
+    }
+
+
+    public function scores() : HasManyThrough {
+        return $this->hasManyThrough(ApplicationScore::class, JobApplication::class, 'job_posting_id', 'job_application_id');
     }
 
     public function scopeFilter(Builder $query, array $filters) : Builder {

@@ -9,9 +9,28 @@
         <h3>
           Final Result
         </h3>
+        
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
       <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
+    </div>
+    <div class="mb-3">
+      <label for="" class="form-label">Rank by</label>
+      <select
+        id=""
+        class="form-select form-select-md"
+        name=""
+        :value="columnToFilter"
+        @change="onRank"
+      >
+        <option selected>Select one</option>
+        <option value="performance">Performance</option>
+        <option value="education">Education</option>
+        <option value="experience">Experience</option>
+        <option value="personality">Personality</option>
+        <option value="potential">Potential</option>
+        <option value="total">Total</option>
+      </select>
     </div>
     <div>
       <div class="table-responsive">
@@ -44,56 +63,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="">
-              <td scope="row">Candidate A</td>
-              <td scope="row">19.51</td>
-              <td scope="row">1</td>
-              <td>15.55</td>
-              <td scope="row">2</td>
-              <td>18.63</td>
-              <td scope="row">1</td>
-              <td>10.16</td>
-              <td scope="row">1</td>
-              <td>10.90</td>
-              <td scope="row">2</td>
-              <td class="text-info"><b>74.74</b></td>
-              <td class="text-info"><b>1</b></td>
-              <td>
-                <button class="btn btn-success" @click="confirmSelect">SELECT</button>
-              </td>
-            </tr>
-            <tr class="">
-              <td scope="row">Candidate B</td>
-              <td scope="row">18.54</td>
-              <td scope="row">2</td>
-              <td>17.30</td>
-              <td scope="row">1</td>
-              <td>18.50</td>
-              <td scope="row">2</td>
-              <td>7.32</td>
-              <td scope="row">3</td>
-              <td>9.67</td>
-              <td scope="row">3</td>
-              <td class="text-info"><b>71.33</b></td>
-              <td class="text-info"><b>2</b></td>
-              <td>
-                <button class="btn btn-success" @click="confirmSelect">SELECT</button>
-              </td>
-            </tr>
-            <tr class="">
-              <td scope="row">Candidate C</td>
-              <td scope="row">17.82</td>
-              <td scope="row">3</td>
-              <td>14.20</td>
-              <td scope="row">3</td>
-              <td>15.50</td>
-              <td scope="row">3</td>
-              <td>10.09</td>
-              <td scope="row">2</td>
-              <td>11.10</td>
-              <td scope="row">1</td>
-              <td class="text-info"><b>68.71</b></td>
-              <td class="text-info"><b>3</b></td>
+            <tr v-for="application in applications" :key="application.id" class="">
+              <td scope="row"><b>{{ application.name }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.performance }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.performance_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'education'}"><b>{{ application.education }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'education'}" scope="row"><b>{{ application.education_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'experience'}"><b>{{ application.experience }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'experience'}" scope="row"><b>{{ application.experience_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'personality'}"><b>{{ application.personality }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'personality'}" scope="row"><b>{{ application.personality_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'potential'}"><b>{{ application.potential }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'potential'}" scope="row"><b>{{ application.potential_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.total }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.total_rank }}</b></td>
               <td>
                 <button class="btn btn-success" @click="confirmSelect">SELECT</button>
               </td>
@@ -108,7 +91,7 @@
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :withControls="true" :applicant="props.applicant_details" :posting_id="job_vacancy_status.job_posting_id" />
       </div>
     </div> -->
   </RecruitmentLayout>
@@ -147,4 +130,28 @@ router.on('finish', () => {
 const confirm = () => window.confirm('Archive this job vacancy?')
 const confirmSelect = () => window.confirm('Select this applicant for this position?')
 
+const columnToFilter = ref('total')
+
+
+const applications = computed(() => {
+  const mappedApplications = props.posting.job_application.map(application => {
+    return {
+      name: application.user.name,
+      ...application.scores,
+    }
+  })
+
+  mappedApplications.sort((a, b) => b[columnToFilter.value] - a[columnToFilter.value])
+
+  return mappedApplications
+})
+
+const onRank = (e) => {
+  const column = e.target.value
+
+  columnToFilter.value = column
+  // router.get(route('admin.recruitment.selection.index'), {job_posting: props.posting.id, rank_by: column}, {
+  //   preserveState: true,
+  // })
+}
 </script>

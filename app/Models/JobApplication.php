@@ -53,6 +53,10 @@ class JobApplication extends Model
     public function psb_points() : HasOne {
         return $this->hasOne(PsbPoint::class, 'job_application_id');
     }
+    
+    public function scores() : HasOne {
+        return $this->hasOne(ApplicationScore::class, 'job_application_id');
+    }
 
     public function getLatestResultAttribute(){
         return Applicationresult::latest()->where('application_id', $this->id)->first();
