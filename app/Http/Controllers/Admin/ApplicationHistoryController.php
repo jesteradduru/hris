@@ -31,16 +31,28 @@ class ApplicationHistoryController extends Controller
             $applicant_details = User::find($request->applicant)->load([
                 'personal_information',
                 'educational_background',
-                'civil_service_eligibility',
+                'college_graduate_studies' => ['files'],
+                'civil_service_eligibility'  => ['files'],
                 'work_experience',
                 'learning_and_development',
                 'other_information',
-                'job_application' => fn($query) => $query->with([
-                    'document',
-                    'result' => fn($query) =>  $query->where('result_id', $request->result)->first()
-                ])->where('job_posting_id', $request->job_posting->id)
+                'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $job_posting->id),
+                'spms',
+                'position',
+                'college_graduate_studies' => ['files', 'academic_award'],
+                'academic_distinction'=> ['files'],
+                'non_academic_distinction' => ['files'],
+                'pes_rating',
+                
             ]);
         }
+
+        $posting_with_score =  $job_posting->load([
+                'job_application' => [
+                    'scores',
+                    'user'
+                ]
+        ]);
 
         return inertia('Admin/Recruitment/JobApplication/History/Show', [
             "job_applications" => $activeResult->load([
@@ -49,7 +61,7 @@ class ApplicationHistoryController extends Controller
                 ]
             ]),
             // "job_vacancy_status" => $result,
-            "posting" => $job_posting,
+            "posting" => $posting_with_score,
             "applicant_details" => $applicant_details,
             "result" => $activeResult->load([
                 'result' => [

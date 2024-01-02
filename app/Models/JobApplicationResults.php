@@ -46,6 +46,9 @@ class JobApplicationResults extends Model
             case 'NEDA_EXAM_SCHEDULE':
                 return 'NEDA Entrance Exam Schedule';
             break;
+            case 'SHORTLISTING':
+                return 'Shortlisting of Applicants';
+            break;
             default:
                 return 'Initial Screening';
             break;

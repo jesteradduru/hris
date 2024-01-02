@@ -63,22 +63,38 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="application in applications" :key="application.id" class="">
-              <td scope="row"><b>{{ application.name }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.performance }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.performance_rank }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'education'}"><b>{{ application.education }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'education'}" scope="row"><b>{{ application.education_rank }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'experience'}"><b>{{ application.experience }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'experience'}" scope="row"><b>{{ application.experience_rank }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'personality'}"><b>{{ application.personality }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'personality'}" scope="row"><b>{{ application.personality_rank }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'potential'}"><b>{{ application.potential }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'potential'}" scope="row"><b>{{ application.potential_rank }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.total }}</b></td>
-              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.total_rank }}</b></td>
+            <tr v-for="application in applications" :key="application.id">
+              <td scope="row"><b>{{ application.user.name }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.scores.performance }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'performance'}" scope="row"><b>{{ application.scores.performance_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'education'}"><b>{{ application.scores.education }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'education'}" scope="row"><b>{{ application.scores.education_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'experience'}"><b>{{ application.scores.experience }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'experience'}" scope="row"><b>{{ application.scores.experience_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'personality'}"><b>{{ application.scores.personality }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'personality'}" scope="row"><b>{{ application.scores.personality_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'potential'}"><b>{{ application.scores.potential }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'potential'}" scope="row"><b>{{ application.scores.potential_rank }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.scores.total }}</b></td>
+              <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.scores.total_rank }}</b></td>
               <td>
-                <button class="btn btn-success" @click="confirmSelect">SELECT</button>
+                <div v-if="selected == application.id || selected === null" class="d-flex gap-2 mb-3">
+                  <Link 
+                    as="button"
+                    class="btn btn-success btn-sm"
+                    :onBefore="confirmSelect"
+                    method="post"
+                    :href="route('admin.recruitment.application_result.store', {
+                      result_id: props.job_vacancy_status.id,
+                      result: application.latest_result.result === 'SELECTED' ? 'SELECTION' : 'SELECTED',
+                      application_id: application.id,
+                      user_id: application.user.id,
+                    })"
+                  >
+                    <span v-if="application.latest_result.result === 'SELECTED'">APPOINTED</span>
+                    <span v-else>APPOINT</span>
+                  </Link>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -132,16 +148,19 @@ const confirmSelect = () => window.confirm('Select this applicant for this posit
 
 const columnToFilter = ref('total')
 
+const selected = computed(() => {
+  const mappedApplications = props.posting.job_application.filter(application => {
+    return application.latest_result.result === 'SELECTED'
+  })
+  return mappedApplications.length > 0 ? mappedApplications[0].id : null
+})
 
 const applications = computed(() => {
   const mappedApplications = props.posting.job_application.map(application => {
-    return {
-      name: application.user.name,
-      ...application.scores,
-    }
+    return application
   })
 
-  mappedApplications.sort((a, b) => b[columnToFilter.value] - a[columnToFilter.value])
+  mappedApplications.sort((a, b) => b.scores[columnToFilter.value] - a.scores[columnToFilter.value])
 
   return mappedApplications
 })

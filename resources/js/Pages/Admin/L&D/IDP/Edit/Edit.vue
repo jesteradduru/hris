@@ -59,7 +59,6 @@ import moment from 'moment'
 import InputError from '@/Components/InputError.vue'
 import '@/Pages/Admin/L&D/CompetencyGap/TrainingsAttended/Create.css'
 
-// console.log(props.target_staff_id)
   
 const props = defineProps({
   idp: Object,

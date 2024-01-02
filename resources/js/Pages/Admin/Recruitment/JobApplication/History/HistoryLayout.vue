@@ -25,9 +25,8 @@ const props = defineProps({
 })
 
 const results = computed(() => {
-  return props.application_results.filter(res => !res.phase.includes('SCHEDULE'))
+  return props.application_results.filter(res => !res.phase.includes('SCHEDULE') && !res.phase.includes('INTERVIEW') )
 })
-
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 
 const crumbs = computed(() => [

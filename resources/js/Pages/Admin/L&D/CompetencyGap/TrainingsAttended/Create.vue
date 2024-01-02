@@ -111,8 +111,6 @@ import {Link, useForm} from '@inertiajs/vue3'
 import moment from 'moment'
 import './Create.css'
 
-console.log(props.target_staff_id)
-  
 const props = defineProps({
   trainings: Array,
   report_id: String,

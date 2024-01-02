@@ -57,7 +57,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <div> Total Number of Targeted Staff	</div>
+          <div>Total Number of Targeted Staff</div>
           <i class="fa-solid fa-users" /> {{ report.status.total_targetted_staff }}
         </div>
         <div class="col">

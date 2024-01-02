@@ -4,9 +4,17 @@
     <!-- TITLE -->
     <div class="d-flex justify-content-between align-items-center mb-1">
       <div class="d-flex justify-content-between align-items-center gap-2">
-        <h3 class="mt-3">{{ result.title }}</h3>
+        <h3 class="mt-3">
+          {{ result.title }}
+          <span v-if="result.schedule"> {{ moment(result.schedule).format('MMM D, Y') }}</span>
+        </h3>
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
+    </div>
+
+    <!-- FINAL RESULT -->
+    <div v-if="result.phase === 'FINAL'">
+      <Result :posting="posting" />
     </div>
   
     <!-- APPLICANT DETAILS -->
@@ -14,7 +22,8 @@
       <div class="col-3">
         <b>
           <span v-if="result.phase === 'FINAL'">SELECTED</span>
-          APPLICANT</b>
+          APPLICANT
+        </b>
         <ol v-if="props.result.result.length !== 0">
           <li v-for="(item) in props.result.result" :key="item.id">
             <Link
@@ -25,7 +34,7 @@
               {{ item.user.name }}
             </Link>
             <div v-if="item.result">
-              <span v-if="item.result.length > 0 && !isChecked(item.result)" class="badge rounded-pill text-bg-warning">
+              <span v-if="item.result.length > 0 && !isChecked(item.result) && result.phase !== 'FINAL'" class="badge rounded-pill text-bg-warning">
                 <i class="fa-solid fa-x " />
               </span>
               <span v-if="item.result.length > 0 && isChecked(item.result)" class="badge rounded-pill text-bg-success">
@@ -40,10 +49,10 @@
       </div>
       <div class="col-9">
         <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
-        <div v-if="props.applicant_details && props.applicant_details.job_application[0]?.result[0]?.notes">
+        <div v-if="props.applicant_details && props.applicant_details.job_application[0].latest_result.notes">
           <h5 class="text-primary">INTERVIEW NOTES</h5>
           <div class="text-pre-wrap">
-            {{ props.applicant_details.job_application[0].result[0].notes }}
+            {{ props.applicant_details.job_application[0].latest_result.notes }}
           </div>
         </div>
       </div>
@@ -57,10 +66,13 @@ import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/App
 import {Head, Link} from '@inertiajs/vue3'
 import { ref } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
+import Result from '../History/Components/Result.vue'
+import { router } from '@inertiajs/vue3'
+import moment from 'moment'
   
 const props = defineProps({
   job_vacancies: Array,
-  posting: String,
+  posting: Object,
   job_applications: Array,
   applicant_details: Object,
   job_vacancy_status: Object,
@@ -69,21 +81,20 @@ const props = defineProps({
 })
   
   
-  
-import { router } from '@inertiajs/vue3'
-  
 const loading = ref(false)
+
 router.on('start', () => {
   loading.value = true
 })
+
 router.on('finish', () => {
   loading.value = false
 })
 
 const isChecked = (value) => {
-  const check = ['QUALIFIED', 'EXAM_PASSED', 'SELECTED']
-  return check.includes(value) && value !== ''
+  const check = ['QUALIFIED', 'EXAM_PASSED', 'SELECTED', 'SHORTLISTED']
+
+  return check.includes(value) || value === ''
 }
-  
-const confirm = () => window.confirm('Are you sure?')
+
 </script>
