@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('education')->nullable();
             $table->integer('training')->nullable();
             $table->integer('work_experience')->nullable();
-            $table->string('competency')->nullable();
+            $table->text('competency')->nullable();
             $table->foreignIdFor(Division::class, 'division_id')->nullable();
         });
     }
