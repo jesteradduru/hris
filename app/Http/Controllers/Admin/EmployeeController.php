@@ -22,7 +22,7 @@ class EmployeeController extends Controller
         $filters = $request->only(['name', 'division']);
 
         return inertia('Admin/Employee/Index', [
-            'employees' => User::with('position')->filter($filters)->role('employee')->paginate(10)->withQueryString(),
+            'employees' => User::with('position')->filter($filters)->role('employee')->paginate(15)->withQueryString(),
             'divisions' => Division::all()
         ]);
     }
@@ -97,7 +97,7 @@ class EmployeeController extends Controller
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($employee->id)],
             'dtr_user_id' => ['required', 'integer', Rule::unique('users')->ignore($employee->id)],
             'password' => [Password::defaults(), 'nullable'],
-            'plantilla_id' => ['required', 'integer', Rule::unique('users')->ignore($employee->id)],
+            'plantilla_id' => ['nullable', 'integer', Rule::unique('users')->ignore($employee->id)],
             'role' => 'required|string|max:255',
         ], [ 
             'username.valid_username' => 'Invalid Username.',
