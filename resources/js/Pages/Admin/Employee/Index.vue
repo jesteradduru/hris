@@ -52,7 +52,7 @@
           </tr>
         </tbody>
       </table>
-      <Pagination v-if="props.employees.length > 15" :links="props.employees.links" />
+      <Pagination v-if="props.employees.data.length > 15" :links="props.employees.links" />
     </div>
   </AdminLayout>
 </template>
