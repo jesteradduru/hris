@@ -18,6 +18,10 @@ const user = usePage().props.auth.user
 
 const form = useForm({
   name: user.name,
+  surname: user.surname,
+  middle_name: user.middle_name,
+  first_name: user.first_name,
+  name_extension: user.name_extension,
   username: user.username,
 })
 </script>
@@ -35,16 +39,82 @@ const form = useForm({
     </header>
 
     <form class="mt-6 space-y-6" @submit.prevent="form.patch(route('profile.update'))">
-      <div>
-        <InputLabel for="name" value="Name" />
+      <div class="mb-3"> 
+        <InputLabel for="surname" value="Surname" />
 
         <TextInput
-          id="name" v-model="form.name" type="text" class="mt-1 block w-full" required autofocus
-          autocomplete="name"
+          id="surname"
+          v-model="form.surname"
+          type="text"
+          class="mt-1 block w-full"
+          autocomplete="surname"
         />
 
-        <InputError class="mt-2" :message="form.errors.name" />
+        <InputError
+          class="mt-2"
+          :message="form.errors.surname"
+        />
       </div>
+
+      <div class="mb-3"> 
+        <InputLabel for="first_name" value="First Name" />
+
+        <TextInput
+          id="first_name"
+          v-model="form.first_name"
+          type="text"
+          class="mt-1 block w-full"
+          autofocus
+          autocomplete="first_name"
+        />
+
+        <InputError
+          class="mt-2"
+          :message="form.errors.first_name"
+        />
+      </div>
+
+      <div class="mb-3"> 
+        <InputLabel for="middle_name" value="Middle Name" />
+
+        <TextInput
+          id="middle_name"
+          v-model="form.middle_name"
+          type="text"
+          class="mt-1 block w-full"
+          autofocus
+          autocomplete="middle_name"
+        />
+
+        <InputError
+          class="mt-2"
+          :message="form.errors.middle_name"
+        />
+      </div>
+            
+      <div class="mb-3"> 
+        <InputLabel for="name_extension" value="Name Extension" />
+
+        <TextInput
+          id="name_extension"
+          v-model="form.name_extension"
+          type="text"
+          class="mt-1 block w-full"
+          autofocus
+          autocomplete="name_extension"
+        />
+      </div>
+
+      <!-- <div>
+          <InputLabel for="name" value="Name" />
+
+          <TextInput
+            id="name" v-model="form.name" type="text" class="mt-1 block w-full" required autofocus
+            autocomplete="name"
+          />
+
+          <InputError class="mt-2" :message="form.errors.name" />
+        </div> -->
 
       <div>
         <InputLabel for="username" value="Username" />
