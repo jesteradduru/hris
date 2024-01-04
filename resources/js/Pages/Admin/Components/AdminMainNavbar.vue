@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-sm bg-light shadow-sm navbar-light" style="text-transform: uppercase;">
+  <nav class="navbar navbar-expand-sm bg-light shadow-sm" style="text-transform: uppercase;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">HRIS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
