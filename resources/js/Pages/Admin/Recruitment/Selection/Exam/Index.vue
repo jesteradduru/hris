@@ -21,7 +21,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          PUBLISH
+          NEXT (INTERVIEW SCHEDULE)
         </Link>
       </div>
     </div>

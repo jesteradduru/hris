@@ -32,7 +32,7 @@
       <button class="btn btn-primary mt-3" @click="filter">Filter</button>
     </div>
 
-    <Link v-if="permission.includes('Add SPMS')" class="btn btn-secondary mt-3 ms-auto" :href="route('admin.spms.create')">Add SPMS Form <i class="fa-solid fa-plus" /></Link>
+    <!-- <Link v-if="permission.includes('Add SPMS')" class="btn btn-secondary mt-3 ms-auto" :href="route('admin.spms.create')">Add SPMS Form <i class="fa-solid fa-plus" /></Link> -->
 
     <div class="mt-3">
       <div class="table-responsive">

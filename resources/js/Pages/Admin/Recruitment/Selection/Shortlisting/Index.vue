@@ -19,7 +19,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          PUBLISH
+          NEXT (NEDA EXAM)
         </Link>
       </div>
     </div>

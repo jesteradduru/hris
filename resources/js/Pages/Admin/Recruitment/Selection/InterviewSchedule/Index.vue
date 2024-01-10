@@ -25,7 +25,7 @@
             })"
             :disabled="!scheduleForm.wasSuccessful && scheduleForm.schedule === null"
           >
-            PUBLISH
+            NEXT (INTERVIEW)
           </Link>
         </div>
       </div>

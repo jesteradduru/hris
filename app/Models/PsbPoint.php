@@ -18,6 +18,9 @@ class PsbPoint extends Model
         'personality_hrmpsb',
         'personality_peer',
         'potential',
+        'org_competency',
+        'leadership_competency',
+        'technical_competency',
     ];
 
     public function user() : HasOneThrough {

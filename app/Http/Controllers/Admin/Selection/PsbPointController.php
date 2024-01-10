@@ -21,7 +21,10 @@ class PsbPointController extends Controller
             $validate = $request->validate([
                 'performance' => 'required|decimal:0,2|max:15',  
                 'experience' => 'required|decimal:0,2|max:15',
-                'personality_hrmpsb' => 'required|decimal:0,2|max:80',
+                // 'personality_hrmpsb' => 'required|decimal:0,2|max:80',
+                'org_competency' => 'required|decimal:0,2',
+                'leadership_competency' => 'required|decimal:0,2',
+                'technical_competency' => 'required|decimal:0,2',
                 'personality_peer' => 'required|decimal:0,2|max:20',
                 'potential' => 'required|decimal:0,2|max:15',
             ]);
@@ -29,7 +32,9 @@ class PsbPointController extends Controller
             $validate = $request->validate([
                 'performance' => 'required|decimal:0,2|max:15',  
                 'experience' => 'required|decimal:0,2|max:15',
-                'personality_hrmpsb' => 'required|decimal:0,2|max:100',
+                'org_competency' => 'required|decimal:0,2',
+                'leadership_competency' => 'required|decimal:0,2',
+                'technical_competency' => 'required|decimal:0,2',
                 'potential' => 'required|decimal:0,2|max:15',
             ]);
         }

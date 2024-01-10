@@ -15,11 +15,28 @@
         <InputError :message="form.errors.experience" />
       </div>
       <div class="border p-2 mb-3">
-        <b class="mb-3">Personality (15 points)</b>
-        <div class="form-group mb-3">
-          <label for="" class="form-label">HRMPSB (80 points)</label>
-          <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
-          <InputError :message="form.errors.personality_hrmpsb" />
+        <b class="mb-4">Personality Traits and Attributes(15 points)</b>
+        <div class="border p-3 m-3 mb-3">
+          <!-- <div class="form-group mb-3">
+            <label for="" class="form-label">HRMPSB (80 points)</label>
+            <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.personality_hrmpsb" />
+          </div> -->
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Organizational Competencies</label>
+            <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.org_competency" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Leadership and Managerial Competencies</label>
+            <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.leadership_competency" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Technical/Functional Competencies</label>
+            <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.technical_competency" />
+          </div>
         </div>
         <div class="form-group mb-3">
           <label for="" class="form-label">Peer Review (20 points)</label>
@@ -47,6 +64,8 @@
       <small v-if="form.isDirty" class="text-danger form-status ms-2">Not Saved</small>
     </div>
   </form>
+
+  <!-- outsider -->
   <form v-else class="card mb-3" @submit.prevent="onSubmit">
     <div class="card-header">
       <div class="card-title">HRMPSB Deliberation and Validation</div>
@@ -63,11 +82,28 @@
         <InputError :message="form.errors.experience" />
       </div>
       <div class="border p-2 mb-3">
-        <b class="mb-3">Personality (15 points)</b>
-        <div class="form-group mb-3">
-          <label for="" class="form-label">HRMPSB (100 points)</label>
-          <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
-          <InputError :message="form.errors.personality_hrmpsb" />
+        <b class="mb-4">Personality Traits and Attributes(15 points)</b>
+        <div class="border p-3 m-3 mb-3">
+          <!-- <div class="form-group mb-3">
+            <label for="" class="form-label">HRMPSB (80 points)</label>
+            <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.personality_hrmpsb" />
+          </div> -->
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Organizational Competencies</label>
+            <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.org_competency" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Leadership and Managerial Competencies</label>
+            <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.leadership_competency" />
+          </div>
+          <div class="form-group mb-3">
+            <label for="" class="form-label">Technical/Functional Competencies</label>
+            <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
+            <InputError :message="form.errors.technical_competency" />
+          </div>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -103,6 +139,9 @@ const form = useForm({
   performance: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.performance : null,
   experience: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.experience : null,
   personality_hrmpsb: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.personality_hrmpsb :null,
+  org_competency: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.org_competency:null,
+  leadership_competency: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.leadership_competency:null,
+  technical_competency: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.technical_competency:null,
   personality_peer: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.personality_peer :null,
   potential: props.applicant_details.job_application[0].psb_points ? props.applicant_details.job_application[0].psb_points.potential :null,
 })

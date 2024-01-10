@@ -21,7 +21,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          PROCEED TO SELECTION OF APPLICANT
+          NEXT (RANKING OF APPLICANT)
         </Link>
       </div>
     </div>

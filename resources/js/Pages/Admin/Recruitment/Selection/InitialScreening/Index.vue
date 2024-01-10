@@ -22,7 +22,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          PUBLISH
+          NEXT (SHORTLISTING)
         </Link>
       </div>
     </div>

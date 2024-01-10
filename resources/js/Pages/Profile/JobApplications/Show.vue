@@ -25,23 +25,47 @@
             <div v-for="(result, index) in job_application.result" :key="result.id">
               <li v-if="result.result" :class="{'text-success' : index === 0}">
                 <div>
-                  <span v-if="result.result === 'FOR_EXAM'">
-                    {{ `Take the examination on ${getDateTime(result.results.schedule, result.results.start_time, result.results.end_time)}` }}
-                  </span>
-                  <span v-else-if="result.result === 'FOR_INTERVIEW'">
-                    {{ `Attend the interview on ${getDateTime(result.results.schedule, result.results.start_time, result.results.end_time)}` }}
-                  </span>
-                  <span v-else>{{ result.result }}</span>
+                  <!-- <b v-if="result.result === 'SELECTION'" class="text-bold">
+                    {{ `You're application is undergoing final evaluation and deliberation.` }}
+                  </b> -->
+                  <b v-if="result.result === 'FOR_INTERVIEW'">
+                    {{ `The interview is scheduled on ${getDateTime(result.results.schedule, result.results.start_time)}` }}
+                  </b>
+                  <b v-else-if="result.result === 'EXAM_PASSED'">
+                    {{ `You've successfully passed the NEDA exam and will proceed to the next hiring process.` }}
+                  </b>
+                  <b v-else-if="result.result === 'EXAM_FAILED'">
+                    {{ `You did not meet the passing criteria in the examination.` }}
+                  </b>
+                  <b v-else-if="result.result === 'FOR_EXAM'">
+                    {{ `You are scheduled for examination on ${getDateTime(result.results.schedule, result.results.start_time)}` }}
+                  </b>
+                  <b v-else-if="result.result === 'UNLISTED'">
+                    {{ `Your application did not make it to the shortlisting stage for further consideration.` }}
+                  </b>
+                  <b v-else-if="result.result === 'SHORTLISTED'">
+                    {{ `You've been selected for the next stage of the hiring process.` }}
+                  </b>
+                  <b v-else-if="result.result === 'SHORTLISTING'">
+                    {{ `Your application is under consideration for further evaluation.` }}
+                  </b>
+                  <b v-else-if="result.result === 'UNQUALIFIED'">
+                    {{ ` You did not meet the necessary qualifications for the position.` }}
+                  </b>
+                  <b v-else-if="result.result === 'QUALIFIED'">
+                    {{ `You have successfully met the qualification criteria and will undergo further evaluation.` }}
+                  </b>
+                  <!-- {{ result.result }} -->
                 </div>
                 <i class="text-muted">{{ moment( result.created_at ).format('MMM D, YYYY hh:mm a') }}</i>
               </li>
             </div>
             <div>
               <li :class="{'text-success' : job_application.result.length === 0}">
-                <div>
-                  Application Submitted
-                </div>
-                <span class="text-muted">{{ moment( job_application.created_at ).format('MMM D, YYYY hh:mm a') }}</span>
+                <b>
+                  You submitted your application.
+                </b>
+                <i class="d-block text-muted">{{ moment( job_application.created_at ).format('MMM D, YYYY hh:mm a') }}</i>
               </li>
             </div>
           </ul>
@@ -72,9 +96,9 @@ const crumbs = computed(() => [
   },
 ])
 
-const getDateTime = (schedule, start_time, end_time) => {
+const getDateTime = (schedule, start_time) => {
   const date = moment(schedule).format('MMM D, Y')
-  const time = moment(start_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') + ' - ' + moment(end_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') 
+  const time = moment(start_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') 
   return `${date} ${time}`
 }
 

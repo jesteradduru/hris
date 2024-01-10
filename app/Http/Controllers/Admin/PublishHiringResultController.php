@@ -57,19 +57,14 @@ class PublishHiringResultController extends Controller
                 break;
         }
 
-    $computeResult = [];
-
-
        foreach($applicationResults as $currentResult) {
             $currentResult->update([
-                'published' => false
+                'published' => true
             ]);
 
             $user = $currentResult->user;
 
-            array_push($computeResult, self::compute($currentResult));
-
-            // dd($user->psb_point());
+            // self::compute($currentResult);
 
             self::notifyPublishResult($user, $currentResult);
 
@@ -101,6 +96,7 @@ class PublishHiringResultController extends Controller
                 break;
 
                 case 'FOR_INTERVIEW':
+                    self::compute($currentResult);
                     $currentResult->create([
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
@@ -170,7 +166,7 @@ class PublishHiringResultController extends Controller
         $performance_rating = ($performance_rating + $outstanding + $hrmpsb_points->performance) * 0.25;
         $education_rating = $education + $relevant_training;
         $experience_rating = ($experience + $hrmpsb_points->experience) * .25;
-        $personality_rating = $hrmpsb_points->personality_hrmpsb * .15;
+        $personality_rating = ($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency ) * .15;
         $potential_rating = $hrmpsb_points->potential;
 
         if($user->hasRole('employee')){

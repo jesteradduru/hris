@@ -100,6 +100,10 @@
             </Link>
           </li>
         </ul>
+        <div v-if="$page.props.auth.user ">
+          <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+          <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
+        </div>
         <div class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{
             $page.props.auth.user.name }}</a>

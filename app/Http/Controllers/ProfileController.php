@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -47,6 +48,9 @@ class ProfileController extends Controller
         $request->user()->save();
 
         if($request->hasFile('profile_picture')){
+
+            Storage::disk('public')->delete($request->user()->profile_picture->filepath);
+            $request->user()->profile_picture()->delete();
 
             $path = $request->file('profile_picture')->store('profile_picture', 'public');
             
