@@ -28,6 +28,9 @@ class FamilyBackground extends Model
         'mothers_surname',
         'mothers_first_name',
         'mothers_middle_name',
+        'spouse_deceased',
+        'mothers_deceased',
+        'fathers_deceased'
     ];
 
     public function user() : BelongsTo {

@@ -2,14 +2,14 @@
   <AuthenticatedLayout>
     <PDSLayout>
       <Link :href="route('profile.pds.non_academic_distinctions.create')" class="btn btn-success">Add Award</Link>
-      <div class="table-responsive">
-        <table class="table table-sm mt-3">
+      <div class="table-responsive uppercase">
+        <table class="table table-bordered table-sm mt-3">
           <thead>
             <tr>
               <th scope="col">NON-ACADEMIC DISTINCTIONS / RECOGNITION / AWARD</th>
               <th scope="col">DEPARTMENT / AGENCY / OFFICE / COMPANY</th>
               <th scope="col">DATE AWARDED</th>
-              <th scope="col">DOCUMENT</th>
+              <th scope="col">ATTACHMENT</th>
               <th scope="col">ACTION</th>
             </tr>
           </thead>

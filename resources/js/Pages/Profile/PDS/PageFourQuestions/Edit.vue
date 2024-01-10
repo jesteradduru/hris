@@ -41,8 +41,10 @@
                 <div v-if="_34_both_yes" class="mb-3 mt-2">
                   <input
                     id=""
-                    type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, give details:"
+                    v-model="form.thirty_four_a_b_if_yes" type="text" class="form-control" name="" aria-describedby="helpId"
+                    placeholder="If yes, give details:"
                   />
+                  <InputError :message="form.errors.thirty_four_a_b_if_yes" />
                 </div>
               </div>
             </div>
@@ -71,12 +73,13 @@
                         id=""
                         v-model="form.thirty_five_a_if_yes" type="text" class="form-control" name="" aria-describedby="helpId" placeholder="If yes, give details:"
                       />
+                      <InputError :message="form.errors.thirty_five_a_if_yes" />
                     </div>
                   </li>
 
                   
                   <li class="list-group-item">
-                    <label for="q-34" class="form-label">b. within the fourth degree (for Local Government Unit - Career Employees)?</label>
+                    <label for="q-34" class="form-label">b. Have you been criminally charged before any court?</label>
                     <div>
                       <div class="form-check form-check-inline">
                         <input id="35.b.yes" v-model="form.thirty_five_b" class="form-check-input" type="radio" name="35.b" value="Yes" />
@@ -445,7 +448,7 @@ const save = () => {
 }
 
 const _34_both_yes = computed(() => {
-  return form.thirty_four_a === 'Yes' && form.thirty_four_b === 'Yes'
+  return form.thirty_four_a === 'Yes' || form.thirty_four_b === 'Yes'
 
 })
   

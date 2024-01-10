@@ -27,7 +27,7 @@
         </div>
         <div class="col-4">
           <div class="mb-3">
-            <label for="" class="form-label">Telephone No.</label>
+            <label for="" class="form-label">Contact Information</label>
             <input
               id=""
               v-model="form.references_telephone_one" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""
@@ -58,7 +58,7 @@
         </div>
         <div class="col-4">
           <div class="mb-3">
-            <label for="" class="form-label">Telephone No.</label>
+            <label for="" class="form-label">Contact Information</label>
             <input
               id=""
               v-model="form.references_telephone_two" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""
@@ -90,7 +90,7 @@
         </div>
         <div class="col-4">
           <div class="mb-3">
-            <label for="" class="form-label">Telephone No.</label>
+            <label for="" class="form-label">Contact Information</label>
             <input
               id=""
               v-model="form.references_telephone_three" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""

@@ -25,13 +25,16 @@ return new class extends Migration
             $table->string('spouse_employer_business_name', 255)->nullable();
             $table->string('spouse_business_address', 255)->nullable();
             $table->string('spouse_telephone_number', 255)->nullable();
+            $table->boolean('spouse_deceased')->default(false)->nullable();
             $table->string('fathers_surname', 255);
             $table->string('fathers_first_name', 255);
             $table->string('fathers_name_extension', 255)->nullable();
             $table->string('fathers_middle_name', 255);
+            $table->boolean('fathers_deceased')->default(false)->nullable();
             $table->string('mothers_surname', 255);
             $table->string('mothers_first_name', 255);
             $table->string('mothers_middle_name', 255);
+            $table->boolean('mothers_deceased')->default(false)->nullable();
         });
     }
 

@@ -11,7 +11,7 @@ class Children extends Model
     use HasFactory;
     
     protected $table = 'name_of_children';
-    protected $fillable = ['fullname', 'date_of_birth'];
+    protected $fillable = ['fullname', 'date_of_birth', 'deceased'];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class);

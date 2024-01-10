@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id');
             $table->string('fullname', 255)->nullable();
             $table->date('date_of_birth')->nullable();
+            $table->boolean('deceased')->default(false)->nullable();
         });
     }
 

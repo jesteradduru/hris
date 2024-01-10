@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Document;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,16 @@ class ProfileController extends Controller
         }
         
         $request->user()->save();
+
+        if($request->hasFile('profile_picture')){
+
+            $path = $request->file('profile_picture')->store('profile_picture', 'public');
+            
+            $request->user()->profile_picture()->save(new Document([
+                'filename' => $request->file('profile_picture'),
+                'filepath' => $path
+            ]));
+        }
 
         return Redirect::route('profile.edit');
     }

@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <PDSLayout>
       <div class="table-responsive">
-        <table class="table table-sm mt-3">
+        <table class="table table-bordered table-sm mt-3">
           <thead>
             <tr>
               <th scope="col">SPECIAL SKILLS and HOBBIES</th>

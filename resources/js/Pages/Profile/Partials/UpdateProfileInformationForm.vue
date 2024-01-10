@@ -1,31 +1,3 @@
-<script setup>
-import InputError from '@/Components/InputError.vue'
-import InputLabel from '@/Components/InputLabel.vue'
-import PrimaryButton from '@/Components/PrimaryButton.vue'
-import TextInput from '@/Components/TextInput.vue'
-import { Link, useForm, usePage } from '@inertiajs/vue3'
-
-defineProps({
-  mustVerifyEmail: {
-    type: Boolean,
-  },
-  status: {
-    type: String,
-  },
-})
-
-const user = usePage().props.auth.user
-
-const form = useForm({
-  name: user.name,
-  surname: user.surname,
-  middle_name: user.middle_name,
-  first_name: user.first_name,
-  name_extension: user.name_extension,
-  username: user.username,
-})
-</script>
-
 <template>
   <section>
     <header>
@@ -38,7 +10,24 @@ const form = useForm({
       </p>
     </header>
 
-    <form class="mt-6 space-y-6" @submit.prevent="form.patch(route('profile.update'))">
+    <form class="mt-6 space-y-6" @submit.prevent="form.post(route('profile.update'))">
+      <div class="mb-3">
+        <img v-if="form.profile_picture" class="profile-pic rounded-circle shadow mb-3" :src="form.profile_picture" alt="" />
+        <img v-else class="profile-pic rounded-circle shadow mb-3" src="../../../Assets/profile.png" alt="" />
+        <div class="mb-3">
+          <label for="" class="form-label">Upload Profile Picture</label>
+          <input
+            id=""
+            type="file"
+            class="form-control"
+            name=""
+            placeholder=""
+            aria-describedby="fileHelpId"
+            @input="onChooseProfile"
+          />
+          <div id="fileHelpId" class="form-text">PNG, JPG</div>
+        </div>
+      </div>
       <div class="mb-3"> 
         <InputLabel for="surname" value="Surname" />
 
@@ -152,3 +141,38 @@ const form = useForm({
     </form>
   </section>
 </template>
+
+<script setup>
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import TextInput from '@/Components/TextInput.vue'
+import { Link, useForm, usePage } from '@inertiajs/vue3'
+
+defineProps({
+  mustVerifyEmail: {
+    type: Boolean,
+  },
+  status: {
+    type: String,
+  },
+})
+
+const user = usePage().props.auth.user
+
+const form = useForm({
+  _method: 'patch',
+  name: user.name,
+  surname: user.surname,
+  middle_name: user.middle_name,
+  first_name: user.first_name,
+  name_extension: user.name_extension,
+  username: user.username,
+  profile_picture: user.profile_pic,
+})
+
+
+const onChooseProfile = (e) => {
+  form.profile_picture = e.target.files[0]
+}
+</script>

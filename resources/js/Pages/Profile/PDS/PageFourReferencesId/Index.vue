@@ -9,7 +9,7 @@
             <tr>
               <th scope="col">NAME</th>
               <th scope="col">ADDRESS</th>
-              <th scope="col">TEL. NO.</th>
+              <th scope="col">CONTACT INFORMATION</th>
             </tr>
           </thead>
           <tbody v-if="props.reference_id">

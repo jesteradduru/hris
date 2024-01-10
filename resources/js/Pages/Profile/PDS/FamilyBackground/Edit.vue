@@ -4,8 +4,12 @@
       <form class="row" @submit.prevent="create_update_family_background">
         <!-- SPOUSE -->
 
-        <div class="col-12">
+        <div class="col-12 d-flex">
           <h5>Spouse</h5>
+          <div class="form-check ms-4">
+            <input id="spouse_deceased" v-model="form.spouse_deceased" class="form-check-input" type="checkbox" value="" />
+            <label class="form-check-label" for="spouse_deceased">Deceased?</label>
+          </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="mb-3">
@@ -69,8 +73,12 @@
 
         <!-- FATHER -->
 
-        <div class="col-12">
+        <div class="col-12 d-flex">
           <h5>Father</h5>
+          <div class="form-check ms-4">
+            <input id="fathers_deceased" v-model="form.fathers_deceased" class="form-check-input" type="checkbox" value="" />
+            <label class="form-check-label" for="fathers_deceased">Deceased?</label>
+          </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="mb-3">
@@ -103,8 +111,12 @@
 
         <!-- MMOTHER -->
 
-        <div class="col-12">
+        <div class="col-12 d-flex">
           <h5>Mother</h5>
+          <div class="form-check ms-4">
+            <input id="mothers_deceased" v-model="form.mothers_deceased" class="form-check-input" type="checkbox" value="" />
+            <label class="form-check-label" for="mothers_deceased">Deceased?</label>
+          </div>
         </div>
         <div class="col-12 col-md-6">
           <div class="mb-3">
@@ -144,13 +156,14 @@
               </thead>
               <tbody>
                 <tr v-for="child in children" :key="child.id">
-                  <td>{{ child.fullname }}</td>
+                  <td>{{ child.fullname }} <span v-if="child.deceased == 1">(deceased)</span></td>
                   <td>{{ child.date_of_birth }}</td>
                   <td>
                     <Link
                       :only="['children']" as="button" class="btn btn-danger " method="delete"
                       :href="route('profile.pds.children.delete', { children: child.id })"
                       preserve-scroll
+                      :onBefore="confirm"
                     >
                       Delete
                     </Link>
@@ -219,6 +232,14 @@
             <InputError :message="childrenForm.errors.date_of_birth" />
           </div>
         </div>
+        <div class="col-12 col-md-6">
+          <div class="mb-3">
+            <div class="form-check">
+              <input id="deceased" v-model="childrenForm.deceased" class="form-check-input" type="checkbox" value="" />
+              <label class="form-check-label" for="deceased">Deceased?</label>
+            </div>
+          </div>
+        </div>
         <div class="col-12">
           <button class="btn btn-success d-block ms-auto" @click="addChild">Add</button>
         </div>
@@ -259,6 +280,9 @@ if (props.family_background) {
     mothers_surname: props.family_background.mothers_surname,
     mothers_first_name: props.family_background.mothers_first_name,
     mothers_middle_name: props.family_background.mothers_middle_name,
+    mothers_deceased: props.family_background.mothers_deceased == 1,
+    fathers_deceased: props.family_background.fathers_deceased == 1,
+    spouse_deceased: props.family_background.spouse_deceased == 1,
   })
 } else {
   form = useForm({
@@ -277,6 +301,9 @@ if (props.family_background) {
     mothers_surname: null,
     mothers_first_name: null,
     mothers_middle_name: null,
+    mothers_deceased: null,
+    fathers_deceased: null,
+    spouse_deceased: null,
   })
 }
 
@@ -290,6 +317,7 @@ const create_update_family_background = () => {
 const childrenForm = useForm({
   fullname: null,
   date_of_birth: null,
+  deceased: null,
 })
 
 const addChild = () => childrenForm.post(route('profile.pds.family_background.store_child'), {
@@ -298,4 +326,5 @@ const addChild = () => childrenForm.post(route('profile.pds.family_background.st
 })
 
 
+const confirm = () => window.confirm('Are you sure?')
 </script>

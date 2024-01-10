@@ -9,25 +9,32 @@
           NRO2 HRIS
         </Link>
       </div>
-      <div v-if="user" class="dropdown">
-        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{
-          $page.props.auth.user?.name }}</a>
-        <ul class="dropdown-menu dropdown-menu-end">
-          <li>
-            <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>
-          </li>
-          <li v-if="admin">
-            <Link class="dropdown-item" :href="route('admin.dashboard')">Admin</Link>
-          </li>
-          <li>
-            <Link class="dropdown-item" :href="route('logout')" method="post" as="button">Logout</Link>
-          </li>
-        </ul>
-      </div>
+      
+      <div class="d-flex align-items-center">
+        <div v-if="$page.props.auth.user ">
+          <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+          <img v-else class="profile-pic-nav rounded-circle  me-2" src="../Assets/profile.png" alt="" />
+        </div>
+        <div v-if="user" class="dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{
+            $page.props.auth.user?.name }}</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>
+            </li>
+            <li v-if="admin">
+              <Link class="dropdown-item" :href="route('admin.dashboard')">Admin</Link>
+            </li>
+            <li>
+              <Link class="dropdown-item" :href="route('logout')" method="post" as="button">Logout</Link>
+            </li>
+          </ul>
+        </div>
 
-      <div v-else class="d-flex gap-2">
-        <Link :href="route('login')" class="btn btn-dark">Sign-In</Link>
-        <Link :href="route('register')" class="btn btn-secondary">Register</Link>
+        <div v-else class="d-flex gap-2">
+          <Link :href="route('login')" class="btn btn-dark">Sign-In</Link>
+          <Link :href="route('register')" class="btn btn-secondary">Register</Link>
+        </div>
       </div>
     </div>
   </nav>

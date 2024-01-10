@@ -10,6 +10,7 @@ class LearningAndDevelopmentController extends Controller
 {
     public function includeLnd(Request $request, LearningAndDevelopment $lnd)
     {
+        $included = $lnd->included;
         if( $lnd->included()->exists()){
             $lnd->included()->delete();
 

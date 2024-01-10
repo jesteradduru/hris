@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -56,7 +57,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['name', 'role_name'];
+    protected $appends = ['name', 'role_name', 'profile_pic'];
 
     public function getNameAttribute() {
         return "{$this->surname}, {$this->first_name},  {$this->middle_name} {$this->name_extension}";
@@ -64,6 +65,14 @@ class User extends Authenticatable
 
     public function getRoleNameAttribute() {
         return $this->getRoleNames();
+    }
+
+    public function getProfilePicAttribute() {
+        if($this->profile_picture()->exists()){
+            return $this->profile_picture->src;
+        }else{
+            return null;
+        }
     }
 
     public function dtr() : BelongsTo {
@@ -169,5 +178,10 @@ class User extends Authenticatable
                ->where('plantilla_positions.division_id', $value);
             }
         );
+    }
+
+    public function profile_picture(): MorphOne
+    {
+        return $this->morphOne(Document::class, 'fileable');
     }
 }
