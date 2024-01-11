@@ -6,6 +6,32 @@
     <div class="container">
       <h3>{{ reward.title }} Awardees</h3>
       <BreadCrumbs :crumbs="crumbs" />
+      <!-- Nav tabs -->
+      <ul id="myTab" class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            id="home-tab"
+            class="nav-link active"
+            data-bs-toggle="tab"
+            data-bs-target="#home"
+            type="button"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+          >
+            All
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <Link
+            :href="route('admin.employees.rewards.rank_by_ipcr', {reward: reward.id})"
+            class="nav-link"
+          >
+            VIEW IPCR RANKING
+          </Link>
+        </li>
+      </ul>
+      
       <div class="row mt-3">
         <div class="col-4">
           <input
@@ -60,7 +86,7 @@
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import { Head, router, useForm } from '@inertiajs/vue3'
+import { Head, router, useForm, Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import Pagination from '@/Components/Pagination.vue'
   

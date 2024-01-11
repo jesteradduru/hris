@@ -5,32 +5,34 @@
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Create Reward/Recognition</h3>
     
-    <form @submit.prevent="onSubmit">
-      <div class="mb-3">
-        <label for="" class="form-label">Title</label>
-        <input
-          id=""
-          v-model="form.title" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""
-        />
-        <InputError :message="form.errors.title" />
-      </div>
-      <div class="mb-3">
+    <form class="w-50 card mx-auto shadow" @submit.prevent="onSubmit">
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="" class="form-label">Title</label>
+          <input
+            id=""
+            v-model="form.title" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""
+          />
+          <InputError :message="form.errors.title" />
+        </div>
+        <!-- <div class="mb-3">
         <label for="" class="form-label">Points</label>
         <input
           id=""
           v-model="form.points" type="text" class="form-control" name="" aria-describedby="helpId" placeholder=""
         />
         <InputError :message="form.errors.points" />
-      </div>
+      </div> -->
     
-      <div class="mb-3">
-        <button
-          :disabled="!form.isDirty &&
-            form.wasSuccessful" type="submit" class="btn btn-primary btn-md"
-        >
-          <Spinner :processing="form.processing" /> {{ !form.isDirty &&
-            form.wasSuccessful ? 'Added' : 'Add Reward' }}
-        </button>
+        <div class="mb-3">
+          <button
+            :disabled="!form.isDirty &&
+              form.wasSuccessful" type="submit" class="btn btn-primary btn-md"
+          >
+            <Spinner :processing="form.processing" /> {{ !form.isDirty &&
+              form.wasSuccessful ? 'Added' : 'Add Reward' }}
+          </button>
+        </div>
       </div>
     </form>
   </AdminLayout>

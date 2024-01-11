@@ -11,14 +11,13 @@
         <thead>
           <tr>
             <th scope="col">Title</th>
-            <th scope="col">Points</th>
+            <!-- <th scope="col">Points</th> -->
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in props.rewards.data" :key="item.id" class="">
             <td scope="row">{{ item.title }}</td>
-            <td>{{ item.points }}</td>
             <td class="d-flex gap-2">
               <Link class="btn btn-primary btn-sm" :href="route('admin.rewards.show', {reward: item.id})">
                 <i class="fa-solid fa-award" />

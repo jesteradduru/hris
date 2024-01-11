@@ -37,7 +37,7 @@ class AdminRewardAndRecognitionController extends Controller
     {
         $validate = $request->validate([
             'title' => 'required|string|max:255',
-            'points' => 'required|integer'
+            // 'points' => 'required|integer'
         ]);
 
         RewardAndRecognition::create($validate);
@@ -72,7 +72,7 @@ class AdminRewardAndRecognitionController extends Controller
     {
         $validate = $request->validate([
             'title' => 'required|string|max:255',
-            'points' => 'required|integer'
+            // 'points' => 'required|integer'
         ]);
 
         $reward->update($validate);

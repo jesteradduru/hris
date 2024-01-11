@@ -57,9 +57,10 @@ use Illuminate\Support\Facades\Route;
         Route::get('/{employee}/rewards/edit', [EmployeeController::class, 'editRewards'])->name('rewards.edit');
         Route::get('/{employee}/rewards/add', [EmployeeController::class, 'addReward'])->name('rewards.add');
         // Rewarding the employee
-        Route::get('rewards/{reward}/create', [EmployeeRewardController::class, 'create'])->name('rewards.create');
+        Route::get('rewards/{reward?}/create', [EmployeeRewardController::class, 'create'])->name('rewards.create');
         Route::post('{user}/rewards/store', [EmployeeRewardController::class, 'store'])->name('rewards.store');
         Route::delete('rewards/{reward}/destroy', [EmployeeRewardController::class, 'destroy'])->name('rewards.destroy');
+        Route::get('rewards/{reward?}/rankByIpcr', [EmployeeRewardController::class, 'rank_by_ipcr'])->name('rewards.rank_by_ipcr');
     });   
 
 
