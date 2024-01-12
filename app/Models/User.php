@@ -141,9 +141,9 @@ class User extends Authenticatable
     
 
     //reward and recognition
-    // public function reward() : HasMany {
-    //     return $this->hasMany(EmployeeReward::class, 'user_id');
-    // }
+    public function reward() : HasMany {
+        return $this->hasMany(EmployeeReward::class, 'user_id');
+    }
 
     // pes
     public function pes_rating() : HasOneThrough {
@@ -173,9 +173,28 @@ class User extends Authenticatable
         )
         ->when(
             $filters['division'] ?? false, function($query, $value) {
+                if( $value === 'All' ){
+                    return $query;
+                }
                return $query
-               ->join('plantilla_positions', 'users.plantilla_id', '=', 'plantilla_positions.id')
-               ->where('plantilla_positions.division_id', $value);
+               ->select(['users.*'])
+               ->join('plantilla_positions as pp1', 'users.plantilla_id', '=', 'pp1.id')
+               ->where('pp1.division_id', $value);
+            }
+        )
+        ->when(
+            $filters['employee_type'] ?? false, function($query, $value) {
+                if($value == 'non-tech'){
+                    return $query
+                    ->select(['users.*'])
+                    ->join('plantilla_positions as pp2', 'users.plantilla_id', '=', 'pp2.id')
+                    ->where('pp2.salary_grade', '<=', 11);
+                }else{
+                    return $query
+                    ->select(['users.*'])
+                    ->join('plantilla_positions as pp3', 'users.plantilla_id', '=', 'pp3.id')
+                    ->where('pp3.salary_grade', '>', 11);
+                }
             }
         );
     }

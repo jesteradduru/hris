@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Undefined;
 
 class EmployeeRewardController extends Controller
 {
@@ -33,20 +34,6 @@ class EmployeeRewardController extends Controller
     public function create(Request $request, RewardAndRecognition $reward)
     {
         $filters = $request->only(['name', 'division', 'year', 'grouped']);
-        $year = $filters['year'] ?? Carbon::now()->format('Y');
-
-        $employeeWithIpcr = User::role('employee')->with(
-            [
-                'spms'=> fn($query) => $query->where('year','like' , '%' . $year  . '%')->get()
-            ])->filter($filters)->paginate(15)->withQueryString();
-
-
-        // $division = Division::with('employees')
-        // ->where('abbreviation', '!=', 'ORD')
-        // ->where('abbreviation', '!=', 'OARD')
-        // ->get();
-
-
 
         // dd($employeeWithIpcr);
         return inertia('Admin/RnR/EmployeeReward/Create', [
@@ -104,32 +91,78 @@ class EmployeeRewardController extends Controller
 
     public function rank_by_ipcr(Request $request, RewardAndRecognition $reward) {
 
-        $filters = $request->only(['name', 'division', 'year', 'grouped']);
+        $filters = $request->only(['division', 'year', 'employee_type']);
+        $year = $filters['year'] ?? Carbon::now()->format('Y');
 
-        $year = 2022 ?? Carbon::now()->format('Y');
-
-        $division = Division::with(['employees' => [
-            'spms'=> fn($query) => $query->where('year','like' , '%' . $year  . '%')->get()
-        ]])
-        ->where('abbreviation', '!=', 'ORD')
+        $division = Division::where('abbreviation', '!=', 'ORD')
         ->where('abbreviation', '!=', 'OARD')
         ->get();
+// with(['spms' => fn($query) => $query->where('year', $year)])->
+        $employees = User::filter($filters)->role(['employee'])->get();
+        $employeesWithIPCR = collect();
+
+        foreach($employees as $employee){
+            $currentEmp =  $employee->load(['spms' => fn($query) => $query->where('year', $year), 'position' => ['division']]);
+            $first = null;
+            $second = null;
+
+            $firstRating = $currentEmp->spms->filter(function ($item, $key) {
+                return $item->semester === 'FIRST';
+            });
+
+            $secondRating = $currentEmp->spms->filter(function ($item, $key) {
+                return $item->semester === 'SECOND';
+            });
+
+            if(count($firstRating) > 0){
+                $first = $firstRating->first()->rating;
+            }
+            if(count($secondRating) > 0){
+                $second = $secondRating->first()->rating;
+            }
+
+            $employeesWithIPCR->push([
+                'first' => $first,
+                'second' => $second,
+                'first_link' => count($firstRating) > 0 ? $firstRating->first()->src : null,
+                'second_link' =>count($secondRating) > 0 ? $secondRating->first()->src : null,
+                'average' =>number_format((float) ($first + $second) / 2, 2, '.', ''),
+                'name' => $employee->name,
+                'user_id' => $employee->id,
+                'division' => $currentEmp->position->division->abbreviation
+            ]);
+            
+        }
+
+        $employeesWithIPCR = $employeesWithIPCR->sortByDesc('average');
+
+        $limitPerDiv = collect();
+
+        if($filters['division'] == 'All'){
+            foreach($division as $div){
+                $filterPerDiv = $employeesWithIPCR->filter(function ($value, $key) use($div) {
+                    // dd($div->abbreviation);
+                    return $value['division'] === $div->abbreviation;
+                });
+                // if($div->abbreviation == 'DRD') dd($filterPerDiv);
+                $chunks = $filterPerDiv->take(2);
+
+
+                $limitPerDiv = $limitPerDiv->merge($chunks);
+            }
+        }
+
+        $limitPerDiv = $limitPerDiv->sortByDesc('average');
+        // dd($limitPerDiv->toArray());
         
-
-        $SPMS = DB::table('spms_forms')->select([
-            'plantilla_positions.division_id',
-        ])
-        ->join('users', 'spms_forms.user_id', '=', 'users.id')
-        ->join('plantilla_positions', 'plantilla_positions.id', '=', 'users.plantilla_id')
-        ->where('spms_forms.year', 2022)
-        ->get();
-
-        dd($SPMS);
+        
+        
 
         return inertia('Admin/RnR/EmployeeReward/RankByIpcr', [
             'reward' => $reward,
             'divisions' => $division,
-            'years' => SpmsForm::select('year')->distinct()->pluck('year')
+            'years' => SpmsForm::select('year')->distinct()->orderBy('year', 'desc')->pluck('year'),
+            'employees' => $filters['division'] == 'All' ? $limitPerDiv->values() : $employeesWithIPCR->values()
         ]);
     }
     

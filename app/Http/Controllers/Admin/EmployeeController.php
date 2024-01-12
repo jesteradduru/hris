@@ -22,7 +22,7 @@ class EmployeeController extends Controller
         $filters = $request->only(['name', 'division']);
 
         return inertia('Admin/Employee/Index', [
-            'employees' => User::with('position')->filter($filters)->role('employee')->paginate(15)->withQueryString(),
+            'employees' => User::with('position')->filter($filters)->paginate(15)->withQueryString(),
             'divisions' => Division::all()
         ]);
     }

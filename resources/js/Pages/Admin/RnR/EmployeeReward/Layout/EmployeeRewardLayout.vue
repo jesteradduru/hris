@@ -23,7 +23,7 @@
             class="nav-link"
             :class="{'active': route().current('admin.employees.rewards.rank_by_ipcr')}"
           >
-            VIEW IPCR RANKING
+            PERFORMANCE RANKING
           </Link>
         </li>
       </ul>

@@ -24,10 +24,10 @@
         </li>
         <li class="nav-item" role="presentation">
           <Link
-            :href="route('admin.employees.rewards.rank_by_ipcr', {reward: reward.id})"
+            :href="route('admin.employees.rewards.rank_by_ipcr', {reward: reward.id, division: 'All'})"
             class="nav-link"
           >
-            VIEW IPCR RANKING
+            PERFORMANCE RANKING
           </Link>
         </li>
       </ul>

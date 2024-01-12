@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar bg-light shadow-sm fixed-top" style="z-index: 1;">
+  <nav class="navbar bg-light shadow fixed-top" style="z-index: 1;">
     <div class="container-fluid">
       <div class="d-flex gap-3 align-items-center ">
         <div data-bs-toggle="offcanvas" data-bs-target="#sideNav" class="side-nav-toggler px-1">

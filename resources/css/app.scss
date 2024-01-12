@@ -50,12 +50,13 @@ $theme-colors: (
     z-index: 1;
     width: 300px;
     
-    * {
-        color: $white !important;
-    }
+    // * {
+    //     color: $white;
+    // }
     
     .nav-link {
         transition: background-color 0.2s;
+        color: $white;
         &:hover{
             background-color: $blue-800;
             border-radius: 7px;
@@ -129,4 +130,16 @@ $theme-colors: (
 .profile-pic-nav{
     width: 40px;
     height: auto;
+}
+
+.auth-layout{
+    background-image: url('../js/Assets/neda_facade.png');
+    height: 100vh;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+
+    // .form{
+    //     width: ;
+    // }
 }
