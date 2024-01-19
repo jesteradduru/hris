@@ -133,11 +133,21 @@ $theme-colors: (
 }
 
 .auth-layout{
-    background-image: url('../js/Assets/neda_facade.png');
+    // background-image: url('../js/Assets/neda_facade.png');
     height: 100vh;
     width: 100%;
     background-size: cover;
     background-position: center;
+
+    .card{
+        border-top:solid;
+        border-top-width: 10px;
+        border-color: $primary;
+    }
+
+    .left{
+        height: 100vh;
+    }
 
     // .form{
     //     width: ;

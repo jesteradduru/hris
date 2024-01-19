@@ -102,9 +102,16 @@
 }
 
 .auth-layout {
-  background-image: url("../js/Assets/neda_facade.png");
   height: 100vh;
   width: 100%;
   background-size: cover;
   background-position: center;
+}
+.auth-layout .card {
+  border-top: solid;
+  border-top-width: 10px;
+  border-color: #0d6efd;
+}
+.auth-layout .left {
+  height: 100vh;
 }/*# sourceMappingURL=app.css.map */

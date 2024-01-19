@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { Head } from '@inertiajs/vue3'
+import logo from '@/Assets/Logo.jpg'
 </script>
 
 <template>
@@ -8,15 +9,10 @@ import { Head } from '@inertiajs/vue3'
 
   <AuthenticatedLayout>
     <div class="py-12">
-      <div class="container d-flex flex-column justify-content-center" style="height: 30vh">
-        <div class="d-flex flex-row align-items-center justify-content-center gap-4">
-          <img
-            class="img-fluid banner-logo"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/National_Economic_and_Development_Authority_%28NEDA%29.svg/1200px-National_Economic_and_Development_Authority_%28NEDA%29.svg.png"
-            alt=""
-          />
-          <div>
-            <h1>Welcome to NRO2-HRIS</h1>
+      <div class="container-fluid d-flex flex-column justify-content-center" style="height: 30vh">
+        <div class="mt-4 p-5 bg-secondary text-white rounded">
+          <div class="jumbotron">
+            <h1>Welcome to NRO2 HRIS</h1>
             <p>Human Resource Information System</p>
           </div>
         </div>
@@ -24,3 +20,4 @@ import { Head } from '@inertiajs/vue3'
     </div>
   </AuthenticatedLayout>
 </template>
+

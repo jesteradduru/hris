@@ -1,8 +1,12 @@
 <template>
-  <nav class="navbar bg-light shadow fixed-top" style="z-index: 1;">
+  <nav
+    class="navbar shadow fixed-top" style="z-index: 1;" 
+    :class="{'bg-primary': route().current('login') || route().current('register') , 'navbar-dark': route().current('login') || route().current('register')}
+    "
+  >
     <div class="container-fluid">
       <div class="d-flex gap-3 align-items-center ">
-        <div data-bs-toggle="offcanvas" data-bs-target="#sideNav" class="side-nav-toggler px-1">
+        <div data-bs-toggle="offcanvas" data-bs-target="#sideNav" class="side-nav-toggler px-1 d-block d-md-none">
           <span class="navbar-toggler-icon" />
         </div>
         <Link class="navbar-brand" :href="route('dashboard')">
