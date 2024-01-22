@@ -20,7 +20,7 @@ class NonAcademicDistinction extends Model
         'title',
         'office',
         'date_awarded',
-       
+        'reward_id'
     ];
 
     protected $appends = [ 'included' ];
@@ -31,6 +31,10 @@ class NonAcademicDistinction extends Model
 
     public function files() : MorphMany {
         return $this->morphMany(Document::class, 'fileable');
+    }
+
+    public function reward() : BelongsTo {
+        return $this->belongsTo(RewardAndRecognition::class, 'reward_id');
     }
 
     public function included() : MorphMany {

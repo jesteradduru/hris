@@ -15,12 +15,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in props.reward.employee" :key="item.id" class="">
-            <td>{{ item.employee.name }}</td>
-            <td>{{ moment(item.employee.created_at).format('MMM D, Y') }}</td>
+          <tr v-for="item in props.reward.non_academic" :key="item.id" class="">
+            <td>{{ item.user.name }}</td>
+            <td>{{ moment(item.created_at).format('MMM D, Y') }}</td>
             
             <td class="d-flex gap-2">
-              <Link class="btn btn-danger btn-sm" method="delete" as="button" :href="route('admin.employees.rewards.destroy', {reward: item.id})" :onBefore="confirm">
+              <Link
+                class="btn btn-danger btn-sm" method="delete" as="button" 
+                :href="route('profile.pds.non_academic_distinctions.destroy', { non_academic_distinction: item.id })"
+                :onBefore="confirm"
+              >
                 <i class="fa-solid fa-trash" />
               </Link>
             </td>

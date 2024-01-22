@@ -82,7 +82,7 @@
             <td>{{ employee.average }}</td>
             <td>{{ employee.division }}</td>
             <td>
-              <button :data-id="employee.id" class="btn btn-success btn-sm">
+              <button :data-id="employee.user_id" class="btn btn-success btn-sm" @click="addReward">
                 Add
               </button>
             </td>
@@ -97,7 +97,7 @@
 
 <script setup>
 import EmployeeRewardLayout from '@/Pages/Admin/RnR/EmployeeReward/Layout/EmployeeRewardLayout.vue'
-import {useForm} from '@inertiajs/vue3'
+import {useForm, router} from '@inertiajs/vue3'
 import moment from 'moment'
 
 const props = defineProps({
@@ -120,4 +120,13 @@ const onFilter = () => {
   })
 }
 
+const addReward = (e) => {
+  const emp_id = e.target.getAttribute('data-id')
+
+  router.post(route('admin.employees.rewards.store', {
+    user: emp_id,
+    reward_id: props.reward.id,
+  }))
+}
+  
 </script>

@@ -10,9 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class RewardAndRecognition extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'points'];
+    protected $fillable = ['title', 'category'];
 
-    public function employee() : HasMany {
-        return $this->hasMany(EmployeeReward::class, 'reward_id');
+
+    public function employee() : HasManyThrough {
+        return $this->hasManyThrough(User::class, NonAcademicDistinction::class, 'reward_id', 'id', 'user_id', 'id');
+    }
+    
+    public function non_academic() : HasMany {
+        return $this->hasMany(NonAcademicDistinction::class, 'reward_id');
     }
 }

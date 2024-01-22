@@ -48,8 +48,16 @@ class EmployeeRewardController extends Controller
      */
     public function store(Request $request, User $user)
     {
-        $user->reward()->create([
-            'reward_id' => $request->reward_id
+        $reward = RewardAndRecognition::find($request->reward_id);
+
+        // dd($reward);
+
+        $user->non_academic_distinction()->create([
+            'reward_id' => $request->reward_id,
+            'title' => $reward->title,
+            'category' => $reward->category,
+            'office' => 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2',
+            'date_awarded' => now()
         ]);
 
         return back()->with('success', 'Reward has been added.');

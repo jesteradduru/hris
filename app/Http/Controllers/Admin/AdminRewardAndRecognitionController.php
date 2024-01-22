@@ -37,7 +37,7 @@ class AdminRewardAndRecognitionController extends Controller
     {
         $validate = $request->validate([
             'title' => 'required|string|max:255',
-            // 'points' => 'required|integer'
+            'category' => 'required|string'
         ]);
 
         RewardAndRecognition::create($validate);
@@ -50,8 +50,15 @@ class AdminRewardAndRecognitionController extends Controller
      */
     public function show(RewardAndRecognition $reward)
     {
+
+        // dd($reward->load('employee'));.
+        $rewards = $reward->load(['non_academic' => ['user']]);
+        // $employees = $rewards->non_academic->map(function($value, $key){
+        //     return $value->user;
+        // });
+        
         return inertia('Admin/RnR/Show', [
-            'reward' => $reward->load(['employee' => ['employee']])
+            'reward' => $rewards
         ]);
     }
 

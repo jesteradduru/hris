@@ -16,8 +16,10 @@ return new class extends Migration
             $table->timestamps();
 
             $table->string('title');
-            $table->enum('classification', [ 'MAJOR', 'MINOR' ])->nullable();
-            $table->float('points');
+            $table->enum('category', [
+                'MAJOR_LOCAL',
+                'MINOR',
+            ])->nullable();
         });
     }
 
