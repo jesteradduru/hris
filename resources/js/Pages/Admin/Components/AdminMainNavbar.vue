@@ -2,8 +2,10 @@
   <nav class="navbar navbar-expand-sm bg-primary text-light navbar-dark shadow mb-4 mt-2 rounded" style="text-transform: uppercase;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">HRIS</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon" />
+      <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon">
+          <i class="fa-solid fa-bars" />
+        </span>
       </button>
       <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
@@ -109,7 +111,7 @@
             $page.props.auth.user.name }}</a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>
+              <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
             </li>
             <li>
               <Link class="dropdown-item" :href="route('dashboard')">Main</Link>

@@ -78,7 +78,7 @@
               <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.scores.total }}</b></td>
               <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.scores.total_rank }}</b></td>
               <td>
-                <div v-if="selected == application.id || selected === null" class="d-flex gap-2 mb-3">
+                <div class="d-flex gap-2 mb-3">
                   <Link 
                     as="button"
                     class="btn btn-success btn-sm"

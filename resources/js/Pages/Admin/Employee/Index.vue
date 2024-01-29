@@ -34,6 +34,7 @@
       <table class="table table-compact">
         <thead>
           <tr>
+            <th scope="col">Picture</th>
             <th scope="col">Username</th>
             <th scope="col">Name</th>
             <th scope="col">DTR ID</th>
@@ -42,7 +43,11 @@
         </thead>
         <tbody>
           <tr v-for="employee in props.employees.data" :key="employee.id" class="">
-            <td scope="row">{{ employee.username }}</td>
+            <td scope="row">
+              <img v-if="employee.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+              <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
+            </td>
+            <td>{{ employee.username }}</td>
             <td>{{ employee.name }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">

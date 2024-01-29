@@ -1,13 +1,13 @@
 <template>
   <nav
-    class="navbar shadow fixed-top" style="z-index: 1;" 
+    class="navbar shadow fixed-top navbar-light bg-light" style="z-index: 1;" 
     :class="{'bg-primary': route().current('login') || route().current('register') , 'navbar-dark': route().current('login') || route().current('register')}
     "
   >
     <div class="container-fluid">
       <div class="d-flex gap-3 align-items-center ">
         <div data-bs-toggle="offcanvas" data-bs-target="#sideNav" class="side-nav-toggler px-1 d-block d-md-none">
-          <span class="navbar-toggler-icon" />
+          <span class="fa-solid fa-bars" />
         </div>
         <Link class="navbar-brand" :href="route('dashboard')">
           NRO2 HRIS
@@ -20,8 +20,8 @@
           <img v-else class="profile-pic-nav rounded-circle  me-2" src="../Assets/profile.png" alt="" />
         </div>
         <div v-if="user" class="dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{
-            $page.props.auth.user?.name }}</a>
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><b>{{
+            $page.props.auth.user?.username }}</b></a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
               <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>

@@ -19,14 +19,14 @@ class ApplicationResultController extends Controller
         ->where('result_id', $request->result_id)->first();
 
         // IF SELECTED CHECK IF MAY NA SELECT NA
-        if($request->result == 'SELECTED'){
-            $selectionDone = ApplicationResult::where('result_id', $request->result_id)->where('result', 'SELECTED')->get();
-            // dd($selectionDone->result);
-            // isType($selectionDone->result);
-            if(count($selectionDone) > 0){
-                abort(403, 'Only one candidate can be selected.');
-            }
-        }
+        // if($request->result == 'SELECTED'){
+        //     $selectionDone = ApplicationResult::where('result_id', $request->result_id)->where('result', 'SELECTED')->get();
+        //     // dd($selectionDone->result);
+        //     // isType($selectionDone->result);
+        //     if(count($selectionDone) > 0){
+        //         abort(403, 'Only one candidate can be selected.');
+        //     }
+        // }
 
 
         if($application){

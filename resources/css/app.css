@@ -114,4 +114,8 @@
 }
 .auth-layout .left {
   height: 100vh;
+}
+
+.main {
+  min-height: 80vh;
 }/*# sourceMappingURL=app.css.map */
