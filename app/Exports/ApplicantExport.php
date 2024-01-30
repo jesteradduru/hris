@@ -23,6 +23,9 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
     use Exportable;
 
     private $job_posting, $position;
+
+    protected $index = 0;
+
     
 
     public function __construct(int $job_posting_id)
@@ -45,6 +48,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
 
     public function map($applicant) : array {
         return [
+            ++$this->index,
             $applicant->personal_information->surname,
             $applicant->personal_information->first_name,
             $applicant->personal_information->middle_name,
@@ -58,6 +62,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
     public function headings(): array
     {
         return [
+            'NO.',
             'LAST NAME',
             'FIRST NAME',
             'MIDDLE NAME',
@@ -115,13 +120,13 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
             ],
             'border',
         ]);
-        $sheet->getStyle('E6:E'.$sheet->getHighestRow())->getAlignment()->setWrapText(true);
+        $sheet->getStyle('F6:F'.$sheet->getHighestRow())->getAlignment()->setWrapText(true);
     }
 
     public function columnWidths(): array
     {
         return [
-            'E' => 40
+            'F' => 40
         ];
     }
 

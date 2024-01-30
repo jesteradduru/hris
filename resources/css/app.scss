@@ -153,3 +153,10 @@ $theme-colors: (
 .main{
     min-height: 80vh;
 }
+
+.dropdown {
+    .active{
+        background: $secondary;
+        color: white
+    }
+}

@@ -11,7 +11,7 @@
         <ul class="navbar-nav me-auto">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">HRIS MODULES</a>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu shadow">
               <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')">
                 <Link
                   class="dropdown-item" :href="route('admin.recruitment.job_posting.index')" :class="{

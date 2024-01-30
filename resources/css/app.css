@@ -118,4 +118,9 @@
 
 .main {
   min-height: 80vh;
+}
+
+.dropdown .active {
+  background: #6c757d;
+  color: white;
 }/*# sourceMappingURL=app.css.map */
