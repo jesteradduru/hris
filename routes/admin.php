@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\LndTrainingsAttendedController;
 use App\Http\Controllers\Admin\PesRatingController;
 use App\Http\Controllers\Admin\PlantillaPositionController;
 use App\Http\Controllers\Admin\PublishHiringResultController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\Selection\AcademicAwardController;
 use App\Http\Controllers\Admin\Selection\LearningAndDevelopmentController;
@@ -123,6 +124,11 @@ use Illuminate\Support\Facades\Route;
     Route::resource('rewards', AdminRewardAndRecognitionController::class);
     // spms
     Route::resource('spms', AdminSpmsController::class);
+
+    // reports
+    Route::resource('reports', ReportController::class)->only('index');
+    Route::name('reports.export')->get('reports/export/', [ReportController::class, 'export']);
+
     // lnd
     Route::resource('lnd', AdminLearningAndDevelopmentController::class);
     Route::resource('competency_gap', CompetencyGapController::class);

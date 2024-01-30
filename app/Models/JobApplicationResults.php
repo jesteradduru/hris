@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class JobApplicationResults extends Model
 {
@@ -27,6 +28,10 @@ class JobApplicationResults extends Model
 
     public function result() : HasMany {
         return $this->hasMany(ApplicationResult::class, 'result_id');
+    }
+
+    public function user() : HasManyThrough {
+        return $this->hasManyThrough(User::class, ApplicationResult::class, 'user_id', 'id');
     }
 
     public function getTitleAttribute(){

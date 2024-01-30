@@ -9,7 +9,62 @@
       </button>
       <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
-          <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">HRIS MODULES</a>
+            <ul class="dropdown-menu">
+              <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')">
+                <Link
+                  class="dropdown-item" :href="route('admin.recruitment.job_posting.index')" :class="{
+                    active: route().current(
+                      'admin.recruitment.job_posting.*'
+                    )
+                  }"
+                >
+                  Recruitment, Selection and Placement
+                </Link>
+              </li>
+              <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')">
+                <Link
+                  class="dropdown-item" :href="route('admin.lnd.index')" :class="{
+                    active: route().current(
+                      'admin.lnd.*'
+                    ) || route().current(
+                      'admin.idp.*'
+                    ) || route().current(
+                      'admin.lnd.*'
+                    )
+                  }"
+                >
+                  Learning and Development
+                </Link>
+              </li>
+              <li>
+                <Link
+                  class="dropdown-item" :href="route('admin.spms.index')" :class="{
+                    active: route().current(
+                      'admin.spms.*'
+                    )
+                  }"
+                >
+                  Performance Management
+                </Link>
+              </li>
+
+              <li v-if="permissions.includes('View Reward Page')">
+                <Link
+                  class="dropdown-item" :href="route('admin.rewards.index')" :class="{
+                    active: route().current(
+                      'admin.rewards.*'
+                    )
+                  }"
+                >
+                  Rewards and Recognition
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <!-- <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.recruitment.job_posting.index')" :class="{
                 active: route().current(
@@ -19,9 +74,9 @@
             >
               Recruitment, Selection and Placement
             </Link>
-          </li>
+          </li> -->
 
-          <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
+          <!-- <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.lnd.index')" :class="{
                 active: route().current(
@@ -35,9 +90,9 @@
             >
               Learning and Development
             </Link>
-          </li>
+          </li> -->
           
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <Link
               class="nav-link" :href="route('admin.spms.index')" :class="{
                 active: route().current(
@@ -47,10 +102,10 @@
             >
               Performance Management
             </Link>
-          </li>
+          </li> -->
 
 
-          <li v-if="permissions.includes('View Reward Page')" class="nav-item">
+          <!-- <li v-if="permissions.includes('View Reward Page')" class="nav-item">
             <Link
               class="nav-link" :href="route('admin.rewards.index')" :class="{
                 active: route().current(
@@ -60,7 +115,7 @@
             >
               Rewards and Recognition
             </Link>
-          </li>
+          </li> -->
 
 
 
@@ -87,6 +142,18 @@
               }"
             >
               Roles and Permissions
+            </Link>
+          </li>
+
+          <li class="nav-item">
+            <Link
+              class="nav-link" :href="route('admin.reports.index')" :class="{
+                active: route().current(
+                  'admin.reports.*'
+                )
+              }"
+            >
+              Reports
             </Link>
           </li>
           

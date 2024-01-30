@@ -48,6 +48,10 @@ class JobPosting extends Model
         return $this->hasMany(JobApplication::class, 'job_posting_id');
     }
 
+    public function applicants() : HasManyThrough {
+        return $this->hasManyThrough(User::class, JobApplication::class, 'user_id', 'id');
+    }
+
     public function results() : HasMany {
         return $this->hasMany(JobApplicationResults::class, 'job_posting_id');
     }
