@@ -28,7 +28,7 @@ class DailyTimeRecord extends Model
 
     // update dtr
     public static function getDtr(){
-        set_time_limit(120);
+        set_time_limit(200);
         $zk = new ZKTeco('192.168.222.4', 4370);
             
         $zk->connect();
@@ -235,34 +235,6 @@ class DailyTimeRecord extends Model
             ->get();
 
 
-            // // initialize time in/out in the morning and afternoon
-            // $inAM = null;
-            // $outAM = null;
-            // $inPM = null;
-            // $outPM = null;
-            
-            // $logTimeBetween7to11 = array();
-            // $logTimeBetween11to3 = array();
-            // $logTimeBetween3onwards = array();
-
-            // if(count($dateTimeRecordToday)){
-            //     foreach($dateTimeRecordToday as $dtrRecord){
-            //         $time = Carbon::create($dtrRecord->date_time);
-            //         $logTime = Carbon::parse($time->toTimeString());
-
-            //         if($logTime->lessThan(Carbon::parse('11:00:00'))){
-            //             array_push($logTimeBetween7to11, $time);
-            //         }
-    
-            //         if($logTime->greaterThan(Carbon::parse('11:00:00')) && $logTime->lessThan(Carbon::parse('15:00:00'))){
-            //             array_push($logTimeBetween11to3, $time);
-            //         }
-
-            //         if($logTime->greaterThan(Carbon::parse('15:00:00'))){
-            //             array_push($logTimeBetween3onwards, $time);
-            //         }
-            //     }
-            // }
             $inout = self::identifyInOut($dateTimeRecordToday);    
 
             $inAM = $inout['inAM'];
@@ -301,6 +273,11 @@ class DailyTimeRecord extends Model
         $date = Carbon::now();
         
         $hours_to_render = ($date->dayOfWeek * 8) * 60 * 60;
+
+        if($date->dayOfWeek > $date->format('d')){
+            $hours_to_render = ((7 - $date->dayOfWeek) * 8) * 60 * 60;
+        }
+
         $rendered = 0;
         $timeout = null;
 
@@ -311,6 +288,10 @@ class DailyTimeRecord extends Model
         if($date->format('d') === '01' && $date->dayOfWeek > $date->format('d') || true){
             // $hours_to_render = (5 - ($date->dayOfWeek - 1)) * 8;
             $days_before_count = $date->dayOfWeek;
+
+            if($date->dayOfWeek > $date->format('d')){
+                $days_before_count = 7 - $date->dayOfWeek;
+            }
             // 1; 1 < 1; 0+1
 
             for($i = 0; $i < $days_before_count; $i ++){
@@ -342,6 +323,7 @@ class DailyTimeRecord extends Model
                 }
             }
         }
+
         if($dtr_now !== null && $dtr_now['inAM'] && $dtr_now['outPM'] == null){
             $dtr_now_am = $dtr_now['inAM'];
             $inAM = Carbon::parse($dtr_now_am->format('H:i:s'));
