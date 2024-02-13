@@ -91,7 +91,7 @@
           </div>
 
           <!-- CIVIL STATUS -->
-          <div class="col-12 col-md-4">
+          <div class="col-12 col-md-3">
             <div class="mb-3">
               <label for="sex" class="form-label">Civil Status</label>
               <div class="d-flex gap-2">
@@ -148,7 +148,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-2">
+          <div class="col-12 col-md-1">
             <div class="mb-3">
               <label for="height" class="form-label">Height (m)</label>
               <input id="height" v-model="form.height" type="text" class="form-control form-control-sm" />
@@ -156,7 +156,7 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-2">
+          <div class="col-12 col-md-1">
             <div class="mb-3">
               <label for="weight" class="form-label">Weight (kg)</label>
               <input id="weight" v-model="form.weight" type="text" class="form-control form-control-sm" />
@@ -164,11 +164,27 @@
             </div>
           </div>
 
-          <div class="col-12 col-md-2">
+          <div class="col-12 col-md-1">
             <div class="mb-3">
               <label for="blood_type" class="form-label">Blood Type</label>
               <input v-model="form.blood_type" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.blood_type" />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2">
+            <div class="mb-3">
+              <label for="religion" class="form-label">Religion</label>
+              <input id="religion" v-model="form.religion" type="text" class="form-control form-control-sm" />
+              <InputError :message="form.errors.religion" />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-2">
+            <div class="mb-3">
+              <label for="etnicity" class="form-label">Ethnicity</label>
+              <input id="etnicity" v-model="form.ethnicity" type="text" class="form-control form-control-sm" />
+              <InputError :message="form.errors.ethnicity" />
             </div>
           </div>
 
@@ -533,6 +549,8 @@ let form = useForm({
   r_address_city_municipality: props.personal_information ? props.personal_information.r_address_city_municipality : null,
   r_address_zipcode: props.personal_information ? props.personal_information.r_address_zipcode : null,
   r_address_province: props.personal_information ? props.personal_information.r_address_province : null,
+  ethnicity: props.personal_information ? props.personal_information.ethnicity : null,
+  religion: props.personal_information ? props.personal_information.religion : null,
 
   p_address_house_block_lot_number: props.personal_information ? props.personal_information.p_address_house_block_lot_number : null,
   p_address_street: props.personal_information ? props.personal_information.p_address_street : null,
@@ -556,102 +574,6 @@ let form = useForm({
   same_address: props.personal_information ? props.personal_information.same_address == 1 : false,
 })
 
-
-// if (props.personal_information) {
-//   form = useForm({
-//     surname: props.personal_information.surname,
-//     first_name: props.personal_information.first_name,
-//     middle_name: props.personal_information.middle_name,
-//     name_extension: props.personal_information.name_extension,
-//     date_of_birth: props.personal_information.date_of_birth,
-//     place_of_birth: props.personal_information.place_of_birth,
-//     sex: props.personal_information.sex,
-//     height: props.personal_information.height,
-//     weight: props.personal_information.weight,
-//     blood_type: props.personal_information.blood_type,
-//     gsis_id_number: props.personal_information.gsis_id_number,
-//     pagibig_id_number: props.personal_information.pagibig_id_number,
-//     sss_number: props.personal_information.sss_number,
-//     philhealth_number: props.personal_information.philhealth_number,
-//     tin_number: props.personal_information.tin_number,
-//     agency_employee_number: props.personal_information.agency_employee_number,
-//     r_address_house_block_lot_number: props.personal_information.r_address_house_block_lot_number,
-//     r_address_street: props.personal_information.r_address_street,
-//     r_address_subdivision_village: props.personal_information.r_address_subdivision_village,
-//     r_address_barangay: props.personal_information.r_address_barangay,
-//     r_address_city_municipality: props.personal_information.r_address_city_municipality,
-//     r_address_zipcode: props.personal_information.r_address_zipcode,
-//     r_address_province: props.personal_information.r_address_province,
-
-//     p_address_house_block_lot_number: props.personal_information.p_address_house_block_lot_number,
-//     p_address_street: props.personal_information.p_address_street,
-//     p_address_subdivision_village: props.personal_information.p_address_subdivision_village,
-//     p_address_barangay: props.personal_information.p_address_barangay,
-//     p_address_city_municipality: props.personal_information.p_address_city_municipality,
-//     p_address_zipcode: props.personal_information.p_address_zipcode,
-//     p_address_province: props.personal_information.p_address_province,
-
-//     telephone_number: props.personal_information.telephone_number,
-//     mobile_number: props.personal_information.mobile_number,
-//     email_address: props.personal_information.email_address,
-
-//     civil_status: props.personal_information.civil_status,
-//     other_civil_status: props.personal_information.other_civil_status,
-//     dual_citizenship: props.personal_information.dual_citizenship == 1,
-//     filipino: props.personal_information.filipino == 1,
-//     by_birth: props.personal_information.by_birth == 1,
-//     by_naturalization: props.personal_information.by_naturalization == 1,
-//     country: props.personal_information.country,
-//     same_address: props.personal_information.same_address == 1,
-//   })
-// } else {
-//   form = useForm({
-//     surname: null,
-//     first_name: null,
-//     middle_name: null,
-//     name_extension: null,
-//     date_of_birth: null,
-//     place_of_birth: null,
-//     sex: null,
-//     height: null,
-//     weight: null,
-//     blood_type: null,
-//     gsis_id_number: null,
-//     pagibig_id_number: null,
-//     sss_number: null,
-//     philhealth_number: null,
-//     tin_number: null,
-//     agency_employee_number: null,
-//     r_address_house_block_lot_number: null,
-//     r_address_street: null,
-//     r_address_subdivision_village: null,
-//     r_address_barangay: null,
-//     r_address_city_municipality: null,
-//     r_address_zipcode: null,
-//     r_address_province: null,
-
-//     p_address_house_block_lot_number: null,
-//     p_address_street: null,
-//     p_address_subdivision_village: null,
-//     p_address_barangay: null,
-//     p_address_city_municipality: null,
-//     p_address_zipcode: null,
-//     p_address_province: null,
-
-//     telephone_number: null,
-//     mobile_number: null,
-//     email_address: null,
-
-//     civil_status: null,
-//     other_civil_status: null,
-//     dual_citizenship: false,
-//     filipino: false,
-//     by_birth: false,
-//     by_naturalization: false,
-//     country: null,
-//     same_address: false,
-//   })
-// }
 
 const create_update_personal_info = () => {
   form.post(route('profile.pds.personal_information.store_or_update'), {

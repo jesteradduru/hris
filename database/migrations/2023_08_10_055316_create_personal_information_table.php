@@ -60,6 +60,8 @@ return new class extends Migration
             $table->string('telephone_number', 255)->nullable();
             $table->string('mobile_number', 255)->nullable();
             $table->string('email_address', 255)->nullable();
+            $table->string('religion', 255)->nullable();
+            $table->string('ethnicity', 255)->nullable();
         });
     }
 

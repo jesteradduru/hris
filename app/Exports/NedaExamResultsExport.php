@@ -2,7 +2,9 @@
 
 namespace App\Exports;
 
+use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -18,21 +20,23 @@ use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
 
-class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, WithHeadings, WithStyles, WithColumnWidths, WithDefaultStyles, WithCustomStartCell, WithDrawings
+class NedaExamResultsExport implements FromCollection, ShouldAutoSize, WithMapping, WithHeadings, WithStyles, WithColumnWidths, WithDefaultStyles, WithCustomStartCell, WithDrawings
 {
+    /**
+    * @return \Illuminate\Support\Collection
+    */
     use Exportable;
 
-    private $job_posting = null, $position;
+    private $job_posting = null, $position, $exam_date;
 
     protected $index = 0;
 
-    
 
     public function __construct($job_posting_id = null)
     {
         if($job_posting_id){
             $job_posting = JobPosting::find($job_posting_id);
-            $this->job_posting = $job_posting_id;
+            $this->job_posting = $job_posting->id;
             $this->position = $job_posting->plantilla->position;
         }
 
@@ -40,46 +44,72 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
 
     public function collection() {
         if($this->job_posting){
-            $job_posting = JobPosting::find($this->job_posting)->load(
+            // dd(JobApplicationResults::with('user')->get());
+            $job_results = JobApplicationResults::where('job_posting_id', $this->job_posting)->where('phase', 'NEDA_EXAM')->with(
                 [
-                    'job_application' => [
+                    'result' => [
                         'user' => ['personal_information', 'page_four_questions']
                     ]
                 ]
-            );
+            )->first();
 
             $applicants = collect();
 
-            foreach($job_posting->job_application as $item) {
-                $applicants->push($item->user);
+            $this->exam_date = Carbon::parse($job_results->schedule)->toFormattedDateString();;
+
+            foreach($job_results->result as $item) {
+                $applicant = $item->user;
+                
+                if($item->result === 'EXAM_PASSED'){
+                    $applicant->result = 'PASSED';
+                }else if($item->result === 'EXAM_FAILED'){
+                    $applicant->result = 'FAILED';
+                }
+
+                $applicants->push($applicant);
             }
-            
+
+            // dd($applicants);
             return $applicants;
         }else{
-            $job_posting = JobPosting::notArchived()->with([
-                'job_application' => [
-                    'user' => ['personal_information', 'page_four_questions']
-                ],
-            ])->get();
 
+            $job_posting_result = JobApplicationResults::where('phase', 'NEDA_EXAM')->with(
+                [
+                    'result' => [
+                        'user' => ['personal_information', 'page_four_questions']
+                    ],
+                    'job_posting' => [ 'plantilla']
+                ]
+            )->get();
+
+            // dd($job_posting_result);
 
             $applicants = collect();
             $applicants_array = array();
             
-            foreach($job_posting as $posting){
-                foreach($posting->job_application as $key=>$app){
-                    $applicant = [];
-                    $applicant = $app->user;
+            foreach($job_posting_result as $result){
+                foreach($result->result as $application_result){
+                    $applicant = null;
+                    $applicant = $application_result->user;
+                    $applicant = $application_result->user;
+                    $applicant->position_applied = $result->job_posting->plantilla->position;
 
-                    $applicant->position_applied = $app->job_posting->plantilla->position;
+                    if($application_result->result === 'EXAM_PASSED'){
+                        $applicant->result = 'PASSED';
+                    }else if($application_result->result === 'EXAM_FAILED'){
+                        $applicant->result = 'FAILED';
+                    }
+
                     array_push($applicants_array, clone $applicant);
                 }
-                
             }
 
             foreach($applicants_array as $applicant){
                 $applicants->push($applicant);
             }
+
+
+            // dd($applicants);
 
             return $applicants;
         }
@@ -98,6 +128,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
             Str::upper($applicant->personal_information->religion),
             Str::upper($applicant->personal_information->ethnicity),
             $applicant->page_four_questions && $applicant->page_four_questions->fourty_b ? 'PWD ID: ' . $applicant->page_four_questions->fourty_b_if_yes : 'NO',
+            Str::upper($applicant->result ? $applicant->result  : 'NOT YET UPDATED'),
         ];
 
 
@@ -123,6 +154,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
             'RELIGION',
             'ETHNICITY',
             'PWD',
+            'EXAM RESULT',
         ];
         
         if(!$this->job_posting){
@@ -151,7 +183,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
             $sheet->getStyle('G6:G'.$sheet->getHighestRow())->getAlignment()->setWrapText(true);
         }
 
-        $sheet->setCellValue('A4', 'List of Applicants');
+        $sheet->setCellValue('A4',  'NEDA Entrance Examination Result last ' . $this->exam_date);
 
         $sheet->getStyle('A1:'.$sheet->getHighestColumn() . '5')->applyFromArray([
             'font' => [
@@ -230,7 +262,7 @@ class ApplicantExport implements FromCollection, ShouldAutoSize, WithMapping, Wi
         $drawing->setDescription('This is my logo');
         $drawing->setPath(public_path('/image/neda-logo.png'));
         $drawing->setHeight(60);
-        $drawing->setCoordinates('E2');
+        $drawing->setCoordinates('F2');
 
         return $drawing;
     }

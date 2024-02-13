@@ -100,16 +100,17 @@ class CollegeGraduateStudyController extends Controller
 
 
 
-
-        foreach ($request->file('documents') as $file){
- 
-            $path = $file->store('education', 'public');
-            
-
-            $course->files()->save(new Document([
-                'filename' => $file->getClientOriginalName(),
-                'filepath' => $path
-            ]));
+        if($request->hasFile('documents')){
+            foreach ($request->file('documents') as $file){
+     
+                $path = $file->store('education', 'public');
+                
+    
+                $course->files()->save(new Document([
+                    'filename' => $file->getClientOriginalName(),
+                    'filepath' => $path
+                ]));
+            }
         }
 
         return back()->with('success', 'Added Successfully');
