@@ -6,6 +6,7 @@ use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\LndFormController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationSeenController;
+use App\Http\Controllers\PDS\ExportPdsController;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,10 @@ Route::prefix('recruitment')
 
 // Job Application
 Route::resource('job_application', JobApplicationController::class)->middleware(['auth']);
+
+
+//export pds
+Route::name('pds.export')->get('pds/export', ExportPdsController::class);
 
 
 
