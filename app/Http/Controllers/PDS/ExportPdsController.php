@@ -13,66 +13,18 @@ class ExportPdsController extends Controller
         $pdsfile='./pds/PDS.xlsx';
         /** Load $inputFileName to a Spreadsheet Object  **/
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($pdsfile);
-        //dd($spreadsheet);
+
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
-        dd($request->user);
-        $user = $request->user;
-        $personal_info = $user->personal_information;
 
-        dd($personal_info);
+        // load user
+        $user = $request->user();
+        $personal_info = $user->personal_information;        
 
-        //personal information
-        $surName="Alvarez";
-        $firstName="";
-        $middleName= "";
-        $nameExtension="";
-        $dateofBirth="";
-        $placeOfBirth= "";
-        $height="";
-        $weight="";
-        $bloodtype= "";
-        $gsis="";
-        $pagibig= "";
-        $bloodtype="";
-        $philhealth="";
-        $sss="";
-        $tin="";
-        $employeeNumber= "";
-        $citizenship= "";
-        $indicateCitizenship="";
-        $telephoneNumber= "";
-        $mobileNumber="";
-        $emailAddress= "";
-        
-        //permanent address
-        $phouseblock= "";
-        $pstreet= "";
-        $psubdvision = "";
-        $pbarangay="";
-        $pcity= "";
-        $pprovince="";
-        $pzipcode="";
+        if($personal_info){
+            // code for personal info
 
-        //residential address
-        $rhouseblock= "";
-        $rstreet= "";
-        $rsubdvision = "";
-        $rbarangay="";
-        $rcity= "";
-        $rprovince="";
-        $rzipcode="";
-
-        //family background
-        
-
-
-        
-
-
-
-        $spreadsheet->getActiveSheet()->setCellValue('D10', $surName);
-
-
+            // end of personal info
+        }
 
 
 
