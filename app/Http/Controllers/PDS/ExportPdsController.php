@@ -23,7 +23,7 @@ class ExportPdsController extends Controller
         
         if($personal_info){
             // personal info
-            $spreadsheet->getActiveSheet()->setCellValue('D10', $personal_info['surname']);
+            $spreadsheet->getActiveSheet()->setCellValue('C2', $personal_info['surname']);
             $spreadsheet->getActiveSheet()->setCellValue('D11', $personal_info['first_name']);
             $spreadsheet->getActiveSheet()->setCellValue('D12', $personal_info['middle_name']);
             $spreadsheet->getActiveSheet()->setCellValue('N11', $personal_info['name_extension']);
@@ -31,7 +31,7 @@ class ExportPdsController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('D15', $personal_info['place_of_birth']);
             $spreadsheet->getActiveSheet()->setCellValue('D16', $personal_info['sex']);
             $spreadsheet->getActiveSheet()->setCellValue('D22', $personal_info['height']);
-            $spreadsheet->getActiveSheet()->setCellValue('D23', $personal_info['weight']);
+            $spreadsheet->getActiveSheet()->setCellValue('D24', $personal_info['weight']);
             $spreadsheet->getActiveSheet()->setCellValue('D25', $personal_info['blood_type']);
             $spreadsheet->getActiveSheet()->setCellValue('D27', $personal_info['gsis_id_number']);
             $spreadsheet->getActiveSheet()->setCellValue('D29', $personal_info['pagibig_id_number']);
@@ -50,9 +50,9 @@ class ExportPdsController extends Controller
             $spreadsheet->getActiveSheet()->setCellValue('L25', $personal_info['p_address_street']);
             $spreadsheet->getActiveSheet()->setCellValue('I27', $personal_info['p_address_subdivision_village']);
             $spreadsheet->getActiveSheet()->setCellValue('L27', $personal_info['p_address_barangay']);
-            $spreadsheet->getActiveSheet()->setCellValue('L29', $personal_info['p_address_city_municipality']);
+            $spreadsheet->getActiveSheet()->setCellValue('I29', $personal_info['p_address_city_municipality']);
             $spreadsheet->getActiveSheet()->setCellValue('I31', $personal_info['p_address_zipcode']);
-            $spreadsheet->getActiveSheet()->setCellValue('M29', $personal_info['p_address_province']);
+            $spreadsheet->getActiveSheet()->setCellValue('L29', $personal_info['p_address_province']);
             $spreadsheet->getActiveSheet()->setCellValue('I32', $personal_info['telephone_number']);
             $spreadsheet->getActiveSheet()->setCellValue('I33', $personal_info['mobile_number']);
             $spreadsheet->getActiveSheet()->setCellValue('I34', $personal_info['email_address']);
@@ -66,7 +66,7 @@ class ExportPdsController extends Controller
             //family background
             $spreadsheet->getActiveSheet()->setCellValue('D36', $family_background['spouse_surname']);
             $spreadsheet->getActiveSheet()->setCellValue('D37', $family_background['spouse_first_name']);
-            $spreadsheet->getActiveSheet()->setCellValue('G37', $family_background['spouse_name_extension']);
+            $spreadsheet->getActiveSheet()->setCellValue('H37', $family_background['spouse_name_extension']);
             $spreadsheet->getActiveSheet()->setCellValue('D38', $family_background['spouse_middle_name']);
             $spreadsheet->getActiveSheet()->setCellValue('D39', $family_background['spouse_occupation']);
             $spreadsheet->getActiveSheet()->setCellValue('D40', $family_background['spouse_employer_business_name']);
@@ -75,7 +75,7 @@ class ExportPdsController extends Controller
 
             $spreadsheet->getActiveSheet()->setCellValue('D43', $family_background['fathers_surname']);
             $spreadsheet->getActiveSheet()->setCellValue('D44', $family_background['fathers_first_name']);
-            $spreadsheet->getActiveSheet()->setCellValue('G44', $family_background['fathers_name_extension']);
+            $spreadsheet->getActiveSheet()->setCellValue('H44', $family_background['fathers_name_extension']);
             $spreadsheet->getActiveSheet()->setCellValue('D45', $family_background['fathers_middle_name']);
 
             $spreadsheet->getActiveSheet()->setCellValue('D47', $family_background['mothers_surname']);
