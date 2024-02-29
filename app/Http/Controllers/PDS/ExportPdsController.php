@@ -22,7 +22,8 @@ class ExportPdsController extends Controller
         $user = $request->user();
         $personal_info = $user->personal_information;  
         $family_background = $user->family_background;       
-        $children = $user->children;       
+        $children = $user->children;
+        $education=$user->college_graduate_studies;       
         
         if($personal_info){
             // personal info
@@ -115,7 +116,15 @@ class ExportPdsController extends Controller
             }
         }
 
-
+        //group college
+        $college = $education->filter(function($value){
+            return $value->type === 'BACHELOR';
+        });
+        //get length
+        $length=count($college);
+        //add row
+        $spreadsheet->getActiveSheet()->insertNewRowBefore(58, $length-1);
+        $spreadsheet->getSheetByName('A')->setCellValue('B58', "COLLEGE");
 
         $writer->save($path = storage_path('PDS.xlsx'));
 
