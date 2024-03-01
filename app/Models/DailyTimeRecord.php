@@ -273,9 +273,9 @@ class DailyTimeRecord extends Model
         $date = Carbon::now();
         
         $hours_to_render = ($date->dayOfWeek * 8) * 60 * 60;
-
+        
         if($date->dayOfWeek > $date->format('d')){
-            $hours_to_render = ((7 - $date->dayOfWeek) * 8) * 60 * 60;
+            $hours_to_render = ((6 - $date->dayOfWeek) * 8) * 60 * 60;
         }
 
         $rendered = 0;
