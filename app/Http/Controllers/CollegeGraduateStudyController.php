@@ -150,7 +150,7 @@ class CollegeGraduateStudyController extends Controller
             "period_to" => "integer|nullable",
             "highest_lvl_units_earned" => "integer|nullable",
             "year_graduated" => "integer|nullable",
-            "level" => "required|string|max:255",
+            "level" => "required_if:type,COLLEGE|required_if:type,GRADUATE|max:255",
         ]);
 
         $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
