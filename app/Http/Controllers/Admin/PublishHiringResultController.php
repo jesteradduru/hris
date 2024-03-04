@@ -96,7 +96,6 @@ class PublishHiringResultController extends Controller
                 break;
 
                 case 'FOR_INTERVIEW':
-                    self::compute($currentResult);
                     $currentResult->create([
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
@@ -106,6 +105,7 @@ class PublishHiringResultController extends Controller
                 break;
                 
                 case 'SELECTION':
+                    self::compute($currentResult);
                     $currentResult->create([
                         'result_id' => $newResult->id,
                         'application_id' => $currentResult->application_id,
@@ -227,7 +227,7 @@ class PublishHiringResultController extends Controller
             if($latestSpms){
                 $performance_rating = $latestSpms->avg('rating') / 5 * 70;
             }
-        }else{ // if outsider
+        }else if($application->pes_rating()->exists()){ // if outsider
             $pesRatingOutsider = $application->pes_rating;
 
             if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
