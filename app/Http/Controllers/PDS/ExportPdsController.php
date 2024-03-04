@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PDS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
@@ -77,10 +78,7 @@ class ExportPdsController extends Controller
 
                 $sheetA->setCellValue('J16', $personal_info['country']);
             }
-            // dd($personal_info['by_birth'] == 1 ? 'Dual Citizenship (by birth)' : 'Dual Citizenship' );
-            // $sheetA->setCellValue('J15', $personal_info['by_naturalization'] == 1 ? 'Dual Citizenship (by naturalization)' : 'Dual Citizenship');
             
-
             // end of personal info
             // checkbox not included
         }
@@ -121,43 +119,56 @@ class ExportPdsController extends Controller
         $elementary = $education->filter(function($value){
             return $value->type == 'ELEMENTARY';
         });
-
-        // dd($elementary->count());
-        // add rows
-        for($i = 0; $i < $elementary->count() - 1; $i++){
-            $sheetA->insertNewRowBefore(55);
-            $sheetA->mergeCells('D55:F55');
-            $sheetA->mergeCells('G55:I55');
-        }
-
-        // add data
-        for($i = 0; $i < $elementary->count(); $i++){
-            dd($elementary[$i]);
-            $sheetA->setCellValue('D'. 54 + $i, $elementary[$i]->name_of_school );
-            $sheetA->setCellValue('G'. 54 + $i, $elementary[$i]->basic_ed_degree_course );
-            $sheetA->setCellValue('J'. 54 + $i, $elementary[$i]->period_from );
-            $sheetA->setCellValue('K'. 54 + $i, $elementary[$i]->period_to );
-            $sheetA->setCellValue('L'. 54 + $i, $elementary[$i]->highest_lvl_units_earned );
-            $sheetA->setCellValue('M'. 54 + $i, $elementary[$i]->year_graduated );
-            $sheetA->setCellValue('N'. 54 + $i, $elementary[$i]->type );
-        }
-
-        // if($elementary->count() > 1){
-        //     $sheet = $sheetA;
-            
-        //     $sheet->insertNewRowBefore(55);
-        //     $sheet->setCellValue('A1', 'Updated');
-        // }
+        $SECONDARY = $education->filter(function($value){
+            return $value->type == 'SECONDARY';
+        });
+        $VOCATIONAL = $education->filter(function($value){
+            return $value->type == 'VOCATIONAL';
+        });
+        $COLLEGE = $education->filter(function($value){
+            return $value->type == 'COLLEGE';
+        });
+        $GRADUATE = $education->filter(function($value){
+            return $value->type == 'GRADUATE';
+        });
 
 
-
-        // dd($elementary);
-
-
+        self::insertEducation($elementary->values(), $sheetA, 55);
+        self::insertEducation($SECONDARY->values(), $sheetA, 55 + $elementary->count());
+        self::insertEducation($VOCATIONAL->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count());
+        self::insertEducation($COLLEGE->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count());
+        self::insertEducation($GRADUATE, $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count() + $COLLEGE->count());
 
 
         $writer->save($path = storage_path('PDS.xlsx'));
 
         return response()->download($path);
+    }
+
+    private static function insertEducation($filteredEducation, $sheet, $rowNumber){
+        if($filteredEducation->count() !== 0){
+            $filteredEducation->values();
+       
+            // add rows
+            for($i = 0; $i < $filteredEducation->count() - 1; $i++){
+                $sheet->insertNewRowBefore($rowNumber);
+                $sheet->mergeCells('D'. $rowNumber .':F'. $rowNumber .'');
+                $sheet->mergeCells('G'. $rowNumber .':I'. $rowNumber .'');
+            }
+
+            // insert to excel
+
+            $rowNumber = $rowNumber - 1;
+
+            for($i = 0; $i < $filteredEducation->count(); $i++){
+                $sheet->setCellValue('D'. $rowNumber + $i, $filteredEducation[$i]->name_of_school );
+                $sheet->setCellValue('G'. $rowNumber + $i, $filteredEducation[$i]->basic_ed_degree_course );
+                $sheet->setCellValue('J'. $rowNumber + $i, $filteredEducation[$i]->period_from );
+                $sheet->setCellValue('K'. $rowNumber + $i, $filteredEducation[$i]->period_to );
+                $sheet->setCellValue('L'. $rowNumber + $i, $filteredEducation[$i]->highest_lvl_units_earned );
+                $sheet->setCellValue('M'. $rowNumber + $i, $filteredEducation[$i]->year_graduated );
+                $sheet->setCellValue('N'. $rowNumber + $i, $filteredEducation[$i]->academic_award->pluck('title')->join(', '));
+            }
+        }
     }
 }
