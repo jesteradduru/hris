@@ -26,7 +26,8 @@ class WorkExperience extends Model
         "govt_service",
         "list_of_accomplishments",
         "summary_of_duties",
-        'to_present'
+        'to_present',
+        'user_id'
     ];
 
     public function user() : BelongsTo {
