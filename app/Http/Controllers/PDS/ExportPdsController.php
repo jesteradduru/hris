@@ -8,6 +8,7 @@ use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\RichText\RichText;
+use PhpParser\Node\Stmt\Else_;
 
 class ExportPdsController extends Controller
 {
@@ -26,7 +27,7 @@ class ExportPdsController extends Controller
         $children = $user->children;       
         $education = $user->college_graduate_studies()->with('academic_award')->get();
         $civil_service_eligibility = $user->civil_service_eligibility;
-  
+        $work_experience= $user->work_experience;
 
         $sheetA = $spreadsheet->getSheetByName('A');
         $sheetB = $spreadsheet->getSheetByName('B');
@@ -160,7 +161,42 @@ class ExportPdsController extends Controller
                 $sheetB->setCellValue('I'. 5 + $i, $civil_service_eligibility[$i]->place_of_exam_conferment);
                 $sheetB->setCellValue('L'. 5 + $i, $civil_service_eligibility[$i]->license_number);
                 $sheetB->setCellValue('M'. 5 + $i, $civil_service_eligibility[$i]->license_date_of_validity);
+            }
+
+            //code for work experiences
+            if($work_experience){
+                $civil_rowcount=$civil_service_eligibility->count()+11;
                 
+
+                for($i = 0; $i < $work_experience->count() - 28; $i++){
+                    $sheetB->insertNewRowBefore($civil_rowcount);  
+                }
+
+                for($i = 0; $i < $work_experience->count(); $i++){
+                    $sheetB->setCellValue('A'. $civil_rowcount + $i, $work_experience[$i]->inclusive_date_from);
+
+                    if($work_experience[$i]->to_present=='1') $workstatus='TO PRESENT';    
+                    else{
+                        $workstatus= $work_experience[$i]->inclusive_date_to;
+                    }
+
+                    $sheetB->setCellValue('C'. $civil_rowcount + $i, $workstatus);
+                    $sheetB->setCellValue('D'. $civil_rowcount + $i, $work_experience[$i]->position_title);
+                    $sheetB->setCellValue('G'. $civil_rowcount + $i, $work_experience[$i]->dept_agency_office_company);
+                    $sheetB->setCellValue('J'. $civil_rowcount + $i, $work_experience[$i]->monthly_salary);
+                    $sheetB->setCellValue('K'. $civil_rowcount + $i, $work_experience[$i]->paygrade);
+                    $sheetB->setCellValue('L'. $civil_rowcount + $i, $work_experience[$i]->status_of_appointment);
+                    
+                    if($work_experience[$i]->govt_service=='1') $govt_service='Y';
+                    else $govt_service ='N';;
+
+                    $sheetB->setCellValue('M'. $civil_rowcount + $i, $govt_service);
+                }
+    
+
+
+
+
             }
 
 
