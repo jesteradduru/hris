@@ -28,9 +28,12 @@ class ExportPdsController extends Controller
         $education = $user->college_graduate_studies()->with('academic_award')->get();
         $civil_service_eligibility = $user->civil_service_eligibility;
         $work_experience= $user->work_experience;
+        $page_four_questions= $user->page_four_questions;
+        $references_id= $user->references_id;
 
         $sheetA = $spreadsheet->getSheetByName('A');
         $sheetB = $spreadsheet->getSheetByName('B');
+        $sheetD = $spreadsheet->getSheetByName('D');
         
         if($personal_info){
             // personal info
@@ -162,52 +165,91 @@ class ExportPdsController extends Controller
                 $sheetB->setCellValue('L'. 5 + $i, $civil_service_eligibility[$i]->license_number);
                 $sheetB->setCellValue('M'. 5 + $i, $civil_service_eligibility[$i]->license_date_of_validity);
             }
+        }
 
-            //code for work experiences
-            if($work_experience){
-                $civil_rowcount = $civil_service_eligibility->count() + 18;
+        //code for work experiences
+        if($work_experience){
+            $civil_rowcount = $civil_service_eligibility->count() + 18;
+            
+
+            for($i = 0; $i < $work_experience->count() - 28; $i++){
+                $sheetB->insertNewRowBefore(19);  
+                $sheetB->mergeCells('A'. 19 .':B'. 19);
+                $sheetB->mergeCells('D'. 19 .':F'. 19);
+                $sheetB->mergeCells('G'. 19 .':I'. 19);
+            }
+
+            if($civil_service_eligibility->count() > 0){
+                $civil_rowcount = $civil_rowcount - 1;
+            }
+
+            for($i = 0; $i < $work_experience->count() ; $i++){
+                $sheetB->setCellValue('A'. $civil_rowcount + $i, $work_experience[$i]->inclusive_date_from);
+
+                if($work_experience[$i]->to_present=='1') $workstatus='TO PRESENT';    
+                else{
+                    $workstatus= $work_experience[$i]->inclusive_date_to;
+                }
+
+                $sheetB->setCellValue('C'. $civil_rowcount + $i, $workstatus);
+                $sheetB->setCellValue('D'. $civil_rowcount + $i, $work_experience[$i]->position_title);
+                $sheetB->setCellValue('G'. $civil_rowcount + $i, $work_experience[$i]->dept_agency_office_company);
+                $sheetB->setCellValue('J'. $civil_rowcount + $i, $work_experience[$i]->monthly_salary);
+                $sheetB->setCellValue('K'. $civil_rowcount + $i, $work_experience[$i]->paygrade);
+                $sheetB->setCellValue('L'. $civil_rowcount + $i, $work_experience[$i]->status_of_appointment);
                 
+                if($work_experience[$i]->govt_service=='1') $govt_service='Y';
+                else $govt_service ='N';;
 
-                for($i = 0; $i < $work_experience->count() - 28; $i++){
-                    $sheetB->insertNewRowBefore(19);  
-                    $sheetB->mergeCells('A'. 19 .':B'. 19);
-                    $sheetB->mergeCells('D'. 19 .':F'. 19);
-                    $sheetB->mergeCells('G'. 19 .':I'. 19);
-                }
-
-                if($civil_service_eligibility->count() > 0){
-                    $civil_rowcount = $civil_rowcount - 1;
-                }
-
-                for($i = 0; $i < $work_experience->count() ; $i++){
-                    $sheetB->setCellValue('A'. $civil_rowcount + $i, $work_experience[$i]->inclusive_date_from);
-
-                    if($work_experience[$i]->to_present=='1') $workstatus='TO PRESENT';    
-                    else{
-                        $workstatus= $work_experience[$i]->inclusive_date_to;
-                    }
-
-                    $sheetB->setCellValue('C'. $civil_rowcount + $i, $workstatus);
-                    $sheetB->setCellValue('D'. $civil_rowcount + $i, $work_experience[$i]->position_title);
-                    $sheetB->setCellValue('G'. $civil_rowcount + $i, $work_experience[$i]->dept_agency_office_company);
-                    $sheetB->setCellValue('J'. $civil_rowcount + $i, $work_experience[$i]->monthly_salary);
-                    $sheetB->setCellValue('K'. $civil_rowcount + $i, $work_experience[$i]->paygrade);
-                    $sheetB->setCellValue('L'. $civil_rowcount + $i, $work_experience[$i]->status_of_appointment);
-                    
-                    if($work_experience[$i]->govt_service=='1') $govt_service='Y';
-                    else $govt_service ='N';;
-
-                    $sheetB->setCellValue('M'. $civil_rowcount + $i, $govt_service);
-                }
-    
-
-
-
-
+                $sheetB->setCellValue('M'. $civil_rowcount + $i, $govt_service);
             }
 
 
-        }
+        } // end of work exp
+
+
+        // page four questions
+        $sheetD->setCellValue('G6', $page_four_questions->thirty_four_a);
+        $sheetD->setCellValue('G8', $page_four_questions->thirty_four_b);
+        $sheetD->setCellValue('H11', $page_four_questions->thirty_four_a_b_if_yes);
+        $sheetD->setCellValue('G13', $page_four_questions->thirty_five_a);
+        $sheetD->setCellValue('H15', $page_four_questions->thirty_five_a_if_yes);
+        $sheetD->setCellValue('G18', $page_four_questions->thirty_five_b);
+        $sheetD->setCellValue('K20', $page_four_questions->thirty_five_b_if_yes_date);
+        $sheetD->setCellValue('K21', $page_four_questions->thirty_five_b_if_yes_case);
+        $sheetD->setCellValue('G23', $page_four_questions->thirty_six);
+        $sheetD->setCellValue('H25', $page_four_questions->thirty_six_if_yes);
+        $sheetD->setCellValue('G27', $page_four_questions->thirty_seven);
+        $sheetD->setCellValue('H29', $page_four_questions->thirty_seven_if_yes);
+        $sheetD->setCellValue('G31', $page_four_questions->thirty_eight_a);
+        $sheetD->setCellValue('K32', $page_four_questions->thirty_eight_a_if_yes);
+        $sheetD->setCellValue('G34', $page_four_questions->thirty_eight_b);
+        $sheetD->setCellValue('K35', $page_four_questions->thirty_eight_b_if_yes);
+        $sheetD->setCellValue('G37', $page_four_questions->thirty_nine);
+        $sheetD->setCellValue('H39', $page_four_questions->thirty_nine_if_yes);
+        $sheetD->setCellValue('G43', $page_four_questions->fourty_a);
+        $sheetD->setCellValue('L44', $page_four_questions->fourty_a_if_yes);
+        $sheetD->setCellValue('G45', $page_four_questions->fourty_b);
+        $sheetD->setCellValue('L46', $page_four_questions->fourty_b_if_yes);
+        $sheetD->setCellValue('G47', $page_four_questions->fourty_c);
+        $sheetD->setCellValue('L48', $page_four_questions->fourty_c_if_yes);
+
+
+        $sheetD->setCellValue('A52', $references_id->references_name_one);
+        $sheetD->setCellValue('F52', $references_id->references_address_one);
+        $sheetD->setCellValue('G52', $references_id->references_telephone_one);
+        $sheetD->setCellValue('A53', $references_id->references_name_two);
+        $sheetD->setCellValue('F53', $references_id->references_address_two);
+        $sheetD->setCellValue('G53', $references_id->references_telephone_two);
+        $sheetD->setCellValue('A54', $references_id->references_name_three);
+        $sheetD->setCellValue('F54', $references_id->references_address_three);
+        $sheetD->setCellValue('G54', $references_id->references_telephone_three);
+
+        $sheetD->setCellValue('D61', $references_id->government_issued_id);
+        $sheetD->setCellValue('D62', $references_id->id_license_passport_number);
+        $sheetD->setCellValue('D64', $references_id->date_place_of_issuance);
+
+
 
         $writer->save($path = storage_path('PDS.xlsx'));
 
