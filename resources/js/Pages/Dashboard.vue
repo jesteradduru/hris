@@ -13,7 +13,7 @@ import logo from '@/Assets/Logo.jpg'
         <div>
           <h1 class="display-4">Welcome to NRO2 HRIS</h1>
           <p class="lead display-6">Human Resource Information System</p>
-          <div class="d-flex gap-2 justify-content-center mt-5">
+          <div v-if="!$page.props.auth.user" class="d-flex gap-2 justify-content-center mt-5">
             <Link :href="route('login')" class="btn btn-lg btn-primary">Sign-In</Link>
             <Link :href="route('register')" class="btn btn-lg btn-dark">Register</Link>
           </div>

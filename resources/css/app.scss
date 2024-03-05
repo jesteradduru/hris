@@ -56,7 +56,7 @@ $theme-colors: (
     
     .nav-link {
         transition: background-color 0.2s;
-        color: $white;
+        color: $white !important;
         &:hover{
             background-color: $blue-800;
             border-radius: 7px;

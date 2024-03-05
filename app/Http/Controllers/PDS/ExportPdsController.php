@@ -165,14 +165,21 @@ class ExportPdsController extends Controller
 
             //code for work experiences
             if($work_experience){
-                $civil_rowcount=$civil_service_eligibility->count()+11;
+                $civil_rowcount = $civil_service_eligibility->count() + 18;
                 
 
                 for($i = 0; $i < $work_experience->count() - 28; $i++){
-                    $sheetB->insertNewRowBefore($civil_rowcount);  
+                    $sheetB->insertNewRowBefore(19);  
+                    $sheetB->mergeCells('A'. 19 .':B'. 19);
+                    $sheetB->mergeCells('D'. 19 .':F'. 19);
+                    $sheetB->mergeCells('G'. 19 .':I'. 19);
                 }
 
-                for($i = 0; $i < $work_experience->count(); $i++){
+                if($civil_service_eligibility->count() > 0){
+                    $civil_rowcount = $civil_rowcount - 1;
+                }
+
+                for($i = 0; $i < $work_experience->count() ; $i++){
                     $sheetB->setCellValue('A'. $civil_rowcount + $i, $work_experience[$i]->inclusive_date_from);
 
                     if($work_experience[$i]->to_present=='1') $workstatus='TO PRESENT';    
