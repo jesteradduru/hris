@@ -30,10 +30,17 @@ class ExportPdsController extends Controller
         $work_experience= $user->work_experience;
         $page_four_questions= $user->page_four_questions;
         $references_id= $user->references_id;
+        $voluntary_work=$user->voluntary_work;
+        $learning_and_development=$user->learning_and_development;
+        $other_information=$user->other_information;
+        $non_academic_distinction=$user->non_academic_distinction;
+
 
         $sheetA = $spreadsheet->getSheetByName('A');
         $sheetB = $spreadsheet->getSheetByName('B');
+        $sheetC = $spreadsheet->getSheetByName('C');
         $sheetD = $spreadsheet->getSheetByName('D');
+        
         
         if($personal_info){
             // personal info
@@ -197,9 +204,11 @@ class ExportPdsController extends Controller
                 $sheetB->setCellValue('J'. $civil_rowcount + $i, $work_experience[$i]->monthly_salary);
                 $sheetB->setCellValue('K'. $civil_rowcount + $i, $work_experience[$i]->paygrade);
                 $sheetB->setCellValue('L'. $civil_rowcount + $i, $work_experience[$i]->status_of_appointment);
+
                 
                 if($work_experience[$i]->govt_service=='1') $govt_service='Y';
                 else $govt_service ='N';;
+
 
                 $sheetB->setCellValue('M'. $civil_rowcount + $i, $govt_service);
             }
@@ -250,6 +259,48 @@ class ExportPdsController extends Controller
         $sheetD->setCellValue('D64', $references_id->date_place_of_issuance);
 
 
+        //code for voluntary work
+        if($voluntary_work){
+            for($i = 0; $i < $voluntary_work->count() - 7; $i++){
+                $sheetC->insertNewRowBefore(12);
+                $sheetC->mergeCells('A'. 12 .':D'. 12 .'');
+                $sheetC->mergeCells('H'. 12 .':K'. 12    .'');
+            }
+
+            for($i = 0; $i < $voluntary_work->count(); $i++){
+                $sheetC->setCellValue('A'. 6 + $i, strtoupper($voluntary_work[$i]->name_address_of_org));
+                $sheetC->setCellValue('E'. 6 + $i, $voluntary_work[$i]->inclusive_date_from);
+                $sheetC->setCellValue('F'. 6 + $i, $voluntary_work[$i]->inclusive_date_to);
+                $sheetC->setCellValue('G'. 6 + $i, $voluntary_work[$i]->number_of_hours);
+                $sheetC->setCellValue('H'. 6 + $i,strtoupper($voluntary_work[$i]->position_work));
+            }
+        }
+        // code for learning and dev
+        if($learning_and_development){
+            $vol_rowcount = $voluntary_work->count() + 12;
+
+            for($i = 0; $i < $learning_and_development->count() -   21; $i++){
+                $sheetC->insertNewRowBefore(18);  
+                $sheetC->mergeCells('A'. 18 .':D'. 18);
+                $sheetC->mergeCells('I'. 18 .':K'. 18);
+                
+            }
+            if($learning_and_development->count() > 0){
+                $vol_rowcount = $vol_rowcount - 1;
+            }
+            for($i = 0; $i < $learning_and_development->count() ; $i++){
+                $sheetC->setCellValue('A'. $vol_rowcount + $i, $learning_and_development[$i]->title_of_learning);
+                $sheetC->setCellValue('E'. $vol_rowcount + $i, $learning_and_development[$i]->inclusive_date_from);
+                $sheetC->setCellValue('F'. $vol_rowcount + $i, $learning_and_development[$i]->inclusive_date_to);
+                $sheetC->setCellValue('G'. $vol_rowcount + $i, $learning_and_development[$i]->number_of_hours);
+                $sheetC->setCellValue('H'. $vol_rowcount + $i, $learning_and_development[$i]->type_of_ld);
+                $sheetC->setCellValue('I'. $vol_rowcount + $i, $learning_and_development[$i]->conducted_sponsored_by);    
+            }
+        }
+        //end of learning and development
+
+
+            
 
         $writer->save($path = storage_path('PDS.xlsx'));
 
