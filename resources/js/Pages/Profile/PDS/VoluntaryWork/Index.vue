@@ -44,6 +44,10 @@
         </table>
         <div v-if="!props.voluntary_works.data.length" class="text-center">No records to display</div>
       </div>
+      <Pagination
+        v-if="true"
+        :links="props.voluntary_works.links"
+      />
       <div class="mb-3 d-flex gap-2 justify-content-end">
         <Link
           :href="route('profile.pds.work_experience.index')" type="button"
@@ -58,10 +62,6 @@
           <i class="fa-solid fa-arrow-right" />
         </Link>
       </div>
-      <Pagination
-        v-if="props.voluntary_works.data.length > 10"
-        :links="props.voluntary_works.links"
-      />
     </PDSLayout>
   </AuthenticatedLayout>
 </template>

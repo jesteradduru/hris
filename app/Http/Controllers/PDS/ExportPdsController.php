@@ -33,7 +33,7 @@ class ExportPdsController extends Controller
         $voluntary_work=$user->voluntary_work;
         $learning_and_development=$user->learning_and_development;
         $other_information=$user->other_information;
-        $non_academic_distinction=$user->non_academic_distinction;
+        
 
 
         $sheetA = $spreadsheet->getSheetByName('A');
@@ -176,41 +176,41 @@ class ExportPdsController extends Controller
 
         //code for work experiences
         if($work_experience){
-            $civil_rowcount = $civil_service_eligibility->count() + 18;
+            $work_start_row = $civil_service_eligibility->count() + 18;
             
 
             for($i = 0; $i < $work_experience->count() - 28; $i++){
-                $sheetB->insertNewRowBefore(19);  
-                $sheetB->mergeCells('A'. 19 .':B'. 19);
-                $sheetB->mergeCells('D'. 19 .':F'. 19);
-                $sheetB->mergeCells('G'. 19 .':I'. 19);
+                $sheetB->insertNewRowBefore($work_start_row);  
+                $sheetB->mergeCells('A'. $work_start_row .':B'. $work_start_row);
+                $sheetB->mergeCells('D'. $work_start_row .':F'. $work_start_row);
+                $sheetB->mergeCells('G'. $work_start_row .':I'. $work_start_row);
             }
 
             if($civil_service_eligibility->count() > 0){
-                $civil_rowcount = $civil_rowcount - 1;
+                $work_start_row = $work_start_row - 7;
             }
 
             for($i = 0; $i < $work_experience->count() ; $i++){
-                $sheetB->setCellValue('A'. $civil_rowcount + $i, $work_experience[$i]->inclusive_date_from);
+                $sheetB->setCellValue('A'. $work_start_row + $i, $work_experience[$i]->inclusive_date_from);
 
                 if($work_experience[$i]->to_present=='1') $workstatus='TO PRESENT';    
                 else{
                     $workstatus= $work_experience[$i]->inclusive_date_to;
                 }
 
-                $sheetB->setCellValue('C'. $civil_rowcount + $i, $workstatus);
-                $sheetB->setCellValue('D'. $civil_rowcount + $i, $work_experience[$i]->position_title);
-                $sheetB->setCellValue('G'. $civil_rowcount + $i, $work_experience[$i]->dept_agency_office_company);
-                $sheetB->setCellValue('J'. $civil_rowcount + $i, $work_experience[$i]->monthly_salary);
-                $sheetB->setCellValue('K'. $civil_rowcount + $i, $work_experience[$i]->paygrade);
-                $sheetB->setCellValue('L'. $civil_rowcount + $i, $work_experience[$i]->status_of_appointment);
+                $sheetB->setCellValue('C'. $work_start_row + $i, $workstatus);
+                $sheetB->setCellValue('D'. $work_start_row + $i, $work_experience[$i]->position_title);
+                $sheetB->setCellValue('G'. $work_start_row + $i, $work_experience[$i]->dept_agency_office_company);
+                $sheetB->setCellValue('J'. $work_start_row + $i, $work_experience[$i]->monthly_salary);
+                $sheetB->setCellValue('K'. $work_start_row + $i, $work_experience[$i]->paygrade);
+                $sheetB->setCellValue('L'. $work_start_row + $i, $work_experience[$i]->status_of_appointment);
 
                 
                 if($work_experience[$i]->govt_service=='1') $govt_service='Y';
                 else $govt_service ='N';;
 
 
-                $sheetB->setCellValue('M'. $civil_rowcount + $i, $govt_service);
+                $sheetB->setCellValue('M'. $work_start_row + $i, $govt_service);
             }
 
 
@@ -262,9 +262,9 @@ class ExportPdsController extends Controller
         //code for voluntary work
         if($voluntary_work){
             for($i = 0; $i < $voluntary_work->count() - 7; $i++){
-                $sheetC->insertNewRowBefore(12);
-                $sheetC->mergeCells('A'. 12 .':D'. 12 .'');
-                $sheetC->mergeCells('H'. 12 .':K'. 12    .'');
+                $sheetC->insertNewRowBefore(11);
+                $sheetC->mergeCells('A'. 11 .':D'. 11 .'');
+                $sheetC->mergeCells('H'. 11 .':K'. 11    .'');
             }
 
             for($i = 0; $i < $voluntary_work->count(); $i++){
@@ -272,32 +272,77 @@ class ExportPdsController extends Controller
                 $sheetC->setCellValue('E'. 6 + $i, $voluntary_work[$i]->inclusive_date_from);
                 $sheetC->setCellValue('F'. 6 + $i, $voluntary_work[$i]->inclusive_date_to);
                 $sheetC->setCellValue('G'. 6 + $i, $voluntary_work[$i]->number_of_hours);
-                $sheetC->setCellValue('H'. 6 + $i,strtoupper($voluntary_work[$i]->position_work));
+                $sheetC->setCellValue('H'. 6 + $i, strtoupper($voluntary_work[$i]->position_work));
             }
         }
         // code for learning and dev
         if($learning_and_development){
-            $vol_rowcount = $voluntary_work->count() + 12;
+            $lnd_row_start = $voluntary_work->count() + 18;
 
-            for($i = 0; $i < $learning_and_development->count() -   21; $i++){
-                $sheetC->insertNewRowBefore(18);  
-                $sheetC->mergeCells('A'. 18 .':D'. 18);
-                $sheetC->mergeCells('I'. 18 .':K'. 18);
+            for($i = 0; $i < $learning_and_development->count() - 21; $i++){
+                $sheetC->insertNewRowBefore($lnd_row_start);  
+                $sheetC->mergeCells('A'. $lnd_row_start .':D'. $lnd_row_start);
+                $sheetC->mergeCells('I'. $lnd_row_start .':K'. $lnd_row_start);
                 
             }
-            if($learning_and_development->count() > 0){
-                $vol_rowcount = $vol_rowcount - 1;
+
+            if($voluntary_work->count() > 0){
+                $lnd_row_start = $lnd_row_start - 7;
             }
+
             for($i = 0; $i < $learning_and_development->count() ; $i++){
-                $sheetC->setCellValue('A'. $vol_rowcount + $i, $learning_and_development[$i]->title_of_learning);
-                $sheetC->setCellValue('E'. $vol_rowcount + $i, $learning_and_development[$i]->inclusive_date_from);
-                $sheetC->setCellValue('F'. $vol_rowcount + $i, $learning_and_development[$i]->inclusive_date_to);
-                $sheetC->setCellValue('G'. $vol_rowcount + $i, $learning_and_development[$i]->number_of_hours);
-                $sheetC->setCellValue('H'. $vol_rowcount + $i, $learning_and_development[$i]->type_of_ld);
-                $sheetC->setCellValue('I'. $vol_rowcount + $i, $learning_and_development[$i]->conducted_sponsored_by);    
+                $sheetC->setCellValue('A'. $lnd_row_start + $i, $learning_and_development[$i]->title_of_learning);
+                $sheetC->setCellValue('E'. $lnd_row_start + $i, $learning_and_development[$i]->inclusive_date_from);
+                $sheetC->setCellValue('F'. $lnd_row_start + $i, $learning_and_development[$i]->inclusive_date_to);
+                $sheetC->setCellValue('G'. $lnd_row_start + $i, $learning_and_development[$i]->number_of_hours);
+                $sheetC->setCellValue('H'. $lnd_row_start + $i, $learning_and_development[$i]->type_of_ld);
+                $sheetC->setCellValue('I'. $lnd_row_start + $i, $learning_and_development[$i]->conducted_sponsored_by);    
             }
+        }//end of learning and development
+
+        $skills = [];
+        $org = [];
+
+        // other info
+        if($other_information){
+            $skills = explode(',', $other_information->special_skills_hobbies);
+            $org = explode(',', $other_information->membership_in_assoc_org);
         }
-        //end of learning and development
+
+        $non_academic_distinction=$user->non_academic_distinction;
+
+        $number_of_rows = max([count($skills), count($org), count($non_academic_distinction)]);
+
+
+        $other_row_start = 42;
+
+
+        if($voluntary_work->count() > 7){
+            $other_row_start = $other_row_start + ($voluntary_work->count() - 7);
+        }
+
+        if($learning_and_development->count() > 21){
+            $other_row_start = $other_row_start + ($learning_and_development->count() - 21);
+        }
+
+        for($i = 0; $i < $number_of_rows - 7; $i++){
+            $sheetC->insertNewRowBefore($other_row_start + 1);  
+            $sheetC->mergeCells('A'. $other_row_start + 1 .':B'. $other_row_start + 1);
+            $sheetC->mergeCells('C'. $other_row_start + 1 .':H'. $other_row_start + 1);
+            $sheetC->mergeCells('I'. $other_row_start + 1 .':K'. $other_row_start + 1);
+        }
+        
+        for($i = 0; $i < count($skills) ; $i++){
+            $sheetC->setCellValue('A'. $other_row_start + $i, $skills[$i]); 
+        }
+
+        for($i = 0; $i < count($non_academic_distinction) ; $i++){
+            $sheetC->setCellValue('C'. $other_row_start + $i, $non_academic_distinction[$i]->title); 
+        }
+        
+        for($i = 0; $i < count($org) ; $i++){
+            $sheetC->setCellValue('I'. $other_row_start + $i, $org[$i]); 
+        }
 
 
             
