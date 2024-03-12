@@ -117,7 +117,7 @@
     <hr />
     <div id="pds" class="container">
       <div class="d-flex justify-content-end">
-        <a class="btn btn-secondary" :href="route('pds.export')" target="_blank">Export</a>
+        <a class="btn btn-secondary" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-table" />&nbsp; Export Excel</a>
       </div>
       <slot />
     </div>
