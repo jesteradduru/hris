@@ -18,7 +18,7 @@ class CheckAdmin
         if($request->user()->hasAnyRole(['hr', 'superadmin'])){
             return $next($request);
         }else{
-            sweetalert()->addError('You do not have the permission to access this page.');
+            abort(403, 'You do not have the permission to access this page.');
 
             return back();
         }

@@ -103,10 +103,22 @@ class JobApplicationController extends Controller
 
     public function destroy(JobApplication $job_application){
         $documents = $job_application->document;
+        $job_vacancy = $job_application->job_posting;
+        $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
+
+        dd($job_vacancy_status);
 
         foreach($documents as $document){
             Storage::disk('public')->delete($document->path);
         }
+
+        dd($job_vacancy_status->phase);
+        
+        if($job_vacancy_status->phase !== 'INITIAL_SCREENING'){
+
+        }
+
+
         $job_application->document()->delete();
         $job_application->delete();
 

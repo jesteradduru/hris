@@ -153,9 +153,9 @@ const permissions = usePage()
   .props.auth.permissions?.map((perm) => perm.name)
 
 const admin = computed(() => {
-  const isAdmin = usePage()
-    .props.auth.permissions?.map((perm) => perm.name)
-    .includes('Access Admin')
+  const isAdmin = permissions.includes('Access Admin')
+
+  console.log(permissions)
   return isAdmin
 })
 

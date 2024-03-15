@@ -227,45 +227,47 @@ class ExportPdsController extends Controller
 
 
         // page four questions
-        $sheetD->setCellValue('G6', strtoupper($page_four_questions->thirty_four_a));
-        $sheetD->setCellValue('G8', strtoupper($page_four_questions->thirty_four_b));
-        $sheetD->setCellValue('H11', strtoupper($page_four_questions->thirty_four_a_b_if_yes));
-        $sheetD->setCellValue('G13', strtoupper($page_four_questions->thirty_five_a));
-        $sheetD->setCellValue('H15', strtoupper($page_four_questions->thirty_five_a_if_yes));
-        $sheetD->setCellValue('G18', strtoupper($page_four_questions->thirty_five_b));
-        $sheetD->setCellValue('K20', strtoupper($page_four_questions->thirty_five_b_if_yes_date));
-        $sheetD->setCellValue('K21', strtoupper($page_four_questions->thirty_five_b_if_yes_case));
-        $sheetD->setCellValue('G23', strtoupper($page_four_questions->thirty_six));
-        $sheetD->setCellValue('H25', strtoupper($page_four_questions->thirty_six_if_yes));
-        $sheetD->setCellValue('G27', strtoupper($page_four_questions->thirty_seven));
-        $sheetD->setCellValue('H29', strtoupper($page_four_questions->thirty_seven_if_yes));
-        $sheetD->setCellValue('G31', strtoupper($page_four_questions->thirty_eight_a));
-        $sheetD->setCellValue('K32', strtoupper($page_four_questions->thirty_eight_a_if_yes));
-        $sheetD->setCellValue('G34', strtoupper($page_four_questions->thirty_eight_b));
-        $sheetD->setCellValue('K35', strtoupper($page_four_questions->thirty_eight_b_if_yes));
-        $sheetD->setCellValue('G37', strtoupper($page_four_questions->thirty_nine));
-        $sheetD->setCellValue('H39', strtoupper($page_four_questions->thirty_nine_if_yes));
-        $sheetD->setCellValue('G43', strtoupper($page_four_questions->fourty_a));
-        $sheetD->setCellValue('L44', strtoupper($page_four_questions->fourty_a_if_yes));
-        $sheetD->setCellValue('G45', strtoupper($page_four_questions->fourty_b));
-        $sheetD->setCellValue('L46', strtoupper($page_four_questions->fourty_b_if_yes));
-        $sheetD->setCellValue('G47', strtoupper($page_four_questions->fourty_c));
-        $sheetD->setCellValue('L48', strtoupper($page_four_questions->fourty_c_if_yes));
-
-
-        $sheetD->setCellValue('A52', strtoupper($references_id->references_name_one));
-        $sheetD->setCellValue('F52', strtoupper($references_id->references_address_one));
-        $sheetD->setCellValue('G52', strtoupper($references_id->references_telephone_one));
-        $sheetD->setCellValue('A53', strtoupper($references_id->references_name_two));
-        $sheetD->setCellValue('F53', strtoupper($references_id->references_address_two));
-        $sheetD->setCellValue('G53', strtoupper($references_id->references_telephone_two));
-        $sheetD->setCellValue('A54', strtoupper($references_id->references_name_three));
-        $sheetD->setCellValue('F54', strtoupper($references_id->references_address_three));
-        $sheetD->setCellValue('G54', strtoupper($references_id->references_telephone_three));
-
-        $sheetD->setCellValue('D61', strtoupper($references_id->government_issued_id));
-        $sheetD->setCellValue('D62', strtoupper($references_id->id_license_passport_number));
-        $sheetD->setCellValue('D64', strtoupper($references_id->date_place_of_issuance));
+        if($page_four_questions){
+            $sheetD->setCellValue('G6', strtoupper($page_four_questions->thirty_four_a));
+            $sheetD->setCellValue('G8', strtoupper($page_four_questions->thirty_four_b));
+            $sheetD->setCellValue('H11', strtoupper($page_four_questions->thirty_four_a_b_if_yes));
+            $sheetD->setCellValue('G13', strtoupper($page_four_questions->thirty_five_a));
+            $sheetD->setCellValue('H15', strtoupper($page_four_questions->thirty_five_a_if_yes));
+            $sheetD->setCellValue('G18', strtoupper($page_four_questions->thirty_five_b));
+            $sheetD->setCellValue('K20', strtoupper($page_four_questions->thirty_five_b_if_yes_date));
+            $sheetD->setCellValue('K21', strtoupper($page_four_questions->thirty_five_b_if_yes_case));
+            $sheetD->setCellValue('G23', strtoupper($page_four_questions->thirty_six));
+            $sheetD->setCellValue('H25', strtoupper($page_four_questions->thirty_six_if_yes));
+            $sheetD->setCellValue('G27', strtoupper($page_four_questions->thirty_seven));
+            $sheetD->setCellValue('H29', strtoupper($page_four_questions->thirty_seven_if_yes));
+            $sheetD->setCellValue('G31', strtoupper($page_four_questions->thirty_eight_a));
+            $sheetD->setCellValue('K32', strtoupper($page_four_questions->thirty_eight_a_if_yes));
+            $sheetD->setCellValue('G34', strtoupper($page_four_questions->thirty_eight_b));
+            $sheetD->setCellValue('K35', strtoupper($page_four_questions->thirty_eight_b_if_yes));
+            $sheetD->setCellValue('G37', strtoupper($page_four_questions->thirty_nine));
+            $sheetD->setCellValue('H39', strtoupper($page_four_questions->thirty_nine_if_yes));
+            $sheetD->setCellValue('G43', strtoupper($page_four_questions->fourty_a));
+            $sheetD->setCellValue('L44', strtoupper($page_four_questions->fourty_a_if_yes));
+            $sheetD->setCellValue('G45', strtoupper($page_four_questions->fourty_b));
+            $sheetD->setCellValue('L46', strtoupper($page_four_questions->fourty_b_if_yes));
+            $sheetD->setCellValue('G47', strtoupper($page_four_questions->fourty_c));
+            $sheetD->setCellValue('L48', strtoupper($page_four_questions->fourty_c_if_yes));
+    
+    
+            $sheetD->setCellValue('A52', strtoupper($references_id->references_name_one));
+            $sheetD->setCellValue('F52', strtoupper($references_id->references_address_one));
+            $sheetD->setCellValue('G52', strtoupper($references_id->references_telephone_one));
+            $sheetD->setCellValue('A53', strtoupper($references_id->references_name_two));
+            $sheetD->setCellValue('F53', strtoupper($references_id->references_address_two));
+            $sheetD->setCellValue('G53', strtoupper($references_id->references_telephone_two));
+            $sheetD->setCellValue('A54', strtoupper($references_id->references_name_three));
+            $sheetD->setCellValue('F54', strtoupper($references_id->references_address_three));
+            $sheetD->setCellValue('G54', strtoupper($references_id->references_telephone_three));
+    
+            $sheetD->setCellValue('D61', strtoupper($references_id->government_issued_id));
+            $sheetD->setCellValue('D62', strtoupper($references_id->id_license_passport_number));
+            $sheetD->setCellValue('D64', strtoupper($references_id->date_place_of_issuance));
+        }
 
 
         //code for voluntary work
