@@ -51,8 +51,9 @@ class CivilServiceEligibilityController extends Controller
             ]));
         }
 
+        sweetalert()->addSuccess('Record saved!');
 
-        return back()->with('success', 'Record saved.');
+        return back();
     }
 
     public function edit(CivilServiceEligibility $civil_service_eligibility) {
@@ -95,8 +96,9 @@ class CivilServiceEligibilityController extends Controller
         
         $civil_service_eligibility->update($validate);
 
+        sweetalert()->addSuccess('Record updated!');
 
-        return back()->with('success', 'Record updated.');
+        return back();
     }
 
     //  function to delete eligibility
@@ -114,7 +116,10 @@ class CivilServiceEligibilityController extends Controller
 
         $civil_service_eligibility->delete();
 
-        return back()->with('success', 'Record Deleted.');
+        // flash()->addSuccess('Eligibility deleted!');
+        sweetalert()->addSuccess('Eligibility Deleted.');
+        
+        return redirect()->back();
     }
 
 }

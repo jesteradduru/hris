@@ -47,7 +47,9 @@ class IdpAccomplishmentController extends Controller
             'lnd_form_id' => $request->lnd_form_id,
         ]);
 
-        return back()->with('success', 'Record has been added.');
+        sweetalert()->addSuccess('Record added!');
+
+        return back();
     }
 
     /**
@@ -82,6 +84,8 @@ class IdpAccomplishmentController extends Controller
         Storage::disk('public')->delete($idpAccomplishment->filepath);
         $idpAccomplishment->delete();
 
-        return back()->with('success', 'Removed Successfully.');
+        sweetalert()->addSuccess('Removed successfully!');
+
+        return back();
     }
 }

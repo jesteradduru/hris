@@ -57,7 +57,9 @@ class CompetencyGapController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Report Created');
+        sweetalert()->addSuccess('Report created!');
+
+        return back();
         
     }
 
@@ -126,11 +128,15 @@ class CompetencyGapController extends Controller
             'user_id' => $request->user_id
         ]);
 
-        return back()->with('success', 'Employee has been added to priority.');
+        sweetalert()->addSuccess('Employee has been added to priority!');
+
+        return back();
     }
     public function removePriority(LndTargettedStaff $targetStaff){
         $targetStaff->delete();
 
-        return back()->with('success', 'Employee has been removed from priority.');
+        sweetalert()->addSuccess('Employee has been removed to priority!');
+
+        return back();
     }
 }

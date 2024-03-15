@@ -68,7 +68,9 @@ class EmployeeController extends Controller
 
         $user->assignRole($request->role);
 
-        return back()->with('success', "$request->username has been registered." );
+        sweetalert()->addSuccess("$request->username has been registered.");
+
+        return back();
     }
 
     public function edit(User $employee){
@@ -130,7 +132,9 @@ class EmployeeController extends Controller
 
         $employee->assignRole($request->role);
 
-        return back()->with('success', "$request->username account has been updated." );
+        sweetalert()->addSuccess("$request->username account has been updated.");
+
+        return back();
     }
 
     public function editRewards(User $employee) {

@@ -43,7 +43,9 @@ class RewardAndRecognitionController extends Controller
             'reward_id' => $request->query('reward')
         ]);
 
-        return back()->with('success', 'Reward has been added.');
+        sweetalert()->addSuccess('Reward has been added!');
+
+        return back();
     }
 
     /**
@@ -77,7 +79,9 @@ class RewardAndRecognitionController extends Controller
     {
         $reward->delete();
 
-        return back()->with('success', 'Reward has been deleted.'); 
+        sweetalert()->addSuccess('success', 'Reward has been deleted.');
+
+        return back(); 
     }
     
 }

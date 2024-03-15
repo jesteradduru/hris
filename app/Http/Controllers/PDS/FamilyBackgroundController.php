@@ -41,10 +41,16 @@ class FamilyBackgroundController extends Controller
 
         if(!$request->user()->family_background()->exists()){
             $request->user()->family_background()->create($validate);
-            return back()->with('success', 'Family background has been saved.');
+
+            sweetalert()->addSuccess('Created successfully!');
+
+            return back();
         }else{
             $request->user()->family_background()->update($validate);
-            return back()->with('success', 'Family background has been updated.');
+
+            sweetalert()->addSuccess('Updated successfully!');
+
+            return back();
         }
 
         
@@ -60,12 +66,17 @@ class FamilyBackgroundController extends Controller
 
         $request->user()->children()->create($validate);
 
-        return back()->with('success', 'Record saved.');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     // delete child function
     public function delete_child(Children $children) {
         $children->delete();
-        return back()->with('success', 'Successfully Deleted.');
+
+        sweetalert()->addSuccess('Deleted successfully!');
+        
+        return back();
     }
 }

@@ -60,7 +60,9 @@ class EmployeeRewardController extends Controller
             'date_awarded' => now()
         ]);
 
-        return back()->with('success', 'Reward has been added.');
+        sweetalert()->addSuccess('Reward added!');
+
+        return back();
     }
 
     /**
@@ -94,7 +96,9 @@ class EmployeeRewardController extends Controller
     {
         $reward->delete();
 
-        return back()->with('success', 'Reward has been deleted.'); 
+        sweetalert()->addSuccess('Reward deleted!');
+
+        return back(); 
     }
 
     public function rank_by_ipcr(Request $request, RewardAndRecognition $reward) {

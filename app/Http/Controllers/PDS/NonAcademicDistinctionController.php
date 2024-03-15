@@ -60,7 +60,9 @@ class NonAcademicDistinctionController extends Controller
         }
 
 
-        return back()->with('success', 'Record saved.');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     /**
@@ -123,7 +125,9 @@ class NonAcademicDistinctionController extends Controller
         
         $nonAcademicDistinction->update($validate);
 
-        return back()->with('success', 'Record updated.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -142,6 +146,8 @@ class NonAcademicDistinctionController extends Controller
 
         $nonAcademicDistinction->delete();
 
-        return back()->with('success', 'Record Deleted.');
+        sweetalert()->addSuccess('Record deleted!');
+
+        return back();
     }
 }

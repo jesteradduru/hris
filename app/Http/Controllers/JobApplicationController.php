@@ -43,7 +43,8 @@ class JobApplicationController extends Controller
             || !$user->college_graduate_studies()->exists()
             || !$user->page_four_questions()->exists()
         ){
-            abort(403, 'Please update your PDS. You must atleast fill Personal Information, Family Background, Educational Background and Questions form.');
+            sweetalert()->addError('Please update your PDS. You must atleast fill Personal Information, Family Background, Educational Background and Questions form.');
+            return back();
         }
 
 
@@ -74,7 +75,10 @@ class JobApplicationController extends Controller
                     'path' => $path
                 ]));
             }
-            return back()->with('success', 'Application has been submitted.');
+
+            sweetalert()->addSuccess('Application has been submitted!');
+            
+            return back();
         }
 
     }
@@ -106,7 +110,9 @@ class JobApplicationController extends Controller
         $job_application->document()->delete();
         $job_application->delete();
 
-        return back()->with('success', 'Application has been canceled.');
+        sweetalert()->addSuccess('Application has been canceled.');
+
+        return back();
     }
 
 }

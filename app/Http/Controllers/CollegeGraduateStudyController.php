@@ -113,7 +113,9 @@ class CollegeGraduateStudyController extends Controller
             }
         }
 
-        return back()->with('success', 'Added Successfully');
+        flash()->addSuccess('Added Successfully!');
+
+        return back();
     }
 
     /**
@@ -205,9 +207,11 @@ class CollegeGraduateStudyController extends Controller
                 ]));
             }
         }
+
+        flash()->addSuccess('Updated Successfully!');
         
         
-        return back()->with('success', 'Updated Successfully');
+        return back();
         
     }
 
@@ -244,6 +248,8 @@ class CollegeGraduateStudyController extends Controller
         
         $course->delete();
 
-        return back()->with('success', 'Sucessfully deleted.');
+        flash()->addSuccess('Deleted Successfully!');
+        
+        return back();
     }
 }

@@ -62,7 +62,9 @@ class LearningAndDevelopmentController extends Controller
             ]));
         }
 
-        return back()->with('success', 'Record has been saved.');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     /**
@@ -122,7 +124,9 @@ class LearningAndDevelopmentController extends Controller
         }
         
 
-        return back()->with('success', 'Record has been updated.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -131,7 +135,9 @@ class LearningAndDevelopmentController extends Controller
     public function destroy(LearningAndDevelopment $learningAndDevelopment)
     {
         if($learningAndDevelopment->lnd_training()->exists()){
-            return abort(403, 'You cannot delete this data.');
+            sweetalert()->addError('You cannot delete this data.');
+
+            return back();
         }
 
         if($learningAndDevelopment->files()->exists()){
@@ -145,6 +151,7 @@ class LearningAndDevelopmentController extends Controller
         
         $learningAndDevelopment->delete();
 
-        return back()->with('success', 'Record has been deleted.');
+        sweetalert()->addSuccess('Record deleted!');
+        return back();
     }
 }

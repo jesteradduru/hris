@@ -65,7 +65,10 @@ class AdminSpmsController extends Controller
 
 
             }
-            return back()->with('success', 'Form has been added successfully.');
+
+            sweetalert()->addSuccess('Form has been added successfully!');
+
+            return back();
         }
         
     }
@@ -104,6 +107,8 @@ class AdminSpmsController extends Controller
         Storage::disk('public')->delete($spm->filepath);
         $spm->delete();
 
-        return back()->with('success', 'Form has been deleted.');
+        sweetalert()->addSuccess('Form has been deleted.');
+
+        return back();
     }
 }

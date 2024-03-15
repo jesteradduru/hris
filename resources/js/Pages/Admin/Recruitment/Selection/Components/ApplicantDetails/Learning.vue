@@ -61,7 +61,7 @@ const props = defineProps({
 })
 
 const included = computed(() => {
-  return  props.applicant?.job_application.length > 0 ?  props.applicant?.job_application[0].included.map(included => included) : false
+  return  props.applicant?.job_application.length > 0 ?  props.applicant?.job_application[0].included?.map(included => included) : false
 })
 
 const checkIfIncluded = (id, type) => {

@@ -20,7 +20,7 @@
               </td>
               <td scope="row">{{ award.title }}</td>
               <td>{{ award.category }}</td>
-              <td><a :href="award.files[0].src" target="_blank">{{ award.files[0].filename }}</a></td>
+              <td><a :href="award.files[0]?.src" target="_blank">{{ award.files[0]?.filename }}</a></td>
             </tr>
           </tbody>
         </table>
@@ -51,7 +51,7 @@
                 </div>
               </td>
               <td scope="row">{{ award.title }}</td>
-              <td><a :href="award.files[0].src" target="_blank">{{ award.files[0].filename }}</a></td>
+              <td><a :href="award.files[0]?.src" target="_blank">{{ award.files[0]?.filename }}</a></td>
             </tr>
           </tbody>
         </table>

@@ -53,7 +53,10 @@ class LndTrainingsAttendedController extends Controller
             'training_id' => $request->training_id,
             'target_staff_id' => $request->target_staff_id
         ]);
-        return back()->with('success', 'Training Added.');
+
+        sweetalert()->addSuccess('Training added.');
+
+        return back();
     }
 
     /**
@@ -87,6 +90,8 @@ class LndTrainingsAttendedController extends Controller
     {
         $competency_training->delete();
 
-        return back()->with('success', 'Removed Successfully.');
+        sweetalert()->addSuccess('Removed Successfully!');
+
+        return back();
     }
 }

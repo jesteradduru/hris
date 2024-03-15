@@ -51,7 +51,9 @@ class PlantillaPositionController extends Controller
 
         PlantillaPosition::create($validate);
 
-        return back()->with('success', 'Record has been saved');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     public function edit(PlantillaPosition $plantilla) {
@@ -85,13 +87,16 @@ class PlantillaPositionController extends Controller
         
         $plantilla->update($validated);
 
-        return back()->with('success', 'Record updated successfully!');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
 
     }
 
     public function destroy(PlantillaPosition $plantilla) {
         $plantilla->delete();
 
-        return back()->with('success', 'Successfully Deleted');
+        sweetalert()->addSuccess('Record deleted!');
+        return back();
     }
 }

@@ -68,6 +68,8 @@ class PageFourQuestionsController extends Controller
             $user->page_four_questions()->update($validate);
         }
         
-        return back()->with('success', 'Record saved.');
+        sweetalert()->addSuccess('Record saved!');
+        
+        return back();
     }
 }

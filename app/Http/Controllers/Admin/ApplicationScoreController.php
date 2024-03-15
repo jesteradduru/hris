@@ -55,9 +55,9 @@ class ApplicationScoreController extends Controller
             ]);
         }
 
-        
+        sweetalert()->addSuccess('Score has been saved.');
 
-        return back()->with('success', 'Score has been saved.');
+        return back();
     }
 
     /**

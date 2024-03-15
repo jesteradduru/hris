@@ -11,7 +11,6 @@
           <br />
           <br />
           <br />
-          <Notifications :flash="$page.props.flash" />
           <slot />
         </div>
       </div>
@@ -21,7 +20,24 @@
 
 <script setup>
 import MainNavbar from '@/Components/MainNavbar.vue'
-import Notifications from '@/Components/Notifications.vue'
 import SideNav from '@/Components/SideNav.vue'
+import {usePage} from '@inertiajs/vue3'
+import { watch} from 'vue'
+import Swal from 'sweetalert2'
 
-</script>
+const page = usePage()
+
+watch(() => page.props.messages, (value) => {
+  value.envelopes.forEach((val) => {
+    Swal.fire({
+      title:  val.notification.title,
+      text: val.notification.message,
+      icon: val.notification.options.icon,
+      timerProgressBar: true,
+    })
+  })
+})
+
+
+</script>import { forEach } from 'lodash'
+

@@ -17,6 +17,8 @@ class SetExamScheduleController extends Controller
 
         $result->update($validate);
 
-        return back()->with('success', 'Exam date has been updated.');
+        sweetalert()->addSuccess('Exam date has been updated!');
+
+        return back();
     }
 }

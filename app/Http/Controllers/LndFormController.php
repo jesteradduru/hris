@@ -48,8 +48,11 @@ class LndFormController extends Controller
             'filepath' => $path
         ]);
 
+        sweetalert()->addSuccess('Form has been added!');
 
-        return back()->with('success', 'Form has been added successfully.');
+
+
+        return back();
     }
 
     /**
@@ -102,8 +105,11 @@ class LndFormController extends Controller
         }
 
 
+        sweetalert()->addSuccess('Form has been updated successfully.');
 
-        return back()->with('success', "Form has been updated successfully.");
+
+
+        return back();
     }
 
     /**
@@ -113,10 +119,13 @@ class LndFormController extends Controller
     {
         Storage::disk('public')->delete($lndForm->filepath);
         if($lndForm->lnd_training()->exists()){
-            return abort(403, 'You cannot delete this because it is related to another model.');
+            sweetalert()->addError('You cannot delete this because it is related to another model.');
+            return back();
         }
         $lndForm->delete();
 
-        return back()->with('success', 'Form has been deleted.');
+        sweetalert()->addSuccess('Form has been deleted!');
+
+        return back();
     }
 }

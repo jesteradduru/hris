@@ -145,7 +145,9 @@ class PublishHiringResultController extends Controller
        
     //    dd($computeResult);
 
-       return back()->with('success', 'Result successfully published.');
+    sweetalert()->addSuccess('Result successfully published!');
+
+       return back();
     }
 
     private static function notifyPublishResult($user, $currentResult){

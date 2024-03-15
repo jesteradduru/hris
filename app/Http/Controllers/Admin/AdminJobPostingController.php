@@ -72,7 +72,9 @@ class AdminJobPostingController extends Controller
             'phase' => 'INITIAL_SCREENING'
         ]);
 
-        return back()->with('success', 'Record added successfully!');
+        sweetalert()->addSuccess('Job vacancy added!');
+
+        return back();
     }
 
     /**
@@ -121,7 +123,9 @@ class AdminJobPostingController extends Controller
         
         $job_posting->update($validated);
 
-        return back()->with('success', 'Record updated successfully!');
+        sweetalert()->addSuccess('Job vacancy updated!');
+
+        return back();
 
     }
 
@@ -132,13 +136,17 @@ class AdminJobPostingController extends Controller
     {
         $job_posting->deleteOrFail();
 
-        return redirect(route('admin.recruitment.job_posting.index'))->with('success', 'Record successfully deleted!');
+        sweetalert()->addSuccess('Job vacancy deleted!');
+        
+        return back();
     }
 
     public function archived(JobPosting $job_posting){
         $job_posting->update([
             'archived_at' => now()
         ]);
+
+        
 
         return redirect(route('admin.recruitment.selection.index'))->with('success', 'Job vacancy has been archived.');
     }

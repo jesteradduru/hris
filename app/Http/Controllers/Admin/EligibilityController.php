@@ -34,6 +34,8 @@ class EligibilityController extends Controller
     public function destroy(Eligibility $eligibility){
         $eligibility->delete();
 
+        sweetalert()->addSuccess('Eligibility deleted successfully!');
+
         return back();
     }
 }
