@@ -7,6 +7,7 @@ use App\Models\ApplicationResult;
 use App\Models\ApplicationScore;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\PlantillaPosition;
 use App\Models\SpmsForm;
 use App\Models\User;
 use Carbon\Carbon;
@@ -391,6 +392,7 @@ class AdminJobApplicationController extends Controller
             "posting" => $posting_with_score,
             "applicant_details" => $applicant_details,
             "qualified_applicants" => $latest_result,
+            "positions" => PlantillaPosition::doesntHave('user')->with('division')->get()
         ]);
 
     }

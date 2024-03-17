@@ -31,12 +31,13 @@
       </div>
     </div>
     <div class="table-responsive">
-      <table class="table table-compact">
+      <table class="table table-sm table-bordered mt-4">
         <thead>
           <tr>
             <th scope="col">Picture</th>
             <th scope="col">Username</th>
             <th scope="col">Name</th>
+            <th scope="col">Position</th>
             <th scope="col">DTR ID</th>
             <th scope="col">Action</th>
           </tr>
@@ -49,10 +50,11 @@
             </td>
             <td>{{ employee.username }}</td>
             <td>{{ employee.name }}</td>
+            <td>{{ employee.position?.position }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">
               <Link :href="route('admin.employees.employee.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></Link>
-              <Link class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
+              <Link :onBefore="confirm" method="delete" as="button" :href="route('admin.employees.employee.destroy', {employee: employee.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
             </td>
           </tr>
         </tbody>
@@ -94,6 +96,8 @@ const onReset = () => {
     preserveState: true,
   })
 }
+
+const confirm = () => window.confirm('Delete this user?')
 
 const crumbs = computed(() => [
   {

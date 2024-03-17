@@ -155,7 +155,6 @@ const permissions = usePage()
 const admin = computed(() => {
   const isAdmin = permissions.includes('Access Admin')
 
-  console.log(permissions)
   return isAdmin
 })
 

@@ -113,7 +113,7 @@ class CollegeGraduateStudyController extends Controller
             }
         }
 
-        flash()->addSuccess('Added Successfully!');
+        sweetalert()->addSuccess('Added Successfully!');
 
         return back();
     }

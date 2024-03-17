@@ -137,6 +137,14 @@ class EmployeeController extends Controller
         return back();
     }
 
+    public function destroy(User $employee) {
+        $employee->deleteOrFail();
+
+        sweetalert()->addSuccess('User deleted!');
+        
+        return back();
+    }
+
     public function editRewards(User $employee) {
         return inertia('Admin/Employee/Edit/Rewards', [
             'employee' => $employee,
