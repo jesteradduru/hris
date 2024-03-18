@@ -44,7 +44,7 @@
         <!-- REWARDS -->
         <dt>rewards:</dt>
         <dd>
-          <div v-if="applicant.reward.length > 0" class="table-responsive">
+          <div v-if="applicant.reward?.length > 0" class="table-responsive">
             <table class="table table-bordered mt-3 table-sm">
               <thead>
                 <tr>
