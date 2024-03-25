@@ -3,8 +3,8 @@
     
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
-    <h3>Employees</h3>
-    <Link :href="route('admin.employees.employee.create')" class="btn btn-primary">Create Employee Account</Link>
+    <h3>Accounts</h3>
+    <Link :href="route('admin.employees.employee.create')" class="btn btn-primary">Create Account</Link>
     <div class="row mt-3">
       <div class="col-4">
         <input
@@ -105,7 +105,7 @@ const crumbs = computed(() => [
     link: route('admin.dashboard'),
   },
   {
-    label: 'Employees',
+    label: 'Accounts',
   },
 ])
     

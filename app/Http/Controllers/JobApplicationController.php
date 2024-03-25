@@ -106,25 +106,33 @@ class JobApplicationController extends Controller
         $job_vacancy = $job_application->job_posting;
         $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
 
-        dd($job_vacancy_status);
+        // dd($job_vacancy_status);
 
-        foreach($documents as $document){
-            Storage::disk('public')->delete($document->path);
-        }
+       
 
-        dd($job_vacancy_status->phase);
+        // dd($job_vacancy_status->phase);
         
         if($job_vacancy_status->phase !== 'INITIAL_SCREENING'){
 
+            sweetalert()->addError('Application can not be recalled.');
+            
+            return back();
+
+        }else{
+            foreach($documents as $document){
+                Storage::disk('public')->delete($document->path);
+            }
+            $job_application->document()->delete();
+            $job_application->delete();
+            
+            sweetalert()->addSuccess('Application has been recalled.');
+    
+            return back();
+
         }
 
 
-        $job_application->document()->delete();
-        $job_application->delete();
 
-        sweetalert()->addSuccess('Application has been canceled.');
-
-        return back();
     }
 
 }

@@ -3,7 +3,7 @@
     <!-- Personal Information -->
     <PersonalInformation :applicant="applicant" />
     <!-- EMPLOYEE RECORDS -->
-    <div v-if="applicant.position" class="mb-3">
+    <Box v-if="applicant.position" class="mb-3">
       <h5 class="text-primary">Employment Records</h5>
       <dl>
         <dt>
@@ -67,7 +67,7 @@
           </div>
         </dd>
       </dl>
-    </div>
+    </Box>
 
     <!-- PERFORMANCE -->
     <!-- outstanding accomplishments -->

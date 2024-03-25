@@ -40,7 +40,7 @@ class CompetencyGapController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'year' => 'required|integer|max:2099|min:2000',
+            'year' => 'required|integer|max:2099|min:2000|unique:lnd_monitoring_reports,year',
             'targettedEmployees' => 'required|array',
             'targettedEmployees.*.id' => 'required|integer',
             'targettedEmployees.*.name' => 'required|string',
@@ -118,8 +118,14 @@ class CompetencyGapController extends Controller
     public function destroy(LndMonitoringReport $competencyGap)
     {
         
+        $competencyGap->target_staff()->target_staff_training()->delete();
         $competencyGap->target_staff()->delete();
         $competencyGap->delete();
+
+
+        sweetalert()->addSuccess('Report deleted!');
+
+        return back();        
     }
 
     public function addPriority(Request $request){

@@ -56,7 +56,7 @@
       <li class="nav-item">
         <b>Menu</b>
       </li>
-      <li v-if="user" class="nav-item mt-4">
+      <!-- <li v-if="user" class="nav-item mt-4">
         <Link
           class="nav-link text-info" :class="{
             active: route().current(
@@ -66,7 +66,7 @@
         >
           Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
         </Link>
-      </li>
+      </li> -->
       <li :class="{'mt-3': !user}" class="nav-item">
         <Link
         

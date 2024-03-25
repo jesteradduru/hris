@@ -22,7 +22,7 @@
         </dt>
         <dd>
           <ul>
-            <div v-for="(result, index) in job_application.result" :key="result.id">
+            <div v-for="(result, index) in job_application.result.filter(res => res.result !== 'SELECTION')" :key="result.id">
               <li v-if="result.result" :class="{'text-success' : index === 0}">
                 <div>
                   <!-- <b v-if="result.result === 'SELECTION'" class="text-bold">

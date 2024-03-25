@@ -13,11 +13,12 @@ class SetExamScheduleController extends Controller
 
         $validate = $request->validate([
             'schedule' => 'required|date',
+            'start_time' => 'nullable|string'
         ]);
 
         $result->update($validate);
 
-        sweetalert()->addSuccess('Exam date has been updated!');
+        sweetalert()->addSuccess('Schedule has been updated!');
 
         return back();
     }

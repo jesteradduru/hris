@@ -62,12 +62,14 @@
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Division</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in props.employees.data" :key="item.id" class="">
               <td scope="row">{{ item.name }}</td>
+              <td scope="row">{{ item.division.abbreviation }}</td>
               <td class="d-flex gap-2">
                 <button :data-id="item.id" class="btn btn-success " @click="addReward">
                   Add

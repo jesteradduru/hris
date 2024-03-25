@@ -109,7 +109,7 @@ class EmployeeRewardController extends Controller
         $division = Division::where('abbreviation', '!=', 'ORD')
         ->where('abbreviation', '!=', 'OARD')
         ->get();
-// with(['spms' => fn($query) => $query->where('year', $year)])->
+
         $employees = User::filter($filters)->role(['employee'])->get();
         $employeesWithIPCR = collect();
 

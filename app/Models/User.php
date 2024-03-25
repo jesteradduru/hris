@@ -58,7 +58,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['name', 'role_name', 'profile_pic'];
+    protected $appends = ['name', 'role_name', 'profile_pic', 'division'];
 
     public function getNameAttribute() {
         return "{$this->surname}, {$this->first_name},  {$this->middle_name} {$this->name_extension}";
@@ -164,6 +164,8 @@ class User extends Authenticatable
     public function priority_for_training() : HasMany {
         return $this->hasMany(LndTargettedStaff::class, 'user_id');
     }
+
+    
     
     public function scopeFilter(Builder $query, array $filters):Builder{
         return $query->when(
@@ -203,5 +205,14 @@ class User extends Authenticatable
     public function profile_picture(): MorphOne
     {
         return $this->morphOne(Document::class, 'fileable');
+    }
+
+    public function getDivisionAttribute() {
+        if($this->plantilla_id){
+            $plantilla = PlantillaPosition::find($this->plantilla_id);
+            return $plantilla->division;
+        }else{
+            return null;
+        }
     }
 }

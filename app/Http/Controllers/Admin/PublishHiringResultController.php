@@ -172,7 +172,7 @@ class PublishHiringResultController extends Controller
         $potential_rating = $hrmpsb_points->potential;
 
         if($user->hasRole('employee')){
-            $personality_rating = ($hrmpsb_points->personality_hrmpsb + $hrmpsb_points->personality_peer) * .15;
+            $personality_rating = ($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency) * .15;
         }
 
         $total =  $performance_rating + $education_rating + $experience_rating + $personality_rating + $potential_rating;

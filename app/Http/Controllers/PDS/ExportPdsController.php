@@ -252,8 +252,9 @@ class ExportPdsController extends Controller
             $sheetD->setCellValue('L46', strtoupper($page_four_questions->fourty_b_if_yes));
             $sheetD->setCellValue('G47', strtoupper($page_four_questions->fourty_c));
             $sheetD->setCellValue('L48', strtoupper($page_four_questions->fourty_c_if_yes));
-    
-    
+        }
+        
+        if($references_id){
             $sheetD->setCellValue('A52', strtoupper($references_id->references_name_one));
             $sheetD->setCellValue('F52', strtoupper($references_id->references_address_one));
             $sheetD->setCellValue('G52', strtoupper($references_id->references_telephone_one));
@@ -268,7 +269,6 @@ class ExportPdsController extends Controller
             $sheetD->setCellValue('D62', strtoupper($references_id->id_license_passport_number));
             $sheetD->setCellValue('D64', strtoupper($references_id->date_place_of_issuance));
         }
-
 
         //code for voluntary work
         if($voluntary_work){

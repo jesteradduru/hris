@@ -16,24 +16,20 @@ class ApplicationResultController extends Controller
         ->where('result_id', $request->result_id)->first();
 
 
-        if($application){
-            DB::table('application_results')
+        DB::table('application_results')
             ->where('application_id', $request->application_id)
             ->where('result_id', $request->result_id)
             ->update(['result' => $request->result ]);
 
-            $application->user->assignRole('employee');
+            if($application->user->hasAnyRole('user')){
+                $application->user()->removeRole('user');
+                $application->user->assignRole('employee');
+            }
+
+        
             $application->user->update([
                 'plantilla_id' => $request->plantilla_id
             ]);
-        }else{
-            ApplicationResult::create([
-                'result_id' => $request->result_id,
-                'application_id' => $request->application_id,
-                'user_id' => $request->user_id,
-                'result' => $request->result
-            ]);
-        }
 
         sweetalert()->addSuccess('Results updated!');
 

@@ -2,9 +2,11 @@
   <Head title="Rewards and Recognition" />
         
   <AdminLayout>
-    <h3>{{ reward.title }} Awardees</h3>
+    <h3>Awardees</h3>
     <BreadCrumbs :crumbs="crumbs" />
     <Link class="btn  btn-primary" :href="route('admin.employees.rewards.create', {reward: reward.id})">Add Awardee</Link>
+
+    <h3 class="mt-4 text-uppercase">{{ reward.title }} awardees</h3>
     <div class="table-responsive">
       <table class="table table-sm table-bordered mt-4">
         <thead>

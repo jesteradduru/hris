@@ -77,7 +77,7 @@ class EmployeeController extends Controller
         return inertia('Admin/Employee/Edit/Profile', [
             'employee' => $employee->load(['position']),
             'roles' => Role::all()->pluck('name'),
-            'positions' => PlantillaPosition::with(['division'])->get()
+            'positions' => PlantillaPosition::doesntHave('user')->with('division')->get()
         ]);
     }
 
@@ -147,7 +147,7 @@ class EmployeeController extends Controller
 
     public function editRewards(User $employee) {
         return inertia('Admin/Employee/Edit/Rewards', [
-            'employee' => $employee,
+            'employee' => $employee->with(['division']),
             'rewards' => $employee->reward->load(['reward'])
         ]);
     }

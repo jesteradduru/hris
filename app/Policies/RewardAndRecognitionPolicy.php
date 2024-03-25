@@ -49,8 +49,10 @@ class RewardAndRecognitionPolicy
             return Response::deny('You do not have permission to delete this data.');
         }
 
+        // dd($rewardAndRecognition->employee()->exists());
+
         if($rewardAndRecognition->employee()->exists()){
-            return Response::deny('This reward is awarded to an employee.');
+            return Response::deny('Reward cannot be deleted!');
         }
 
         return Response::allow();

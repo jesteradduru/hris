@@ -8,6 +8,7 @@
             <th scope="col">Plantilla</th>
             <th scope="col">Item No</th>
             <th scope="col">Division</th>
+            <th scope="col">Employee</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
@@ -16,6 +17,7 @@
             <td scope="row">{{ position.position }}</td>
             <td>{{ position.plantilla_item_no }}</td>
             <td>{{ position.division?.name }}</td>
+            <td>{{ position.user?.name }}</td>
             <td class="d-flex ">
               <Link class="btn btn-success btn-sm" :href="route('admin.recruitment.plantilla.edit', {plantilla: position.id })"><i class="fa-solid fa-pen" /></Link>
               <Link :onBefore="confirm" as="button" method="delete" class="btn btn-danger btn-sm" :href="route('admin.recruitment.plantilla.destroy', {plantilla: position.id })"><i class="fa-solid fa-trash" /></Link>

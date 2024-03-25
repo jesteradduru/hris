@@ -14,7 +14,7 @@ class RewardAndRecognition extends Model
 
 
     public function employee() : HasManyThrough {
-        return $this->hasManyThrough(User::class, NonAcademicDistinction::class, 'reward_id', 'id', 'user_id', 'id');
+        return $this->hasManyThrough(User::class, EmployeeReward::class, 'reward_id', 'id', 'user_id', 'id');
     }
     
     public function non_academic() : HasMany {

@@ -36,7 +36,7 @@
                       </td>
                       <td>
                         <Link v-if="permission.includes('Edit SPMS')" class="btn btn-success btn-sm" :href="route('profile.spms.edit', {spm: item.id})"><i class="fa-solid fa-pen" /></Link>
-                        <Link v-if="permission.includes('Delete SPMS')" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.spms.destroy', {spm: item.id})"><i class="fa-solid fa-trash" /></Link>
+                        <Link v-if="permission.includes('Delete SPMS')" :onBefore="confirm" class="btn btn-danger btn-sm" method="delete" as="button" :href="route('profile.spms.destroy', {spm: item.id})"><i class="fa-solid fa-trash" /></Link>
                       </td>
                     </tr>
                   </tbody>
@@ -151,11 +151,12 @@ const addFile = (e) => {
   form.file = e.target.files
 }
 
-const onSubmit = () => form.post(route('profile.spms.store'), {
+const onSubmit = () => form.post(route('profile.spms.store', {
   onSuccess: () => {
-    form.reset()
     form.file = null
   },
-})
+}))
+
+const confirm = () => window.confirm('Are you sure?')
 
 </script>

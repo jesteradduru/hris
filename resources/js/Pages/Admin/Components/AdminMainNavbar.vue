@@ -14,7 +14,7 @@
             <ul class="dropdown-menu shadow">
               <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')">
                 <Link
-                  class="dropdown-item" :href="route('admin.recruitment.job_posting.index')" :class="{
+                  class="dropdown-item" :href="route('admin.recruitment.plantilla.index')" :class="{
                     active: route().current(
                       'admin.recruitment.job_posting.*'
                     )
@@ -128,7 +128,7 @@
                 )
               }"
             >
-              Employees
+              Accounts
             </Link>
           </li>
           

@@ -15,7 +15,7 @@ class PlantillaPositionController extends Controller
     public function index() {
 
         return inertia('Admin/Recruitment/PlantillaPositions/Index', [
-            'positions' => PlantillaPosition::with('division')->paginate(15),
+            'positions' => PlantillaPosition::with(['division', 'user'])->paginate(15),
         ]);
     }
 
