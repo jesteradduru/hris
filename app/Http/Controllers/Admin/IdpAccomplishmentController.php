@@ -30,12 +30,13 @@ class IdpAccomplishmentController extends Controller
      */
     public function store(Request $request)
     {
+
         $validate = $request->validate([
             'activity' => 'required|string|max:300',
-            'file.*' => 'required|mimes:pdf|max:25000',
+            'file' => 'required|mimes:pdf|max:25000',
         ], [
-            'file.required' => 'Select atleast one file.',
-            'file.mimes' => 'The file you inserted is invalid. Only pdf files is allowed.',
+            'file.*.required' => 'Select atleast one file.',
+            'file.*.mimes' => 'The file you inserted is invalid. Only pdf files is allowed.',
         ]);
 
         $path = $request->file('file')[0]->store('idp_accomplishment', 'public');

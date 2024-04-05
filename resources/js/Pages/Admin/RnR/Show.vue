@@ -12,14 +12,14 @@
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Points</th>
+            <th scope="col">Date Awarded</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in props.reward.non_academic" :key="item.id" class="">
             <td>{{ item.user.name }}</td>
-            <td>{{ moment(item.created_at).format('MMM D, Y') }}</td>
+            <td>{{ moment(item.date_awarded).format('MMM D, Y') }}</td>
             
             <td class="d-flex gap-2">
               <Link

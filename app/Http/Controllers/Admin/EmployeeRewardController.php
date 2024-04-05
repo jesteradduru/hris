@@ -50,14 +50,18 @@ class EmployeeRewardController extends Controller
     {
         $reward = RewardAndRecognition::find($request->reward_id);
 
-        // dd($reward);
+        // dd($request->date_awarded);
+
+        $request->validate([
+            'date_awarded' => 'required|date'
+        ]);
 
         $user->non_academic_distinction()->create([
             'reward_id' => $request->reward_id,
             'title' => $reward->title,
             'category' => $reward->category,
             'office' => 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2',
-            'date_awarded' => now()
+            'date_awarded' => $request->date_awarded
         ]);
 
         sweetalert()->addSuccess('Reward added!');
