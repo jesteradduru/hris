@@ -2,7 +2,7 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <b>VACANCIES</b>
-    <JobVacancies :job_vacancies="job_vacancies" :posting="{ id : posting.id}" />
+    <JobVacancies :job_vacancies="job_vacancies" :posting="{ id : posting.job_posting.id}" />
 
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
@@ -12,7 +12,10 @@
         
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
-      <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
+      <div>
+        <a :href="route('admin.reports.job_application.export', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-success"><i class="fa-solid fa-table" />&nbsp; Export SPB Forms</a>
+        <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
+      </div>
     </div>
     <div class="mb-3">
       <label for="" class="form-label">Rank by</label>
@@ -173,9 +176,9 @@ import { router } from '@inertiajs/vue3'
 const props = defineProps({
   job_vacancies: Array,
   posting: Object,
-  applicant_details: Object,
+  // applicant_details: Object,
   job_vacancy_status: Object,
-  qualified_applicants: Array,
+  // qualified_applicants: Array,
   positions: Array,
 })
 
@@ -202,21 +205,21 @@ router.on('finish', () => {
   loading.value = false
 })
 
-const confirm = () => window.confirm('Archive this job vacancy?')
+const confirm = () => window.confirm('Are you sure?')
 const confirmSelect = () => window.confirm('Select this applicant for this position?')
 
 const columnToFilter = ref('total')
 
-const selected = computed(() => {
-  const mappedApplications = props.posting.job_application.filter(application => {
-    return application.latest_result.result === 'SELECTED'
-  })
-  return mappedApplications.length > 0 ? mappedApplications[0].id : null
-})
+// const selected = computed(() => {
+//   const mappedApplications = props.posting.result.filter(application => {
+//     return application.application[0].latest_result.result === 'SELECTED'
+//   })
+//   return mappedApplications.length > 0 ? mappedApplications[0].id : null
+// })
 
 const applications = computed(() => {
-  const mappedApplications = props.posting.job_application.map(application => {
-    return application
+  const mappedApplications = props.posting.result.map(application => {
+    return application.application
   })
 
   mappedApplications.sort((a, b) => b.scores[columnToFilter.value] - a.scores[columnToFilter.value])

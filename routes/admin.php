@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CompetencyGapController;
 use App\Http\Controllers\Admin\EligibilityController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
+use App\Http\Controllers\Admin\ExportJobApplicationReportsController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
 use App\Http\Controllers\Admin\IdpController;
 use App\Http\Controllers\Admin\LndTrainingsAttendedController;
@@ -128,6 +129,7 @@ use Illuminate\Support\Facades\Route;
     // reports
     Route::resource('reports', ReportController::class)->only('index');
     Route::name('reports.export')->get('reports/export/', [ReportController::class, 'export']);
+    Route::name('reports.job_application.export')->get('reports/job_applicaion/export/', [ExportJobApplicationReportsController::class, 'export']);
 
     // lnd
     Route::resource('lnd', AdminLearningAndDevelopmentController::class);

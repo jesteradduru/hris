@@ -24,7 +24,7 @@
             $page.props.auth.user?.username }}</b></a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>
+              <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
             </li>
             <li v-if="admin">
               <Link class="dropdown-item" :href="route('admin.dashboard')">Admin</Link>

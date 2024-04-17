@@ -165,14 +165,15 @@ class PublishHiringResultController extends Controller
         $experience = self::compute_experience($currentResult);
         $user = $currentResult->user;
 
-        $performance_rating = ($performance_rating + $outstanding + $hrmpsb_points->performance) * 0.25;
+        $pvei = $hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency;
+        $performance_rating = ($performance_rating + $outstanding + ($pvei * .15)) * 0.25;
         $education_rating = $education + $relevant_training;
         $experience_rating = ($experience + $hrmpsb_points->experience) * .25;
         $personality_rating = ($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency ) * .15;
         $potential_rating = $hrmpsb_points->potential;
 
         if($user->hasRole('employee')){
-            $personality_rating = ($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency) * .15;
+            $personality_rating = ((($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency) * .8) + $hrmpsb_points->personality_peer) * .15;
         }
 
         $total =  $performance_rating + $education_rating + $experience_rating + $personality_rating + $potential_rating;

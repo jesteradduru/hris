@@ -22,7 +22,7 @@ class ApplicationResultController extends Controller
             ->update(['result' => $request->result ]);
 
             if($application->user->hasAnyRole('user')){
-                $application->user()->removeRole('user');
+                $application->user->removeRole('user');
                 $application->user->assignRole('employee');
             }
 
