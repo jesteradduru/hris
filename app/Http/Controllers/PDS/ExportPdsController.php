@@ -194,8 +194,10 @@ class ExportPdsController extends Controller
                 $sheetB->mergeCells('G'. $work_start_row .':I'. $work_start_row);
             }
 
-            if($civil_service_eligibility->count() > 0){
+            if($civil_service_eligibility->count() > 7){
                 $work_start_row = $work_start_row - 7;
+            }else if($civil_service_eligibility->count() < 7){
+                $work_start_row = $work_start_row - $civil_service_eligibility->count();
             }
 
             for($i = 0; $i < $work_experience->count() ; $i++){
@@ -297,8 +299,10 @@ class ExportPdsController extends Controller
                 
             }
 
-            if($voluntary_work->count() > 0){
+            if($voluntary_work->count() > 7){
                 $lnd_row_start = $lnd_row_start - 7;
+            }else if($voluntary_work->count() < 7){
+                $lnd_row_start = $lnd_row_start - $voluntary_work->count();
             }
 
             for($i = 0; $i < $learning_and_development->count() ; $i++){
