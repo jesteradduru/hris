@@ -159,9 +159,9 @@
           
           <li class="nav-item">
             <Link
-              class="nav-link" :href="route('admin.daily_time_record.index')" :class="{
+              class="nav-link" :href="route('admin.dtr.dtr.index')" :class="{
                 active: route().current(
-                  'admin.daily_time_record.*'
+                  'admin.dtr.*'
                 )
               }"
             >

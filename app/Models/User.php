@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\DTR\Timesheet;
+use App\Models\DTR\TimesheetEntries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -165,6 +167,16 @@ class User extends Authenticatable
         return $this->hasMany(LndTargettedStaff::class, 'user_id');
     }
 
+
+    // timesheet draft
+    public function timesheet_draft() : HasMany {
+        return $this->hasMany(Timesheet::class, 'user_id');
+    }
+
+     // timesheet draft entry
+     public function timesheet_draft_entry() : HasMany {
+        return $this->hasMany(TimesheetEntries::class, 'employee');
+    }
     
     
     public function scopeFilter(Builder $query, array $filters):Builder{

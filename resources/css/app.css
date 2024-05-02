@@ -131,4 +131,8 @@
 .dropdown .active {
   background: #6c757d;
   color: white;
+}
+
+.dtr-active {
+  color: darkblue;
 }/*# sourceMappingURL=app.css.map */
