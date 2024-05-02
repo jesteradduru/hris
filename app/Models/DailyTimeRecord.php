@@ -60,6 +60,7 @@ class DailyTimeRecord extends Model
     
     } 
 
+    // filter 
     public function scopeFilter(Builder $query, $filters = []) {
         return $query
         

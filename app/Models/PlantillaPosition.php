@@ -32,8 +32,8 @@ class PlantillaPosition extends Model
         return $this->hasOne(User::class, 'plantilla_id');
     }
 
-    public function job_posting() : HasMany {
-        return $this->hasMany(JobPosting::class, 'plantilla_id');
+    public function job_posting() : HasOne {
+        return $this->hasOne(JobPosting::class, 'plantilla_id');
     }
 
     public function division() : BelongsTo {

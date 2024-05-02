@@ -31,7 +31,7 @@
           <label for="" class="form-label">Date of Exam</label>
           <input
             id=""
-            type="date" class="form-control" name="" aria-describedby="helpId" placeholder="" :value="moment(job_vacancy_status.schedule).format('Y-M-D')" @input="setSchedule"
+            :value="moment(props.job_vacancy_status.schedule).format('Y-MM-DD')" type="date" class="form-control" name="" aria-describedby="helpId" placeholder="" @input="setSchedule"
           />
         </div>
       </div>
@@ -79,7 +79,7 @@
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
 import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
 import {Head, Link,  router} from '@inertiajs/vue3'
-import { ref } from 'vue'
+import { ref, computed} from 'vue'
 import Spinner from '@/Components/Spinner.vue'
 import JobVacancies from '../Components/JobVacancies.vue'
 import {debounce} from 'lodash'
@@ -94,16 +94,6 @@ const props = defineProps({
   qualified_applicants: Array,
 })
 
-const haveResult = (id) => {
-  const applicantHaveResult = props.latest_result.filter(res => res.user_id == id)
-  return applicantHaveResult.length > 0
-}
-
-const examPassed = (id) => {
-  const applicantHaveResult = props.latest_result.filter(res => res.user_id == id)
-  const applicantPassed = applicantHaveResult.filter(res =>  res.result == 'EXAM_PASSED')
-  return applicantPassed.length > 0 
-}
 
 const setSchedule = debounce((e) => {
   const date = e.target.value
@@ -116,6 +106,9 @@ const setSchedule = debounce((e) => {
 import ApplicantsList from '../Components/ApplicantsList.vue'
 
 const loading = ref(false)
+const examSchedule = computed(() => moment(props.job_vacancy_status.schedule).format('yyyy-MM-dd'))
+
+
 router.on('start', () => {
   loading.value = true
 })

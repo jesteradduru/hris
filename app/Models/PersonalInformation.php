@@ -54,6 +54,8 @@ class PersonalInformation extends Model
     "by_naturalization",
     "country",
     "same_address",
+    'religion',
+    'ethnicity'
     ];
 
     protected $appends = ['address'];

@@ -30,10 +30,7 @@ class JobApplicationResults extends Model
         return $this->hasMany(ApplicationResult::class, 'result_id');
     }
 
-    public function user() : HasManyThrough {
-        return $this->hasManyThrough(User::class, ApplicationResult::class, 'user_id', 'id');
-    }
-
+    
     public function getTitleAttribute(){
         switch($this->phase){
             case 'FINAL':

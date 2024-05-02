@@ -65,6 +65,8 @@ class PersonalInformationController extends Controller
             "by_birth" =>" boolean",
             "by_naturalization" =>"boolean",
             "country" =>"string|max:255|nullable",
+            "religion" =>"string|max:255|nullable",
+            "ethnicity" =>"string|max:255|nullable",
             "same_address" => "boolean"
         ], [
             "r_address_house_block_lot_number.required" =>"This field is required.",

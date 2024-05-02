@@ -14,7 +14,7 @@
         <option value="">Select one</option>
         <option value="applicants">List of Applicants</option>
         <option value="shortlisted">Shortlisted Applicants</option>
-        <option value="exam">NEDA Exam Passers</option>
+        <option value="exam">NEDA Exam Result</option>
       </select>
     </div>
 
@@ -27,20 +27,18 @@
         class="form-select form-select-lg"
         name=""
       >
-        <option value="">Select one</option>
+        <option value="">All</option>
         <option v-for="posting in job_posting" :key="posting.id" :value="posting.id">{{ posting.plantilla.position }}</option>
       </select>
 
-      <a class="btn btn-primary mt-3" :href="route('admin.reports.export', {posting: form.posting, report: form.report})">Export</a>
+      <a class="btn btn-primary mt-3" target="_blank" :href="route('admin.reports.export', {posting: form.posting, report: form.report})">Export</a>
     </div>
   </AdminLayout>
 </template>
       
 <script setup>
-import Pagination from '@/Components/Pagination.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import {Head, Link, useForm, usePage, router} from '@inertiajs/vue3'
-import {computed} from 'vue'
+import {Head, useForm, router} from '@inertiajs/vue3'
 
 const props = defineProps({
   job_posting: Array,
@@ -50,12 +48,5 @@ const form = useForm({
   report: '',
   posting: '',
 })
-
-const generateReport = () => {
-  router.visit(route('admin.reports.export'), {
-    method: 'get',
-  })
-}
-
 
 </script>

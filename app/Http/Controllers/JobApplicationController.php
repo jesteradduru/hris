@@ -37,8 +37,13 @@ class JobApplicationController extends Controller
     public function store(Request $request) {
         $user = $request->user();
 
-        if(!$user->personal_information()->exists()){
-            abort(403, 'Please update your Personal Data Sheet');
+        if(
+            !$user->personal_information()->exists()
+            || !$user->family_background()->exists()
+            || !$user->college_graduate_studies()->exists()
+            || !$user->page_four_questions()->exists()
+        ){
+            abort(403, 'Please update your PDS. You must atleast fill Personal Information, Family Background, Educational Background and Questions form.');
         }
 
 

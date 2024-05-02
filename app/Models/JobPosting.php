@@ -37,7 +37,7 @@ class JobPosting extends Model
     protected $appends = ['isClosed', 'plantilla'];
 
     public function encoder() : BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'by_user_id');
     }
 
     public function plantilla() : BelongsTo {
@@ -47,11 +47,7 @@ class JobPosting extends Model
     public function job_application() : HasMany {
         return $this->hasMany(JobApplication::class, 'job_posting_id');
     }
-
-    public function applicants() : HasManyThrough {
-        return $this->hasManyThrough(User::class, JobApplication::class, 'user_id', 'id');
-    }
-
+    
     public function results() : HasMany {
         return $this->hasMany(JobApplicationResults::class, 'job_posting_id');
     }

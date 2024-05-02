@@ -18,7 +18,7 @@ class JobApplication extends Model
     protected $appends = ['latest_result'];
 
     public function user() : BelongsTo {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function document() : HasMany
@@ -28,7 +28,7 @@ class JobApplication extends Model
     
     public function job_posting() : BelongsTo
     {
-        return $this->belongsTo(JobPosting::class);
+        return $this->belongsTo(JobPosting::class, 'job_posting_id');
     }
 
     public function result() : HasMany

@@ -116,6 +116,7 @@
     </ul>
     <hr />
     <div id="pds" class="container">
+      <a class="btn btn-success" :href="route('pds.export')" target="_blank">Export</a>
       <slot />
     </div>
   </div>

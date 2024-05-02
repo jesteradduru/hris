@@ -10,8 +10,6 @@ use App\Models\PlantillaPosition;
             "monthly_salary" => "3210",
             "eligibility" => "Civil Service Eligibility or equivalent",
             "education" => "Bachelor of Science in Economics",
-            "training" => "None Required",
-            "work_experience" => "None Required",
             "competency" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error excepturi eum laudantium.",
             'division_id' => 3,
             
@@ -24,8 +22,6 @@ use App\Models\PlantillaPosition;
             "monthly_salary" => "50000",
             "eligibility" => "Civil Service Eligibility or equivalent",
             "education" => "Bachelor of Science in Economics",
-            "training" => "None Required",
-            "work_experience" => "None Required",
             "competency" => "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Error excepturi eum laudantium.",
             'division_id' => 4,
             
