@@ -272,11 +272,12 @@ class DailyTimeRecord extends Model
 
     public static function getInfo($user_id){
         $date = Carbon::now();
+        $startMonth = Carbon::now()->startOfMonth();
         
         $hours_to_render = ($date->dayOfWeek * 8) * 60 * 60;
 
         if($date->dayOfWeek > $date->format('d')){
-            $hours_to_render = ((7 - $date->dayOfWeek) * 8) * 60 * 60;
+            $hours_to_render = (($date->dayOfWeek + 1 - $startMonth->dayOfWeek) * 8) * 60 * 60;
         }
 
         $rendered = 0;
