@@ -31,6 +31,10 @@ class LearningAndDevelopment extends Model
     public function lnd_training() : HasMany {
         return $this->hasMany(LndTrainingsAttended::class, 'training_id');
     }
+    
+    public function scopeMostRecent(Builder $query) {
+        return $query->orderBy('inclusive_date_from', 'desc');
+    }
 
     public function scopeFilter(Builder $query, array $filters) : Builder {
         return $query

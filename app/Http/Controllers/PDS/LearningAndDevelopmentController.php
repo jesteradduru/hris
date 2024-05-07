@@ -16,7 +16,7 @@ class LearningAndDevelopmentController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/LearningAndDevelopment/Index', [
-            'learning_and_development' => $request->user()->learning_and_development()->with(['files'])->paginate(10)
+            'learning_and_development' => $request->user()->learning_and_development()->mostRecent()->with(['files'])->paginate(10)
         ]);
     }
 
