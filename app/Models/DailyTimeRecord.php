@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -228,12 +229,35 @@ class DailyTimeRecord extends Model
         for ($day = 1; $day <= $daysInMonth; $day++) {
 
             $date = $day;
+            $remarks = '';
+            
 
             $dateTimeRecordToday = DB::table('daily_time_record')
             ->select(['date_time'])
             ->where('user_id', '=', $user_id)
             ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $yearMonth . '-' . $date)
             ->get();
+
+            $user = User::select('id')->where('dtr_user_id', $user_id)->first();
+
+            $other_dtr = DB::table('timesheet_entries')->select('*')
+                // ->where('employee', $user_id)
+                ->where(function($query) use ($user) {
+                    $query->where('employee', $user->id)
+                          ->orWhere('employee', 0);
+                })
+                ->where(DB::raw("DATE_FORMAT(date, '%Y-%m-%e')"), $yearMonth . '-' . $date)
+                ->get();
+
+            if(count($other_dtr)){
+                $ts = $other_dtr[0];
+                if($ts->remarks === 'REG_HOLIDAY'){
+                    $remarks = $ts->remarks;
+                }else if($ts->remarks === 'REG_OB'){
+                    $remarks = $ts->remarks;
+                }
+            }
+                
 
 
             $inout = self::identifyInOut($dateTimeRecordToday);    
@@ -256,6 +280,7 @@ class DailyTimeRecord extends Model
                 'inPM' => $inPM ? $inPM->format('h:i:00 A') : null,
                 'outPM' => $outPM ? $outPM->format('h:i:00 A') : null,
                 'totalHours' => $total['total'],
+                'remarks' => $remarks
             ];
 
             // Add the daily record to the array
@@ -354,16 +379,24 @@ class DailyTimeRecord extends Model
                 $timeout = Carbon::parse('7:00 PM');
             }
 
+            $hours_remaining = Carbon::now()->diffInSeconds($timeout->format('H:i'));
     
             return([
                 'hours_to_render' => ($hours_to_render / 60) / 60,
                 'render' => round(($hours_to_render - $rendered) / 60 / 60),
                 'rendered' => round($rendered / 60 / 60),
                 'timeout' => $timeout->format('h:i A'),
+                'hours_remaining' =>  $hours_remaining
             ]);
         }
-
-
         
     }
+
+    public static function convertSecondsToHoursMinutes($seconds) {
+        // Create a Carbon interval from the total seconds
+        $interval = CarbonInterval::seconds($seconds)->cascade()->forHumans();
+
+        return $interval;
+    }
+    
 }

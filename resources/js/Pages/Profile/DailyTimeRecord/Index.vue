@@ -5,12 +5,14 @@
     <div class="mb-3">
       <input id="" v-model="filter.month" type="month" name="" class="form-control" @change="onChangeMonth" />
     </div>
+    <div v-if="props.suggestions" class="mb-3 text-center">
+      <b>Today, you are expected to have rendered at least	<span class="text-danger">{{ props.suggestions.hours_to_render }} hours</span>. </b>
+      <br />
+      <b>The suggested time to logout is <span class="text-danger">{{ props.suggestions.timeout }}</span></b>
+      <br />
+      <b><span class="text-danger">{{ time_remaining }}</span> remaining</b>
+    </div>
     <div class="table-responsive container" :style="{position: 'relative'}">
-      <div v-if="props.suggestions" class="mb-3">
-        <b>Today, you are expected to have rendered at least	<span class="text-danger">{{ props.suggestions.hours_to_render }} hours</span>. </b>
-        <br />
-        <b>The suggested time to logout is <span class="text-danger">{{ props.suggestions.timeout }}</span></b>
-      </div>
       <div v-if="filter.processing" class="center-element">
         <div
           class="spinner-border text-primary spinner-border-lg"
@@ -29,6 +31,7 @@
             <td colspan="2">Morning</td>
             <td colspan="2">Afternoon</td>
             <td rowspan="2">Total Hours</td>
+            <td rowspan="2">Remarks</td>
           </tr>
           <tr>
             <td>In</td>
@@ -57,6 +60,7 @@
             <td>
               <b>{{ record.totalHours }}</b>
             </td>
+            <td>{{ record.remarks }}</td>
           </tr>
         </tbody>
       </table>
@@ -70,12 +74,19 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { debounce } from 'lodash'
 import moment from 'moment'
+import { computed, onMounted, ref } from 'vue'
 
 
 const props = defineProps({
   records: Array,
   filters: Object,
   suggestions: Object,
+})
+
+const seconds = ref(props.suggestions.hours_remaining)
+const time_remaining = computed(() => {
+  var duration =  moment.utc(seconds.value*1000).format('HH:mm:ss')
+  return duration
 })
 
 const filter = useForm({
@@ -89,6 +100,19 @@ const onChangeMonth = debounce(() => {
   })
 }, 1500)
 
+// Function to update currentTime every second
+const updateTime = () => {
+  seconds.value -= 1
+}
+
+// Lifecycle hook to start updating currentTime when component is mounted
+onMounted(() => {
+  // Update currentTime immediately upon mounting
+  updateTime()
+
+  // Set up interval to update currentTime every second
+  setInterval(updateTime, 1000)
+})
 
 </script>
 
