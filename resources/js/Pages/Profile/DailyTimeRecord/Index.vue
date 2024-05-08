@@ -10,7 +10,8 @@
       <br />
       <b>The suggested time to logout is <span class="text-danger">{{ props.suggestions.timeout }}</span></b>
       <br />
-      <b><span class="text-danger">{{ time_remaining }}</span> remaining</b>
+      <b v-if="seconds > 0"><span class="text-danger">{{ time_remaining }}</span> remaining</b>
+      <b v-else>You have successfully rendered <span class="text-success"> {{ props.suggestions.hours_to_render }} hours</span>.</b>
     </div>
     <div class="table-responsive container" :style="{position: 'relative'}">
       <div v-if="filter.processing" class="center-element">
