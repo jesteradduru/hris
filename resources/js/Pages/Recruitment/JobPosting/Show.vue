@@ -19,6 +19,7 @@
             >
               Apply
             </Link>
+            <i class="text-muted" v-else>Please login/register to apply.</i>
           </div>
         </div>
         <hr />
@@ -51,12 +52,12 @@
         <dl>
           <dt>Education</dt>
           <dd>{{ props.job_posting.plantilla.education }}</dd>
-          <dt>Training</dt>
+          <dt>Training (Total no. of hours)</dt>
           <dd>
             {{ props.job_posting.plantilla.training }}
             <span v-if="job_posting.plantilla.training == null">None Required</span>
           </dd>
-          <dt>Work Experience</dt>
+          <dt>Work Experience (Total no. of years)</dt>
           <dd>
             {{ props.job_posting.plantilla.work_experience }}
             <span v-if="job_posting.plantilla.work_experience == null">None Required</span>
