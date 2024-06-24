@@ -5,7 +5,7 @@
       <div>
         <b>Training Requirement</b>
       </div>
-      {{ plantilla.training }}
+      {{ plantilla.training }} hour/s of relevant training.
     </div>
     <div class="table-responsive">
       <table class="table table-sm table-bordered mt-3">
