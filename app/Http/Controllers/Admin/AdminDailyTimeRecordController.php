@@ -81,4 +81,8 @@ class AdminDailyTimeRecordController extends Controller
         return back();
 
     }
+
+    public function export_monthly_dtr(){
+        
+    }
 }

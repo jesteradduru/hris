@@ -36,7 +36,17 @@ class DailyTimeRecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $dtr_user_id = $request->user()->dtr_user_id;
+        // dd($dtr_user_id);
+        DailyTimeRecord::create([
+            'date_time' => now(),
+            'user_id' => $dtr_user_id,
+            'remark' => 'AWA'
+        ]);
+
+        sweetalert()->addSuccess("You've successfully timed in!");
+
+        return back();
     }
 
     /**

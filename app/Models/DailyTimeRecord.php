@@ -17,7 +17,8 @@ class DailyTimeRecord extends Model
     use HasFactory;
 
     protected $table = 'daily_time_record';
-    protected $fillable = ['user_id', 'date_time'];
+    protected $fillable = ['user_id', 'date_time', 'remark'];
+    public $timestamps = false;
 
     public function scopeLatestDtr(Builder $query){
         return $query->orderBy('date_time', 'DESC');
@@ -84,7 +85,7 @@ class DailyTimeRecord extends Model
         );
     }
 
-    private static function getTotalHours ($inAM, $outAM, $inPM, $outPM) {
+    private static function getTotalHours ($inAM, $outAM, $inPM, $outPM, $remarks = '') {
         $totalAM = null;
         $totalPM = null;
 
@@ -136,25 +137,35 @@ class DailyTimeRecord extends Model
         }
 
         $total = null;
+        $totalMinutes = null;
 
         if($totalAM || $totalPM){
 
             if($totalAM) {
                 $total = gmdate('H:i:s', $totalAM);
+                $totalMinutes =  $totalAM - 28800;
             }
 
             if($totalPM){
                 $total = gmdate('H:i:s', $totalPM);
+                $totalMinutes =  $totalPM- 28800;
             }
 
             if($totalAM && $totalPM){
                 $total = gmdate('H:i:s', $totalAM + $totalPM);
+                $totalMinutes = ($totalAM + $totalPM ) - 28800;
+                if($totalMinutes > 0 && $remarks){
+                    $totalMinutes = null;
+                    $total = gmdate('H:i:s', 8*60*60);
+                }
             }
+
         }
 
         return [
             'totalAM' => $totalAM,
             'totalPM' => $totalPM,
+            'totalMinutes' => $totalMinutes ? $totalMinutes / 60 : '',
             'total' => $total
         ];
     }
@@ -170,8 +181,14 @@ class DailyTimeRecord extends Model
         $logTimeBetween11to3 = array();
         $logTimeBetween3onwards = array();
 
+        // if(count($dateTimeRecordToday))
+        // dd($dateTimeRecordToday);
+
+        $remarks = null;
+
         if(count($dateTimeRecordToday)){
             foreach($dateTimeRecordToday as $dtrRecord){
+    
                 $time = Carbon::create($dtrRecord->date_time);
                 $logTime = Carbon::parse($time->toTimeString());
 
@@ -186,6 +203,10 @@ class DailyTimeRecord extends Model
                 if($logTime->greaterThan(Carbon::parse('15:00:00'))){
                     array_push($logTimeBetween3onwards, $time);
                 }
+
+                if(!isset($remarks) && isset($dtrRecord->remark)){
+                    $remarks = $dtrRecord->remark;
+                }
             }
         }
 
@@ -196,7 +217,7 @@ class DailyTimeRecord extends Model
 
         // IN PM LOGIC
         if(count($logTimeBetween11to3) == 1){
-            $inPM = $logTimeBetween11to3[0];
+            $outAM = $logTimeBetween11to3[0];
         }else if(count($logTimeBetween11to3) > 1 ){
             $inPM = $logTimeBetween11to3[1];
         }
@@ -206,6 +227,7 @@ class DailyTimeRecord extends Model
             'outAM' => $outAM,
             'inPM' => $inPM,
             'outPM' => $outPM,
+            'remarks' => $remarks
         ];
     }
 
@@ -228,17 +250,10 @@ class DailyTimeRecord extends Model
         // Loop through each day of the month
         for ($day = 1; $day <= $daysInMonth; $day++) {
 
+            $user = User::select('id')->where('dtr_user_id', $user_id)->first();
             $date = $day;
             $remarks = '';
-            
-
-            $dateTimeRecordToday = DB::table('daily_time_record')
-            ->select(['date_time'])
-            ->where('user_id', '=', $user_id)
-            ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $yearMonth . '-' . $date)
-            ->get();
-
-            $user = User::select('id')->where('dtr_user_id', $user_id)->first();
+            $dayOfWeek = date('D', strtotime($yearMonth . '-' . $date));
 
             $other_dtr = DB::table('timesheet_entries')->select('*')
                 // ->where('employee', $user_id)
@@ -247,41 +262,61 @@ class DailyTimeRecord extends Model
                           ->orWhere('employee', 0);
                 })
                 ->where(DB::raw("DATE_FORMAT(date, '%Y-%m-%e')"), $yearMonth . '-' . $date)
-                ->get();
+                ->orWhere(function($query) use ($yearMonth, $date) {
+                    $query->where('reg_multiday', '1')
+                          ->where(DB::raw("reg_start"), '<=', $yearMonth . '-' . $date)
+                          ->where(DB::raw("reg_end"), '>=', $yearMonth . '-' . $date);
+                })
+                ->first();
 
-            if(count($other_dtr)){
-                $ts = $other_dtr[0];
-                if($ts->remarks === 'REG_HOLIDAY'){
-                    $remarks = $ts->remarks;
-                }else if($ts->remarks === 'REG_OB'){
-                    $remarks = $ts->remarks;
+            if($other_dtr && $other_dtr->purpose !== 'supp'){
+                $record = self::getTimeSheet($other_dtr, $date, $dayOfWeek);
+            }else{
+                $dateTimeRecordToday = DB::table('daily_time_record')
+                ->select(['date_time', 'remark'])
+                ->where('user_id', '=', $user_id)
+                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $yearMonth . '-' . $date)
+                ->get();
+                
+                $inout = self::identifyInOut($dateTimeRecordToday);    
+
+                if($other_dtr && $other_dtr->purpose === 'supp'){
+                    // dd($other_dtr);
+                    $supp_am_in = $other_dtr->supp_am_in ? Carbon::parse($other_dtr->supp_am_in) : null;
+                    $supp_am_out = $other_dtr->supp_am_out ? Carbon::parse($other_dtr->supp_am_out) : null;
+                    $supp_pm_in = $other_dtr->supp_pm_in ? Carbon::parse($other_dtr->supp_pm_in) : null;
+                    $supp_pm_out = $other_dtr->supp_pm_out ? Carbon::parse($other_dtr->supp_pm_out) : null;
+
+                    $inAM = $inout['inAM'] ? $inout['inAM'] : $supp_am_in;
+                    $outAM = $inout['outAM'] ? $inout['outAM'] : $supp_am_out;
+                    $inPM = $inout['inPM'] ? $inout['inPM'] : $supp_pm_in;
+                    $outPM = $inout['outPM'] ? $inout['outPM'] : $supp_pm_out;
+                }else{
+                    $inAM = $inout['inAM'];
+                    $outAM = $inout['outAM'];
+                    $inPM = $inout['inPM'];
+                    $outPM = $inout['outPM'];
                 }
-            }
+
+
+                $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $inout['remarks']);
                 
 
+               
 
-            $inout = self::identifyInOut($dateTimeRecordToday);    
-
-            $inAM = $inout['inAM'];
-            $outAM = $inout['outAM'];
-            $inPM = $inout['inPM'];
-            $outPM = $inout['outPM'];
-
-            $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $yearMonth . '-' . $date);
-            
-
-            $dayOfWeek = date('D', strtotime($yearMonth . '-' . $date));
-            // Create a daily record for the current day
-            $record = [
-                'date' => $date,
-                'day' => $dayOfWeek,
-                'inAM' => $inAM ? $inAM->format('h:i:00 A') : null,  
-                'outAM' => $outAM ? $outAM->format('h:i:00 A') : null,
-                'inPM' => $inPM ? $inPM->format('h:i:00 A') : null,
-                'outPM' => $outPM ? $outPM->format('h:i:00 A') : null,
-                'totalHours' => $total['total'],
-                'remarks' => $remarks
-            ];
+                // Create a daily record for the current day
+                $record = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => $inAM ? $inAM->format('h:i:00 A') : null,  
+                    'outAM' => $outAM ? $outAM->format('h:i:00 A') : null,
+                    'inPM' => $inPM ? $inPM->format('h:i:00 A') : null,
+                    'outPM' => $outPM ? $outPM->format('h:i:00 A') : null,
+                    'totalMinutes'=> $total['totalMinutes'],
+                    'totalHours' => $total['total'],
+                    'remarks' => $inout['remarks']
+                ];
+            }
 
             // Add the daily record to the array
             $dailyTimeRecord[] = $record;
@@ -392,11 +427,52 @@ class DailyTimeRecord extends Model
         
     }
 
-    public static function convertSecondsToHoursMinutes($seconds) {
-        // Create a Carbon interval from the total seconds
-        $interval = CarbonInterval::seconds($seconds)->cascade()->forHumans();
+    public static function getTimeSheet($record, $date, $dayOfWeek) {
+        $entry = [];
+        $wholeday_remarks = [
+            'REG_HOLIDAY',
+            'RA_9710',
+            'REG_OB',
+            'REG_SPL',
+            'REG_SL',
+            'REG_VL',
+            'REG_FL',
+            'STUDY_LEAVE',
+            'ON_SCHOLARSHIP'
+        ];
 
-        return $interval;
+        $weekend = ['Sat', 'Sun'];
+        
+
+        if(in_array($record->remarks, $wholeday_remarks)){
+            if(in_array($dayOfWeek, $weekend)){
+                $entry = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => null,
+                    'outAM' =>  null,
+                    'inPM' =>  null,
+                    'outPM' =>  null,
+                    'totalMinutes'=> 0,
+                    'totalHours' => null,
+                    'remarks' => null
+                ];
+            }else{
+                $entry = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => '08:00:00 AM',  
+                    'outAM' =>  '12:00:00 AM',
+                    'inPM' =>  '01:00:00 PM',
+                    'outPM' =>  '05:00:00 PM',
+                    'totalMinutes'=> 0,
+                    'totalHours' => '08:00:00',
+                    'remarks' => $record->remarks
+                ];
+            }
+        }
+
+        return $entry;
     }
     
 }

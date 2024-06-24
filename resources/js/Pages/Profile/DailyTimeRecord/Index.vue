@@ -6,11 +6,12 @@
       <input id="" v-model="filter.month" type="month" name="" class="form-control" @change="onChangeMonth" />
     </div>
     <div v-if="props.suggestions" class="mb-3 text-center">
+      <br /> 
       <b>Today, you are expected to have rendered at least	<span class="text-danger">{{ props.suggestions.hours_to_render }} hours</span>. </b>
       <br />
       <b>The suggested time to logout is <span class="text-danger">{{ props.suggestions.timeout }}</span></b>
       <br />
-      <b v-if="seconds > 0"><span class="text-danger">{{ time_remaining }}</span> remaining</b>
+      <b v-if="seconds > 0"><span class="text-danger">{{ seconds }}</span> remaining</b>
       <b v-else>You have successfully rendered <span class="text-success"> {{ props.suggestions.hours_to_render }} hours</span>.</b>
     </div>
     <div class="table-responsive container" :style="{position: 'relative'}">
@@ -47,15 +48,20 @@
             <td>{{ record.date }}</td>
             <td>{{ record.day }}</td>
             <td>
-              <b>{{ record.inAM }}</b>
+              <b>
+                <Link v-if="showAwa(record.date) && !record.inAM" :href="route('daily_time_record.store')" method="post" as="button">Time-In</Link>
+                {{ record.inAM }}</b>
             </td>
             <td>
+              <Link v-if="showAwa(record.date) && !record.outAM && record.inAM" :href="route('daily_time_record.store')" method="post" as="button">Time-Out</Link>
               <b>{{ record.outAM }}</b>
             </td>
             <td>
+              <Link v-if="showAwa(record.date) && !record.inPM && record.outAM " :href="route('daily_time_record.store')" method="post" as="button">Time-In</Link>
               <b>{{ record.inPM }}</b>
             </td>
             <td>
+              <Link v-if="showAwa(record.date) && !record.outPM && record.inPM" :href="route('daily_time_record.store')" method="post" as="button">Time-Out</Link>
               <b>{{ record.outPM }}</b>
             </td>
             <td>
@@ -70,7 +76,7 @@
 </template>
 
 <script setup>
-import {Head} from '@inertiajs/vue3'
+import {Head, Link} from '@inertiajs/vue3'
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
 import { useForm } from '@inertiajs/vue3'
 import { debounce } from 'lodash'
@@ -84,9 +90,14 @@ const props = defineProps({
   suggestions: Object,
 })
 
-const seconds = ref(props.suggestions.hours_remaining)
+const seconds = ref(props.suggestions?.hours_remaining)
+
+const showAwa = (day) => {
+  return moment().day() === 5 && moment().date() === day
+}
+
 const time_remaining = computed(() => {
-  var duration =  moment.utc(seconds.value*1000).format('HH:mm:ss')
+  var duration =  moment.utc(seconds.value * 1000).format('HH:mm:ss')
   return duration
 })
 
