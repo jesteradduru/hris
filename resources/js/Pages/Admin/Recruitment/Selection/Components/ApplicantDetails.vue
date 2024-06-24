@@ -128,7 +128,7 @@
             :key="doc.id" 
             data-bs-toggle="modal" data-bs-target="#viewAttachment" 
             href="#" @click="() => showPdf(doc.src)"
-          >{{ doc.filename }}</a>
+          >{{ doc.filename }} &nbsp;&nbsp;</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
         </div>
         <div v-else class="text-muted text-center text-sm">
