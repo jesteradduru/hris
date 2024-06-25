@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\ApplicationScoreController;
 use App\Http\Controllers\Admin\CompetencyGapController;
+use App\Http\Controllers\Admin\DTR\ExportMonthlyDTRController;
 use App\Http\Controllers\Admin\DTR\TimeSheetController;
 use App\Http\Controllers\Admin\DTR\TimesheetEntriesController;
 use App\Http\Controllers\Admin\EligibilityController;
@@ -149,7 +150,10 @@ use Illuminate\Support\Facades\Route;
     ->name('dtr.')
     ->group(function () {
         Route::resource('dtr', AdminDailyTimeRecordController::class);
+        Route::name('index')->get('/monthlyDTR', [ExportMonthlyDTRController::class, 'index']);
+        Route::name('export')->get('/export', [ExportMonthlyDTRController::class, 'export']);
         Route::resource('timesheet', TimeSheetController::class);
+        Route::name('timesheet.deleteSelected')->post('/timesheet/deleteSelected', [TimeSheetController::class, 'deleteSelected']);
         Route::resource('timesheet_draft', TimesheetEntriesController::class);
         Route::post('daily_time_record/getDtr', [AdminDailyTimeRecordController::class, 'getDtr'])->name('getDtr');
     });

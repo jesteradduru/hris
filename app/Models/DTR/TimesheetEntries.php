@@ -24,13 +24,15 @@ class TimesheetEntries extends Model
         'supp_pm_in',
         'supp_pm_out',
         'off_title',
-        'off_start',
-        'off_end',
         'eo_start',
         'eo_end',
         'off_hours',
         'eo_sched_type',
         'remarks',
+        'reg_multiday',
+        'reg_start',
+        'reg_end',
+        
     ];
 
     public function draft() : BelongsTo {

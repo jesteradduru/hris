@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->bigInteger('timesheet_id');
-            $table->foreignIdFor(User::class, 'employee')->constrained('users');
+            $table->bigInteger('employee')->unsigned()->nullable();
             $table->enum('purpose', ['pass', 'supp', 'off'])->nullable();
             $table->enum('pass_type', ['official', 'personal'])->nullable();
             $table->date('date')->nullable();
@@ -27,8 +27,6 @@ return new class extends Migration
             $table->time('supp_pm_in')->nullable();
             $table->time('supp_pm_out')->nullable();
             $table->string('off_title')->nullable();
-            $table->string('off_start')->nullable();
-            $table->string('off_end')->nullable();
             $table->integer('off_hours')->nullable();
             $table->string('eo_sched_type')->nullable();
             $table->time('eo_start')->nullable();
