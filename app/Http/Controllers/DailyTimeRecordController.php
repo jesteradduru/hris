@@ -16,6 +16,7 @@ class DailyTimeRecordController extends Controller
     {
         $filters = $request->only(['month']);
         $dtr = DailyTimeRecord::getRecordByMonth($request->user()->dtr_user_id, $filters);
+
         return inertia('Profile/DailyTimeRecord/Index', [
             'filters' => $filters,
             'records' => $dtr['dtr'],

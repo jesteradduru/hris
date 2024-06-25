@@ -438,12 +438,12 @@ class DailyTimeRecord extends Model
             'REG_VL',
             'REG_FL',
             'STUDY_LEAVE',
-            'ON_SCHOLARSHIP'
+            'ON_SCHOLARSHIP',
         ];
 
         $weekend = ['Sat', 'Sun'];
         
-
+        // dd($record);
         if(in_array($record->remarks, $wholeday_remarks)){
             if(in_array($dayOfWeek, $weekend)){
                 $entry = [
@@ -470,6 +470,21 @@ class DailyTimeRecord extends Model
                     'remarks' => $record->remarks
                 ];
             }
+        }
+    
+        if($record->remarks === 'EO' && $record->eo_sched_type === 'ALLDAY'){
+            
+            $entry = [
+                'date' => $date,
+                'day' => $dayOfWeek,
+                'inAM' => '08:00:00 AM',  
+                'outAM' =>  '12:00:00 AM',
+                'inPM' =>  '01:00:00 PM',
+                'outPM' =>  '05:00:00 PM',
+                'totalMinutes'=> 0,
+                'totalHours' => '08:00:00',
+                'remarks' => $record->remarks . ': ' . $record->off_title
+            ];
         }
 
         return $entry;
