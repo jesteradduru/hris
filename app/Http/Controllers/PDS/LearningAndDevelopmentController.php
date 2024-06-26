@@ -37,7 +37,7 @@ class LearningAndDevelopmentController extends Controller
             'title_of_learning' => 'required|string',
             'inclusive_date_from' => 'date|nullable',
             'inclusive_date_to' => 'date|nullable',
-            'number_of_hours' => 'string|nullable',
+            'number_of_hours' => 'integer|nullable',
             'type_of_ld' => 'string|nullable',
             'conducted_sponsored_by' => 'string|nullable',
             'documents' => 'required|array|min:1',
@@ -94,7 +94,7 @@ class LearningAndDevelopmentController extends Controller
             'title_of_learning' => 'string|nullable',
             'inclusive_date_from' => 'date|nullable',
             'inclusive_date_to' => 'date|nullable',
-            'number_of_hours' => 'string|nullable',
+            'number_of_hours' => 'integer|nullable',
             'type_of_ld' => 'string|nullable',
             'conducted_sponsored_by' => 'string|nullable',
         ]);
