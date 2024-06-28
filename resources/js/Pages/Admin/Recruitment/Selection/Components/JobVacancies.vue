@@ -6,12 +6,11 @@
                      {job_posting: item.id}
         )"
       >
-        {{ `${item.plantilla.position}, ${item.plantilla.plantilla_item_no}, ${item.plantilla.division.abbreviation}` }}
+        {{ `${item.plantilla.position}` }}
       </Link>
     </div>
   </div>
   <hr />
-
 </template>
 
 <script setup>

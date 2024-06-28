@@ -19,6 +19,8 @@ class CheckAdmin
             return $next($request);
         }else{
             abort(403, 'You do not have the permission to access this page.');
+
+            return back();
         }
     }
 }

@@ -35,7 +35,7 @@
 }
 .side-nav .nav-link {
   transition: background-color 0.2s;
-  color: #fff;
+  color: #fff !important;
 }
 .side-nav .nav-link:hover {
   background-color: #052c65;
@@ -101,8 +101,16 @@
   height: auto;
 }
 
+.bg-dashboard {
+  background-image: url("../js/Assets/neda_facade.jpg");
+  height: 88vh !important;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
 .auth-layout {
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   background-size: cover;
   background-position: center;
@@ -123,4 +131,8 @@
 .dropdown .active {
   background: #6c757d;
   color: white;
+}
+
+.dtr-active {
+  color: darkblue;
 }/*# sourceMappingURL=app.css.map */

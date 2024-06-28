@@ -40,7 +40,7 @@ class CompetencyGapController extends Controller
     public function store(Request $request)
     {
         $validate = $request->validate([
-            'year' => 'required|integer|max:2099|min:2000',
+            'year' => 'required|integer|max:2099|min:2000|unique:lnd_monitoring_reports,year',
             'targettedEmployees' => 'required|array',
             'targettedEmployees.*.id' => 'required|integer',
             'targettedEmployees.*.name' => 'required|string',
@@ -57,7 +57,9 @@ class CompetencyGapController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Report Created');
+        sweetalert()->addSuccess('Report created!');
+
+        return back();
         
     }
 
@@ -116,8 +118,14 @@ class CompetencyGapController extends Controller
     public function destroy(LndMonitoringReport $competencyGap)
     {
         
+        $competencyGap->target_staff()->target_staff_training()->delete();
         $competencyGap->target_staff()->delete();
         $competencyGap->delete();
+
+
+        sweetalert()->addSuccess('Report deleted!');
+
+        return back();        
     }
 
     public function addPriority(Request $request){
@@ -126,11 +134,15 @@ class CompetencyGapController extends Controller
             'user_id' => $request->user_id
         ]);
 
-        return back()->with('success', 'Employee has been added to priority.');
+        sweetalert()->addSuccess('Employee has been added to priority!');
+
+        return back();
     }
     public function removePriority(LndTargettedStaff $targetStaff){
         $targetStaff->delete();
 
-        return back()->with('success', 'Employee has been removed from priority.');
+        sweetalert()->addSuccess('Employee has been removed to priority!');
+
+        return back();
     }
 }

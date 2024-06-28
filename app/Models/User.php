@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Models\DTR\Timesheet;
+use App\Models\DTR\TimesheetEntries;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -19,7 +22,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -57,7 +60,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['name', 'role_name', 'profile_pic'];
+    protected $appends = ['name', 'role_name', 'profile_pic', 'division'];
 
     public function getNameAttribute() {
         return "{$this->surname}, {$this->first_name},  {$this->middle_name} {$this->name_extension}";
@@ -163,6 +166,18 @@ class User extends Authenticatable
     public function priority_for_training() : HasMany {
         return $this->hasMany(LndTargettedStaff::class, 'user_id');
     }
+
+
+    // timesheet draft
+    public function timesheet_draft() : HasMany {
+        return $this->hasMany(Timesheet::class, 'user_id');
+    }
+
+     // timesheet draft entry
+     public function timesheet_draft_entry() : HasMany {
+        return $this->hasMany(TimesheetEntries::class, 'employee');
+    }
+    
     
     public function scopeFilter(Builder $query, array $filters):Builder{
         return $query->when(
@@ -202,5 +217,14 @@ class User extends Authenticatable
     public function profile_picture(): MorphOne
     {
         return $this->morphOne(Document::class, 'fileable');
+    }
+
+    public function getDivisionAttribute() {
+        if($this->plantilla_id){
+            $plantilla = PlantillaPosition::find($this->plantilla_id);
+            return $plantilla->division;
+        }else{
+            return null;
+        }
     }
 }

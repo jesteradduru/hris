@@ -2,7 +2,7 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <b>VACANCIES</b>
-    <JobVacancies :job_vacancies="job_vacancies" :posting="{ id : posting.id}" />
+    <JobVacancies :job_vacancies="job_vacancies" :posting="{ id : posting.job_posting.id}" />
 
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
@@ -12,7 +12,10 @@
         
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
-      <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
+      <div>
+        <a :href="route('admin.reports.job_application.export', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-success"><i class="fa-solid fa-table" />&nbsp; Export SPB Forms</a>
+        <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
+      </div>
     </div>
     <div class="mb-3">
       <label for="" class="form-label">Rank by</label>
@@ -79,7 +82,21 @@
               <td :class="{'table-success': columnToFilter == 'total'}"><b>{{ application.scores.total_rank }}</b></td>
               <td>
                 <div class="d-flex gap-2 mb-3">
-                  <Link 
+                  <button
+                    :disabled="application.latest_result.result === 'SELECTED'"
+                    class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#positions" :onClick="() => {
+                      onAppoint({
+                        result_id: props.job_vacancy_status.id,
+                        result: application.latest_result.result === 'SELECTED' ? 'SELECTION' : 'SELECTED',
+                        application_id: application.id,
+                        user_id: application.user.id,
+                      })
+                    }"
+                  >
+                    <span v-if="application.latest_result.result === 'SELECTED'">APPOINTED</span>
+                    <span v-else>APPOINT</span>
+                  </button>
+                  <!-- <Link 
                     as="button"
                     class="btn btn-success btn-sm"
                     :onBefore="confirmSelect"
@@ -93,7 +110,7 @@
                   >
                     <span v-if="application.latest_result.result === 'SELECTED'">APPOINTED</span>
                     <span v-else>APPOINT</span>
-                  </Link>
+                  </Link> -->
                 </div>
               </td>
             </tr>
@@ -101,39 +118,84 @@
         </table>
       </div>
     </div>
-    <!-- <div class="row">
-      <div class="col-3">
-        <b>SELECTED </b>
-        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
-      </div>
-      <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :withControls="true" :applicant="props.applicant_details" :posting_id="job_vacancy_status.job_posting_id" />
-      </div>
-    </div> -->
+    <Modal id="positions" modal-xl>
+      <template #header>Open plantilla positions</template>
+      <template #body>
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th scope="col">Plantilla</th>
+                <th scope="col">Item No</th>
+                <th scope="col">Division</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="position in positions" :key="position.id" class="">
+                <td scope="row">{{ position.position }}</td>
+                <td>{{ position.plantilla_item_no }}</td>
+                <td>{{ position.division?.name }}</td>
+                <td class="d-flex ">
+                  <div data-bs-toggle="modal" data-bs-target="#loadData">
+                    <Link
+                      class="btn btn-success btn-sm" 
+                      :onBefore="confirmSelect"
+                      method="post"
+                      :href="route('admin.recruitment.application_result.store', {
+                        result_id: props.job_vacancy_status.id,
+                        result: user_result.result,
+                        application_id: user_result.application_id,
+                        user_id: user_result.user_id,
+                        plantilla_id: position.id
+                      })"
+                    >
+                      Select
+                    </Link>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+    </Modal>
   </RecruitmentLayout>
 </template>
 
 <script setup>
 import RecruitmentLayout from '@/Pages/Admin/Recruitment/Layout/RecruitmentLayout.vue'
-import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
+// import ApplicantDetails from '@/Pages/Admin/Recruitment/Selection/Components/ApplicantDetails.vue'
 import {Head, Link} from '@inertiajs/vue3'
 import { ref, computed } from 'vue'
 import Spinner from '@/Components/Spinner.vue'
+import Modal from '@/Components/Modal.vue'
 import JobVacancies from '../Components/JobVacancies.vue'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   job_vacancies: Array,
   posting: Object,
-  applicant_details: Object,
+  // applicant_details: Object,
   job_vacancy_status: Object,
-  qualified_applicants: Array,
+  // qualified_applicants: Array,
+  positions: Array,
 })
 
-import { router } from '@inertiajs/vue3'
-import moment from 'moment'
-import ApplicantsList from '../Components/ApplicantsList.vue'
 
 const loading = ref(false)
+
+const user_result = ref({
+  result_id: props.job_vacancy_status.id,
+  result: 'SELECTED',
+  application_id: null,
+  user_id: null,
+})
+
+const onAppoint = (result) => {
+  user_result.value = result
+}
+
 
 router.on('start', () => {
   loading.value = true
@@ -143,21 +205,21 @@ router.on('finish', () => {
   loading.value = false
 })
 
-const confirm = () => window.confirm('Archive this job vacancy?')
+const confirm = () => window.confirm('Are you sure?')
 const confirmSelect = () => window.confirm('Select this applicant for this position?')
 
 const columnToFilter = ref('total')
 
-const selected = computed(() => {
-  const mappedApplications = props.posting.job_application.filter(application => {
-    return application.latest_result.result === 'SELECTED'
-  })
-  return mappedApplications.length > 0 ? mappedApplications[0].id : null
-})
+// const selected = computed(() => {
+//   const mappedApplications = props.posting.result.filter(application => {
+//     return application.application[0].latest_result.result === 'SELECTED'
+//   })
+//   return mappedApplications.length > 0 ? mappedApplications[0].id : null
+// })
 
 const applications = computed(() => {
-  const mappedApplications = props.posting.job_application.map(application => {
-    return application
+  const mappedApplications = props.posting.result.map(application => {
+    return application.application
   })
 
   mappedApplications.sort((a, b) => b.scores[columnToFilter.value] - a.scores[columnToFilter.value])

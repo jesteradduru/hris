@@ -13,9 +13,13 @@ use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\ApplicationScoreController;
 use App\Http\Controllers\Admin\CompetencyGapController;
+use App\Http\Controllers\Admin\DTR\ExportMonthlyDTRController;
+use App\Http\Controllers\Admin\DTR\TimeSheetController;
+use App\Http\Controllers\Admin\DTR\TimesheetEntriesController;
 use App\Http\Controllers\Admin\EligibilityController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EmployeeRewardController;
+use App\Http\Controllers\Admin\ExportJobApplicationReportsController;
 use App\Http\Controllers\Admin\IdpAccomplishmentController;
 use App\Http\Controllers\Admin\IdpController;
 use App\Http\Controllers\Admin\LndTrainingsAttendedController;
@@ -128,6 +132,7 @@ use Illuminate\Support\Facades\Route;
     // reports
     Route::resource('reports', ReportController::class)->only('index');
     Route::name('reports.export')->get('reports/export/', [ReportController::class, 'export']);
+    Route::name('reports.job_application.export')->get('reports/job_applicaion/export/', [ExportJobApplicationReportsController::class, 'export']);
 
     // lnd
     Route::resource('lnd', AdminLearningAndDevelopmentController::class);
@@ -140,8 +145,18 @@ use Illuminate\Support\Facades\Route;
     Route::resource('idp', IdpController::class);
     Route::resource('idp_accomplishment', IdpAccomplishmentController::class)->only(['store', 'destroy']);
 
-    Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
-    Route::post('daily_time_record/getDtr', [AdminDailyTimeRecordController::class, 'getDtr'])->name('daily_time_record.getDtr');
+    // Route::get('daily_time_record', [AdminDailyTimeRecordController::class, 'index'])->name('daily_time_record.index');
+    Route::prefix('dtr')
+    ->name('dtr.')
+    ->group(function () {
+        Route::resource('dtr', AdminDailyTimeRecordController::class);
+        Route::name('index')->get('/monthlyDTR', [ExportMonthlyDTRController::class, 'index']);
+        Route::name('export')->get('/export', [ExportMonthlyDTRController::class, 'export']);
+        Route::resource('timesheet', TimeSheetController::class);
+        Route::name('timesheet.deleteSelected')->post('/timesheet/deleteSelected', [TimeSheetController::class, 'deleteSelected']);
+        Route::resource('timesheet_draft', TimesheetEntriesController::class);
+        Route::post('daily_time_record/getDtr', [AdminDailyTimeRecordController::class, 'getDtr'])->name('getDtr');
+    });
 
     
  });

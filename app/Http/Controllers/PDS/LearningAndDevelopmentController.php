@@ -16,7 +16,7 @@ class LearningAndDevelopmentController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/LearningAndDevelopment/Index', [
-            'learning_and_development' => $request->user()->learning_and_development()->with(['files'])->paginate(10)
+            'learning_and_development' => $request->user()->learning_and_development()->mostRecent()->with(['files'])->paginate(10)
         ]);
     }
 
@@ -37,7 +37,7 @@ class LearningAndDevelopmentController extends Controller
             'title_of_learning' => 'required|string',
             'inclusive_date_from' => 'date|nullable',
             'inclusive_date_to' => 'date|nullable',
-            'number_of_hours' => 'string|nullable',
+            'number_of_hours' => 'integer|nullable',
             'type_of_ld' => 'string|nullable',
             'conducted_sponsored_by' => 'string|nullable',
             'documents' => 'required|array|min:1',
@@ -62,7 +62,9 @@ class LearningAndDevelopmentController extends Controller
             ]));
         }
 
-        return back()->with('success', 'Record has been saved.');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     /**
@@ -92,7 +94,7 @@ class LearningAndDevelopmentController extends Controller
             'title_of_learning' => 'string|nullable',
             'inclusive_date_from' => 'date|nullable',
             'inclusive_date_to' => 'date|nullable',
-            'number_of_hours' => 'string|nullable',
+            'number_of_hours' => 'integer|nullable',
             'type_of_ld' => 'string|nullable',
             'conducted_sponsored_by' => 'string|nullable',
         ]);
@@ -122,7 +124,9 @@ class LearningAndDevelopmentController extends Controller
         }
         
 
-        return back()->with('success', 'Record has been updated.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -131,7 +135,9 @@ class LearningAndDevelopmentController extends Controller
     public function destroy(LearningAndDevelopment $learningAndDevelopment)
     {
         if($learningAndDevelopment->lnd_training()->exists()){
-            return abort(403, 'You cannot delete this data.');
+            sweetalert()->addError('You cannot delete this data.');
+
+            return back();
         }
 
         if($learningAndDevelopment->files()->exists()){
@@ -145,6 +151,7 @@ class LearningAndDevelopmentController extends Controller
         
         $learningAndDevelopment->delete();
 
-        return back()->with('success', 'Record has been deleted.');
+        sweetalert()->addSuccess('Record deleted!');
+        return back();
     }
 }

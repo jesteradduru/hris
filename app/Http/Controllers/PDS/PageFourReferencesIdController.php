@@ -104,8 +104,10 @@ class PageFourReferencesIdController extends Controller
                 }
             }
         }
+
+        sweetalert()->addSuccess('Record saved!');
         
-        return back()->with('success', 'Record saved.');
+        return back();
     }
 
 }

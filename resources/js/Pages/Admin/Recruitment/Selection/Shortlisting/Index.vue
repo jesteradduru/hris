@@ -58,7 +58,7 @@
             UNLIST
           </Link>
         </div>
-        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="job_vacancy_status.phase === 'SHORTLISTING'" :posting_id="job_vacancy_status.job_posting_id" :plantilla="posting.plantilla" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="false" :posting_id="job_vacancy_status.job_posting_id" :plantilla="posting.plantilla" />
       </div>
     </div>
   </RecruitmentLayout>

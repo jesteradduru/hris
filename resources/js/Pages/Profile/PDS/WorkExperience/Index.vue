@@ -50,6 +50,9 @@
         </table>
         <div v-if="!props.work_experiences.data.length" class="text-center">No records to display</div>
       </div>
+      <Pagination
+        :links="props.work_experiences.links"
+      />
       <div class="mb-3 d-flex gap-2 justify-content-end">
         <Link
           :href="route('profile.pds.civil_service_eligibility.index')" type="button"
@@ -64,10 +67,6 @@
           <i class="fa-solid fa-arrow-right" />
         </Link>
       </div>
-      <Pagination
-        v-if="props.work_experiences.data.length > 10"
-        :links="props.work_experiences.links"
-      />
     </PDSLayout>
   </AuthenticatedLayout>
 </template>

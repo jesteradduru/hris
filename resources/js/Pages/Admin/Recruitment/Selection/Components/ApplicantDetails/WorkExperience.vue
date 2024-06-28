@@ -5,7 +5,7 @@
       <div>
         <b>Work Experience Requirement</b>
       </div>
-      {{ plantilla.work_experience }}
+      {{ plantilla.work_experience }} year/s of relevant experience.
     </div>
     <div v-if="works.length === 0" class="text-muted text-center text-sm">
       No Record
@@ -17,6 +17,7 @@
             <th v-if="withControls" scope="col" />
             <th scope="col">Position</th>
             <th scope="col">Agency</th>
+            <th scope="col">Status of Appointment</th>
             <th scope="col">Inclusive Date</th>
           </tr>
         </thead>
@@ -27,6 +28,7 @@
             </td>
             <td scope="row">{{ work.position_title }}</td>
             <td>{{ work.dept_agency_office_company }}</td>
+            <td>{{ work.status_of_appointment }}</td>
             <td>
               {{ `${simplifyDate(work.inclusive_date_from)} - ` }}
               <span v-if="work.inclusive_date_to">{{ simplifyDate(work.inclusive_date_to) }}</span>
@@ -56,10 +58,13 @@ const props = defineProps({
 })
 
 const included = computed(() => {
-  return props.applicant.job_application[0].included.map(included => included)
+  return props.applicant.job_application[0].included?.map(included => included)
 })
 
 const checkIfIncluded = (id, type) => {
+  if(!included.value){
+    return
+  }
   return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
 }
 

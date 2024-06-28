@@ -2,22 +2,24 @@
   <Head title="Rewards and Recognition" />
         
   <AdminLayout>
-    <h3>{{ reward.title }} Awardees</h3>
+    <h3>Awardees</h3>
     <BreadCrumbs :crumbs="crumbs" />
     <Link class="btn  btn-primary" :href="route('admin.employees.rewards.create', {reward: reward.id})">Add Awardee</Link>
+
+    <h3 class="mt-4 text-uppercase">{{ reward.title }} awardees</h3>
     <div class="table-responsive">
       <table class="table table-sm table-bordered mt-4">
         <thead>
           <tr>
             <th scope="col">Name</th>
-            <th scope="col">Points</th>
+            <th scope="col">Date Awarded</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in props.reward.non_academic" :key="item.id" class="">
             <td>{{ item.user.name }}</td>
-            <td>{{ moment(item.created_at).format('MMM D, Y') }}</td>
+            <td>{{ moment(item.date_awarded).format('MMM D, Y') }}</td>
             
             <td class="d-flex gap-2">
               <Link

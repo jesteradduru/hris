@@ -2,7 +2,7 @@
   <AuthenticatedLayout>
     <PDSLayout :is-form-dirty="form.isDirty">
       <form @submit.prevent="createUpdateEducationalBackground">
-        <div class="row">
+        <div class="row text-uppercase">
           <!-- elem -->
           <div class="col-12">
             <h5>Elementary</h5>

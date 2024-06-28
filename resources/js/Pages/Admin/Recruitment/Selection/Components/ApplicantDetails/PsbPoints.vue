@@ -5,44 +5,29 @@
     </div>
     <div class="card-body">
       <div class="form-group mb-3">
-        <label for="" class="form-label">Performance (15 points)</label>
-        <input v-model="form.performance" type="text" class="form-control form-control-sm" />
-        <InputError :message="form.errors.performance" />
+        <label for="" class="form-label">Organizational Competencies</label>
+        <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.org_competency" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="" class="form-label">Leadership and Managerial Competencies</label>
+        <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.leadership_competency" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="" class="form-label">Technical/Functional Competencies</label>
+        <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.technical_competency" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="" class="form-label">Peer Review (20 points)</label>
+        <input v-model="form.personality_peer" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.personality_peer" />
       </div>
       <div class="form-group mb-3">
         <label for="" class="form-label">Experience (15 points)</label>
         <input v-model="form.experience" type="text" class="form-control form-control-sm" />
         <InputError :message="form.errors.experience" />
-      </div>
-      <div class="border p-2 mb-3">
-        <b class="mb-4">Personality Traits and Attributes(15 points)</b>
-        <div class="border p-3 m-3 mb-3">
-          <!-- <div class="form-group mb-3">
-            <label for="" class="form-label">HRMPSB (80 points)</label>
-            <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.personality_hrmpsb" />
-          </div> -->
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Organizational Competencies</label>
-            <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.org_competency" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Leadership and Managerial Competencies</label>
-            <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.leadership_competency" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Technical/Functional Competencies</label>
-            <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.technical_competency" />
-          </div>
-        </div>
-        <div class="form-group mb-3">
-          <label for="" class="form-label">Peer Review (20 points)</label>
-          <input v-model="form.personality_peer" type="text" class="form-control form-control-sm" />
-          <InputError :message="form.errors.personality_peer" />
-        </div>
       </div>
       <div class="form-group mb-3">
         <label for="" class="form-label">Potential (15 points)</label>
@@ -72,39 +57,24 @@
     </div>
     <div class="card-body">
       <div class="form-group mb-3">
-        <label for="" class="form-label">Performance (15 points)</label>
-        <input v-model="form.performance" type="text" class="form-control form-control-sm" />
-        <InputError :message="form.errors.performance" />
+        <label for="" class="form-label">Organizational Competencies</label>
+        <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.org_competency" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="" class="form-label">Leadership and Managerial Competencies</label>
+        <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.leadership_competency" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="" class="form-label">Technical/Functional Competencies</label>
+        <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
+        <InputError :message="form.errors.technical_competency" />
       </div>
       <div class="form-group mb-3">
         <label for="" class="form-label">Experience (15 points)</label>
         <input v-model="form.experience" type="text" class="form-control form-control-sm" />
         <InputError :message="form.errors.experience" />
-      </div>
-      <div class="border p-2 mb-3">
-        <b class="mb-4">Personality Traits and Attributes(15 points)</b>
-        <div class="border p-3 m-3 mb-3">
-          <!-- <div class="form-group mb-3">
-            <label for="" class="form-label">HRMPSB (80 points)</label>
-            <input v-model="form.personality_hrmpsb" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.personality_hrmpsb" />
-          </div> -->
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Organizational Competencies</label>
-            <input v-model="form.org_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.org_competency" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Leadership and Managerial Competencies</label>
-            <input v-model="form.leadership_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.leadership_competency" />
-          </div>
-          <div class="form-group mb-3">
-            <label for="" class="form-label">Technical/Functional Competencies</label>
-            <input v-model="form.technical_competency" type="text" class="form-control form-control-sm" />
-            <InputError :message="form.errors.technical_competency" />
-          </div>
-        </div>
       </div>
       <div class="form-group mb-3">
         <label for="" class="form-label">Potential (15 points)</label>

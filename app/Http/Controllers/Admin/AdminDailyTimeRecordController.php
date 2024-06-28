@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\DailyTimeRecord;
+use App\Models\DTR\Timesheet;
 use Illuminate\Http\Request;
 
 class AdminDailyTimeRecordController extends Controller
@@ -26,6 +27,9 @@ class AdminDailyTimeRecordController extends Controller
     public function create()
     {
         //
+        return inertia('Admin/DailyTimeRecord/Create', [
+            'timesheets' => Timesheet::with('user')->get()
+        ]);
     }
 
     /**
@@ -72,7 +76,13 @@ class AdminDailyTimeRecordController extends Controller
 
         DailyTimeRecord::getDtr();
 
-        return back()->with('success', 'DTR loaded successfully.');
+        sweetalert()->addSuccess('Loaded successfully!');
 
+        return back();
+
+    }
+
+    public function export_monthly_dtr(){
+        
     }
 }

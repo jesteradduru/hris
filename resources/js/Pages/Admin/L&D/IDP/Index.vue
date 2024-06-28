@@ -60,7 +60,7 @@
         </tbody>
       </table>
     </div>
-    <div v-if="!props.idp_forms.length" class="text-center text-muted">No record found</div>
+    <div v-if="props.idp_forms.length == 0" class="text-center text-muted">No record found</div>
     <Pagination :links="props.idp_forms.links" />
   </LndLayout>
 </template>

@@ -45,8 +45,9 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $validate['role_name'] ]);
         
+        sweetalert()->addSuccess('Added successfully!');
 
-        return back()->with('success', 'Role'. ' ' . $role->name . ' successfully created!');
+        return back();
 
        } catch (RoleAlreadyExists $e) {
 
@@ -90,7 +91,9 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->input('permissions'));
 
-        return back()->with('success', 'Role successfully updated.');
+        sweetalert()->addSuccess('Updated successfully!');
+
+        return back();
     }
 
     /**
@@ -100,6 +103,8 @@ class RoleController extends Controller
     {
         $role->delete();
 
-        return back()->with('success', 'Role successfully deleted.');
+        sweetalert()->addSuccess('Deleted successfully!');
+        
+        return back();
     }
 }

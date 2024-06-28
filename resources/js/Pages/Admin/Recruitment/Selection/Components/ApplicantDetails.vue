@@ -3,7 +3,7 @@
     <!-- Personal Information -->
     <PersonalInformation :applicant="applicant" />
     <!-- EMPLOYEE RECORDS -->
-    <div v-if="applicant.position" class="mb-3">
+    <Box v-if="applicant.position" class="mb-3">
       <h5 class="text-primary">Employment Records</h5>
       <dl>
         <dt>
@@ -44,7 +44,7 @@
         <!-- REWARDS -->
         <dt>rewards:</dt>
         <dd>
-          <div v-if="applicant.reward.length > 0" class="table-responsive">
+          <div v-if="applicant.reward?.length > 0" class="table-responsive">
             <table class="table table-bordered mt-3 table-sm">
               <thead>
                 <tr>
@@ -67,7 +67,7 @@
           </div>
         </dd>
       </dl>
-    </div>
+    </Box>
 
     <!-- PERFORMANCE -->
     <!-- outstanding accomplishments -->
@@ -128,7 +128,7 @@
             :key="doc.id" 
             data-bs-toggle="modal" data-bs-target="#viewAttachment" 
             href="#" @click="() => showPdf(doc.src)"
-          >{{ doc.filename }}</a>
+          >{{ doc.filename }} &nbsp;&nbsp;</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
         </div>
         <div v-else class="text-muted text-center text-sm">

@@ -113,7 +113,9 @@ class CollegeGraduateStudyController extends Controller
             }
         }
 
-        return back()->with('success', 'Added Successfully');
+        sweetalert()->addSuccess('Added Successfully!');
+
+        return back();
     }
 
     /**
@@ -150,7 +152,7 @@ class CollegeGraduateStudyController extends Controller
             "period_to" => "integer|nullable",
             "highest_lvl_units_earned" => "integer|nullable",
             "year_graduated" => "integer|nullable",
-            "level" => "required|string|max:255",
+            "level" => "required_if:type,COLLEGE|required_if:type,GRADUATE|max:255",
         ]);
 
         $course = EducationalBackgroundCollegeGraduateStudy::find($request->college_graduate_study);
@@ -205,9 +207,11 @@ class CollegeGraduateStudyController extends Controller
                 ]));
             }
         }
+
+        flash()->addSuccess('Updated Successfully!');
         
         
-        return back()->with('success', 'Updated Successfully');
+        return back();
         
     }
 
@@ -244,6 +248,8 @@ class CollegeGraduateStudyController extends Controller
         
         $course->delete();
 
-        return back()->with('success', 'Sucessfully deleted.');
+        flash()->addSuccess('Deleted Successfully!');
+        
+        return back();
     }
 }

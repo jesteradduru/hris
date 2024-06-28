@@ -26,7 +26,7 @@ return new class extends Migration
             // $table->string('scholarship_academic_honors', 255)->nullable();
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
             $table->enum('type', ['COLLEGE', 'GRADUATE', 'ELEMENTARY', 'SECONDARY', 'VOCATIONAL'])->nullable();
-            $table->enum('level', ['DOCTORATE', 'MASTERAL', 'DIPLOMA', 'BACHEL0R', 'TWO_YEAR'])->nullable();
+            $table->enum('level', ['DOCTORATE', 'MASTERAL', 'DIPLOMA', 'BACHELOR', 'TWO_YEAR'])->nullable();
         });
     }
 

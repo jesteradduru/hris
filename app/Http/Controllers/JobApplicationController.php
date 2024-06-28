@@ -43,7 +43,8 @@ class JobApplicationController extends Controller
             || !$user->college_graduate_studies()->exists()
             || !$user->page_four_questions()->exists()
         ){
-            abort(403, 'Please update your PDS. You must atleast fill Personal Information, Family Background, Educational Background and Questions form.');
+            sweetalert()->addError('Please update your PDS. You must atleast fill Personal Information, Family Background, Educational Background and Questions form.');
+            return back();
         }
 
 
@@ -74,7 +75,10 @@ class JobApplicationController extends Controller
                     'path' => $path
                 ]));
             }
-            return back()->with('success', 'Application has been submitted.');
+
+            sweetalert()->addSuccess('Application has been submitted!');
+            
+            return back();
         }
 
     }
@@ -99,14 +103,36 @@ class JobApplicationController extends Controller
 
     public function destroy(JobApplication $job_application){
         $documents = $job_application->document;
+        $job_vacancy = $job_application->job_posting;
+        $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
 
-        foreach($documents as $document){
-            Storage::disk('public')->delete($document->path);
+        // dd($job_vacancy_status);
+
+       
+
+        // dd($job_vacancy_status->phase);
+        
+        if($job_vacancy_status->phase !== 'INITIAL_SCREENING'){
+
+            sweetalert()->addError('Application can not be recalled.');
+            
+            return back();
+
+        }else{
+            foreach($documents as $document){
+                Storage::disk('public')->delete($document->path);
+            }
+            $job_application->document()->delete();
+            $job_application->delete();
+            
+            sweetalert()->addSuccess('Application has been recalled.');
+    
+            return back();
+
         }
-        $job_application->document()->delete();
-        $job_application->delete();
 
-        return back()->with('success', 'Application has been canceled.');
+
+
     }
 
 }

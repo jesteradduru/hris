@@ -43,7 +43,9 @@ class ReportController extends Controller
 
         if($request->report === 'shortlisted' && $posting){
             if(!JobPosting::find($posting)->has('results')->get()){
-                abort(403, 'Shortlist not yet created.');
+                sweetalert()->addSuccess('Shortlist not yet created.');
+
+                return back();
             }
             return $this->excel->download(new ShortlistedApplicants($request->posting), 'shortlist.xlsx');
         }
@@ -55,7 +57,9 @@ class ReportController extends Controller
 
         if($request->report === 'exam' && $posting){
             if(!JobApplicationResults::where('job_posting_id', $posting)->where('phase', '=', 'NEDA_EXAM')->exists()){
-                abort(403, 'Exam results not yet created.');
+                sweetalert()->addSuccess('Exam results not yet created.');
+                
+                return back();
             }
             return $this->excel->download(new NedaExamResultsExport($request->posting), 'exam.xlsx');
         }

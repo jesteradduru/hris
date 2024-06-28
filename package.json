@@ -27,6 +27,7 @@
     "dependencies": {
         "lodash": "^4.17.21",
         "mdb-vue-ui-kit": "^4.1.0",
-        "moment": "^2.29.4"
+        "moment": "^2.29.4",
+        "sweetalert2": "^11.10.6"
     }
 }

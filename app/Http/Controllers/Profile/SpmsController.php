@@ -58,8 +58,9 @@ class SpmsController extends Controller
             'filepath' => $path
         ]);
 
+        sweetalert()->addSuccess('Form has been added!');
 
-        return back()->with('success', 'Form has been added successfully.');
+        return back();
     }
 
     /**
@@ -114,9 +115,9 @@ class SpmsController extends Controller
             ]);
         }
 
+        sweetalert()->addSuccess('Form has been updated!');
 
-
-        return back()->with('success', 'Form has been updated successfully.');
+        return back();
     }
 
     /**
@@ -127,6 +128,8 @@ class SpmsController extends Controller
         Storage::disk('public')->delete($spm->filepath);
         $spm->delete();
 
-        return back()->with('success', 'Form has been deleted.');
+        sweetalert()->addSuccess('Form has been deleted!');
+
+        return back();
     }
 }

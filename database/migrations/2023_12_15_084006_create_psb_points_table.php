@@ -20,7 +20,6 @@ return new class extends Migration
 
             $table->decimal('performance');
             $table->decimal('experience');
-            // $table->decimal('personality_hrmpsb');
             $table->decimal('org_competency');
             $table->decimal('leadership_competency');
             $table->decimal('technical_competency');

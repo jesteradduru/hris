@@ -15,7 +15,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="ipcr in latest_spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
+            <tr v-for="ipcr in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
               <td scope="row">
                 <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
@@ -98,7 +98,7 @@ const props = defineProps({
   posting_id: Number,
   latest_spms: Array,
 })
-
+console.log(props.latest_spms)
 const form = useForm({
   first_rating: null,
   second_rating: null,

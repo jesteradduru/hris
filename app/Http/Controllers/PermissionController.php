@@ -43,8 +43,9 @@ class PermissionController extends Controller
     
             $role = Permission::create(['name' => $validate['permission_name'] ]);
             
-    
-            return back()->with('success', 'Permission'. ' ' . $role->name . ' successfully created!');
+            sweetalert()->addSuccess('Added successfully!');
+
+            return back();
     
            } catch (PermissionAlreadyExists $e) {
     
@@ -84,7 +85,9 @@ class PermissionController extends Controller
 
         $permission->update([ "name" => $request->input('permission_name')]);
 
-        return back()->with('success', 'Permission successfully updated.');
+        sweetalert()->addSuccess('Updated successfully!');
+
+        return back();
     }
 
     /**
@@ -94,6 +97,8 @@ class PermissionController extends Controller
     {
             $permission->delete();
     
-            return back()->with('success', 'Permission successfully deleted.');
+            sweetalert()->addSuccess('Deleted successfully!');
+
+            return back();
     }
 }
