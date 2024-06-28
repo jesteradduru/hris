@@ -64,7 +64,7 @@ const filterForm = useForm({
 })
 
 const filter = debounce((e) => {
-  filterForm.get(route('admin.daily_time_record.index'), {
+  filterForm.get(route('admin.dtr.dtr.index'), {
     preserveState: true,
   })
 }, 1000)
