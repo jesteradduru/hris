@@ -40,7 +40,9 @@ class PesRatingController extends Controller
         
         $application->pes_rating()->create($validate);
 
-        return back()->with('success', 'Record saved.');
+        sweetalert()->addSuccess('Record saved!');
+
+        return back();
     }
 
     /**

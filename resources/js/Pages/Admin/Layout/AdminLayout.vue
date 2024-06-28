@@ -27,6 +27,23 @@
 import Notifications from '@/Components/Notifications.vue'
 import AdminMainNavbar from '../Components/AdminMainNavbar.vue'
 import moment from 'moment'
+import {usePage} from '@inertiajs/vue3'
+import { watch} from 'vue'
+import Swal from 'sweetalert2'
+
+const page = usePage()
+
+watch(() => page.props.messages, (value) => {
+  value.envelopes.forEach((val) => {
+    Swal.fire({
+      title:  val.notification.title,
+      text: val.notification.message,
+      icon: val.notification.options.icon,
+      timerProgressBar: true,
+    })
+  })
+})
+
 
 defineProps({
   fluid: Boolean,

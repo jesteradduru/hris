@@ -41,7 +41,9 @@ class VoluntaryWorkController extends Controller
 
         $request->user()->voluntary_work()->create($validate);
 
-        return back()->with('success', 'Voluntary work has been saved.');
+        sweetalert()->addSuccess('Voluntary work has been saved.');
+
+        return back();
     }
 
     /**
@@ -77,7 +79,9 @@ class VoluntaryWorkController extends Controller
 
         $voluntaryWork->update($validate);
 
-        return back()->with('success', 'Voluntary work has been updated.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -87,7 +91,8 @@ class VoluntaryWorkController extends Controller
     {
         $voluntaryWork->delete();
 
+        sweetalert()->addSuccess('Record deleted!');
 
-        return back()->with('success', 'Work experience has been deleted.');
+        return back();
     }
 }

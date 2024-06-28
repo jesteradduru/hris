@@ -17,7 +17,7 @@ class JobPostingController extends Controller
         $filters = $request->only(['search', 'order_by', 'order']);
 
         return inertia('Recruitment/JobPosting/Index', [
-            'job_vacancies' => JobPosting::open()->filter($filters)->paginate(15)->withQueryString(),
+            'job_vacancies' => JobPosting::open()->notArchived()->filter($filters)->paginate(15)->withQueryString(),
             'filters' => $filters
         ]);
     }

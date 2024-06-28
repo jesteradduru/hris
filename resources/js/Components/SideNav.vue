@@ -1,10 +1,10 @@
 <template>
   <ul class="nav flex-column gap-2 shadow p-4 side-nav bg-primary" style="z-index: 1; text-transform:">
-    <li class="nav-item  d-flex align-center gap-2">
+    <li class="nav-item  d-flex align-center gap-2 mb-4">
       <img :src="nedalogo" alt="" class="img-fluid side-nav-logo" />
       <b class="text-light">NRO2 Human Resource Information System</b>
     </li>
-    <li v-if="user" class="nav-item mt-4">
+    <!-- <li v-if="user" class="nav-item mt-4">
       <Link
         class="nav-link " :class="{
           active: route().current(
@@ -17,7 +17,7 @@
           Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
         </span>
       </Link>
-    </li>
+    </li> -->
     <li :class="{'mt-3': !user}" class="nav-item">
       <Link
         class="nav-link " :class="{

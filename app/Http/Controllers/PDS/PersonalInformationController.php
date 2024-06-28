@@ -87,10 +87,12 @@ class PersonalInformationController extends Controller
 
         if($request->user()->personal_information()->exists()){ // IF PROFILE INFORMATION EXISTS, UPDATE PERSONAL INFO
             $request->user()->personal_information()->update($validateData);
-            return back()->with('success', 'Personal information updated.');
+            sweetalert()->addSuccess('Record updated!');
+            return back();
         }else{ //  // IF PROFILE INFORMATION DOESN'T EXISTS, CREATE PERSONAL INFO
             $request->user()->personal_information()->create($validateData);
-            return back()->with('success', 'Personal information saved.');
+            sweetalert()->addSuccess('Record updated!');
+            return back();
         }
     }
 }

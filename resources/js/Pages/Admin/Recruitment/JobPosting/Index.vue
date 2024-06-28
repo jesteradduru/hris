@@ -47,6 +47,20 @@
               >
                 Show
               </Link>
+              <Link
+                :href="
+                  route(
+                    'admin.recruitment.job_posting.destroy',
+                    { job_posting: item.id }
+                  )
+                "
+                method="delete"
+                as="button"
+                :onBefore="confirm"
+                class="btn btn-danger"
+              >
+                Delete
+              </Link>
             </td>
           </tr>
         </tbody>
@@ -73,6 +87,9 @@ import { computed } from 'vue'
 import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'
 import Filter from '@/Pages/Admin//Recruitment/JobPosting/Components/Filter.vue'
+
+
+const confirm = () => window.confirm('Are you sure to delete this job posting?')
 
 const crumbs = computed(() => [
   {

@@ -81,8 +81,8 @@
             </td>
             <td>{{ employee.average }}</td>
             <td>{{ employee.division }}</td>
-            <td>
-              <button :data-id="employee.user_id" class="btn btn-success btn-sm" @click="addReward">
+            <td> 
+              <button :data-id="employee.user_id" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addReward" @click="() => onSelectUser(employee)">
                 Add
               </button>
             </td>
@@ -92,6 +92,40 @@
     </div>
     
     <!-- employee table -->
+
+    <Modal modal_id="addReward">
+      <template #header>Add Reward</template>
+      <template #body>
+        <div class="form-group mb-2">
+          <div class="form-text">Award</div>
+          <input
+            id=""
+            :value="reward.title"
+            type="text" class="form-control form-control-sm" name="" aria-describedby="helpId"
+            disabled
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="" class="form-text">Awarded To</label>
+          <input
+            id=""
+            :value="awardForm.user?.name"
+            type="text" class="form-control form-control-sm" name="" aria-describedby="helpId" disabled
+            required
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="" class="form-text">Date Awarded:</label>
+          <input
+            id=""
+            v-model="awardForm.dateAwarded"
+            type="date" class="form-control form-control-sm" name="" aria-describedby="helpId"
+          />
+          <InputError :message="awardForm.errors.date_awarded" />
+        </div>
+        <button class="btn btn-sm btn-success" @click="addReward">Save</button>
+      </template>
+    </Modal>
   </EmployeeRewardLayout>
 </template>
 
@@ -99,6 +133,7 @@
 import EmployeeRewardLayout from '@/Pages/Admin/RnR/EmployeeReward/Layout/EmployeeRewardLayout.vue'
 import {useForm, router} from '@inertiajs/vue3'
 import moment from 'moment'
+import Modal from '@/Components/Modal.vue'
 
 const props = defineProps({
   reward: Object,
@@ -113,6 +148,16 @@ const filterForm = useForm({
   employee_type: '',
 })
 
+const awardForm = useForm({
+  user: null, 
+  dateAwarded: null,
+})
+
+
+const onSelectUser = (data) => {
+  awardForm.user = data
+}
+
 const onFilter = () => {
   filterForm.get(route('admin.employees.rewards.rank_by_ipcr', {reward: props.reward.id}), {
     preserveScroll: true,
@@ -120,13 +165,21 @@ const onFilter = () => {
   })
 }
 
-const addReward = (e) => {
-  const emp_id = e.target.getAttribute('data-id')
+const addReward = () => {
+  const employee_id = awardForm.user.user_id
 
-  router.post(route('admin.employees.rewards.store', {
-    user: emp_id,
+  // console.log(employee_id)
+
+  awardForm.post(route('admin.employees.rewards.store', {
+    user: employee_id,
     reward_id: props.reward.id,
-  }))
+    date_awarded: awardForm.dateAwarded,
+  }), {
+    onSuccess: () => {
+      awardForm.user = null
+      awardForm.dateAwarded = null
+    },
+  })
 }
   
 </script>

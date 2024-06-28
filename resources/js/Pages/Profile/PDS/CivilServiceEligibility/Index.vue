@@ -57,6 +57,9 @@
         </table>
         <div v-if="!props.eligibilities.data.length" class="text-center">No records to display</div>
       </div>
+      <Pagination
+        :links="props.eligibilities.links"
+      />
       <div class="mb-3 d-flex justify-content-end gap-2">
         <Link
           :href="route('profile.pds.educational_background.edit')" type="button"
@@ -71,10 +74,6 @@
           <i class="fa-solid fa-arrow-right" />
         </Link>
       </div>
-      <Pagination
-        v-if="props.eligibilities.data.length > 10"
-        :links="props.eligibilities.links"
-      />
     </PDSLayout>
   </AuthenticatedLayout>
 </template>
@@ -88,6 +87,7 @@ import Pagination from '@/Components/Pagination.vue'
 const props = defineProps({
   eligibilities: Object,
 })
+
 
 const confirm = () => window.confirm('Are you sure you want to delete this?')
 </script>

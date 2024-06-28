@@ -87,7 +87,7 @@
         </div>
   
   
-        <div class="col-12 col-md-6">
+        <!-- <div class="col-12 col-md-6">
           <div class="mb-3">
             <label class="form-label">ATTACHMENT (DIPLOMA, TOR)</label>
             <input id="" type="file" class="form-control form-control-sm" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
@@ -95,7 +95,7 @@
             <InputError :message="addForm.errors['documents']" />
             <InputError :message="addForm.errors['documents.0']" />
           </div>
-        </div>
+        </div> -->
             
         <div class="col-12">
           <Link :href="route('profile.pds.educational_background.edit')" class="btn btn-secondary me-2">

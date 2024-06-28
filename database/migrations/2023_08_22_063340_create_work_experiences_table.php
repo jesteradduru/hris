@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class, 'user_id')->constrained('users');
 
             $table->date('inclusive_date_from')->nullable(); // pds inclusive dates & wes duration
-            $table->string('inclusive_date_to', 255)->nullable(); // pds inclusive dates & wes duration
+            $table->date('inclusive_date_to')->nullable(); // pds inclusive dates & wes duration
             $table->string('position_title', 255)->nullable(); // postion pds & wes
             $table->string('dept_agency_office_company', 255)->nullable(); // pds & wes
             $table->string('name_of_office_unit', 255)->nullable(); // wes

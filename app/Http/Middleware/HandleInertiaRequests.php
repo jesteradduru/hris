@@ -45,6 +45,7 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'messages' => flash()->render([], 'array'),
         ]);
     }
 }

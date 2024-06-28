@@ -4,8 +4,6 @@
     <b>VACANCIES</b>
     <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
 
-    <hr />
-  
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
         <h3>Final Deliberation</h3>
@@ -31,7 +29,7 @@
       </div>
       <div class="col-9">
         <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
-        <ApplicantDetails v-if="props.applicant_details" :latest_spms="latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
+        <ApplicantDetails v-if="props.applicant_details" :latest_spms="props.latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
 
         <div v-if="props.applicant_details" class="mt-2">
           <div class="mb-3">

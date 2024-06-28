@@ -1,9 +1,7 @@
 <template>
   <Head title="Daily Time Record" />
   
-  <AdminLayout>
-    <BreadCrumbs :crumbs="crumbs" />
-    <h3>Daily Time Record</h3>
+  <DTRLayout :crumbs="crumbs">
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="mb-3">
@@ -14,7 +12,7 @@
         </div>
       </div>
     </div>
-    <Link class="btn btn-secondary btn-sm mb-3 ms-auto d-block" as="button" method="post" :href="route('admin.daily_time_record.getDtr')"><i class="fa-solid fa-refresh" /> Refresh DTR</Link>
+    <Link class="btn btn-secondary btn-sm mb-3 ms-auto d-block" as="button" method="post" :href="route('admin.dtr.getDtr')"><i class="fa-solid fa-refresh" /> Refresh DTR</Link>
     <div class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
@@ -31,14 +29,15 @@
           </tr>
         </tbody>
       </table>
+      <Pagination :links="dtrs.links" />
     </div>
-    <Pagination :links="dtrs.links" />
-  </AdminLayout>
+  </DTRLayout>
 </template>
   
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
+import DTRLayout from '@/Pages/Admin/DailyTimeRecord/DTRLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'

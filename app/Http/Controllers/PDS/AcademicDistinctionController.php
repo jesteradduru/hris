@@ -75,6 +75,8 @@ class AcademicDistinctionController extends Controller
 
         $academicDistinction->delete();
 
-        return back()->with('success', 'Removed successfully.');
+        sweetalert()->addSuccess('Removed successfully!');
+
+        return back();
     }
 }

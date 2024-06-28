@@ -24,7 +24,7 @@
             $page.props.auth.user?.username }}</b></a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
-              <Link class="dropdown-item" :href="route('profile.index')">Profile</Link>
+              <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
             </li>
             <li v-if="admin">
               <Link class="dropdown-item" :href="route('admin.dashboard')">Admin</Link>
@@ -56,7 +56,7 @@
       <li class="nav-item">
         <b>Menu</b>
       </li>
-      <li v-if="user" class="nav-item mt-4">
+      <!-- <li v-if="user" class="nav-item mt-4">
         <Link
           class="nav-link text-info" :class="{
             active: route().current(
@@ -66,7 +66,7 @@
         >
           Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
         </Link>
-      </li>
+      </li> -->
       <li :class="{'mt-3': !user}" class="nav-item">
         <Link
         
@@ -153,9 +153,8 @@ const permissions = usePage()
   .props.auth.permissions?.map((perm) => perm.name)
 
 const admin = computed(() => {
-  const isAdmin = usePage()
-    .props.auth.permissions?.map((perm) => perm.name)
-    .includes('Access Admin')
+  const isAdmin = permissions.includes('Access Admin')
+
   return isAdmin
 })
 

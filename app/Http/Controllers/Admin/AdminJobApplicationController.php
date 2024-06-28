@@ -7,6 +7,7 @@ use App\Models\ApplicationResult;
 use App\Models\ApplicationScore;
 use App\Models\JobApplication;
 use App\Models\JobPosting;
+use App\Models\PlantillaPosition;
 use App\Models\SpmsForm;
 use App\Models\User;
 use Carbon\Carbon;
@@ -353,44 +354,55 @@ class AdminJobApplicationController extends Controller
             $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
         }
 
-        if($request->applicant){
-            $applicant_details = User::find($request->applicant)->load([
-                'personal_information',
-                'educational_background',
-                'college_graduate_studies' => ['files'],
-                'civil_service_eligibility'  => ['files'],
-                'work_experience',
-                'learning_and_development',
-                'other_information',
-                'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $request->job_posting),
-                'spms',
-                'position',
-                'college_graduate_studies' => ['files', 'academic_award'],
-                'academic_distinction'=> ['files'],
-                'non_academic_distinction' => ['files'],
-                'pes_rating',
-            ]);
-        }
+        // if($request->applicant){
+        //     $applicant_details = User::find($request->applicant)->load([
+        //         'personal_information',
+        //         'educational_background',
+        //         'college_graduate_studies' => ['files'],
+        //         'civil_service_eligibility'  => ['files'],
+        //         'work_experience',
+        //         'learning_and_development',
+        //         'other_information',
+        //         'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $request->job_posting),
+        //         'spms',
+        //         'position',
+        //         'college_graduate_studies' => ['files', 'academic_award'],
+        //         'academic_distinction'=> ['files'],
+        //         'non_academic_distinction' => ['files'],
+        //         'pes_rating',
+        //     ]);
+        // }
 
-        $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
+        // $latest_result = ApplicationResult::with([
+        //     'application',
+        //     'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
 
-        $filters = $request->only(['rank_by']);
-        // dd(ApplicationScore::filter($filters)->get());
+        // $filters = $request->only(['rank_by']);
 
-        $posting_with_score =  JobPosting::find($request->job_posting)->load([
-                'job_application' => [
-                    'scores',
-                    'user'
-                ]
-        ]);
+
+        // dd($job_vacancy_status->load(['result' => [
+        //     'application' => [
+        //         'scores',
+        //         'user'
+        //     ]
+        // ]]));
+
+
+        $posting_with_score =  $job_vacancy_status->load(['job_posting', 'result' => [
+            'application' => [
+                'scores',
+                'user'
+            ]
+        ]]);
+
+        // dd($posting_with_score);
 
         return inertia('Admin/Recruitment/Selection/Final/Index', [
             "job_applications" => $job_applications,
             "job_vacancies" => $job_vacancies,
             "job_vacancy_status" => $job_vacancy_status,
             "posting" => $posting_with_score,
-            "applicant_details" => $applicant_details,
-            "qualified_applicants" => $latest_result,
+            "positions" => PlantillaPosition::doesntHave('user')->with('division')->get()
         ]);
 
     }

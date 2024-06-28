@@ -41,11 +41,11 @@ const crumbs = computed(() => [
     link: route('admin.dashboard'),
   },
   {
-    label: 'Employees',
+    label: 'Account',
     link: route('admin.employees.index'),
   },
   {
-    label: 'Create Account',
+    label: 'Create',
   },
 ])
     

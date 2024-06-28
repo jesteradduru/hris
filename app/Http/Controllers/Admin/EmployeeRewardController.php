@@ -50,17 +50,23 @@ class EmployeeRewardController extends Controller
     {
         $reward = RewardAndRecognition::find($request->reward_id);
 
-        // dd($reward);
+        // dd($request->date_awarded);
+
+        $request->validate([
+            'date_awarded' => 'required|date'
+        ]);
 
         $user->non_academic_distinction()->create([
             'reward_id' => $request->reward_id,
             'title' => $reward->title,
             'category' => $reward->category,
             'office' => 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2',
-            'date_awarded' => now()
+            'date_awarded' => $request->date_awarded
         ]);
 
-        return back()->with('success', 'Reward has been added.');
+        sweetalert()->addSuccess('Reward added!');
+
+        return back();
     }
 
     /**
@@ -94,7 +100,9 @@ class EmployeeRewardController extends Controller
     {
         $reward->delete();
 
-        return back()->with('success', 'Reward has been deleted.'); 
+        sweetalert()->addSuccess('Reward deleted!');
+
+        return back(); 
     }
 
     public function rank_by_ipcr(Request $request, RewardAndRecognition $reward) {
@@ -105,7 +113,7 @@ class EmployeeRewardController extends Controller
         $division = Division::where('abbreviation', '!=', 'ORD')
         ->where('abbreviation', '!=', 'OARD')
         ->get();
-// with(['spms' => fn($query) => $query->where('year', $year)])->
+
         $employees = User::filter($filters)->role(['employee'])->get();
         $employeesWithIPCR = collect();
 

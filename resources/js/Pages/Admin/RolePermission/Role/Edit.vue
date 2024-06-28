@@ -103,10 +103,12 @@ const togglePermission = (e) => {
   }
 }
 
-const update = () =>
+const update = () => {
+  console.log(form.permissions)
   form.put(
     route('admin.role_permission.role.update', { role: props.role.id }),
   )
+}
 
 const selectAll = (e) => {
   const chkboxes = document.querySelectorAll('.chk-others')
@@ -114,7 +116,7 @@ const selectAll = (e) => {
   if(!e.target.checked){
     chkboxes.forEach(chk => {
       chk.checked = false
-      form.permissions.push(chk.value)
+      form.permissions = []
     })
   }else{
     chkboxes.forEach(chk => {

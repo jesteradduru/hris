@@ -43,10 +43,14 @@ class OtherInformationController extends Controller
 
         if($request->user()->other_information()->exists()){
             $request->user()->other_information()->update($validate);
-            return back()->with('success', 'Record has been updated.');
+            sweetalert()->addSuccess('Record updated!');
+
+            return back();
         }else{
             $request->user()->other_information()->create($validate);
-            return back()->with('success', 'Record has been added.');
+
+            sweetalert()->addSuccess('Record updated!');
+            return back();
         }
     }
 

@@ -3,7 +3,6 @@
   <RecruitmentLayout>
     <b>VACANCIES</b>
     <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
-    <hr />
 
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
@@ -101,13 +100,13 @@ const props = defineProps({
 
 const scheduleForm = useForm({
   _method: 'put',
-  schedule: props.job_vacancy_status.schedule ? moment(props.job_vacancy_status.schedule).format('Y-M-D') : null,
+  schedule: props.job_vacancy_status.schedule ? moment(props.job_vacancy_status.schedule).format('Y-MM-D') : null,
   start_time: props.job_vacancy_status.start_time,
   end_time: props.job_vacancy_status.end_time,
 })
 
 const setSchedule = debounce(() => {
-  if(window.confirm('Set this schedule for the NEDA exam?')){
+  if(window.confirm('Are you sure?')){
     scheduleForm.post(route('admin.recruitment.neda_exam.set', {result: props.job_vacancy_status.id}))
   }
 }, 200)

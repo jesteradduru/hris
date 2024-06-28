@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationResult;
-use App\Models\JobApplicationResults;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use function PHPUnit\Framework\isType;
 
 class ApplicationResultController extends Controller
 {
@@ -18,23 +15,25 @@ class ApplicationResultController extends Controller
         $application = ApplicationResult::where('application_id', $request->application_id)
         ->where('result_id', $request->result_id)->first();
 
-        // IF SELECTED CHECK IF MAY NA SELECT NA
-        // if($request->result == 'SELECTED'){
-        //     $selectionDone = ApplicationResult::where('result_id', $request->result_id)->where('result', 'SELECTED')->get();
-        //     // dd($selectionDone->result);
-        //     // isType($selectionDone->result);
-        //     if(count($selectionDone) > 0){
-        //         abort(403, 'Only one candidate can be selected.');
-        //     }
-        // }
-
-
         if($application){
             DB::table('application_results')
-            ->where('application_id', $request->application_id)
-            ->where('result_id', $request->result_id)
-            ->update(['result' => $request->result ]);
-        }else{
+                ->where('application_id', $request->application_id)
+                ->where('result_id', $request->result_id)
+                ->update(['result' => $request->result ]);
+    
+                if($request->result === 'SELECTED'){
+                    if($application->user->hasAnyRole('user')){
+                        $application->user->removeRole('user');
+                        $application->user->assignRole('employee');
+                    }
+        
+                
+                    $application->user->update([
+                        'plantilla_id' => $request->plantilla_id
+                    ]);
+                }
+        }
+        else{
             ApplicationResult::create([
                 'result_id' => $request->result_id,
                 'application_id' => $request->application_id,
@@ -43,7 +42,10 @@ class ApplicationResultController extends Controller
             ]);
         }
 
-        return back()->with('success', 'Transaction success.');
+
+        sweetalert()->addSuccess('Results updated!');
+
+        return back();
     }
 
     public function updateNotes(Request $request){

@@ -42,7 +42,9 @@ class AdminRewardAndRecognitionController extends Controller
 
         RewardAndRecognition::create($validate);
 
-        return back()->with('success', 'Reward and Recognition has been added.');
+        sweetalert()->addSuccess('Reward and Recognition has been added.');
+
+        return back();
     }
 
     /**
@@ -84,7 +86,9 @@ class AdminRewardAndRecognitionController extends Controller
 
         $reward->update($validate);
 
-        return back()->with('success', 'Reward and Recognition has been updated.');
+        sweetalert()->addSuccess('Reward and Recognition has been updated!');
+
+        return back();
     }
 
     /**
@@ -94,6 +98,8 @@ class AdminRewardAndRecognitionController extends Controller
     {
         $reward->delete();
 
-        return back()->with('success', 'Reward and Recognition has been deleted.'); 
+        sweetalert()->addSuccess('Reward and Recognition has been deleted!');
+
+        return back(); 
     }
 }

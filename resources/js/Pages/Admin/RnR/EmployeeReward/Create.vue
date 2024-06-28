@@ -62,14 +62,16 @@
           <thead>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Division</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in props.employees.data" :key="item.id" class="">
               <td scope="row">{{ item.name }}</td>
+              <td scope="row">{{ item.division?.abbreviation }}</td>
               <td class="d-flex gap-2">
-                <button :data-id="item.id" class="btn btn-success " @click="addReward">
+                <button :data-id="item.id" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addReward" @click="() => onSelectUser(item)">
                   Add
                 </button>
               </td>
@@ -80,6 +82,39 @@
         <Pagination :links="props.employees.links" />
       </div>
     </div>
+    <Modal modal_id="addReward">
+      <template #header>Add Reward</template>
+      <template #body>
+        <div class="form-group mb-2">
+          <div class="form-text">Award</div>
+          <input
+            id=""
+            :value="reward.title"
+            type="text" class="form-control form-control-sm" name="" aria-describedby="helpId"
+            disabled
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="" class="form-text">Awarded To</label>
+          <input
+            id=""
+            :value="awardForm.user?.name"
+            type="text" class="form-control form-control-sm" name="" aria-describedby="helpId" disabled
+            required
+          />
+        </div>
+        <div class="form-group mb-2">
+          <label for="" class="form-text">Date Awarded:</label>
+          <input
+            id=""
+            v-model="awardForm.dateAwarded"
+            type="date" class="form-control form-control-sm" name="" aria-describedby="helpId"
+          />
+          <InputError :message="awardForm.errors.date_awarded" />
+        </div>
+        <button class="btn btn-sm btn-success" @click="addReward">Save</button>
+      </template>
+    </Modal>
   </AdminLayout>
 </template>
     
@@ -87,14 +122,26 @@
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 import { Head, router, useForm, Link } from '@inertiajs/vue3'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import Pagination from '@/Components/Pagination.vue'
+import Modal from '@/Components/Modal.vue'
+import InputError from '@/Components/InputError.vue'
   
 const props = defineProps({
   employees: Object,
   reward: Object,
   divisions: Array,
 })
+
+const awardForm = useForm({
+  user: null, 
+  dateAwarded: null,
+})
+
+
+const onSelectUser = (data) => {
+  awardForm.user = data
+}
 
 const filterForm = useForm({
   name: '',
@@ -136,15 +183,20 @@ const crumbs = computed(() => [
 ])
 
 const addReward = (e) => {
-  const employee_id = e.target.getAttribute('data-id')
+  const employee_id = awardForm.user.id
 
-  router.post(route('admin.employees.rewards.store', {
+  awardForm.post(route('admin.employees.rewards.store', {
     user: employee_id,
     reward_id: props.reward.id,
-  }))
+    date_awarded: awardForm.dateAwarded,
+  }), {
+    onSuccess: () => {
+      awardForm.user = null
+      awardForm.dateAwarded = null
+    },
+  })
 }
   
     
         
 </script>
-    

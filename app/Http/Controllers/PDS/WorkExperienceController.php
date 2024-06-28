@@ -50,7 +50,9 @@ class WorkExperienceController extends Controller
 
         $request->user()->work_experience()->create($validate);
 
-        return back()->with('success', 'Work experience has been saved.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -95,7 +97,9 @@ class WorkExperienceController extends Controller
 
         $workExperience->update($validate);
 
-        return back()->with('success', 'Work experience has been updated.');
+        sweetalert()->addSuccess('Record updated!');
+
+        return back();
     }
 
     /**
@@ -104,6 +108,7 @@ class WorkExperienceController extends Controller
     public function destroy(WorkExperience $workExperience)
     {
         $workExperience->delete();
-        return back()->with('success', 'Work experience has been deleted.');
+        sweetalert()->addSuccess('Record deleted!');
+        return back();
     }
 }
