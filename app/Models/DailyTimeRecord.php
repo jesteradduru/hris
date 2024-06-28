@@ -117,16 +117,13 @@ class DailyTimeRecord extends Model
 
             $time_in_earlier_13 = $logTimeInPm->lte(Carbon::parse('13:00:00'));
             $time_in_pass_13 = $logTimeInPm->gte(Carbon::parse('13:00:00'));
-            $time_out_earlier_19 = $logTimeOutPm->gte(Carbon::parse('19:00:00'));
+            $time_out_earlier_19 = $logTimeOutPm->lte(Carbon::parse('19:00:00'));
             $time_out_pass_19 = $logTimeOutPm->gte(Carbon::parse('19:00:00'));
             // $time_out_pass_12 = $logTimeOutPm->greaterThan(Carbon::parse('12:00:00'));
 
             $exact19 = Carbon::parse('19:00');
 
-            // dd($time_in_earlier_13 && $time_out_earlier_19);
-            // if($day === 19){
-            //     dd($logTimeOutPm);
-            // }
+
             
             if($time_in_earlier_13 && $time_out_earlier_19) { // time in before 1 and time out before 7 PM
                 $totalPM = $logTimeOutPm->diffInSeconds(Carbon::parse('13:00'));  // 1 PM until out before 7 PM
