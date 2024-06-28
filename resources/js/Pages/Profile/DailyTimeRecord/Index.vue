@@ -90,16 +90,16 @@ const props = defineProps({
   suggestions: Object,
 })
 
-const seconds = ref(props.suggestions.hours_remaining)
+// const seconds = ref(props.suggestions.hours_remaining)
 
 const showAwa = (day) => {
   return moment().day() === 5 && moment().date() === day
 }
 
-const time_remaining = computed(() => {
-  var duration =  moment.utc(seconds.value * 1000).format('HH:mm:ss')
-  return duration
-})
+// const time_remaining = computed(() => {
+//   var duration =  moment.utc(seconds.value * 1000).format('HH:mm:ss')
+//   return duration
+// })
 
 const filter = useForm({
   month: props.filters.month ?? moment().format('YYYY-MM'),
