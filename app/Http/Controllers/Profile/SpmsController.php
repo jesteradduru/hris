@@ -43,8 +43,9 @@ class SpmsController extends Controller
             'semester' => 'required|string|max:255',
             'rating' => 'required|decimal:0,2',
             'file' => 'required',
-            'file.*.mimes' => 'mimes:pdf|max:25000'
+            'file.*' => 'mimes:pdf|max:25000'
         ], [
+            'file.*.mimes' => 'Must be a pdf file.',
             'file.*.required' => 'Please attach the file.'
         ]);
 

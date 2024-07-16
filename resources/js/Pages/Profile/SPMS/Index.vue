@@ -93,6 +93,7 @@
             @change="addFile"
           />
           <small id="helpId" class="form-text text-muted">ONLY PDF FILE IS ALLOWED</small>
+          <InputError :message="form.errors['file.0']" />
           <InputError :message="form.errors.file" />
         </div>
         <div class="mb-3">
