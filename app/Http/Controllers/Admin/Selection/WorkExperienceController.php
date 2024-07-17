@@ -11,8 +11,8 @@ class WorkExperienceController extends Controller
 {
     public function includeWork(Request $request, WorkExperience $work)
     {
-        $works = $work->whereHas('included', function (Builder $query) use($request) {
-            $query->where('job_application_id',  $request->job_application_id);
+        $works = $work->whereHas('included', function (Builder $query) use($request, $work) {
+            $query->where('job_application_id',  $request->job_application_id)->where('computable_id', $work->id);
         })->get();
 
         if( count($works) > 0){

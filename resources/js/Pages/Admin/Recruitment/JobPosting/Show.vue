@@ -8,7 +8,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h3>{{ props.job_posting.plantilla.position }}</h3>
           <div class="d-flex">
-            <div v-if="!job_posting.archived_at && !isClosed">
+            <div v-if="isClosed">
               <Link
                 :href="
                   route('admin.recruitment.job_posting.edit', {
