@@ -34,8 +34,8 @@ class PesRatingController extends Controller
 
 
         $validate = $request->validate([
-            'first_rating' => 'required_if:second_rating,null|decimal:0,2',
-            'second_rating' => 'required_if:first_rating,null|decimal:0,2',
+            'first_rating' => 'required_if:second_rating,null|decimal:2,4|nullable',
+            'second_rating' => 'required_if:first_rating,null|decimal:2,4|nullable',
         ]);
         
         $application->pes_rating()->create($validate);
