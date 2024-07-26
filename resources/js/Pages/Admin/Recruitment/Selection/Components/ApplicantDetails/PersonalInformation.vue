@@ -1,5 +1,5 @@
 <template>
-  <Box class="mb-3">
+  <Box id="personal" class="mb-3">
     <template #header>Personal Information</template>
     <dl>
       <dt>

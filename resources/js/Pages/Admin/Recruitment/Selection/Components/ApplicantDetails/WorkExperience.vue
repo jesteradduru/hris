@@ -1,5 +1,5 @@
 <template>
-  <Box class="mb-3">
+  <Box id="work" class="mb-3">
     <template #header>Work Experience</template>
     <div v-if="plantilla" class="alert alert-primary">
       <div>

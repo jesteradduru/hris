@@ -1,5 +1,5 @@
 <template>
-  <Box class="mb-3">
+  <Box id="out-accomp" class="mb-3">
     <template #header>Outstanding Accomplishments</template>
     <div class="mb-2">
       <b>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</b>
@@ -51,6 +51,7 @@
                 </div>
               </td>
               <td scope="row">{{ award.title }}</td>
+              <td scope="row">{{ moment(award.date_awarded).format('MMMM Do, YYYY') }}</td>
               <td><a :href="award.files[0]?.src" target="_blank">{{ award.files[0]?.filename }}</a></td>
             </tr>
           </tbody>
@@ -66,6 +67,7 @@ import Box from '../UI/Box.vue'
 import {debounce} from 'lodash'
 import {router } from '@inertiajs/vue3'
 import {computed} from 'vue'
+import moment from 'moment'
 
 const props = defineProps({
   withControls: Boolean,

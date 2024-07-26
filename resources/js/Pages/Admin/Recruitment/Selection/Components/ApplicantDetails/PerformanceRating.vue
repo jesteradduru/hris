@@ -1,5 +1,5 @@
 <template>
-  <Box class="mb-3">
+  <Box id="performance" class="mb-3">
     <template #header>Performance Rating</template>
     <div v-if="isEmployee">
       <div

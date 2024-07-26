@@ -1,5 +1,5 @@
 <template>
-  <Box v-if="educ || college_graduate_studies.length > 0" class="mb-3">
+  <Box v-if="educ || college_graduate_studies.length > 0" id="educ" class="mb-3">
     <template #header>Educational BackGround</template>
     <div v-if="plantilla" class="alert alert-primary">
       <div>

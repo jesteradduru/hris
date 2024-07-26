@@ -28,8 +28,25 @@
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
-        <ApplicantDetails v-if="props.applicant_details" :latest_spms="props.latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
+        <!-- pds nav -->
+         
+         
+        <div
+          class="nav nav-tabs"
+        >
+          <a type="button" class="nav-link" :class="{active: activeTab == 'personal'}" data-id="personal" aria-current="page" @click="setActive">Personal</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'out-accomp'}" data-id="out-accomp" aria-current="page" @click="setActive">Awards</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'performance'}" data-id="performance" aria-current="page" @click="setActive">Performance</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'educ'}" data-id="educ" aria-current="page" @click="setActive">Education</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'lnd'}" data-id="lnd" aria-current="page" @click="setActive">Trainings</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'work'}" data-id="work" aria-current="page" @click="setActive">Experience</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'elig'}" data-id="elig" aria-current="page" @click="setActive">Eligibility</a>
+        </div>
+         
+        <div class="container-fluid" style="height: 80vh; overflow-y: scroll;">
+          <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
+          <ApplicantDetails v-if="props.applicant_details" :latest_spms="props.latest_spms" :applicant="props.applicant_details" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
+        </div>
 
         <div v-if="props.applicant_details" class="mt-2">
           <div class="mb-3">
@@ -65,6 +82,16 @@ import { router } from '@inertiajs/vue3'
 import ApplicantsList from '../Components/ApplicantsList.vue'
   
 const loading = ref(false)
+const activeTab = ref('personal')
+
+const setActive = (e) => {
+  e.preventDefault()
+  const id = e.target.getAttribute('data-id')
+  const target = document.getElementById(id)
+  // location.href = '#' + id
+  target.scrollTop = target.offsetTop
+  activeTab.value = id
+}
 
 const initNotes = computed(() => {
   const applicant = props.qualified_applicants?.filter(qapp => {
