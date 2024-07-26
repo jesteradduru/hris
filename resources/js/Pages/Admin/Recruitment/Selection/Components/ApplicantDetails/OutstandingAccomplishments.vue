@@ -34,6 +34,7 @@
             <tr>
               <th v-if="withControls" scope="col" />
               <th scope="col">Awards</th>
+              <th scope="col">Date awarded</th>
               <th scope="col">File</th>
             </tr>
           </thead>

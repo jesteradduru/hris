@@ -88,8 +88,7 @@ const setActive = (e) => {
   e.preventDefault()
   const id = e.target.getAttribute('data-id')
   const target = document.getElementById(id)
-  // location.href = '#' + id
-  target.scrollTop = target.offsetTop
+  target.scrollIntoView()
   activeTab.value = id
 }
 
