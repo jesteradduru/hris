@@ -95,7 +95,7 @@ class AdminJobApplicationController extends Controller
         });
 
         DB::table('application_results')->whereIn('id', $applications_results)->delete();
-        DB::table('application_scores')->whereIn('id', $applications)->delete();
+        DB::table('application_scores')->whereIn('job_application_id', $applications)->delete();
         $result->delete();
 
         return back();
