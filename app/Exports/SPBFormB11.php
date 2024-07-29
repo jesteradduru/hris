@@ -64,6 +64,7 @@ WithTitle
 
             $applicants = collect();
 
+            // dd($this->job_posting->result);
 
             foreach($this->job_posting->result as $item) {
 
@@ -116,38 +117,54 @@ WithTitle
 
                 }//employee
 
-                else if($item->application->pes_rating()->exists()){ // if outsider
-                    $applicant = null;
-                    $pesRatingOutsider = $item->application->pes_rating;
-        
-                    if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
-                        $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 70;
+                else{
+                    if($item->application->pes_rating()->exists()){ // if outsider
+                        $applicant = null;
+                        $pesRatingOutsider = $item->application->pes_rating;
+            
+                        if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
+                            $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'first' => $pesRatingOutsider->first_rating,
+                                'second' =>  $pesRatingOutsider->second_rating,
+                                'equivalent' => $performance_rating
+                            ];
+                        }else if($pesRatingOutsider->first_rating){
+                            $performance_rating = ($pesRatingOutsider->first_rating / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'first' => $pesRatingOutsider->first_rating,
+                                'second' => 0,
+                                'equivalent' => $performance_rating
+                            ];
+                        }else if($pesRatingOutsider->second_rating){
+                            $performance_rating = ($pesRatingOutsider->second_rating / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'second' =>  $pesRatingOutsider->second_rating,
+                                'first' => 0,
+                                'equivalent' => $performance_rating
+                            ];
+                        }
+    
+                        
+                    }else{
+                        $performance_rating = 50;
                         $applicant = [
                             'name' => $user->name,
-                            'first' => $pesRatingOutsider->first_rating,
-                            'second' =>  $pesRatingOutsider->second_rating,
+                            'second' =>  "NONE",
+                            'first' => "NONE",
                             'equivalent' => $performance_rating
                         ];
-                    }else if($pesRatingOutsider->first_rating){
-                        $performance_rating = ($pesRatingOutsider->first_rating / 5) * 70;
-                        $applicant = [
-                            'name' => $user->name,
-                            'first' => $pesRatingOutsider->first_rating,
-                            'equivalent' => $performance_rating
-                        ];
-                    }else if($pesRatingOutsider->second_rating){
-                        $performance_rating = ($pesRatingOutsider->second_rating / 5) * 70;
-                        $applicant = [
-                            'name' => $user->name,
-                            'second' =>  $pesRatingOutsider->second_rating,
-                            'equivalent' => $performance_rating
-                        ];
-                    }
+                    }//outsider
 
                     if($applicant){
                         $applicants->push($applicant);
                     }
-                }//outsider
+                }
+
+                
                
             }
             

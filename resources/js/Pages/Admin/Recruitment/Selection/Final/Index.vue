@@ -13,6 +13,7 @@
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
       <div>
+        <Link as="button" method="post" :href="route('admin.recruitment.result.rollbackInterview', {result: props.job_vacancy_status.id})" :onBefore="confirm" class="btn btn-success">Go Back</Link>
         <a :href="route('admin.reports.job_application.export', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-success"><i class="fa-solid fa-table" />&nbsp; Export SPB Forms</a>
         <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
       </div>

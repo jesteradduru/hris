@@ -130,37 +130,47 @@ WithTitle
 
                 }//employee
 
-                else if($item->application->pes_rating()->exists()){ // if outsider
+                else{ // if outsider
                     $applicant = null;
-                    $pesRatingOutsider = $item->application->pes_rating;
 
-                    if($PSBPOINTS){
-                        $PVEI = $PSBPOINTS->org_competency + $PSBPOINTS->leadership_competency + $PSBPOINTS->technical_competency;
-                        $PVEI_PERCENT = $PVEI * .15;
-                        // $personality_rating = ($PVEI_PERCENT) * .15;
-                    }
-        
-                    if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
-                        $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 70;
-                        $applicant = [
-                            'name' => $user->name,
-                            'spms' => $performance_rating,
-                            'pvei' => $PVEI_PERCENT,
-                        ];
-                    }else if($pesRatingOutsider->first_rating){
-                        $performance_rating = ($pesRatingOutsider->first_rating / 5) * 70;
-                        $applicant = [
-                            'name' => $user->name,
-                            'spms' => $performance_rating,
-                            'pvei' => $PVEI_PERCENT,
-                        ];
-                    }else if($pesRatingOutsider->second_rating){
-                        $performance_rating = ($pesRatingOutsider->second_rating / 5) * 70;
-                        $applicant = [
-                            'name' => $user->name,
-                            'spms' => $performance_rating,
-                            'pvei' => $PVEI_PERCENT,
-                        ];
+                    if(($item->application->pes_rating()->exists())){
+                        $pesRatingOutsider = $item->application->pes_rating;
+    
+                        if($PSBPOINTS){
+                            $PVEI = $PSBPOINTS->org_competency + $PSBPOINTS->leadership_competency + $PSBPOINTS->technical_competency;
+                            $PVEI_PERCENT = $PVEI * .15;
+                            // $personality_rating = ($PVEI_PERCENT) * .15;
+                        }
+            
+                        if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
+                            $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'spms' => $performance_rating,
+                                'pvei' => $PVEI_PERCENT,
+                            ];
+                        }else if($pesRatingOutsider->first_rating){
+                            $performance_rating = ($pesRatingOutsider->first_rating / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'spms' => $performance_rating,
+                                'pvei' => $PVEI_PERCENT,
+                            ];
+                        }else if($pesRatingOutsider->second_rating){
+                            $performance_rating = ($pesRatingOutsider->second_rating / 5) * 70;
+                            $applicant = [
+                                'name' => $user->name,
+                                'spms' => $performance_rating,
+                                'pvei' => $PVEI_PERCENT,
+                            ];
+                        }
+                    }else{
+                        $performance_rating = 50;
+                            $applicant = [
+                                'name' => $user->name,
+                                'spms' => $performance_rating,
+                                'pvei' => $PVEI_PERCENT,
+                            ];
                     }
 
                    

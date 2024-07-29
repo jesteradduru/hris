@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ApplicationResult;
 use App\Models\ApplicationScore;
 use App\Models\JobApplication;
+use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
 use App\Models\PlantillaPosition;
 use App\Models\SpmsForm;
@@ -77,6 +78,29 @@ class AdminJobApplicationController extends Controller
                 'user' => fn($query) => $query->with(['personal_information'])
             ])
         ]);
+    }
+
+    public function rollback_interview(JobApplicationResults $result){
+        $results = $result->result;
+
+        // dd($results);
+        $applications_results = $results->map(function ($item) {
+            // dd($item);
+            return $item['id'];
+        });
+
+        $applications = $results->map(function ($item) {
+            // dd($item);
+            return $item['application_id'];
+        });
+
+        DB::table('application_results')->whereIn('id', $applications_results)->delete();
+        DB::table('application_scores')->whereIn('id', $applications)->delete();
+        $result->delete();
+
+        return back();
+
+        
     }
 
     // INITIAL SCREENING
@@ -408,3 +432,5 @@ class AdminJobApplicationController extends Controller
     }
 
 }
+
+

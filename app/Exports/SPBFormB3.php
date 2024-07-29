@@ -80,6 +80,7 @@ WithTitle
         $posting = $application->job_posting;
         $plantilla = $posting->plantilla;
         $work_points = 0;
+        $total_year_excess_count = 0;
 
         $included_work = $computable->filter(function ($value, int $key) {
             return $value->computable_type == 'App\Models\WorkExperience';
@@ -88,6 +89,8 @@ WithTitle
         $works = $included_work->map(function ($value, int $key) {
             return $value->computable;
         });
+
+       
 
         $total_years = 0;
 
@@ -102,15 +105,17 @@ WithTitle
 
             $total_years += $years;
         }
+
+        
         
         if($plantilla->work_experience) { // if work experience is required
             if($total_years >= $plantilla->work_experience){
                 $work_points = 50;
-                $total_years = $total_years - $plantilla->work_experience;
+                $total_year_excess_count = $total_years - $plantilla->work_experience;
             }
         }
 
-        $excess_points = $total_years *  3.5;
+        $excess_points = $total_year_excess_count *  3.5;
 
         if($excess_points >= 35){
             $excess_points = 35;
@@ -165,7 +170,7 @@ WithTitle
 
         $sheet->setCellValue('A2', 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2');
         $sheet->setCellValue('A3',  $this->position);
-        $sheet->setCellValue('A4',  'SPB FORM B-2.3 EXPERIENCE SCORE SHEET');
+        $sheet->setCellValue('A4',  'SPB FORM B-3 EXPERIENCE SCORE SHEET');
 
         $sheet->getStyle('A1:'.$sheet->getHighestColumn() . '5')->applyFromArray([
             'font' => [

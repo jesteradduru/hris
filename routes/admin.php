@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\Selection\PsbPointController;
 use App\Http\Controllers\Admin\Selection\WorkExperienceController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\PDS\NonAcademicDistinctionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
@@ -122,6 +123,9 @@ use Illuminate\Support\Facades\Route;
 
         // selection/psbpoints
         Route::post('psb_point/{job_application}/save', [PsbPointController::class, 'save'])->name('psb_point.save');
+
+        //rollback interview
+        Route::post('result/{result}/rollback', [AdminJobApplicationController::class, 'rollback_interview'])->name('result.rollbackInterview');
     });
         
     // rewards and recognition
