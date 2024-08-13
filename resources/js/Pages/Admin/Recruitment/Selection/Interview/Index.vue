@@ -24,15 +24,15 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3">
+      <div class="col-2">
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
-      <div class="col-9">
+      <div class="col-10">
         <!-- pds nav -->
          
          
         <div
-          class="nav nav-tabs"
+          class="nav nav-tabs nav-fill"
         >
           <a type="button" class="nav-link" :class="{active: activeTab == 'personal'}" data-id="personal" aria-current="page" @click="setActive">Personal</a>
           <a type="button" class="nav-link" :class="{active: activeTab == 'out-accomp'}" data-id="out-accomp" aria-current="page" @click="setActive">Awards</a>

@@ -3,6 +3,7 @@
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/mixins";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
 
 
 $theme-colors: (
@@ -17,7 +18,7 @@ $theme-colors: (
 );
 
 #app {
-  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-family: Poppins, sans-serif;
 }
 
 .center-element {
@@ -125,6 +126,11 @@ $theme-colors: (
 .profile-pic{
     width: 150px;
     height: auto;
+
+}
+
+.pic-md{
+    width: 300px;
 }
 
 .profile-pic-nav{
@@ -173,4 +179,46 @@ $theme-colors: (
 
 .dtr-active{
     color: darkblue;
+}
+
+.applicant-list {
+    text-decoration: none;
+    font-weight: bold;
+    font-size:medium;
+
+    ol li{
+        margin-bottom: 20px;
+        transition: all .5s;
+
+        &:has(> a.active){
+            transform: scale(1.1) ;
+        }
+
+        &:hover{
+            transform: scale(1.1) ;
+        }
+
+        .active{
+            color: black;
+        }
+
+        
+    }
+}
+
+.applicant_details{
+    dd{
+        margin-bottom: 20px;
+    }
+}
+
+.education-box{
+    a{
+        text-decoration: none;
+        color: rgb(5, 196, 62);
+
+        &:hover{
+            color: rgb(2, 139, 43);
+        }
+    }
 }
