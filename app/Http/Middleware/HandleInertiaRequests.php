@@ -36,10 +36,6 @@ class HandleInertiaRequests extends Middleware
                 'notificationCount' => $request->user() ? $request->user()->unreadNotifications()->count() : null,
                 'permissions' => $request->user()?->getAllPermissions()
             ],
-            'flash' => [
-                'success' => fn () => $request->session()->get('success'),
-                'warning' => fn () => $request->session()->get('warning')
-            ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [
                     'location' => $request->url(),

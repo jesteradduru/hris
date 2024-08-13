@@ -21,7 +21,7 @@ class AcademicAwardController extends Controller
         if(count($award) > 0){
             $academic->included()->where('job_application_id',  $request->job_application_id)->delete();
 
-            sweetalert()->addSuccess('Removed successfully!');
+            flash('Removed successfully!');
             
             return back();
         }else{
@@ -29,7 +29,7 @@ class AcademicAwardController extends Controller
                 'job_application_id' => $request->job_application_id
             ]);
 
-            sweetalert()->addSuccess('Added successfully!');
+            flash('Added successfully!');
         }
 
 

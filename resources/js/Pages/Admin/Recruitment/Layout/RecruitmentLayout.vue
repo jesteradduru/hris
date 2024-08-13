@@ -1,5 +1,5 @@
 <template>
-  <AdminLayout>
+  <AdminLayout fluid>
     <slot name="header" />
     <h3>Recruiment, Selection and Placement</h3>
     <ul class="nav nav-tabs">
@@ -48,8 +48,7 @@
 </template>
   
 <script setup>
-import { Head, Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
-import { computed } from 'vue'
 </script>
   

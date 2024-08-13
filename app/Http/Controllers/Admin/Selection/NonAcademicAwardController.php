@@ -28,15 +28,14 @@ class NonAcademicAwardController extends Controller
 
         if(count($award) > 0){
             $non_academic->included()->where('job_application_id',  $request->job_application_id)->delete();
-
-            sweetalert()->addSuccess('Added successfully!');
             
+            flash('Removed Successfully.');
         }else{
             $non_academic->included()->create([
                 'job_application_id' => $request->job_application_id
             ]);
 
-            sweetalert()->addSuccess('Added successfully!');
+            flash('Added successfully!');
         }
 
 

@@ -10,7 +10,6 @@
       <!-- Page Content -->
       <main class="main">
         <div :class="`${fluid ? 'container-fluid' : 'container'} mt-3`">
-          <Notifications :flash="$page.props.flash" />
           <slot />
         </div>
       </main>
@@ -24,23 +23,27 @@
 </template>
 
 <script setup>
-import Notifications from '@/Components/Notifications.vue'
 import AdminMainNavbar from '../Components/AdminMainNavbar.vue'
 import moment from 'moment'
 import {usePage} from '@inertiajs/vue3'
 import { watch} from 'vue'
 import Swal from 'sweetalert2'
+import flasher from '@flasher/flasher'
 
 const page = usePage()
 
 watch(() => page.props.messages, (value) => {
   value.envelopes.forEach((val) => {
-    Swal.fire({
-      title:  val.notification.title,
-      text: val.notification.message,
-      icon: val.notification.options.icon,
-      timerProgressBar: true,
-    })
+    if(val.handler === 'flasher'){
+      flasher.render(value)
+    }else{
+      Swal.fire({
+        title:  val.notification.title,
+        text: val.notification.message,
+        icon: val.notification.options.icon,
+        timerProgressBar: true,
+      })
+    }
   })
 })
 

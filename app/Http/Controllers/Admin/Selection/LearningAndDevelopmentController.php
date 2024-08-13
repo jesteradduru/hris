@@ -19,7 +19,7 @@ class LearningAndDevelopmentController extends Controller
         if( count($training) > 0){
             $lnd->included()->where('job_application_id',  $request->job_application_id)->delete();
 
-            sweetalert()->addSuccess('Removed successfully!');
+            flash('Removed successfully!');
             
             return back();
         }else{
@@ -28,7 +28,7 @@ class LearningAndDevelopmentController extends Controller
             ]);
         }
 
-        sweetalert()->addSuccess('Included successfully!');
+        flash('Included successfully!');
 
         return back();
     }

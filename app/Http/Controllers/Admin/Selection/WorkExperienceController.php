@@ -18,7 +18,7 @@ class WorkExperienceController extends Controller
         if( count($works) > 0){
             $work->included()->where('job_application_id',  $request->job_application_id)->delete();
 
-            sweetalert()->addSuccess('Removed successfully!');
+            flash('Removed successfully!');
 
             return back();
         }else{
@@ -27,7 +27,7 @@ class WorkExperienceController extends Controller
             ]);
         }
 
-        sweetalert()->addSuccess('Included successfully!');
+        flash('Included successfully!');
 
         return back();
     }
