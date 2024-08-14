@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="navbar shadow fixed-top navbar-light bg-light" style="z-index: 1;" 
+    class="navbar top-bar shadow-sm fixed-top" style="z-index: 1;" 
     :class="{'bg-primary': route().current('login') || route().current('register') , 'navbar-dark': route().current('login') || route().current('register')}
     "
   >
@@ -15,14 +15,20 @@
       </div>
       
       <div class="d-flex align-items-center">
-        <div v-if="$page.props.auth.user ">
-          <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+        <div v-if="$page.props.auth.user " class="d-none d-sm-flex align-items-center gap-2">
+          <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle border me-2" :src="$page.props.auth.user.profile_pic" alt="" />
           <img v-else class="profile-pic-nav rounded-circle  me-2" src="../Assets/profile.png" alt="" />
+          <small>{{
+            $page.props.auth.user?.name }}</small>
         </div>
-        <div v-if="user" class="dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"><b>{{
-            $page.props.auth.user?.username }}</b></a>
-          <ul class="dropdown-menu dropdown-menu-end">
+        <div v-if="user" class="dropdown open">
+          <a
+            class="nav-link topbar-control" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="fas fa-ellipsis-v" />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg">
             <li>
               <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
             </li>

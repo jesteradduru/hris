@@ -29,14 +29,30 @@
           </tr>
         </tbody>
       </table>
-      <Pagination :links="dtrs.links" />
+      <div class="d-flex align-items-center justify-content-between gap-4">
+        <div class="d-flex align-items-center gap-2">
+          <label for="">Show</label>
+          <select
+            id=""
+            v-model="filterForm.entryPerPage"
+            class="form-select"
+            name=""
+            @change="filter"
+          >
+            <option value="15">15</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <span>entries</span>
+        </div>
+        <Pagination :links="dtrs.links" style="margin-bottom: 0;" />
+      </div>
     </div>
   </DTRLayout>
 </template>
   
 <script setup>
-import BreadCrumbs from '@/Components/BreadCrumbs.vue'
-import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
 import DTRLayout from '@/Pages/Admin/DailyTimeRecord/DTRLayout.vue'
 import { Head, Link, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
@@ -61,6 +77,7 @@ const props = defineProps({
 
 const filterForm = useForm({
   user_id: props.filters.user_id,
+  entryPerPage: props.filters.entryPerPage ? props.filters.entryPerPage : 15,
 })
 
 const filter = debounce((e) => {

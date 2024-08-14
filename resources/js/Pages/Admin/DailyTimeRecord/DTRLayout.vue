@@ -5,8 +5,8 @@
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Daily Time Record</h3>
     <div class="row">
-      <div class="col-2">
-        <div class=" p-2">
+      <div class="col-1">
+        <div>
           <div class="nav-item">
             <Link
               class="" :href="route('admin.dtr.dtr.index')" :class="{'dtr-active': route().current(
@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="col-10">
+      <div class="col-11">
         <slot />
       </div>
     </div>

@@ -14,7 +14,7 @@
 
     <!-- FINAL RESULT -->
     <div v-if="result.phase === 'FINAL'">
-      <Result :posting="posting" />
+      <Result :posting="posting_with_scores" />
     </div>
   
     <!-- APPLICANT DETAILS -->
@@ -71,15 +71,17 @@ import { router } from '@inertiajs/vue3'
 import moment from 'moment'
   
 const props = defineProps({
-  job_vacancies: Array,
+  // job_vacancies: Array,
   posting: Object,
-  job_applications: Array,
+  // job_applications: Array,
+  posting_with_scores: Object,
   applicant_details: Object,
   job_vacancy_status: Object,
   application_results:Array,
   result: Object,
 })
   
+
   
 const loading = ref(false)
 

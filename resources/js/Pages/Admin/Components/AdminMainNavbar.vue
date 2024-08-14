@@ -1,11 +1,9 @@
 <template>
-  <nav class="navbar navbar-expand-sm bg-primary text-light navbar-dark shadow mb-4 mt-2 rounded" style="text-transform: uppercase;">
+  <nav class="navbar navbar-expand-sm bg-primary text-light navbar-dark shadow-sm mb-4 mt-2 rounded" style="text-transform: uppercase;">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">HRIS</a>
       <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon">
-          <i class="fa-solid fa-bars" />
-        </span>
+        <span class="navbar-toggler-icon" />
       </button>
       <div id="collapsibleNavbar" class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto">
@@ -16,7 +14,7 @@
                 <Link
                   class="dropdown-item" :href="route('admin.recruitment.plantilla.index')" :class="{
                     active: route().current(
-                      'admin.recruitment.job_posting.*'
+                      'admin.recruitment.*'
                     )
                   }"
                 >
@@ -63,62 +61,6 @@
               </li>
             </ul>
           </li>
-
-          <!-- <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.recruitment.job_posting.index')" :class="{
-                active: route().current(
-                  'admin.recruitment.job_posting.*'
-                )
-              }"
-            >
-              Recruitment, Selection and Placement
-            </Link>
-          </li> -->
-
-          <!-- <li v-if="permissions.includes('View Recruitment, Selection and Placement Page')" class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.lnd.index')" :class="{
-                active: route().current(
-                  'admin.lnd.*'
-                ) || route().current(
-                  'admin.idp.*'
-                ) || route().current(
-                  'admin.lnd.*'
-                )
-              }"
-            >
-              Learning and Development
-            </Link>
-          </li> -->
-          
-          <!-- <li class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.spms.index')" :class="{
-                active: route().current(
-                  'admin.spms.*'
-                )
-              }"
-            >
-              Performance Management
-            </Link>
-          </li> -->
-
-
-          <!-- <li v-if="permissions.includes('View Reward Page')" class="nav-item">
-            <Link
-              class="nav-link" :href="route('admin.rewards.index')" :class="{
-                active: route().current(
-                  'admin.rewards.*'
-                )
-              }"
-            >
-              Rewards and Recognition
-            </Link>
-          </li> -->
-
-
-
 
           <li class="nav-item">
             <Link
@@ -169,24 +111,29 @@
             </Link>
           </li>
         </ul>
-        <div v-if="$page.props.auth.user ">
-          <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
-          <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
-        </div>
-        <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">{{
-            $page.props.auth.user.name }}</a>
-          <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-              <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
-            </li>
-            <li>
-              <Link class="dropdown-item" :href="route('dashboard')">Main</Link>
-            </li>
-            <li>
-              <Link class="dropdown-item" :href="route('logout')" method="post" as="button">Logout</Link>
-            </li>
-          </ul>
+        <div class="d-flex align-items-center">
+          <div v-if="$page.props.auth.user " class="d-none d-md-flex align-items-center gap-2">
+            <img v-if="$page.props.auth.user.profile_pic" class="profile-pic-nav rounded-circle border me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+            <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
+            <small>{{
+              $page.props.auth.user?.name }}</small>
+          </div>
+          <div class="nav-item dropdown">
+            <a class="nav-link topbar-control" href="#" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-ellipsis-v" />
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <Link class="dropdown-item" :href="route('profile.edit')">Profile</Link>
+              </li>
+              <li>
+                <Link class="dropdown-item" :href="route('dashboard')">Main</Link>
+              </li>
+              <li>
+                <Link class="dropdown-item" :href="route('logout')" method="post" as="button">Logout</Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

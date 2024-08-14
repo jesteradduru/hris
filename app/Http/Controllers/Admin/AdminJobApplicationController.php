@@ -378,39 +378,6 @@ class AdminJobApplicationController extends Controller
             $job_vacancy_status = $job_vacancy->results()->orderBy('created_at', 'DESC')->first();
         }
 
-        // if($request->applicant){
-        //     $applicant_details = User::find($request->applicant)->load([
-        //         'personal_information',
-        //         'educational_background',
-        //         'college_graduate_studies' => ['files'],
-        //         'civil_service_eligibility'  => ['files'],
-        //         'work_experience',
-        //         'learning_and_development',
-        //         'other_information',
-        //         'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $request->job_posting),
-        //         'spms',
-        //         'position',
-        //         'college_graduate_studies' => ['files', 'academic_award'],
-        //         'academic_distinction'=> ['files'],
-        //         'non_academic_distinction' => ['files'],
-        //         'pes_rating',
-        //     ]);
-        // }
-
-        // $latest_result = ApplicationResult::with([
-        //     'application',
-        //     'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
-
-        // $filters = $request->only(['rank_by']);
-
-
-        // dd($job_vacancy_status->load(['result' => [
-        //     'application' => [
-        //         'scores',
-        //         'user'
-        //     ]
-        // ]]));
-
 
         $posting_with_score =  $job_vacancy_status->load(['job_posting', 'result' => [
             'application' => [

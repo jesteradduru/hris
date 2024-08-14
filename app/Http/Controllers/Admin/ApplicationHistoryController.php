@@ -46,22 +46,24 @@ class ApplicationHistoryController extends Controller
                 
             ]);
         }
-
-        $posting_with_score =  $job_posting->load([
-                'job_application' => [
-                    'scores',
-                    'user'
-                ]
+        
+        
+        $posting_with_score =  $activeResult->load([
+                'result' => [
+                     'application' => ['scores', 'user']
+                 ]
         ]);
 
+        $posting_with_score = $posting_with_score->result->map(function($item) {
+            return $item->application;
+        });
+
+        // dd($posting_with_score);
+
+
         return inertia('Admin/Recruitment/JobApplication/History/Show', [
-            "job_applications" => $activeResult->load([
-                'result' => [
-                    'application', 'user'
-                ]
-            ]),
-            // "job_vacancy_status" => $result,
-            "posting" => $posting_with_score,
+            "posting" => $job_posting,
+            "posting_with_scores" => $posting_with_score,
             "applicant_details" => $applicant_details,
             "result" => $activeResult->load([
                 'result' => [

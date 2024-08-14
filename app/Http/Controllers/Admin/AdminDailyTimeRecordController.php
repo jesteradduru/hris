@@ -15,8 +15,9 @@ class AdminDailyTimeRecordController extends Controller
     public function index(Request $request)
     {
         $filters = $request->only(['user_id']);
+        $entryPerPage = $request->entryPerPage ? $request->entryPerPage : 15;
         return inertia('Admin/DailyTimeRecord/Index', [
-            'dtrs' => DailyTimeRecord::with('user')->filter($filters)->paginate()->withQueryString(),
+            'dtrs' => DailyTimeRecord::with('user')->filter($filters)->paginate($entryPerPage)->withQueryString(),
             'filters' => $filters
         ]);
     }

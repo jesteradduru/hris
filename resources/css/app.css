@@ -1,4 +1,4 @@
-@import 'mdb-vue-ui-kit/css/mdb.min.css';
+@import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 #app {
   font-family: Poppins, sans-serif;
@@ -28,23 +28,50 @@
   white-space: pre-wrap;
 }
 
+.top-bar {
+  background-color: #f8f9fa;
+}
+
+.topbar-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  margin: 0 10px 0 10px;
+}
+.topbar-control:hover {
+  background-color: #084298;
+  color: #f8f9fa;
+}
+
+.dropdown-menu-right {
+  right: 0;
+  left: auto;
+  margin-top: 10px;
+}
+
 .side-nav {
   position: fixed;
   height: 100vh;
   z-index: 1;
-  width: 300px;
+  width: 270px;
+  background: linear-gradient(135deg, #3d8bfd, #084298); /* Gradient from light blue to darker blue */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 .side-nav .nav-link {
-  transition: background-color 0.2s;
+  font-size: 0.87rem;
+  transition: all 0.5s;
   color: #fff !important;
+  padding: 12px 13px 12px 13px;
 }
 .side-nav .nav-link:hover {
-  background-color: #052c65;
-  border-radius: 7px;
+  background-color: #084298;
 }
 .side-nav .nav-item .active {
-  background-color: #052c65;
-  border-radius: 7px;
+  background-color: #084298;
 }
 
 .side-nav-logo {
@@ -102,7 +129,7 @@
 }
 
 .profile-pic-nav {
-  width: 40px;
+  width: 50px;
   height: auto;
 }
 
@@ -171,4 +198,117 @@
 }
 .education-box a:hover {
   color: rgb(2, 139, 43);
+}
+
+:root {
+  --btn-border: 1px solid rgba(255, 255, 255, 0.2);
+  --btn-bg: rgb(22, 115, 255);
+  --btn-shadow: 1px 1px 25px 10px rgba(255, 255, 255, 0.5);
+  --btn-text-color: #ffffff;
+  --shine-degree: 120deg;
+  --shine-color: rgba(255, 255, 255, 0.384);
+  --shine-effect: linear-gradient(
+    var(--shine-degree),
+    transparent,
+    var(--shine-color),
+    transparent
+  );
+  --shine-transition: all 0.75s ease-in-out;
+}
+
+.btnx {
+  position: relative;
+  overflow: hidden;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  border: var(--btn-border);
+  color: var(--btn-text-color);
+  background: var(--btn-bg);
+}
+.btnx:not(:last-child) {
+  margin-bottom: 3rem;
+}
+.btnx::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--shine-effect);
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    transition-property: left;
+  }
+  27.2727272727%, 100% {
+    left: 100%;
+    transition-property: left;
+  }
+}
+.btn-alt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 40px;
+  font-size: 1.1rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  text-decoration: none;
+  border: var(--btn-border);
+  color: var(--btn-text-color);
+  background: var(--btn-bg);
+}
+.btn-alt:not(:last-child) {
+  margin-bottom: 3rem;
+}
+.btn-alt::before, .btn-alt::after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  top: 0;
+}
+.btn-alt:before {
+  background: rgba(255, 255, 255, 0.5);
+  width: 60px;
+  left: 0;
+  filter: blur(30px);
+  animation: shine-alt1 2s ease-in-out infinite;
+}
+.btn-alt:after {
+  background: rgba(255, 255, 255, 0.2);
+  width: 30px;
+  left: 30px;
+  filter: blur(5px);
+  animation: shine-alt2 2s ease-in-out infinite;
+}
+
+@keyframes shine-alt1 {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-100px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+  27.2727272727%, 100% {
+    opacity: 0.6;
+    transform: translateX(300px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+}
+@keyframes shine-alt2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+  27.2727272727%, 100% {
+    opacity: 1;
+    transform: translateX(300px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
 }/*# sourceMappingURL=app.css.map */

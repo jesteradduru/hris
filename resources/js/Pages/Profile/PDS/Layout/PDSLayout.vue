@@ -1,6 +1,6 @@
 <template>
   <div class="tabbable">
-    <ul class="nav nav-tabs" role="tablist">
+    <ul class="nav nav-pills" role="tablist">
       <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.personal_information.edit')" class="nav-link"
@@ -79,7 +79,7 @@
           preserve-state :href="route('profile.pds.non_academic_distinctions.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.non_academic_distinctions.*') }"
         >
-          NON-ACADEMIC DISTINCTIONS / RECOGNITION
+          Non-academic Distinctions / Recognition
         </Link>
       </li>
 
@@ -117,7 +117,7 @@
     <hr />
     <div id="pds" class="container">
       <div class="d-flex justify-content-end">
-        <a class="btn btn-secondary" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-table" />&nbsp; Export Excel</a>
+        <a class="btn btn-success" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
       </div>
       <slot />
     </div>

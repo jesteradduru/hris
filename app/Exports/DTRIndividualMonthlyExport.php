@@ -76,6 +76,11 @@ class DTRIndividualMonthlyExport implements  WithEvents
                 $sheet->setCellValue('G'. $row, $dtr['dtr'][$i]['totalHours']);
                 $sheet->setCellValue('I'. $row, $dtr['dtr'][$i]['totalMinutes']);
                 $sheet->setCellValue('J'. $row, $dtr['dtr'][$i]['remarks']);
+                $sheet->setCellValue('K'. $row, $dtr['dtr'][$i]['lateAM']);
+                $sheet->setCellValue('L'. $row, $dtr['dtr'][$i]['latePM']);
+                $sheet->setCellValue('M'. $row, $dtr['dtr'][$i]['utAM']);
+                $sheet->setCellValue('N'. $row, $dtr['dtr'][$i]['utPM']);
+                $sheet->setCellValue('O'. $row, $dtr['dtr'][$i]['absent']);
             }
 
         }

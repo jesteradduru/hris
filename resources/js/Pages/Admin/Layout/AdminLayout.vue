@@ -14,9 +14,8 @@
         </div>
       </main>
 
-      <footer class="footer text-center bg-dark rounded shadow p-3 text-light mt-5">
-        <div>NEDA RO2 ICT</div>
-        <div>ALL RIGHTS RESERVED {{ moment().format('Y') }}</div>
+      <footer class="footer text-center rounded shadow p-1 mt-5">
+        <div><small>&copy; 2023 - {{ moment().format('Y') }} | <a target="_blank" href="https://neda.rdc2.gov.ph">NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2</a></small></div>
       </footer>
     </div>
   </div>

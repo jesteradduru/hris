@@ -35,16 +35,10 @@ class JobApplication extends Model
     {
         return $this->hasMany(ApplicationResult::class, 'application_id');
     }
-
-    public function score() : HasOne
-    {
-        return $this->hasOne(ApplicationScore::class, 'job_application_id');
-    }
     
     public function pes_rating() : HasOne {
         return $this->hasOne(PesRating::class, 'application_id');
     }
-
 
     public function included() : HasMany {
         return $this->hasMany(IncludedComputation::class, 'job_application_id');

@@ -1,23 +1,9 @@
 <template>
-  <ul class="nav flex-column gap-2 shadow p-4 side-nav bg-primary" style="z-index: 1; text-transform:">
-    <li class="nav-item  d-flex align-center gap-2 mb-4">
+  <ul class="nav flex-column shadow pt-4 side-nav bg-primary" style="z-index: 1; text-transform:">
+    <li class="nav-item  d-flex align-center gap-2 mx-2 mb-4">
       <img :src="nedalogo" alt="" class="img-fluid side-nav-logo" />
-      <b class="text-light">NRO2 Human Resource Information System</b>
+      <span class="text-light">NRO2 Human Resource Information System</span>
     </li>
-    <!-- <li v-if="user" class="nav-item mt-4">
-      <Link
-        class="nav-link " :class="{
-          active: route().current(
-            'notification.*'
-          )
-        }" :href="route('notification.index')"
-      >
-        <i class="fa-solid fa-bell me-3" /> 
-        <span>
-          Notifications <span v-if="$page.props.auth.notificationCount" class="badge bg-danger">{{ $page.props.auth.notificationCount }}</span>
-        </span>
-      </Link>
-    </li> -->
     <li :class="{'mt-3': !user}" class="nav-item">
       <Link
         class="nav-link " :class="{
@@ -52,15 +38,6 @@
       </Link>
     </li>
 
-    <!-- <li v-if="user && permissions.includes('View Reward')" class="nav-item">
-      <Link
-        class="nav-link" :class="{
-          active: route().current('profile.rewards.*')
-        }" :href="route('profile.rewards.index')"
-      >
-        Rewards and Recognition
-      </Link>
-    </li> -->
     <li v-if="user" class="nav-item">
       <Link
         class="nav-link d-flex align-items-center" :class="{
@@ -94,9 +71,8 @@
         <span>My Daily Time Record</span>
       </Link>
     </li>
-    <li class="mt-auto mb-4 text-center text-secondary">
-      <div>NRO2 ICT</div>
-      <div>ALL RIGHTS RESERVED {{ moment().format('Y') }}</div>
+    <li class="mt-auto text-center text-secondary mb-4">
+      <small>&copy; 2023 - {{ moment().format('Y') }} | <a class="text-secondary" target="_blank" href="https://neda.rdc2.gov.ph">NRO2</a></small>
     </li>
   </ul>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <AuthenticatedLayout>
     <h3>Learning and Development</h3>
-    <button v-if="permission.includes('Add L&D Form')" class="btn btn-primary" data-bs-target="#uploadSpmsForm" data-bs-toggle="modal">UPLOAD Individual Development Plan/Competency Gap DOCUMENT</button>
+    <button v-if="permission.includes('Add L&D Form')" class="btn btn-primary" data-bs-target="#uploadSpmsForm" data-bs-toggle="modal">Upload IDP/Competency Gap Document</button>
     <div v-if="years.length > 0">
       <div v-for="(spmsForm, index) in years" :id="`accordion${index}`" :key="index" class="accordion mt-3">
         <div class="accordion-item">

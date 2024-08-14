@@ -40,7 +40,7 @@ import {computed} from 'vue'
 
 const crumbs = computed(() => [
   {
-    label: 'My Job Applications',
+    label: 'Applications',
   },
 ])
 

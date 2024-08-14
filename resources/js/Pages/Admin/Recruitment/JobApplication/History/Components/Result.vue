@@ -19,7 +19,7 @@
   </div>
   <div>
     <div class="table-responsive">
-      <table class="table table-bordered table-sm">
+      <table class="table table-bordered table-sm text-uppercase">
         <thead>
           <tr>
             <th scope="col" rowspan="2">CANDIDATES</th>
@@ -30,7 +30,7 @@
             <th scope="col" colspan="2">Personality Traits & Attributes</th>
             <th scope="col" colspan="2">Potential</th>
             <th scope="col" colspan="2">Total</th>
-            <th scope="col" rowspan="2">Action</th>
+            <th scope="col" rowspan="2">Status</th>
           </tr>
           <tr>
             <th scope="col">SCORE</th>
@@ -65,7 +65,7 @@
             <td>
               <div v-if="selected == application.id || selected === null" class="d-flex gap-2 mb-3">
                 <span v-if="application.latest_result.result === 'SELECTED'">APPOINTED</span>
-                <span v-else>APPOINT</span>
+                <span v-else>-</span>
               </div>
             </td>
           </tr>
@@ -82,12 +82,9 @@ import { ref, computed } from 'vue'
 
 
 const props = defineProps({
-//   job_vacancies: Array,
   posting: Object,
-//   applicant_details: Object,
-//   job_vacancy_status: Object,
-//   qualified_applicants: Array,
 })
+
 
 import { router } from '@inertiajs/vue3'
 
@@ -101,22 +98,22 @@ router.on('finish', () => {
   loading.value = false
 })
 
-const confirmSelect = () => window.confirm('Select this applicant for this position?')
 
 const columnToFilter = ref('total')
 
 const selected = computed(() => {
-  const mappedApplications = props.posting.job_application.filter(application => {
+  const mappedApplications = props.posting.filter(application => {
     return application.latest_result.result === 'SELECTED'
   })
   return mappedApplications.length > 0 ? mappedApplications[0].id : null
 })
 
 const applications = computed(() => {
-  const mappedApplications = props.posting.job_application.map(application => {
-    return application
+  const mappedApplications = props.posting.map(result => {
+    return result
   })
 
+  console.log(mappedApplications)
   mappedApplications.sort((a, b) => b.scores[columnToFilter.value] - a.scores[columnToFilter.value])
 
   return mappedApplications

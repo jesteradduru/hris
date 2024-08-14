@@ -2,8 +2,8 @@
   <Head title="Job Vacancies" />
 
   <AuthenticatedLayout>
-    <BreadCrumbs :crumbs="crumbs" />
     <h3>Job Vacancies</h3>
+    <BreadCrumbs :crumbs="crumbs" />
     <div class="d-flex justify-content-between align-items-center">
       <Filter :filters="props.filters" />
     </div>

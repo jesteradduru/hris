@@ -5,7 +5,7 @@
     <BreadCrumbs :crumbs="crumbs" />
     <div class="row">
       <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column ">
           <h3>{{ props.job_posting.plantilla.position }}</h3>
           <div class="d-flex gap-2">
             <Link
@@ -15,11 +15,11 @@
                   job_posting: props.job_posting.id
                 })
               "
-              class="btn btn-primary "
+              class="btn btn-primary btn-x btn-alt"
             >
               Apply
             </Link>
-            <i class="text-muted" v-else>Please login/register to apply.</i>
+            <i v-else class="text-muted">Please login/register to apply.</i>
           </div>
         </div>
         <hr />
@@ -54,13 +54,11 @@
           <dd>{{ props.job_posting.plantilla.education }}</dd>
           <dt>Training</dt>
           <dd>
-            
             <span v-if="job_posting.plantilla.training == null">None Required</span>
             <span v-else>{{ props.job_posting.plantilla.training }} hour/s of relevant training.</span>
           </dd>
           <dt>Work Experience</dt>
           <dd>
-            
             <span v-if="job_posting.plantilla.work_experience == null">None Required</span>
             <span v-else>{{ props.job_posting.plantilla.work_experience }} year/s of relevant experience</span>
           </dd>

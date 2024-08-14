@@ -2,12 +2,15 @@
   <Head title="Selection" />
   <RecruitmentLayout>
     <BreadCrumbs :crumbs="crumbs" />
-    <ul class="nav nav-pills  ">
-      <li v-for="result in results" :key="result.id" class="nav-item">
-        <Link :class="{'active' : result.title === active}" :href="route('admin.recruitment.job_posting.application_history.show', {job_posting: result.job_posting_id, result: result.id})" class="nav-link" aria-current="page">{{ result.title }}</Link>
-      </li>
-    </ul>
     <div class="container">
+      <ul class="nav nav-pills align-items-center">
+        <li v-for="result in results" :key="result.id" class="nav-item">
+          <Link :class="{'active' : result.title === active}" :href="route('admin.recruitment.job_posting.application_history.show', {job_posting: result.job_posting_id, result: result.id})" class="nav-link" aria-current="page">{{ result.title }}</Link>
+        </li>
+        <li class="nav-item ms-auto">
+          <small><a :href="route('admin.reports.job_application.export', {job_posting: job.id})" :onBefore="confirm" class="btn btn-secondary"><i class="fa-solid fa-download" />&nbsp; DOWNLOAD RESULT</a></small>
+        </li>
+      </ul>
       <slot />
     </div>
   </RecruitmentLayout>
@@ -50,5 +53,5 @@ const crumbs = computed(() => [
   },
 ])
   
-  
+const confirm = () => window.confirm('Are you sure?')
 </script>

@@ -75,7 +75,14 @@ class DailyTimeRecord extends Model
         
         ->when( // get sched by id
             $filters['user_id'] ?? false, 
-            fn($query, $value) => $query->where('user_id', '=', $value)
+            function ($query, $value) {
+                $query->where('user_id', '=', $value)
+                      ->orWhereHas('user', function($query) use ($value) {
+                          $query->where('first_name', 'like', "%$value%")
+                                ->orWhere('surname', 'like', "%$value%")
+                                ->orWhere('middle_name', 'like', "%$value%");
+                      });
+            }
         )
         
         ->when( // order date_time descending
@@ -88,27 +95,62 @@ class DailyTimeRecord extends Model
     private static function getTotalHours ($inAM, $outAM, $inPM, $outPM, $remarks = '', $day = '') {
         $totalAM = null;
         $totalPM = null;
+        $lateAM = 0;
+        $utAM = 0;
+        $latePM = 0;
+        $utPM = 0;
+        $absent = 0;
+
+        $exact12 = Carbon::parse('12:00');  
+        $exact7 = Carbon::parse('7:00');
+        $exact930 = Carbon::parse('9:30');
+        $exact19 = Carbon::parse('19:00');
+        $exact4pm = Carbon::parse('16:00');
+        $exact1pm = Carbon::parse('13:00');
 
         if($inAM && $outAM){
             $logTimeInAm = Carbon::parse($inAM->format('H:i'));
             $logTimeOutAm = Carbon::parse($outAM->format('H:i'));
+            
 
             $time_in_earlier_7 = $logTimeInAm->lessThan(Carbon::parse('7:00:00'));
-            $time_in_pass_7 = $logTimeInAm->greaterThan(Carbon::parse('7:00:00'));
-            $time_out_earlier_12 = $logTimeOutAm->lessThan(Carbon::parse('12:00:00'));
-            $time_out_pass_12 = $logTimeOutAm->greaterThanOrEqualTo(Carbon::parse('12:00:00'));
+            $time_in_pass_7 = $logTimeInAm->greaterThan(Carbon::parse('7:00:00')) && $logTimeInAm->lte(Carbon::parse('9:30:00'));
+            $time_out_gte_12 = $logTimeOutAm->gte(Carbon::parse('12:00:00'));
+            $time_in_late = $logTimeInAm->greaterThan(Carbon::parse('09:30:00')) && $logTimeInAm->lte(Carbon::parse('11:00:00'));
+            $early_out = $logTimeOutAm->greaterThan(Carbon::parse('11:00:00')) && $logTimeOutAm->lessThan(Carbon::parse('12:00:00'));
 
-            $exact12 = Carbon::parse('12:00');
+            
+            
+            if($time_in_earlier_7 && $time_out_gte_12) { // maaga sa 7 // saktong out
 
-            if($time_in_earlier_7 && $time_out_earlier_12) {
-                $totalAM = $logTimeOutAm->diffInSeconds(Carbon::parse('7:00'));
-            }else if($time_in_earlier_7 && $time_out_pass_12){
-                $totalAM = $exact12->diffInSeconds(Carbon::parse('7:00'));
-            }else if($time_in_pass_7 && $time_out_earlier_12){
-                $totalAM = $logTimeOutAm->diffInSeconds($logTimeInAm);
-            }else if($time_in_pass_7 && $time_out_pass_12){
+                $totalAM = $exact12->diffInSeconds($exact7);
+
+            }else if($time_in_earlier_7 && $early_out){ // early time in // early out
+
+                $utAM = $exact12->diffInSeconds($logTimeOutAm);
+                $totalAM = $exact12->diffInSeconds($exact7); 
+
+            }else if($time_in_late && $time_out_gte_12){ // time in late // gte 12
+
+                $lateAM = $logTimeInAm->diffInSeconds($exact930);
+                $totalAM = $exact12->diffInSeconds($exact930);
+
+            }else if($time_in_late && $early_out){ // time in late // early out
+
+                $lateAM = $logTimeInAm->diffInSeconds($exact930);
+                $utAM = $exact12->diffInSeconds($logTimeOutAm);
+                $totalAM = $exact12->diffInSeconds($exact930);
+
+            }else if($time_in_pass_7 && $early_out || $time_in_pass_7 && $time_out_gte_12){ // saktong time in // early out or  saktong time in // saktong out
+
+                if($time_in_pass_7 && $early_out){
+                    $utAM = $exact12->diffInSeconds($logTimeOutAm);
+                }
+
                 $totalAM = $exact12->diffInSeconds($logTimeInAm);
+
             }
+
         }
 
         if($inPM && $outPM){
@@ -116,25 +158,46 @@ class DailyTimeRecord extends Model
             $logTimeOutPm = Carbon::parse($outPM->format('H:i'));
 
             $time_in_earlier_13 = $logTimeInPm->lte(Carbon::parse('13:00:00'));
-            $time_in_pass_13 = $logTimeInPm->gte(Carbon::parse('13:00:00'));
-            $time_out_earlier_19 = $logTimeOutPm->lte(Carbon::parse('19:00:00'));
-            $time_out_pass_19 = $logTimeOutPm->gte(Carbon::parse('19:00:00'));
+            $time_in_pass_13 = $logTimeInPm->greaterThan(Carbon::parse('13:00:00'));
+            $early_out_pm = $logTimeOutPm->lte(Carbon::parse('16:00:00'));
+            $time_out_earlier_7pm = $logTimeOutPm->lte(Carbon::parse('19:00:00')) && $logTimeOutPm->gte(Carbon::parse('16:00:00')); // 4pm-7pm
+            $time_out_pass_19 = $logTimeOutPm->gte(Carbon::parse('19:00:00')); // 7pm onwards
             // $time_out_pass_12 = $logTimeOutPm->greaterThan(Carbon::parse('12:00:00'));
 
-            $exact19 = Carbon::parse('19:00');
-
-
-            
-            if($time_in_earlier_13 && $time_out_earlier_19) { // time in before 1 and time out before 7 PM
-                $totalPM = $logTimeOutPm->diffInSeconds(Carbon::parse('13:00'));  // 1 PM until out before 7 PM
-            }else if($time_in_earlier_13 && $time_out_pass_19 ){
-                $totalPM = $exact19->diffInSeconds(Carbon::parse('13:00'));  // 1 PM until out pass 7 PM
-            }else if($time_in_pass_13 && $time_out_earlier_19){
-                $totalPM = $logTimeOutPm->diffInSeconds($logTimeInPm);
-            }else if($time_in_pass_13 && $time_out_pass_19){
-                $totalPM = $exact19->diffInSeconds($logTimeInPm);
+            if($time_in_earlier_13 && $time_out_earlier_7pm) { // saktong in, saktong out
+                $totalPM = $logTimeOutPm->diffInSeconds($exact1pm); 
+            }else if($time_in_earlier_13 && $early_out_pm ){ // saktong in, early out
+                $utPM = $exact1pm->diffInSeconds($logTimeOutPm);
+                $totalPM = $exact4pm->diffInSeconds($exact1pm);  
+            }else if($time_in_earlier_13 && $time_out_pass_19 ){ // saktong in, pass 7 out
+                $totalPM = $exact19->diffInSeconds($exact1pm);  
+            }else if($time_in_pass_13 && $time_out_earlier_7pm){ // late in, saktong out
+                $latePM = $logTimeInPm->diffInSeconds($exact1pm);
+                $totalPM = $logTimeOutPm->diffInSeconds($exact1pm);
+            }else if($time_in_pass_13 && $early_out_pm){ // late in, early out
+                $latePM = $logTimeInPm->diffInSeconds($exact1pm);
+                $utPM = $exact1pm->diffInSeconds($logTimeOutPm);
+                $totalPM = $exact4pm->diffInSeconds($exact1pm);
+            }else if($time_in_pass_13 && $time_out_earlier_7pm){ // late in, saktong out
+                $latePM = $logTimeInPm->diffInSeconds($exact1pm);
+                $totalPM = $logTimeOutPm->diffInSeconds($exact1pm);
+            }else if($time_in_pass_13 && $time_out_pass_19 ){ // late in, pass 7 out
+                $latePM = $logTimeInPm->diffInSeconds($exact1pm);
+                $totalPM = $exact19->diffInSeconds($exact1pm);  
             }
         }
+
+        if($day !== 6 && $day !== 7){
+            if(!($inAM && $outAM) && ($inPM && $outPM)){
+                $absent = $exact12->diffInSeconds($exact930);
+            }else if(!($inPM && $outPM) && ($inAM && $outAM)){
+                $absent = $exact4pm->diffInSeconds($exact1pm);
+            }else if(!($inAM && $outAM) && !($inPM && $outPM)){
+                $absent = 28800;
+            }
+        }
+
+        
 
         $total = null;
         $totalMinutes = null;
@@ -143,12 +206,12 @@ class DailyTimeRecord extends Model
 
             if($totalAM) {
                 $total = gmdate('H:i:s', $totalAM);
-                $totalMinutes =  $totalAM - 28800;
+                $totalMinutes =  $totalAM - 25200;
             }
 
             if($totalPM){
                 $total = gmdate('H:i:s', $totalPM);
-                $totalMinutes =  $totalPM- 28800;
+                $totalMinutes =  $totalPM - 23400;
             }
 
             if($totalAM && $totalPM){
@@ -163,6 +226,11 @@ class DailyTimeRecord extends Model
         }
 
         return [
+            'absent' => $absent,
+            'lateAM' => $lateAM,
+            'utAM' => $utAM,
+            'latePM' => $latePM,
+            'utPM' => $utPM,
             'totalAM' => $totalAM,
             'totalPM' => $totalPM,
             'totalMinutes' => $totalMinutes ? $totalMinutes / 60 : '',
@@ -192,17 +260,18 @@ class DailyTimeRecord extends Model
                 $time = Carbon::create($dtrRecord->date_time);
                 $logTime = Carbon::parse($time->toTimeString());
 
-                if($logTime->lessThan(Carbon::parse('11:00:00'))){
+                if($logTime->lte(Carbon::parse('11:00:00'))){
                     array_push($logTimeBetween7to11, $time);
                 }
 
-                if($logTime->greaterThan(Carbon::parse('11:00:00')) && $logTime->lessThan(Carbon::parse('15:00:00'))){
+                if($logTime->greaterThan(Carbon::parse('11:00:00')) && $logTime->lte(Carbon::parse('15:00:00'))){
                     array_push($logTimeBetween11to3, $time);
                 }
 
-                if($logTime->greaterThan(Carbon::parse('15:00:00'))){
+                if($logTime->gt(Carbon::parse('15:00:00'))){
                     array_push($logTimeBetween3onwards, $time);
                 }
+
 
                 if(!isset($remarks) && isset($dtrRecord->remark)){
                     $remarks = $dtrRecord->remark;
@@ -216,8 +285,10 @@ class DailyTimeRecord extends Model
         $outPM = $logTimeBetween3onwards[0] ?? null;
 
         // IN PM LOGIC
-        if(count($logTimeBetween11to3) == 1){
+        if($inAM && count($logTimeBetween11to3) == 1){
             $outAM = $logTimeBetween11to3[0];
+        }else if(!$inAM && count($logTimeBetween11to3) == 1 ){
+            $inPM = $logTimeBetween11to3[0];
         }else if(count($logTimeBetween11to3) > 1 ){
             $inPM = $logTimeBetween11to3[1];
         }
@@ -312,6 +383,11 @@ class DailyTimeRecord extends Model
                     'outAM' => $outAM ? $outAM->format('h:i:00 A') : null,
                     'inPM' => $inPM ? $inPM->format('h:i:00 A') : null,
                     'outPM' => $outPM ? $outPM->format('h:i:00 A') : null,
+                    'lateAM' =>  ($total['lateAM'] / 60) / 480,
+                    'utAM' =>  ($total['utAM'] / 60) / 480,
+                    'latePM' =>  ($total['latePM'] / 60) / 480,
+                    'utPM' =>  ($total['utPM'] / 60) / 480,
+                    'absent' =>  ($total['absent'] / 60) / 480,
                     'totalMinutes'=> $total['totalMinutes'],
                     'totalHours' => $total['total'],
                     'remarks' => $inout['remarks']

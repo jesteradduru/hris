@@ -1,5 +1,5 @@
 // Required
-@import 'mdb-vue-ui-kit/css/mdb.min.css';
+@import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 @import "../../node_modules/bootstrap/scss/mixins";
@@ -45,28 +45,53 @@ $theme-colors: (
     white-space: pre-wrap
 }
 
+.top-bar{
+    background-color: $gray-100;
+}
+
+.topbar-control{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin: 0 10px 0 10px;
+
+    &:hover{
+        background-color: $blue-700;
+        color: $gray-100;
+    }
+}
+
+.dropdown-menu-right {
+    right: 0;
+    left: auto;
+    margin-top: 10px;
+}
+
 .side-nav{
     position: fixed;
     height: 100vh;
     z-index: 1;
-    width: 300px;
-    
-    // * {
-    //     color: $white;
-    // }
+    width: 270px;
+    background: linear-gradient(135deg, $blue-400, $blue-700); /* Gradient from light blue to darker blue */
+    background-repeat: no-repeat;
+    background-size: cover;
     
     .nav-link {
-        transition: background-color 0.2s;
+        font-size: .87rem;
+        transition: all .5s;
         color: $white !important;
+        padding: 12px 13px 12px 13px;
+
         &:hover{
-            background-color: $blue-800;
-            border-radius: 7px;
+            background-color: $blue-700;
         }
     }
 
     .nav-item .active{
-        background-color: $blue-800;
-        border-radius: 7px;
+        background-color: $blue-700;
     }
 
     
@@ -134,7 +159,7 @@ $theme-colors: (
 }
 
 .profile-pic-nav{
-    width: 40px;
+    width: 50px;
     height: auto;
 }
 
@@ -222,3 +247,135 @@ $theme-colors: (
         }
     }
 }
+
+$anim-duration: 2; // in seconds
+$anim-speed: 0.75; // in seconds
+
+:root {
+  --btn-border: 1px solid rgba(255, 255, 255, 0.2);
+  --btn-bg: rgb(22, 115, 255); // #333
+  --btn-shadow: 1px 1px 25px 10px rgba(255, 255, 255, 0.5);
+  --btn-text-color: #ffffff;
+
+  --shine-degree: 120deg;
+  --shine-color: rgba(255, 255, 255, 0.384);
+  --shine-effect: linear-gradient(
+    var(--shine-degree),
+    transparent,
+    var(--shine-color),
+    transparent
+  );
+  --shine-transition: all #{$anim-speed}s ease-in-out;
+}
+
+.btnx {
+  position: relative;
+  overflow: hidden; // debug
+
+  // last element should not have margin
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+  font-size: 1.1rem;
+
+  border-radius: 4px;
+  text-decoration: none;
+  border: var(--btn-border);
+  color: var(--btn-text-color);
+  background: var(--btn-bg);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--shine-effect);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+    transition-property: left;
+  }
+  #{($anim-speed / ($anim-duration + $anim-speed) * 100%)},
+  100% {
+    left: 100%;
+    transition-property: left;
+  }
+}
+
+.btn-alt {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 40px;
+  font-size: 1.1rem;
+
+  position: relative;
+  overflow: hidden; // debug
+
+  // last element should not have margin
+  &:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+  border-radius: 4px;
+  text-decoration: none;
+  border: var(--btn-border);
+  color: var(--btn-text-color);
+  background: var(--btn-bg);
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    height: 100%;
+    top: 0;
+  }
+  &:before {
+    background: rgba(255, 255, 255, 0.5);
+    width: 60px;
+    left: 0;
+    filter: blur(30px);
+    animation: shine-alt1 #{$anim-duration}s ease-in-out infinite;
+  }
+  &:after {
+    background: rgba(255, 255, 255, 0.2);
+    width: 30px;
+    left: 30px;
+    filter: blur(5px);
+    animation: shine-alt2 #{$anim-duration}s ease-in-out infinite;
+  }
+}
+
+@keyframes shine-alt1 {
+  0% {
+    opacity: 0.5;
+    transform: translateX(-100px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+  #{($anim-speed / ($anim-duration + $anim-speed) * 100%)},
+  100% {
+    opacity: 0.6;
+    transform: translateX(300px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+}
+
+@keyframes shine-alt2 {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+  #{($anim-speed / ($anim-duration + $anim-speed) * 100%)},
+  100% {
+    opacity: 1;
+    transform: translateX(300px) skewX(-15deg);
+    transition-property: opacity, transform;
+  }
+}
+
