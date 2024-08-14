@@ -45,7 +45,7 @@
         <tbody>
           <tr v-for="employee in props.employees.data" :key="employee.id" class="">
             <td scope="row">
-              <img v-if="employee.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="$page.props.auth.user.profile_pic" alt="" />
+              <img v-if="employee.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="employee.profile_pic" alt="" />
               <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
             </td>
             <td>{{ employee.username }}</td>
