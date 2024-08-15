@@ -43,10 +43,8 @@ class ApplicationHistoryController extends Controller
                 'academic_distinction'=> ['files'],
                 'non_academic_distinction' => ['files'],
                 'pes_rating',
-                
             ]);
         }
-        
         
         $posting_with_score =  $activeResult->load([
                 'result' => [
@@ -65,6 +63,7 @@ class ApplicationHistoryController extends Controller
             "posting" => $job_posting,
             "posting_with_scores" => $posting_with_score,
             "applicant_details" => $applicant_details,
+            "job_vacancy_status" => $activeResult->result()->first(),
             "result" => $activeResult->load([
                 'result' => [
                     'application', 'user'

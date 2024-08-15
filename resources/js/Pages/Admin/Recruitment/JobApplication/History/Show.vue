@@ -48,7 +48,12 @@
         </small>
       </div>
       <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+        <ApplicantDetails 
+          v-if="props.applicant_details"
+          :latest_spms="props.latest_spms" 
+          :applicant="props.applicant_details" 
+          :plantilla="posting.plantilla" 
+        />
         <div v-if="props.applicant_details && props.applicant_details.job_application[0].latest_result.notes">
           <h5 class="text-primary">INTERVIEW NOTES</h5>
           <div class="text-pre-wrap">

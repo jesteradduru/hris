@@ -346,7 +346,6 @@ class AdminJobApplicationController extends Controller
                 'academic_distinction'=> ['files'],
                 'non_academic_distinction' => ['files'],
                 'pes_rating',
-                
             ]);
         }
 

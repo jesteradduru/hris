@@ -112,8 +112,7 @@ const applications = computed(() => {
   const mappedApplications = props.posting.map(result => {
     return result
   })
-
-  console.log(mappedApplications)
+  
   mappedApplications.sort((a, b) => b.scores[columnToFilter.value] - a.scores[columnToFilter.value])
 
   return mappedApplications

@@ -9,7 +9,7 @@
       </div>
       <!-- 2nd col -->
 
-      <Box class="container-fluid">
+      <Box class="container-fluid shadow-none border-0">
         <template #header><dd>{{ applicant.name }}</dd></template>
         <dl class="applicant_details">
           <dt>Date of Birth:</dt>

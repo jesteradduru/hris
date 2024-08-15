@@ -42,7 +42,7 @@
           </div>
         </dd>
         <!-- REWARDS -->
-        <dt>rewards:</dt>
+        <!-- <dt>rewards:</dt>
         <dd>
           <div v-if="applicant.reward?.length > 0" class="table-responsive">
             <table class="table table-bordered mt-3 table-sm">
@@ -65,16 +65,14 @@
           <div v-else class="text-muted text-center text-sm">
             No Record
           </div>
-        </dd>
+        </dd> -->
       </dl>
     </Box>
 
     <!-- PERFORMANCE -->
     <!-- outstanding accomplishments -->
-    <div v-if="applicant.academic_distinction && applicant.non_academic_distinction">
-      <OutstandingAccomplishments v-if="withControls" :withControls="withControls" :applicant="applicant" />
-      <PerformanceRating v-if="withControls" :applicant="applicant" :posting_id="posting_id" :withControls="withControls" :is-employee="applicant.role_name.includes('employee')" :latest_spms="latest_spms" />
-    </div>
+    <OutstandingAccomplishments :withControls="withControls" :applicant="applicant" />
+    <PerformanceRating :applicant="applicant" :posting_id="posting_id" :withControls="withControls" :is-employee="applicant.role_name.includes('employee')" :latest_spms="latest_spms" />
 
 
 
@@ -92,12 +90,6 @@
 
     <!-- CS Eligibility -->
     <Eligibility :eligs="eligs" :plantilla="plantilla" />
-
-    
-
-
-    
-
 
     <Box>
       <!-- special skills and hobbies -->
