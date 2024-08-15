@@ -8,6 +8,24 @@
       {{ plantilla.training }} hour/s of relevant training.
     </div>
     <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Total No. of Hours</th>
+            <th>Equivalent Score</th>
+            <th>Relevant Trainings (10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ applicant.trainingComputation.hours }}</td>
+            <td>{{ applicant.trainingComputation.equivalent }}</td>
+            <td>{{ applicant.trainingComputation.score }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="table-responsive">
       <table class="table table-sm table-bordered mt-3">
         <thead>
           <tr>

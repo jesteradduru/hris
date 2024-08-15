@@ -45,7 +45,14 @@
          
         <div class="container-fluid" style="height: 80vh; overflow-y: scroll;">
           <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
-          <ApplicantDetails v-if="props.applicant_details" :latest_spms="props.latest_spms" :applicant="props.applicant_details" :plantilla="posting.plantilla" :withControls="true" :posting_id="job_vacancy_status.job_posting_id" />
+          <ApplicantDetails 
+            v-if="props.applicant_details"
+            :latest_spms="props.latest_spms" 
+            :applicant="props.applicant_details" 
+            :plantilla="posting.plantilla" 
+            :withControls="true" 
+            :posting_id="job_vacancy_status.job_posting_id"
+          />
         </div>
 
         <div v-if="props.applicant_details" class="mt-2">

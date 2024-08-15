@@ -7,7 +7,22 @@
       </div>
       {{ plantilla.education }}
     </div>
-
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Equivalent Score</th>
+            <th>Education(10%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ educationComputation.equivalent }}</td>
+            <td>{{ educationComputation.education }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div v-if="college_graduate_studies.length > 0">
       <div class="row">
         <EducationBox :courses="college_graduate_studies" />
@@ -26,6 +41,7 @@ const props = defineProps({
   college_graduate_studies: Object,
   plantilla: Object,
   withControls: Boolean,
+  educationComputation: Object,
 })
 
 

@@ -34,7 +34,7 @@ class ApplicationHistoryController extends Controller
                 'college_graduate_studies' => ['files'],
                 'civil_service_eligibility'  => ['files'],
                 'work_experience',
-                'learning_and_development',
+                'learning_and_development' => ['files'],
                 'other_information',
                 'job_application' => fn($query) => $query->with(['document', 'included', 'psb_points'])->where('job_posting_id', $job_posting->id),
                 'spms',

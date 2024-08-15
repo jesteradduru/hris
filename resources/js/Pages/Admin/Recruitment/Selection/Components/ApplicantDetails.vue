@@ -1,73 +1,7 @@
 <template>
   <div style="text-transform: uppercase" class="row">
     <!-- Personal Information -->
-    <PersonalInformation :applicant="applicant" />
-    <!-- EMPLOYEE RECORDS -->
-    <Box v-if="applicant.position" class="mb-3">
-      <h5 class="text-primary">Employment Records</h5>
-      <dl>
-        <dt>
-          Current Position
-        </dt>
-        <dd>{{ applicant.position.position }}</dd>
-        <dt>Performance Management:</dt>
-        <dd>
-          <div v-if="applicant.spms.length > 0" class="table-responsive">
-            <table class="table table-sm table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">File</th>
-                  <th scope="col">Rating</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(spmsForm) in applicant.spms" :key="spmsForm.id">
-                  <td><a :href="spmsForm.src" target="_blank">{{ `${spmsForm.year} ${spmsForm.semester} SEMESTER ${spmsForm.type}` }} <i class="fa-solid fa-up-right-from-square" /></a></td>
-                  <td>
-                    {{ spmsForm.rating }}
-                    <b>
-                      {{ spmsForm.rating == 5 ? 'Outstanding' : null }}
-                      {{ spmsForm.rating < 5 && spmsForm.rating >= 4 ? 'Very Satisfactory' : null }}
-                      {{ spmsForm.rating < 4 && spmsForm.rating >= 3 ? 'Satisfactory' : null }}
-                      {{ spmsForm.rating < 3 && spmsForm.rating >= 2 ? 'Unsatisfactory' : null }}
-                      {{ spmsForm.rating < 2 && spmsForm.rating >= 1 ? 'Poor' : null }}
-                    </b>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div v-else class="text-muted text-center text-sm">
-            No Record
-          </div>
-        </dd>
-        <!-- REWARDS -->
-        <!-- <dt>rewards:</dt>
-        <dd>
-          <div v-if="applicant.reward?.length > 0" class="table-responsive">
-            <table class="table table-bordered mt-3 table-sm">
-              <thead>
-                <tr>
-                  <th scope="col">Title</th>
-                  <th scope="col">Points</th>
-                  <th scope="col">Date Awarded</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in applicant.reward" :key="item.id" class="">
-                  <td scope="row">{{ item.reward.title }}</td>
-                  <td>{{ item.reward.points }}</td>
-                  <td>{{ moment(item.created_at).format('MMM D, YYYY') }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div v-else class="text-muted text-center text-sm">
-            No Record
-          </div>
-        </dd> -->
-      </dl>
-    </Box>
+    <PersonalInformation :applicant="applicant" /> 
 
     <!-- PERFORMANCE -->
     <!-- outstanding accomplishments -->
@@ -78,7 +12,7 @@
 
     <!-- EDUCATION AND TRAINING -->
     <!-- Educational Background -->
-    <EducationalBackground :educ="educ" :college_graduate_studies="college" :plantilla="plantilla" :withControls="withControls" />
+    <EducationalBackground :educ="educ" :college_graduate_studies="college" :educationComputation="applicant.educationComputation" :plantilla="plantilla" :withControls="withControls" />
     <!-- learning and development -->
     <Learning :plantilla="plantilla" :lnds="lnds" :applicant="applicant" :withControls="withControls" />
     
@@ -95,13 +29,7 @@
       <!-- special skills and hobbies -->
       <div class="mb-3">
         <h5 class="text-primary">Special Skills and Hobbies</h5>
-        <!-- <div v-if="plantilla" class="alert alert-primary">
-        <div>
-          <b>Competency Requirement</b>
-        </div>
-        {{ plantilla.competency }}
-      </div> -->
-        <div v-if="skills">
+        <div v-if="skills" class="d-flex gap-2">
           <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
         </div>
         <div v-else class="text-muted text-center text-sm">

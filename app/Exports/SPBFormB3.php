@@ -2,8 +2,10 @@
 
 namespace App\Exports;
 
+use App\Models\JobApplication;
 use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
+use App\Models\WorkExperience;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
@@ -67,82 +69,11 @@ WithTitle
             foreach($this->job_posting->result as $item) {
 
                 // dd(self::compute_experience($item));
-                $applicants->push(self::compute_experience($item));
+                $applicants->push(WorkExperience::compute_experience($item->application_id));
                
             }
             
             return $applicants->sortByDesc('score')->values();;
-    }
-
-    public static function compute_experience($currentResult){
-        $application = $currentResult->application;
-        $computable = $application->included;
-        $posting = $application->job_posting;
-        $plantilla = $posting->plantilla;
-        $work_points = 0;
-        $total_year_excess_count = 0;
-
-        $included_work = $computable->filter(function ($value, int $key) {
-            return $value->computable_type == 'App\Models\WorkExperience';
-        });
-
-        $works = $included_work->map(function ($value, int $key) {
-            return $value->computable;
-        });
-
-       
-
-        $total_years = 0;
-
-        foreach($works as $work){
-            $years = 0;
-
-            if($work->to_present){
-                $years = self::calculateTotalYears($work->inclusive_date_from, $posting->closing_date);
-            }else{
-                $years = self::calculateTotalYears($work->inclusive_date_from, $work->inclusive_date_to);
-            }
-
-            $total_years += $years;
-        }
-
-        
-        
-        if($plantilla->work_experience) { // if work experience is required
-            if($total_years >= $plantilla->work_experience){
-                $work_points = 50;
-                $total_year_excess_count = $total_years - $plantilla->work_experience;
-            }
-        }
-
-        $excess_points = $total_year_excess_count *  3.5;
-
-        if($excess_points >= 35){
-            $excess_points = 35;
-        }
-
-        return [
-            'user' => $application->user->name,
-            'equivalent'=> $work_points + $excess_points,
-            'years' => $total_years,
-            'psb' => $application->psb_points->experience,
-            'score' =>  round(($work_points + $excess_points + $application->psb_points->experience) * .25, 2)
-        ];
-    }
-
-    private static function calculateTotalYears($startDate, $endDate)
-    {
-        // Parse the input dates using Carbon
-        $start = Carbon::parse($startDate);
-        $end = Carbon::parse($endDate);
-
-        // Calculate the difference in years and months
-        $diffInDays = $start->diffInDays($end);
-
-        // Convert the difference to decimal years
-        $totalYears = $diffInDays / 365.25;
-
-        return round($totalYears, 2);
     }
 
     public function map($applicant) : array {

@@ -12,14 +12,16 @@
             <tr>
               <th scope="col">Semester</th>
               <th scope="col">Rating</th>
+              <th v-if="applicant.spms.length > 0">Equivalent Rating (70)</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="ipcr in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
+            <tr v-for="(ipcr, index) in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
               <td scope="row">
                 <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
               <td>{{ ipcr.rating }}</td>
+              <td v-if="index === 0" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
           </tbody>
         </table>
@@ -38,12 +40,14 @@
             <tr>
               <th scope="col">Semester</th>
               <th scope="col">Rating</th>
+              <th v-if="applicant.pes_rating">Equivalent Rating (70)</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>FIRST SEMESTER</td>
               <td>{{ applicant.pes_rating.first_rating }}</td>
+              <td rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
             <tr>
               <td>SECOND SEMESTER</td>

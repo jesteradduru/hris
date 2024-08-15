@@ -2,21 +2,16 @@
 
 namespace App\Exports;
 
-use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
+use App\Models\LearningAndDevelopment;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithDrawings;
-use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
-use Maatwebsite\Excel\Concerns\WithColumnWidths;
 use Maatwebsite\Excel\Concerns\WithDefaultStyles;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
@@ -67,53 +62,13 @@ WithTitle
             foreach($this->job_posting->result as $item) {
 
                 // dd(self::compute_training($item));
-                $applicants->push(self::compute_training($item));
+                $applicants->push(LearningAndDevelopment::compute_training($item->application_id));
                
             }
             
             return $applicants->sortByDesc('score')->values();;
     }
 
-    public static function compute_training($currentResult){
-        $application = $currentResult->application;
-        $computable = $application->included;
-        $plantilla = $application->job_posting->plantilla;
-        $training = 0;
-
-        $included_trainings = $computable->filter(function ($value, int $key) {
-            return $value->computable_type == 'App\Models\LearningAndDevelopment';
-        });
-
-        $trainings = $included_trainings->map(function ($value, int $key) {
-            return $value->computable;
-        });
-        
-        $no_of_hours1 = $trainings->sum('number_of_hours');
-        $no_of_hours = $trainings->sum('number_of_hours');
-        
-        if($plantilla->training){ // if training is required
-            if($plantilla->training <= $no_of_hours){
-                $training = 50;
-                $no_of_hours = $no_of_hours - $plantilla->training;
-            }
-        }
-        
-
-        while($no_of_hours >= 12 && $training < 100) {
-            if($no_of_hours >= 12){
-                $training += 1;
-            }
-            $no_of_hours -= 12;
-        }
-    
-
-        return [
-            'user' => $application->user->name,
-            'hours' => $no_of_hours1,
-            'equivalent' => $training,
-            'score' => $training * .1
-        ];
-    }
 
     public function map($applicant) : array {
         // dd($applicant);

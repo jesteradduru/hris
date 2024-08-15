@@ -1,6 +1,6 @@
 <template>
-  <div title="Applicants" class="card shadow">
-    <div class="applicant-list cad-body">
+  <div title="Applicants">
+    <div class="applicant-list">
       <div class="text-uppercase">
         <b>Insider</b>
         <div>

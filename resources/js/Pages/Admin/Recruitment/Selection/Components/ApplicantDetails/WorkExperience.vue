@@ -7,6 +7,26 @@
       </div>
       {{ plantilla.work_experience }} year/s of relevant experience.
     </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-sm">
+        <thead>
+          <tr>
+            <th>Years of relevevant Experience</th>
+            <th>Equivalent Score(85)</th>
+            <th>HRMPSB Validation Rating(15)</th>
+            <th>Relevant Experience (25%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ applicant.workExperienceComputation.years }}</td>
+            <td>{{ applicant.workExperienceComputation.equivalent }}</td>
+            <td>{{ applicant.workExperienceComputation.psb }}</td>
+            <td>{{ applicant.workExperienceComputation.score }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div v-if="works.length === 0" class="text-muted text-center text-sm">
       No Record
     </div>

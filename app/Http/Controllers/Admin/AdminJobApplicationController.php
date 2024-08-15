@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApplicationResult;
-use App\Models\ApplicationScore;
+use App\Models\EducationalBackgroundCollegeGraduateStudy;
 use App\Models\JobApplication;
 use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
+use App\Models\LearningAndDevelopment;
 use App\Models\PlantillaPosition;
 use App\Models\SpmsForm;
 use App\Models\User;
+use App\Models\WorkExperience;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -321,6 +323,9 @@ class AdminJobApplicationController extends Controller
         $job_vacancies = JobPosting::notArchived()->get();
         $job_applications = [];
         $applicant_details = null;
+
+        $workExperienceComputation = null;
+        $trainingComputation = null;
         
 
         // dd($job_vacancies);
@@ -347,6 +352,13 @@ class AdminJobApplicationController extends Controller
                 'non_academic_distinction' => ['files'],
                 'pes_rating',
             ]);
+
+            if(count($applicant_details->job_application) > 0){
+                $applicant_details->workExperienceComputation = WorkExperience::compute_experience($applicant_details->job_application[0]->id);
+                $applicant_details->trainingComputation = LearningAndDevelopment::compute_training($applicant_details->job_application[0]->id);
+                $applicant_details->educationComputation = EducationalBackgroundCollegeGraduateStudy::compute_education($applicant_details->id);
+                $applicant_details->performanceComputation = SpmsForm::compute_performance($applicant_details->id, $request->job_posting, $applicant_details->job_application[0]->id);
+            }
         }
 
         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
