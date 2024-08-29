@@ -17,9 +17,14 @@
     <form v-else @submit.prevent="submitApplication">
       <div class="mb-3 p-4 border rounded">
         <h4>Personal Data Sheet</h4>
-        <a class="btn btn-primary " :href="route('profile.pds.personal_information.edit')" target="_blank">
-          UPDATE PDS <i class="fa-solid fa-up-right-from-square ms-1  " />
-        </a>
+        <div class="d-flex gap-2">
+          <a class="btn btn-primary " :href="route('profile.pds.personal_information.edit')" target="_blank">
+            <i class="fa-solid fa-up-right-from-square " />&nbsp; Update PDS 
+          </a>
+          <a class="btn btn-success " :href="route('pds.export')" target="_blank">
+            <i class="fa-solid fa-download " />&nbsp; Download PDS 
+          </a>
+        </div>
       </div>
       <div class="mb-3 p-4 border rounded">
         <h4>Documentary Requirements</h4>

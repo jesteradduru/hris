@@ -88,7 +88,7 @@ class SpmsForm extends Model
                         'name' => $user->name,
                         'first' => count($latestSpms) >= 1 ? $latestSpms[0]->rating : null,
                         'second' => count($latestSpms) === 2 ? $latestSpms[1]->rating : null,
-                        'equivalent' => $performance_rating
+                        'equivalent' => round($performance_rating, 2)
                     ];
 
                     // dd($applicant);

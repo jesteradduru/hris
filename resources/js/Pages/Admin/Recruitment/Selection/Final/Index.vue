@@ -12,9 +12,9 @@
         
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
-      <div>
-        <Link as="button" method="post" :href="route('admin.recruitment.result.rollbackInterview', {result: props.job_vacancy_status.id})" :onBefore="confirm" class="btn btn-success">Go Back</Link>
-        <a :href="route('admin.reports.job_application.export', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-success"><i class="fa-solid fa-table" />&nbsp; Export SPB Forms</a>
+      <div class="d-flex gap-2">
+        <Link as="button" method="post" :href="route('admin.recruitment.result.rollbackInterview', {result: props.job_vacancy_status.id})" :onBefore="confirm" class="btn btn-secondary"><i class="fa-solid fa-arrow-left" />&nbsp;Previous</Link>
+        <a :href="route('admin.reports.job_application.export', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-success"><i class="fa-solid fa-download" />&nbsp; Download Result</a>
         <Link as="button" method="put" :href="route('admin.recruitment.job_posting.archived', {job_posting: posting.job_posting.id})" :onBefore="confirm" class="btn btn-primary"><i class="fa-solid fa-archive" />&nbsp; Archive</Link>
       </div>
     </div>

@@ -46,6 +46,7 @@ class WorkExperience extends Model
         $plantilla = $posting->plantilla;
         $work_points = 0;
         $total_year_excess_count = 0;
+        $psb_point_experience = $application->psb_points()->exists() ? $application->psb_points->experience : 0;
 
         $included_work = $computable->filter(function ($value, int $key) {
             return $value->computable_type == 'App\Models\WorkExperience';
@@ -90,8 +91,8 @@ class WorkExperience extends Model
             'user' => $application->user->name,
             'equivalent'=> $work_points + $excess_points,
             'years' => $total_years,
-            'psb' => $application->psb_points->experience,
-            'score' =>  round(($work_points + $excess_points + $application->psb_points->experience) * .25, 2)
+            'psb' =>  $psb_point_experience,
+            'score' =>  round(($work_points + $excess_points + $psb_point_experience ) * .25, 2)
         ];
     }
 

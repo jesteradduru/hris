@@ -7,7 +7,7 @@
       </div>
       {{ plantilla.training }} hour/s of relevant training.
     </div>
-    <div class="table-responsive">
+    <div v-if="applicant.trainingComputation" class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>

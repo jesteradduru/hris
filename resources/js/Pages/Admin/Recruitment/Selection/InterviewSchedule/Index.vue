@@ -70,11 +70,32 @@
           </div>
         </div>
       </div>
-      <div class="col-3">
+      <div class="col-2">
         <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
       </div>
       <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" :plantilla="props.posting.plantilla" />
+        <div
+          class="nav nav-tabs nav-fill"
+        >
+          <a type="button" class="nav-link" :class="{active: activeTab == 'personal'}" data-id="personal" aria-current="page" @click="setActive">Personal</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'out-accomp'}" data-id="out-accomp" aria-current="page" @click="setActive">Awards</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'performance'}" data-id="performance" aria-current="page" @click="setActive">Performance</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'educ'}" data-id="educ" aria-current="page" @click="setActive">Education</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'lnd'}" data-id="lnd" aria-current="page" @click="setActive">Trainings</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'work'}" data-id="work" aria-current="page" @click="setActive">Experience</a>
+          <a type="button" class="nav-link" :class="{active: activeTab == 'elig'}" data-id="elig" aria-current="page" @click="setActive">Eligibility</a>
+        </div>
+         
+        <div class="container-fluid" style="height: 80vh; overflow-y: scroll;">
+          <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
+          <ApplicantDetails 
+            v-if="props.applicant_details"
+            :latest_spms="props.latest_spms" 
+            :applicant="props.applicant_details" 
+            :plantilla="posting.plantilla" 
+            :posting_id="job_vacancy_status.job_posting_id"
+          />
+        </div>
       </div>
     </div>
   </RecruitmentLayout>
@@ -127,4 +148,14 @@ router.on('finish', () => {
 })
 
 const confirm = () => window.confirm('Are you sure?')
+
+const activeTab = ref('personal')
+
+const setActive = (e) => {
+  e.preventDefault()
+  const id = e.target.getAttribute('data-id')
+  const target = document.getElementById(id)
+  target.scrollIntoView()
+  activeTab.value = id
+}
 </script>

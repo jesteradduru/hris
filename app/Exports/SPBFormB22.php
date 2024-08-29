@@ -4,7 +4,6 @@ namespace App\Exports;
 
 use App\Models\JobPosting;
 use App\Models\LearningAndDevelopment;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use Maatwebsite\Excel\Concerns\Exportable;

@@ -7,7 +7,7 @@
       </div>
       {{ plantilla.work_experience }} year/s of relevant experience.
     </div>
-    <div class="table-responsive">
+    <div v-if="applicant.workExperienceComputation" class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>

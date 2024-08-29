@@ -21,7 +21,7 @@
                 <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
               <td>{{ ipcr.rating }}</td>
-              <td v-if="index === 0" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td v-if="index === 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
           </tbody>
         </table>

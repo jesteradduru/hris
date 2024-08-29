@@ -1,6 +1,20 @@
 <template>
   <Box id="out-accomp" class="mb-3">
     <template #header>Outstanding Accomplishments</template>
+    <div v-if="applicant.awardsComputation && withControls" class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Equivalent Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="col">{{ applicant.awardsComputation }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <div class="mb-2">
       <b>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</b>
       <div class="table-responsive">
@@ -66,8 +80,8 @@
 
 import Box from '../UI/Box.vue'
 import {debounce} from 'lodash'
-import {router } from '@inertiajs/vue3'
 import {computed} from 'vue'
+import {router } from '@inertiajs/vue3'
 import moment from 'moment'
 
 const props = defineProps({
@@ -76,7 +90,11 @@ const props = defineProps({
 })
 
 const included = computed(() => {
-  return props.applicant.job_application[0].included.map(included => included)
+  if(props.applicant.job_application[0].included){
+    return props.applicant.job_application[0].included.map(included => included)
+  }else{
+    return []
+  }
 })
 
 const checkIfIncluded = (id, type) => {

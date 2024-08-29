@@ -10,6 +10,7 @@ use App\Models\JobApplicationResults;
 use App\Models\JobPosting;
 use App\Models\LearningAndDevelopment;
 use App\Models\PlantillaPosition;
+use App\Models\RewardAndRecognition;
 use App\Models\SpmsForm;
 use App\Models\User;
 use App\Models\WorkExperience;
@@ -358,6 +359,7 @@ class AdminJobApplicationController extends Controller
                 $applicant_details->trainingComputation = LearningAndDevelopment::compute_training($applicant_details->job_application[0]->id);
                 $applicant_details->educationComputation = EducationalBackgroundCollegeGraduateStudy::compute_education($applicant_details->id);
                 $applicant_details->performanceComputation = SpmsForm::compute_performance($applicant_details->id, $request->job_posting, $applicant_details->job_application[0]->id);
+                $applicant_details->awardsComputation = RewardAndRecognition::outstanding_accoplishment($applicant_details->job_application[0]->id);
             }
         }
 

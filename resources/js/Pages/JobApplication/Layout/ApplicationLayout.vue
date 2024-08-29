@@ -2,7 +2,7 @@
   <Head title="Application" />
   <AuthenticatedLayout>
     <BreadCrumbs :crumbs="crumbs" />
-    <div class="container rounded p-4 bg-light border">
+    <div class="container rounded p-4">
       <slot />
     </div>
   </AuthenticatedLayout>

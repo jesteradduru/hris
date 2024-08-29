@@ -7,7 +7,7 @@
       </div>
       {{ plantilla.education }}
     </div>
-    <div class="table-responsive">
+    <div v-if="educationComputation" class="table-responsive">
       <table class="table table-bordered table-sm">
         <thead>
           <tr>
