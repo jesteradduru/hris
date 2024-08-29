@@ -47,7 +47,7 @@
             <tr>
               <td>FIRST SEMESTER</td>
               <td>{{ applicant.pes_rating.first_rating }}</td>
-              <td rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td v-if="index === 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
             <tr>
               <td>SECOND SEMESTER</td>
