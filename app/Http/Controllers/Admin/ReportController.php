@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\ApplicantExport;
+use App\Exports\LonglistedApplicants;
 use App\Exports\NedaExamResultsExport;
 use App\Exports\ShortlistedApplicants;
 use App\Http\Controllers\Controller;
@@ -52,6 +53,19 @@ class ReportController extends Controller
 
         if($request->report === 'shortlisted' && !$posting){
             return $this->excel->download(new ShortlistedApplicants(), 'shortlist.xlsx');
+        }
+
+        if($request->report === 'longlist' && $posting){
+            if(!JobPosting::find($posting)->has('results')->get()){
+                sweetalert()->addSuccess('Longlist not yet created.');
+
+                return back();
+            }
+            return $this->excel->download(new LonglistedApplicants($request->posting), 'longlist.xlsx');
+        }
+
+        if($request->report === 'longlist' && !$posting){
+            return $this->excel->download(new LonglistedApplicants(), 'longlist.xlsx');
         }
 
 

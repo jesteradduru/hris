@@ -10,7 +10,7 @@
           <span class="fa-solid fa-bars" />
         </div>
         <Link class="navbar-brand" :href="route('dashboard')">
-          NRO2 HRIS
+          NEDA2 HRIS
         </Link>
       </div>
       
@@ -54,7 +54,7 @@
     <div class="offcanvas-header text-light">
       <div class="offcanvas-title d-flex align-center gap-2">
         <img :src="nedalogo" alt="" class="img-fluid side-nav-logo" />
-        <b>NRO2 Human Resource Information System</b>
+        <b>NEDA2 Human Resource Information System</b>
       </div>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
     </div>

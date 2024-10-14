@@ -5,7 +5,8 @@
       <div>
         <b>Work Experience Requirement</b>
       </div>
-      {{ plantilla.work_experience }} year/s of relevant experience.
+      <span v-if="plantilla.work_experience">{{ plantilla.work_experience }} year/s of relevant experience.</span>
+      <span v-else>None Required</span>
     </div>
     <div v-if="applicant.workExperienceComputation" class="table-responsive">
       <table class="table table-bordered table-sm">

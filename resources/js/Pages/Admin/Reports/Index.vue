@@ -13,6 +13,7 @@
       >
         <option value="">Select one</option>
         <option value="applicants">List of Applicants</option>
+        <option value="longlist">Longlisted Applicants</option>
         <option value="shortlisted">Shortlisted Applicants</option>
         <option value="exam">NEDA Exam Result</option>
       </select>

@@ -5,7 +5,8 @@
       <div>
         <b>Training Requirement</b>
       </div>
-      {{ plantilla.training }} hour/s of relevant training.
+      <span v-if="plantilla.training">{{ plantilla.training }} hour/s of relevant training.</span>
+      <span v-else>None Required</span>
     </div>
     <div v-if="applicant.trainingComputation" class="table-responsive">
       <table class="table table-bordered table-sm">
