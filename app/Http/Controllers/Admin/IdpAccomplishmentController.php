@@ -33,9 +33,10 @@ class IdpAccomplishmentController extends Controller
 
         $validate = $request->validate([
             'activity' => 'required|string|max:300',
-            'file' => 'required|mimes:pdf|max:25000',
+            'file' => 'required|max:25000',
+            'file.*' => 'mimes:pdf',
         ], [
-            'file.*.required' => 'Select atleast one file.',
+            'file.required' => 'Select atleast one file.',
             'file.*.mimes' => 'The file you inserted is invalid. Only pdf files is allowed.',
         ]);
 
