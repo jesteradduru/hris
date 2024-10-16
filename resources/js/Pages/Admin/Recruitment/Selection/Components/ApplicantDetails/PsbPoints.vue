@@ -25,7 +25,7 @@
         <InputError :message="form.errors.personality_peer" />
       </div>
       <div class="form-group mb-3">
-        <label for="" class="form-label">Experience (15 points)</label>
+        <label for="" class="form-label">Experience (35 points)</label>
         <input v-model="form.experience" type="text" class="form-control form-control-sm" />
         <InputError :message="form.errors.experience" />
       </div>
@@ -72,7 +72,7 @@
         <InputError :message="form.errors.technical_competency" />
       </div>
       <div class="form-group mb-3">
-        <label for="" class="form-label">Experience (15 points)</label>
+        <label for="" class="form-label">Experience (35 points)</label>
         <input v-model="form.experience" type="text" class="form-control form-control-sm" />
         <InputError :message="form.errors.experience" />
       </div>

@@ -76,7 +76,7 @@ class WorkExperience extends Model
         
         if($plantilla->work_experience) { // if work experience is required
             if($total_years >= $plantilla->work_experience){
-                $work_points = 50;
+                $work_points = 30;
                 $total_year_excess_count = $total_years - $plantilla->work_experience;
             }
         }

@@ -64,37 +64,49 @@ class RewardAndRecognition extends Model
             return $award->category == 'LATIN';
         });
 
-        // 1 major award national or 3 major local award
-        if(count($non_acad_award_major_national) >= 1 || count($non_acad_award_major_local) == 3 ){
-            $outstanding = 100;
+        // 1 major award national or more
+        if(count($non_acad_award_major_national) >= 1 ){
+            foreach($non_acad_award_major_national as $x){
+                $outstanding += 80;
+            }
          }
 
-         // 2 major or 1 major + 2 or more minor
-         if(count($non_acad_award_major_local) == 2 || (count($non_acad_award_major_local) == 1) && count($non_acad_award_minor) >= 2){
-            $outstanding = $outstanding + 80;
+         // 1 or more major awards local
+         if(count($non_acad_award_major_local) >= 1 ){
+            $outstanding = $outstanding + 50;
          }
 
-         if(count($non_acad_award_major_local) == 1){
-            $outstanding = $outstanding + 60;
-         }
-
-        //  special awards more than 2
-         if(count($non_acad_award_special) >= 2){
+         // 1 minor award local
+         if(count($non_acad_award_minor) == 1){
             $outstanding = $outstanding + 30;
          }
 
-         // special awards only 1
+         // 2 or more minor awards local
+         if(count($non_acad_award_minor) >= 2){
+            $outstanding = $outstanding + 40;
+         }
+
+        // 1 special awards 
          if(count($non_acad_award_special) == 1){
+            $outstanding = $outstanding + 10;
+         }
+
+         // 2 or more special awards only
+         if(count($non_acad_award_special) >= 2){
             $outstanding = $outstanding + 20;
          }
 
          // ACADEMIC AWARDS
-         if(count($acad_award_latin) == 1){
-            $outstanding = $outstanding + 20;
+         if(count($acad_award_latin) > 0){
+            foreach($acad_award_latin as $acad_awards){
+                $outstanding = $outstanding + 10;
+            }
         }
          // ACADEMIC AWARDS
-        if(count($acad_award_special) == 1){
-            $outstanding = $outstanding + 10;
+        if(count($acad_award_special)> 0){
+            foreach($acad_award_special as $acad_awards){
+                $outstanding = $outstanding + 5;
+            }
         }
 
         if($outstanding > 100){

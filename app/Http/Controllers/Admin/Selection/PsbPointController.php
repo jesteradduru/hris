@@ -20,7 +20,7 @@ class PsbPointController extends Controller
         if($user->hasRole('employee')){
             $validate = $request->validate([
                 // 'performance' => 'required|decimal:0,2|max:15',  
-                'experience' => 'required|decimal:0,2|max:15',
+                'experience' => 'required|decimal:0,2|max:35',
                 // 'personality_hrmpsb' => 'required|decimal:0,2|max:80',
                 'org_competency' => 'required|decimal:0,2',
                 'leadership_competency' => 'required|decimal:0,2',
@@ -31,7 +31,7 @@ class PsbPointController extends Controller
         }else{
             $validate = $request->validate([
                 // 'performance' => 'required|decimal:0,2|max:15',  
-                'experience' => 'required|decimal:0,2|max:15',
+                'experience' => 'required|decimal:0,2|max:35',
                 'org_competency' => 'required|decimal:0,2',
                 'leadership_competency' => 'required|decimal:0,2',
                 'technical_competency' => 'required|decimal:0,2',
