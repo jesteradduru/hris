@@ -19,6 +19,7 @@
                     {{ 
                       getTraining(training.training)
                     }}
+                    <a :href="training.learning_and_development.files[0].src " target="_blank">Show</a>
                   </div>
                   <div>
                     <Link as="button" :onBefore="confirm" method="delete" class="text-danger border-0" :href="route('admin.competency_training.destroy', {competency_training: training.id})"><i class="fa-solid fa-x" /></Link>
@@ -74,6 +75,7 @@
                   {{ 
                     getTraining(training)
                   }}
+                  <a :href="training.files[0].src " target="_blank">Show</a>
                 </div>
                 <div>
                   <Link

@@ -32,8 +32,8 @@ class LndTrainingsAttendedController extends Controller
 
         return inertia('Admin/L&D/CompetencyGap/TrainingsAttended/Create', [
             'report_id' => $request->report_id,
-            'lnd_form' => $lndForm->load(['lnd_training']),
-            'trainings' => LearningAndDevelopment::filter($filters)
+            'lnd_form' => $lndForm->load(['lnd_training' => ['learning_and_development' => ['files']]]),
+            'trainings' => LearningAndDevelopment::with('files')->filter($filters)
             ->where('user_id', $request->user_id)
             ->whereDoesntHave('lnd_training', fn (Builder $query)
                 => $query->where('lnd_form_id', $request->lnd_form)

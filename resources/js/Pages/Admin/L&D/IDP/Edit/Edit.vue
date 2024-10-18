@@ -40,7 +40,8 @@
                 type="file" class="form-control" name="" aria-describedby="helpId" placeholder=""
                 @change="addFile"
               />
-              <InputError :message="form.errors.file" />
+              <InputError :message="form.errors['file']" />
+              <InputError :message="form.errors['file.0']" />
             </div>
             
             <button type="submit" class="btn btn-success">ADD</button>
