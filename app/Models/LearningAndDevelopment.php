@@ -62,7 +62,7 @@ class LearningAndDevelopment extends Model
         $application = JobApplication::find($application_id);
         $computable = $application->included;
         $plantilla = $application->job_posting->plantilla;
-        $training = 0;
+        $training = 50;
 
         $included_trainings = $computable->filter(function ($value, int $key) {
             return $value->computable_type == 'App\Models\LearningAndDevelopment';

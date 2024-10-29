@@ -110,8 +110,8 @@ WithTitle
         // PREPARE COLUMN HEADERS
         $sheet->setCellValue('A6', 'CANDIDATES');
         $sheet->setCellValue('B6', "TOTAL NO. OF YEARS\n(RELEVANT EXPERIENCE)");
-        $sheet->setCellValue('C6', "EQUIVALENT SCORE\n(85)");
-        $sheet->setCellValue('D6', "HRMPSB VALIDATION\nRating(15)");
+        $sheet->setCellValue('C6', "EQUIVALENT SCORE\n(65)");
+        $sheet->setCellValue('D6', "HRMPSB VALIDATION\nRating(35)");
         $sheet->setCellValue('E6', "RELEVANT EXPERIENCE\n(25%)");
         $sheet->setCellValue('F6', 'RANK');
 

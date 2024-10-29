@@ -13,8 +13,8 @@
         <thead>
           <tr>
             <th>Years of relevevant Experience</th>
-            <th>Equivalent Score(85)</th>
-            <th>HRMPSB Validation Rating(15)</th>
+            <th>Equivalent Score(65)</th>
+            <th>HRMPSB Validation Rating(35)</th>
             <th>Relevant Experience (25%)</th>
           </tr>
         </thead>

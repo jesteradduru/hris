@@ -44,7 +44,7 @@ class WorkExperience extends Model
         $computable = $application->included;
         $posting = $application->job_posting;
         $plantilla = $posting->plantilla;
-        $work_points = 0;
+        $work_points = 30;
         $total_year_excess_count = 0;
         $psb_point_experience = $application->psb_points()->exists() ? $application->psb_points->experience : 0;
 
@@ -72,14 +72,16 @@ class WorkExperience extends Model
             $total_years += $years;
         }
 
+        $total_year_excess_count = $total_years - $plantilla->work_experience;
         
-        
-        if($plantilla->work_experience) { // if work experience is required
-            if($total_years >= $plantilla->work_experience){
-                $work_points = 30;
-                $total_year_excess_count = $total_years - $plantilla->work_experience;
-            }
-        }
+        // if($plantilla->work_experience) { // if work experience is required
+        //     if($total_years >= $plantilla->work_experience){
+        //         $work_points = 30;
+        //         $total_year_excess_count = $total_years - $plantilla->work_experience;
+        //     }
+        // }else{
+        //     $total_year_excess_count = $total_years - $plantilla->work_experience;
+        // }
 
         $excess_points = $total_year_excess_count *  3.5;
 
