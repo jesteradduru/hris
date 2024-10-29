@@ -47,6 +47,7 @@ class WorkExperience extends Model
         $work_points = 30;
         $total_year_excess_count = 0;
         $psb_point_experience = $application->psb_points()->exists() ? $application->psb_points->experience : 0;
+        $excess_points = 0;
 
         $included_work = $computable->filter(function ($value, int $key) {
             return $value->computable_type == 'App\Models\WorkExperience';
@@ -72,18 +73,19 @@ class WorkExperience extends Model
             $total_years += $years;
         }
 
-        $total_year_excess_count = $total_years - $plantilla->work_experience;
         
-        // if($plantilla->work_experience) { // if work experience is required
-        //     if($total_years >= $plantilla->work_experience){
-        //         $work_points = 30;
-        //         $total_year_excess_count = $total_years - $plantilla->work_experience;
-        //     }
-        // }else{
-        //     $total_year_excess_count = $total_years - $plantilla->work_experience;
-        // }
+        // $total_year_excess_count = $total_years - $plantilla->work_experience;
+        
+        if($plantilla->work_experience) { // if work experience is required
+            if($total_years >= $plantilla->work_experience){
+                $work_points = 30;
+                $total_year_excess_count = $total_years - $plantilla->work_experience;
+            }
+        }
 
-        $excess_points = $total_year_excess_count *  3.5;
+        if((int)$total_year_excess_count > 0){
+            $excess_points = (int)$total_year_excess_count *  3.5;
+        }
 
         if($excess_points >= 35){
             $excess_points = 35;
