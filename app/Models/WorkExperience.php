@@ -83,9 +83,7 @@ class WorkExperience extends Model
             }
         }
 
-        if((int)$total_year_excess_count > 0){
-            $excess_points = (int)$total_year_excess_count *  3.5;
-        }
+        $excess_points = (int)$total_year_excess_count *  3.5;
 
         if($excess_points >= 35){
             $excess_points = 35;
