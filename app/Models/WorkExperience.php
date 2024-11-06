@@ -74,16 +74,21 @@ class WorkExperience extends Model
         }
 
         
-        // $total_year_excess_count = $total_years - $plantilla->work_experience;
-        
         if($plantilla->work_experience) { // if work experience is required
             if($total_years >= $plantilla->work_experience){
                 $work_points = 30;
                 $total_year_excess_count = $total_years - $plantilla->work_experience;
+
+                if($total_year_excess_count){
+                    $excess_points = (int)$total_years *  3.5;
+                }
+            }
+        }else{
+            if((int)$total_years > 0){
+                $excess_points = (int)$total_years *  3.5;
             }
         }
 
-        $excess_points = (int)$total_year_excess_count *  3.5;
 
         if($excess_points >= 35){
             $excess_points = 35;
