@@ -1,6 +1,7 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout>
+      <div class="alert alert-info mt-2"><b>Reminder: </b>To validate the Learning and Development Intervention/Training, please attach the certificate.</div>
       <Link :href="route('profile.pds.learning_and_development.create')" class="btn btn-success">Add</Link>
       <div class="table-responsive">
         <table class="table table-sm table-bordered mt-3">

@@ -27,35 +27,171 @@
         </div>
       </div>
       <div class="mb-3 p-4 border rounded">
-        <h4>Documentary Requirements</h4>
-        <div class="mb-3 text-pre-wrap">
-          {{ props.job_posting.documents }}
+        <div class="alert alert-danger">
+          <b>Important Reminders:</b> 
+          <ol>
+            <li>
+              Work Experiences and Learning and Development(L&D) Interventions/ Training Programs must be inputted to the PDS through the system. Click <b>
+                <a :href="route('profile.pds.personal_information.edit')" target="_blank">
+                  here
+                </a>
+              </b>
+              to update your PDS.
+            </li>
+            <li>
+              Please attach  the certificates of Trainings on PDS under <b><Link :href="route('profile.pds.learning_and_development.index')">L&D Interventions/ Training Programs</Link></b> for it to be valid. All trainings without certificate will be invalid.
+            </li>
+          </ol>
         </div>
-        <div>
-          <div class="mb-3 d-flex gap-2">
-            <div>
-              <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" multiple @input="addDocument" />
-            </div>
-            <div><button type="reset" class="btn btn-secondary btn-sm" @click="() => form.reset()">Clear files</button></div>
+        <h4>Work Experience</h4>
+        <div class="mb-3 text-pre-wrap">
+          <div class="mb-2">
+            <span v-if="props.job_posting.plantilla.work_experience">{{ props.job_posting.plantilla.work_experience }} year/s of relevant experience.</span>
+            <span v-else>None required</span>
           </div>
-          <div class="form-text text-muted">Accepted file formats: pdf</div>
-          <InputError :message="form.errors['documents']" />
-          <InputError :message="form.errors['documents.0']" />
+        </div>
+        <h4>Training</h4>
+        <div class="mb-3 text-pre-wrap">
+          <span v-if="props.job_posting.plantilla.training">{{ props.job_posting.plantilla.training }} hour/s of relevant trainings.</span>
+          <span v-else>None required</span>
+        </div>
+        <!-- DOCUMENTARY REQUIREMENTS -->
+        <h4>Documentary Requirements</h4>
+        <div class="text-danger mb-3">* Required</div>
+        <div>
+          <!-- PDS -->
+          <div class="form-group mb-3">
+            <label for="PDS">
+              1. Fully accomplished Personal Data Sheet (PDS) with recent passport-sized picture (CS Form No. 212,
+              Revised 2017) which can be downloaded
+              <a :href="route('pds.export')" target="_blank">
+                <b>here</b>
+              </a>
+              <span class="text-danger">*</span>
+            </label>
+            <div class="d-flex gap-2">
+              <div>
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" multiple data-input="pds" @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['pds']" />
+              <InputError :message="form.errors['pds.0']" />
+            </div>
+            <div class="form-text text-info">Must be a scanned copy of signed PDS in PDF format.</div>
+          </div>
+          <!-- Rating -->
+          <div class="form-group mb-3 ">
+            <label for="Rating">
+              2. Performance rating in the last rating period (if applicable).
+            </label>
+            <div class="d-flex gap-2">
+              <div>
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" data-input="rating" multiple @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['rating']" />
+              <InputError :message="form.errors['rating.0']" />
+            </div>
+            <div class="form-text text-info">Accepted file formats: pdf</div>
+          </div>
+          <!-- Eligibility -->
+          <div class="form-group mb-3 ">
+            <label for="Eligibility">
+              3. Photocopy of certificate of eligibility/rating/license. <span class="text-danger">*</span>
+            </label>
+            <div class="d-flex gap-2">
+              <div>
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" data-input="eligibility" multiple @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['eligibility']" />
+              <InputError :message="form.errors['eligibility.0']" />
+            </div>
+            <div class="form-text text-info">Accepted file formats: pdf</div>
+          </div>
+          <!-- TOR -->
+          <div class="form-group mb-3">
+            <label for="TOR">
+              4. Photocopy of Transcript of Records. <span class="text-danger">*</span>
+            </label>
+            <div class="d-flex gap-2">
+              <div>
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId" multiple data-input="tor" @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['tor']" />
+              <InputError :message="form.errors['tor.0']" />
+            </div>
+            <div class="form-text text-info">Accepted file formats: pdf</div>
+          </div>
+          <!-- training -->
+          <!-- <div class="form-group mb-3 ">
+            <label for="Documents">
+              5. Photocopy of certificates on Learning and Development Interventions/ Training Programs
+            </label>
+            <div class="mb-3 d-flex gap-2">
+              <div>
+                <input id="training" type="file" class="form-control" name="" placeholder="" data-input="training" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['training']" />
+              <InputError :message="form.errors['training.0']" />
+            </div>
+            <div class="form-text text-info">Accepted file formats: pdf</div>
+          </div> -->
+          <!-- other documents -->
+          <div class="form-group mb-3 ">
+            <label for="Documents">
+              5. Other Documents
+            </label>
+            <div class="d-flex gap-2">
+              <div>
+                <input id="" type="file" class="form-control" name="" placeholder="" data-input="documents" aria-describedby="fileHelpId" multiple @input="addDocument" />
+              </div>
+              <InputError :message="form.errors['documents']" />
+              <InputError :message="form.errors['documents.0']" />
+            </div>
+            <div class="form-text text-info">Accepted file formats: pdf</div>
+          </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-success" :disabled="form.processing">
-        <Spinner :processing="form.processing" />
-        Submit
-      </button>
+      <div class="d-flex gap-2">
+        <button type="reset" class="btn btn-secondary" :onClick="resetForm">
+          Reset
+        </button>
+        <button type="submit" class="btn btn-success" :disabled="form.processing">
+          <Spinner :processing="form.processing" />
+          Submit
+        </button>
+      </div>
     </form>
+    <Modal modal_id="reminder">
+      <template #header>
+        <h3>Reminder</h3>
+      </template>
+      <template #body>
+        <div class="alert alert-danger">
+          <b>Important Reminders:</b> 
+          <ol>
+            <li>
+              Work Experiences and Learning and Development(L&D) Interventions/ Training Programs must be inputted to the PDS through the system. Click <b>
+                <a :href="route('profile.pds.personal_information.edit')" target="_blank">
+                  here
+                </a>
+              </b>
+              to update your PDS.
+            </li>
+            <li>
+              Please attach  the certificates of Trainings on PDS under <b><Link :href="route('profile.pds.learning_and_development.index')">L&D Interventions/ Training Programs</Link></b> for it to be valid. All trainings without certificate will be invalid.
+            </li>
+          </ol>
+        </div>
+      </template>
+    </Modal>
   </ApplicationLayout>
 </template>
-    
+
 <script setup>
 import { Link, useForm, usePage } from '@inertiajs/vue3'
 import ApplicationLayout from '@/Pages/JobApplication/Layout/ApplicationLayout.vue'
 import InputError from '@/Components/InputError.vue'
 import Spinner from '@/Components/Spinner.vue'
+import Modal from '@/Components/Modal.vue'
 
     
 const props = defineProps({
@@ -65,12 +201,20 @@ const props = defineProps({
 
 const form = useForm({
   documents: [],
+  pds: [],
+  rating: [],
+  eligibility: [],
+  training: [],
+  tor: [],
 })
 
 const addDocument = (e) => {
-  form.reset()
+  const data_input = e.target.getAttribute('data-input')
+
+  form[data_input] = []
+
   for(const file of e.target.files){
-    form.documents.push(file)
+    form[data_input].push(file)
   }
 }
 
@@ -83,6 +227,14 @@ const submitApplication = () => {
 const confirm = () => window.confirm('Are you sure to cancel the job application.')
 
 const permissions = usePage().props.auth.permissions.map(p => p.name)
+
+const resetForm = () => {
+  form.reset()
+}
+
+window.onload = () => {
+  $('#reminder').modal('show')
+}
 
 </script>
     

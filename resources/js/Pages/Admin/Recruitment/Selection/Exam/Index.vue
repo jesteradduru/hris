@@ -49,38 +49,37 @@
           <a type="button" class="nav-link" :class="{active: activeTab == 'elig'}" data-id="elig" aria-current="page" @click="setActive">Eligibility</a>
         </div>
 
-        <div v-if="props.applicant_details" class="d-flex gap-2 mb-3 mt-3">
-          <Link 
-            as="button"
-            class="btn btn-success btn-sm"
-            :onBefore="confirm"
-            method="post"
-            :href="route('admin.recruitment.application_result.store', {
-              result_id: props.job_vacancy_status.id,
-              result: 'EXAM_PASSED',
-              application_id: props.applicant_details.job_application[0].id,
-              user_id: props.applicant_details.id,
-            })"
-          >
-            PASSED
-          </Link>
-          <Link 
-            as="button"
-            class="btn btn-warning btn-sm"
-            :onBefore="confirm"
-            method="post"
-            :href="route('admin.recruitment.application_result.store', {
-              result_id: props.job_vacancy_status.id,
-              result: 'EXAM_FAILED',
-              application_id: props.applicant_details.job_application[0].id,
-              user_id: props.applicant_details.id,
-            })"
-          >
-            FAILED
-          </Link>
-        </div>
-         
         <div class="container-fluid" style="height: 80vh; overflow-y: scroll;">
+          <div v-if="props.applicant_details" class="d-flex gap-2 mb-3 mt-3 applicant-buttons">
+            <Link 
+              as="button"
+              class="btn btn-success btn-sm shadow"
+              :onBefore="confirm"
+              method="post"
+              :href="route('admin.recruitment.application_result.store', {
+                result_id: props.job_vacancy_status.id,
+                result: 'EXAM_PASSED',
+                application_id: props.applicant_details.job_application[0].id,
+                user_id: props.applicant_details.id,
+              })"
+            >
+              PASSED
+            </Link>
+            <Link 
+              as="button"
+              class="btn btn-warning btn-sm shadow"
+              :onBefore="confirm"
+              method="post"
+              :href="route('admin.recruitment.application_result.store', {
+                result_id: props.job_vacancy_status.id,
+                result: 'EXAM_FAILED',
+                application_id: props.applicant_details.job_application[0].id,
+                user_id: props.applicant_details.id,
+              })"
+            >
+              FAILED
+            </Link>
+          </div>
           <PsbPoints v-if="props.applicant_details" :applicant_details="applicant_details" />
           <ApplicantDetails 
             v-if="props.applicant_details"

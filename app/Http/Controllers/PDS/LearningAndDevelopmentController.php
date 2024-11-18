@@ -35,12 +35,12 @@ class LearningAndDevelopmentController extends Controller
     {
         $validate = $request->validate([
             'title_of_learning' => 'required|string',
-            'inclusive_date_from' => 'date|nullable',
-            'inclusive_date_to' => 'date|nullable',
-            'number_of_hours' => 'integer|nullable',
-            'type_of_ld' => 'string|nullable',
-            'conducted_sponsored_by' => 'string|nullable',
-            'documents' => 'required|array|min:1',
+            'inclusive_date_from' => 'required|date',
+            'inclusive_date_to' => 'required|date',
+            'number_of_hours' => 'required|integer',
+            'type_of_ld' => 'required|string',
+            'conducted_sponsored_by' => 'required|string',
+            'documents' => 'required|array',
             'documents.*'=> 'required|mimes:pdf|max:15000',
         ], [
             'documents.*.mimes' => 'Only pdf format is accepted.',
@@ -51,15 +51,17 @@ class LearningAndDevelopmentController extends Controller
 
         $lnd = $request->user()->learning_and_development()->create($validate);
 
-        foreach ($request->file('documents') as $file){
- 
-            $path = $file->store('lnd', 'public');
-            
+        if($request->file('documents')){
+            foreach ($request->file('documents') as $file){
+    
+                $path = $file->store('lnd', 'public');
+                
 
-            $lnd->files()->save(new Document([
-                'filename' => $file->getClientOriginalName(),
-                'filepath' => $path
-            ]));
+                $lnd->files()->save(new Document([
+                    'filename' => $file->getClientOriginalName(),
+                    'filepath' => $path
+                ]));
+            }
         }
 
         sweetalert()->addSuccess('Record saved!');

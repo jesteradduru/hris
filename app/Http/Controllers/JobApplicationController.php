@@ -50,36 +50,75 @@ class JobApplicationController extends Controller
 
         $job_posting = JobPosting::find($request->input('job_posting'));
 
+
         $request->validate([
-            'documents' => 'required|array|min:1',
-            'documents.*'=> 'required|mimes:pdf|max:15000' 
+            'pds' => 'required|array|min:1',
+            'pds.*'=> 'required|mimes:pdf|max:15000', 
+            'rating' => 'nullable|array',
+            'rating.*' => 'nullable|mimes:pdf|max:15000',
+            'eligibility' => 'required|array|min:1',
+            'eligibility.*'=> 'required|mimes:pdf|max:15000', 
+            'tor' => 'required|array|min:1',
+            'tor.*'=> 'required|mimes:pdf|max:15000', 
+            // 'training' => 'nullable|array',
+            // 'training.*'=> 'nullable|mimes:pdf|max:15000', 
+            'documents' => 'nullable|array',
+            'documents.*'=> 'nullable|mimes:pdf|max:15000' 
         ], [
+            'pds.*.mimes' => 'Only pdf format is accepted.',
+            'pds.*.max' => 'Document must not be greater than 15MB.',
+            'pds.required' => 'Please upload signed photocopy of PDS.',
+            'rating.*.mimes' => 'Only pdf format is accepted.',
+            'rating.*.max' => 'Document must not be greater than 15MB.',
+            'eligibility.*.mimes' => 'Only pdf format is accepted.',
+            'eligibility.*.max' => 'Document must not be greater than 15MB.',
+            'eligibility.required' => 'Please upload a photocopy of certificate of eligibility/rating/license.',
+            'tor.*.mimes' => 'Only pdf format is accepted.',
+            'tor.*.max' => 'Document must not be greater than 15MB.',
+            'tor.required' => 'Please upload a photocopy of Transcript of Records.',
+            // 'training.*.mimes' => 'Only pdf format is accepted.',
+            // 'training.*.max' => 'Document must not be greater than 15MB.',
             'documents.*.mimes' => 'Only pdf format is accepted.',
             'documents.*.max' => 'Document must not be greater than 15MB.',
             'documents.required' => 'Please upload the required documents.'
         ]);
-
         
-        if($request->hasFile('documents')){
+
             $job_application = $request->user()->job_application()->create(
                 [
                     'job_posting_id' => $job_posting->id,
                 ]
             );
+            
 
-            foreach ($request->file('documents') as $file){
-                $path = $file->store('documents', 'public');
+            $documents = array('pds', 'eligibility', 'tor', 'rating', 'documents');
 
-                $job_application->document()->save(new JobApplicationAttachment([
-                    'filename' => $file->getClientOriginalName(),
-                    'path' => $path
-                ]));
+
+            foreach($documents as $document){
+                if($request->hasFile($document)){
+                    foreach ($request->file($document) as $key=>$file){
+                        $key += 1;
+                        $path = $file->store('documents', 'public');
+
+                        $filename = $file->getClientOriginalName();
+                        $filename_explode = explode(".", $filename);
+
+                        $upload_name = strtoupper($document . '_' . $request->user()->surname) . "_{$key}." . end($filename_explode);
+
+                        // if($document === 'training') $upload_name = $filename_explode[0];
+
+                        $job_application->document()->save(new JobApplicationAttachment([
+                            'filename' => $upload_name,
+                            'path' => $path
+                        ]));
+                    }
+                }
             }
+
 
             sweetalert()->addSuccess('Application has been submitted!');
             
             return back();
-        }
 
     }
 

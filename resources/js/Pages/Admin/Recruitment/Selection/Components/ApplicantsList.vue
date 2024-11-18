@@ -1,13 +1,13 @@
 <template>
   <div title="Applicants">
     <div class="applicant-list">
-      <div class="text-uppercase">
+      <div class="text-uppercase" style="height: 80vh; overflow-y: auto; overflow-x: hidden;">
         <b>Insider</b>
         <div>
           <ol v-if="insider.length !== 0">
             <li v-for="(item) in insider" :key="item.id">
               <Link
-                :preserve-state="false"
+                :preserve-state="true"
                 :class="{
                   'active': applicant_details?.id === item.user.id,
                 }" :href="route('admin.recruitment.selection.index', {applicant: item.user.id, job_posting: posting.id})"

@@ -42,13 +42,13 @@
       <!-- documents -->
       <div class="mb-3">
         <h5 class="text-primary">Attached Documents</h5>
-        <div v-if="applicant.job_application">
+        <div v-if="applicant.job_application" class="d-flex gap-2">
           <a 
             v-for="doc in applicant.job_application[0].document"
             :key="doc.id" 
-            data-bs-toggle="modal" data-bs-target="#viewAttachment" 
-            href="#" @click="() => showPdf(doc.src)"
-          >{{ doc.filename }} &nbsp;&nbsp;</a>
+            :href="doc.src"
+            target="_blank"
+          >{{ doc.filename }}</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
         </div>
         <div v-else class="text-muted text-center text-sm">
@@ -90,9 +90,6 @@ const props = defineProps({
   withControls: Boolean,
   posting_id: Number,
 })
-
-const pdf = ref('')
-const showPdf = (src) => pdf.value = src
 
 
 const {

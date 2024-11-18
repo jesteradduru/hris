@@ -400,3 +400,11 @@ $anim-speed: 0.75; // in seconds
         width: 100%;
     }
 }
+
+
+// recruitment selection panel
+.applicant-buttons{
+    position: sticky;
+    top: 10px;
+    z-index: 1;
+}

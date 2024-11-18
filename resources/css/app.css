@@ -324,4 +324,9 @@
   .home-image {
     width: 100%;
   }
+}
+.applicant-buttons {
+  position: sticky;
+  top: 10px;
+  z-index: 1;
 }/*# sourceMappingURL=app.css.map */

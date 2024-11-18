@@ -46,10 +46,10 @@
         </div>
          
         <div class="container-fluid" style="height: 80vh; overflow-y: scroll;">
-          <div v-if="props.applicant_details" class="d-flex gap-2 my-3">
+          <div v-if="props.applicant_details" class="d-flex gap-2 my-3 applicant-buttons">
             <Link 
               as="button"
-              class="btn btn-success btn-sm"
+              class="btn btn-success btn-sm shadow"
               :onBefore="confirm"
               method="post"
               :href="route('admin.recruitment.application_result.store', {
@@ -63,7 +63,7 @@
             </Link>
             <Link 
               as="button"
-              class="btn btn-warning btn-sm"
+              class="btn btn-warning btn-sm shadow"
               :onBefore="confirm"
               method="post"
               :href="route('admin.recruitment.application_result.store', {

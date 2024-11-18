@@ -45,7 +45,7 @@ class PlantillaPositionController extends Controller
             "education" => "required|string|max:255",
             "training" => "exclude_if:training_none_required,true|required_if:training_none_required,false|integer|min:1",
             "work_experience" => "exclude_if:work_none_required,true|required_if:work_none_required,false|integer|min:1",
-            "competency" => "required|string|max:500",
+            "competency" => "required|string",
             'division_id' => 'required|integer',
         ]);
 
@@ -79,8 +79,8 @@ class PlantillaPositionController extends Controller
             "monthly_salary" => "required|integer",
             "eligibility" => "required|string|max:255",
             "education" => "required|string|max:255",
-            "training" => "exclude_if:training_none_required,true|required_if:training_none_required,false|integer|min:1",
-            "work_experience" => "exclude_if:work_none_required,true|required_if:work_none_required,false|integer|min:1",
+            "training" => "nullable|integer|min:1",
+            "work_experience" => "nullable|integer|min:1",
             "competency" => "required|string|max:500",
             "division_id" => "required|integer",
         ], $messages)->validate();

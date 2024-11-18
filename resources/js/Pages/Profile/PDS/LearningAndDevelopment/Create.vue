@@ -2,6 +2,7 @@
   <AuthenticatedLayout>
     <PDSLayout>
       <form @submit.prevent="add">
+        <div class="alert alert-info mt-2"><b>Reminder: </b>To validate the Learning and Development Intervention/Training, please attach the certificate.</div>
         <div class="row">
           <div class="form-group col-6">
             <div class="mb-3">
