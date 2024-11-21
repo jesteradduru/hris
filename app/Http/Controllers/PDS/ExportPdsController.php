@@ -159,7 +159,7 @@ class ExportPdsController extends Controller
         self::insertEducation($SECONDARY->values(), $sheetA, 55 + $elementary->count());
         self::insertEducation($VOCATIONAL->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count());
         self::insertEducation($COLLEGE->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count());
-        self::insertEducation($GRADUATE, $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count() + $COLLEGE->count());
+        self::insertEducation($GRADUATE->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count() + $COLLEGE->count());
 
 
         // code for  civil service eligibility
