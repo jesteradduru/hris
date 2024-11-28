@@ -12,17 +12,15 @@ use Illuminate\Support\Facades\DB;
 class TimeSheetController extends Controller
 {
     public function index(Request $request) {
-        $timesheet_draft = Timesheet::find($request->timesheet_draft)->load(['entries' => ['user']]);
+        $timesheet = TimesheetEntries::with(['user', 'createdBy'])->orderBy('id', 'desc')->get();
 
         return inertia('Admin/DailyTimeRecord/TimeSheet/Index', [
             'employees' => User::role(['employee', 'hr'])->get(),
-            'timesheet_draft' => $timesheet_draft
+            'timesheet' => $timesheet
         ]);
     }
 
     public function store(Request $request) {
-
-        $timesheet_draft = Timesheet::find($request->timesheet_draft_id);
 
         $request->validate([
             'employee' => 'required_unless:rdEmployee,all|integer|nullable',
@@ -59,7 +57,7 @@ class TimeSheetController extends Controller
 
         foreach($employees as $employee){
             if($request->purpose === 'pass'){
-                $timesheet_draft->entries()->create([
+                $request->user()->timesheet_entry()->create([
                     'employee' => $employee,
                     'purpose' => $request->purpose,
                     'pass_type' => $request->pass_type,
@@ -75,7 +73,7 @@ class TimeSheetController extends Controller
     
             else if($request->purpose === 'supp'){
     
-                $timesheet_draft->entries()->create([
+                $request->user()->timesheet_entry()->create([
                     'employee' => $employee,
                     'purpose' => $request->purpose,
                     'date' => $request->date,
@@ -111,7 +109,7 @@ class TimeSheetController extends Controller
     
                 // if EO and allday
                 if($eo_and_allday){
-                    $timesheet_draft->entries()->create([
+                    $request->user()->timesheet_entry()->create([
                         // 'employee' => $request->employee,
                         'purpose' => $request->purpose,
                         'date' => $request->date,
@@ -123,7 +121,7 @@ class TimeSheetController extends Controller
                 }
                 // if EO and partial
                 else if($eo_and_partial){
-                    $timesheet_draft->entries()->create([
+                    $request->user()->timesheet_entry()->create([
                         'purpose' => $request->purpose,
                         'date' => $request->date,
                         'remarks' => $request->remarks,
@@ -135,7 +133,7 @@ class TimeSheetController extends Controller
                 }
     
                 else if($request->remarks === 'OFFSETTING'){
-                    $timesheet_draft->entries()->create([
+                    $request->user()->timesheet_entry()->create([
                         'employee' => $employee,
                         'purpose' => $request->purpose,
                         'date' => $request->date,
@@ -146,7 +144,7 @@ class TimeSheetController extends Controller
     
     
                 else if(in_array($request->remarks, $wholeday_remarks) && $request->reg_multiday){
-                    $timesheet_draft->entries()->create([
+                    $request->user()->timesheet_entry()->create([
                         'employee' => $employee,
                         'purpose' => $request->purpose,
                         'remarks' => $request->remarks,
@@ -157,7 +155,7 @@ class TimeSheetController extends Controller
                 }
     
                 else{
-                    $timesheet_draft->entries()->create([
+                    $request->user()->timesheet_entry()->create([
                         'employee' => $request->rdEmployee == 'all' ? null : $employee,
                         'purpose' => $request->purpose,
                         'date' => $request->date,

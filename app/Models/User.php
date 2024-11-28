@@ -168,12 +168,12 @@ class User extends Authenticatable
     }
 
 
-    // timesheet draft
-    public function timesheet_draft() : HasMany {
-        return $this->hasMany(Timesheet::class, 'user_id');
+    // created timesheet draft
+    public function timesheet_entry() : HasMany {
+        return $this->hasMany(TimesheetEntries::class, 'user_id');
     }
 
-     // timesheet draft entry
+     // tagged timesheet draft entry // 
      public function timesheet_draft_entry() : HasMany {
         return $this->hasMany(TimesheetEntries::class, 'employee');
     }

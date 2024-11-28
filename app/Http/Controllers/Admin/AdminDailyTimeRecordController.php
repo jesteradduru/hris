@@ -27,10 +27,7 @@ class AdminDailyTimeRecordController extends Controller
      */
     public function create()
     {
-        //
-        return inertia('Admin/DailyTimeRecord/Create', [
-            'timesheets' => Timesheet::with('user')->get()
-        ]);
+
     }
 
     /**

@@ -32,13 +32,13 @@ class TimesheetEntries extends Model
         'reg_multiday',
         'reg_start',
         'reg_end',
-        
+        'user_id',
     ];
 
-    public function draft() : BelongsTo {
-        return $this->belongsTo(Timesheet::class, 'timesheet_draft_id');
+    public function createdBy() {
+        return $this->belongsTo(User::class, 'user_id');
     }
-
+    
     public function user() : BelongsTo {
         return $this->belongsTo(User::class, 'employee');
     }

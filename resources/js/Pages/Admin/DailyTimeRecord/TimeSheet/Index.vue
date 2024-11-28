@@ -1,16 +1,10 @@
-span<template>
+<template>
   <Head title="Daily Time Record" />
         
   <DTRLayout :crumbs="crumbs">
-    <div class="d-flex gap-2">
-      <div>
-        <Link class="btn btn-secondary btn-sm" :href="route('admin.dtr.dtr.create')"><i class="fa-solid fa-arrow-left" /></Link>
-      </div>
-      <h3>{{ timesheet_draft.name }}</h3>
-    </div>
     <br />
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table id="tbl-timesheet" bordered class="table table-sm table-bordered">
         <thead>
           <tr>
             <th>
@@ -22,11 +16,12 @@ span<template>
             <th>Pass Type</th>
             <th>Date (mm/dd/yyyy)</th>
             <th>Duration</th>
+            <th>Created By</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="entry in timesheet_draft.entries" :key="entry.id">
+          <tr v-for="entry in timesheet" :key="entry.id">
             <td><input id="" :data-id="entry.id" class="entries" type="checkbox" name="" @change="onCheckEntry" /></td>
             <td>
               <span v-if="entry.user">{{ entry.user.name }}</span>
@@ -81,7 +76,12 @@ span<template>
               </div>
             </td>
             <!-- <td v-else-if="entry.purpose === 'off'">Official Travel, Leave, Holiday, Tardy, WFH</td> -->
-            
+            <td>
+              <code>
+                {{ entry.created_by.username }}<br />
+                {{ getDate(entry.created_at) }}
+              </code>
+            </td>
             <td>
               <!-- <button class="btn btn-sm btn-success"><i class="fa-solid fa-pen" /></button> -->
               <Link :href="route('admin.dtr.timesheet.destroy', {timesheet: entry.id})" as="button" :onBefore="confirm" class="btn btn-sm btn-danger" method="delete"><i class="fa-solid fa-trash" /></Link>
@@ -89,6 +89,7 @@ span<template>
           </tr>
         </tbody>
       </table>
+      <div v-if="timesheet == 0" class="text-center">No Data</div>
     </div>
     <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addRow"><i class="fa-solid fa-plus" /> Add row</button>
     <button class="btn btn-sm btn-danger" :onBefore="confirm" :disabled="!selectedEntryDeleteForm.selected_entries.length > 0" @click="destroySelected"><i class="fa-solid fa-trash" /> Delete selected</button>
@@ -237,7 +238,7 @@ const crumbs = computed(() => [
 
 const entryForm = useForm({
   rdEmployee: 'single',
-  timesheet_draft_id: props.timesheet_draft.id,
+  timesheet_id: props.timesheet.id,
   employee: '',
   multiEmployee: [],
   purpose: '',
@@ -289,7 +290,7 @@ const deleteEmployee = (e) => {
       
 const props = defineProps({
   employees: Array,
-  timesheet_draft: Object,
+  timesheet: Object,
 })
 
 const get12hr = (time) => {
@@ -350,4 +351,9 @@ const destroySelected = () => {
 const confirm = () => window.confirm('Are you sure?')
   
 </script>
-        
+
+<style>
+  #tbl-timesheet {
+    font-size: 11pt;
+  }
+</style>

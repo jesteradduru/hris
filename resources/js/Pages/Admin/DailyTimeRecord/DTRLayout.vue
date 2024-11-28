@@ -18,8 +18,8 @@
           </div>
           <div class="nav-item">
             <Link
-              class="" :href="route('admin.dtr.dtr.create')" :class="{'dtr-active': route().current(
-                'admin.dtr.dtr.*'
+              class="" :href="route('admin.dtr.timesheet.index')" :class="{'dtr-active': route().current(
+                'admin.dtr.timesheet.index'
               )}"
             >
               HR Timesheet Entry
