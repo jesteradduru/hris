@@ -1,4 +1,4 @@
-<template>
+span<template>
   <Head title="Daily Time Record" />
         
   <DTRLayout :crumbs="crumbs">
@@ -18,10 +18,10 @@
             </th>
             <th>Employee</th>
             <th>Purpose</th>
+            <th>Remarks</th>
             <th>Pass Type</th>
             <th>Date (mm/dd/yyyy)</th>
             <th>Duration</th>
-            <th>Remarks</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -36,31 +36,35 @@
             <td v-else-if="entry.purpose === 'supp'">Supplementary</td>
             <td v-else-if="entry.purpose === 'off'">Official</td>
             <td>
+              <span v-if="entry.remarks"> {{ entry.remarks }}</span>
+            </td>
+            <td>
               <span v-if="entry.pass_type == 'personal'">Personal</span>
               <span v-else-if="entry.pass_type == 'official'">Official</span>
-              <span v-else class="badge badge-secondary">-</span>
             </td>
             <td>
               <span v-if="entry.date">{{ getDate(entry.date) }}</span>
-              <span v-else class="badge badge-secondary">-</span>
             </td>
             <td>
               <div v-if="entry.purpose === 'pass'">
-                <span class="badge badge-danger">DEPARTURE {{ get12hr(entry.pass_out) }}</span>
-                <span class="badge badge-success">RETURN {{ get12hr(entry.pass_in) }}</span>
+                {{ get12hr(entry.pass_out) }} -
+                {{ get12hr(entry.pass_in) }}
               </div>
               <div v-else-if="entry.purpose === 'supp'">
-                <span v-if="entry.supp_am_in" class="badge badge-success">AM IN: {{ get12hr(entry.supp_am_in) }}</span>
-                <span v-if="entry.supp_am_out" class="badge badge-danger">AM OUT: {{ get12hr(entry.supp_am_out) }}</span>
-                <span v-if="entry.supp_pm_in" class="badge badge-success">PM IN: {{ get12hr(entry.supp_pm_in) }}</span>
-                <span v-if="entry.supp_pm_out" class="badge badge-danger">PM OUT: {{ get12hr(entry.supp_pm_out) }}</span>
+                <span v-if="entry.supp_am_in">In: {{ get12hr(entry.supp_am_in) }}</span>
+                <span v-if="entry.supp_am_in && entry.supp_am_out"> - </span>
+                <span v-if="entry.supp_am_out">Out: {{ get12hr(entry.supp_am_out) }}</span>
+                <br v-if="(entry.supp_am_in && entry.supp_am_out) || (entry.supp_pm_in && entry.supp_pm_out)" />
+                <span v-if="entry.supp_pm_in">In: {{ get12hr(entry.supp_pm_in) }}</span>
+                <span v-if="entry.supp_pm_in && entry.supp_pm_out"> - </span>
+                <span v-if="entry.supp_pm_out">Out: {{ get12hr(entry.supp_pm_out) }}</span>
               </div>
               <div v-else-if="entry.eo_sched_type == 'PARTIAL'">
-                <div class="badge badge-success ">{{ get12hr(entry.eo_start) }}</div>
-                <div class="badge badge-success ">{{ get12hr(entry.eo_end) }}</div>
+                {{ get12hr(entry.eo_start) }}
+                {{ get12hr(entry.eo_end) }}
               </div>
               <div v-else-if="entry.off_hours">
-                <div class="badge badge-success ">{{ entry.off_hours }} HOURS</div>
+                <div class="badge bg-success ">{{ entry.off_hours }} HOURS</div>
               </div>
               <div
                 v-else-if="(
@@ -72,16 +76,12 @@
                   entry.remarks === 'REG_SL' || entry.remarks === 'REG_FL') &&
                   entry.reg_multiday === 1"
               >
-                <div class="badge badge-success ">{{ getDate(entry.reg_start) }}</div>
-                <div class="badge badge-danger ">{{ getDate(entry.reg_end) }}</div>
+                {{ getDate(entry.reg_start) }} - 
+                {{ getDate(entry.reg_end) }}
               </div>
-              <div v-else class="badge badge-secondary">-</div>
             </td>
             <!-- <td v-else-if="entry.purpose === 'off'">Official Travel, Leave, Holiday, Tardy, WFH</td> -->
-            <td>
-              <span v-if="entry.remarks"> {{ entry.remarks }}</span>
-              <span v-else class="badge badge-secondary">-</span>
-            </td>
+            
             <td>
               <!-- <button class="btn btn-sm btn-success"><i class="fa-solid fa-pen" /></button> -->
               <Link :href="route('admin.dtr.timesheet.destroy', {timesheet: entry.id})" as="button" :onBefore="confirm" class="btn btn-sm btn-danger" method="delete"><i class="fa-solid fa-trash" /></Link>
@@ -101,16 +101,63 @@
         <!-- EMPLOYEE -->
         <div class="mb-3">
           <label for="" class="form-label">Employee</label>
-          <select
-            id=""
-            v-model="entryForm.employee"
-            class="form-select form-select-lg"
-            name=""
-          >
-            <option value="">Select one</option>
-            <option :value="0">All</option>
-            <option v-for="employee in employees" :key="employee.id" :value="employee.id">{{ employee.name }}</option>
-          </select>
+          <div class="d-flex gap-3">
+            <div>
+              <input
+                id="allEmployee"
+                v-model="entryForm.rdEmployee"
+                class="form-check-input"
+                type="radio"
+                name="rdEmployee"
+                value="all"
+              />
+              <label for="allEmployee">
+                &nbsp; All
+              </label>
+            </div>
+            <div>
+              <input
+                id="multiEmployee"
+                v-model="entryForm.rdEmployee"
+                class="form-check-input"
+                type="radio"
+                name="rdEmployee"
+                value="multiple"
+              />
+              <label for="multiEmployee">
+                &nbsp; Multiple
+              </label>
+            </div>
+            <div>
+              <input
+                id="singleEmployee"
+                v-model="entryForm.rdEmployee"
+                class="form-check-input"
+                type="radio"
+                name="rdEmployee"
+                value="single"
+              />
+              <label for="singleEmployee">
+                &nbsp; Single
+              </label>
+            </div>
+          </div>
+          <div v-for="employee in selectedEmployee" :key="employee.id" :value="employee.id">{{ employee.name }} <small style="cursor: pointer" class="text-danger" :data-id="employee.id" @click="deleteEmployee">X</small></div>
+          <div class="d-flex align-items-center">
+            <select
+              v-if="entryForm.rdEmployee !== 'all'"
+              id=""
+              v-model="entryForm.employee"
+              class="form-select form-select-lg"
+              name=""
+            >
+              <option value="">Select one</option>
+              <option v-for="employee in employees" :key="employee.id" :value="employee.id">{{ employee.name }}</option>
+            </select>
+            <div>
+              <button v-if="entryForm.rdEmployee=='multiple'" class="btn btn-primary" @click="addEmployee"><i class="fa fa-plus" /></button>
+            </div>
+          </div>
           <InputError :message="entryForm.errors.employee" />
         </div>
         <!-- PURPOSE -->
@@ -132,30 +179,6 @@
         <!-- DATE -->
         <div v-if="entryForm.purpose">
           <!-- PASS SLIP -->
-          <div v-if="entryForm.purpose === 'pass'" class="mb-3">
-            <div class="form-check form-check-inline">
-              <input
-                id="passper"
-                v-model="entryForm.pass_type"
-                class="form-check-input"
-                type="radio"
-                name="pass"
-                value="personal"
-              />
-              <label class="form-check-label" for="passper">Personal</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                id="passoff"
-                v-model="entryForm.pass_type"
-                class="form-check-input"
-                type="radio"
-                name="pass"
-                value="official"
-              />
-              <label class="form-check-label" for="passoff">Official</label>
-            </div>
-          </div>
           <!-- DATE -->
           <div v-if="!entryForm.reg_multiday || entryForm.remarks === 'OFFSETTING'" class="mb-3">
             <label for="" class="form-label">Date</label>
@@ -170,251 +193,20 @@
             />
             <InputError :message="entryForm.errors.date" />
           </div>
-          <!-- PASS TIME OUT IN -->
-          <div v-if="entryForm.purpose === 'pass'">
-            <div class="mb-3">
-              <label for="" class="form-label">Time Out</label>
-              <input
-                id=""
-                v-model="entryForm.pass_out"
-                type="time"
-                class="form-control"
-                name=""
-                aria-describedby="helpId"
-                placeholder=""
-              />
-              <InputError :message="entryForm.errors.pass_out" />
-            </div>
-            <div class="mb-3">
-              <label for="" class="form-label">Time In</label>
-              <input
-                id=""
-                v-model="entryForm.pass_in"
-                type="time"
-                class="form-control"
-                name=""
-                aria-describedby="helpId"
-                placeholder=""
-              />
-              <InputError :message="entryForm.errors.pass_in" />
-            </div>
+          <div v-if="entryForm.purpose === 'pass'" class="mb-3">
+            <PassSlip :entryForm="entryForm" />
           </div>
           <!-- SUPPLEMENTARY -->
-          <div v-if="entryForm.purpose === 'supp'">
-            <fieldset class="mb-3 row">
-              <legend class="col-12">AM</legend>
-              <div class="mb-3 col-6">
-                <label for="" class="form-label">Time In</label>
-                <input
-                  id=""
-                  v-model="entryForm.supp_am_in"
-                  type="time"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-                <InputError :message="entryForm.errors.supp_am_in" />
-              </div>
-              <div class="mb-3 col-6">
-                <label for="" class="form-label">Time Out</label>
-                <input
-                  id=""
-                  v-model="entryForm.supp_am_out"
-                  type="time"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-                <InputError :message="entryForm.errors.supp_am_out" />
-              </div>
-            </fieldset>
-            <fieldset class="row">
-              <legend class="col-12">PM</legend>
-              <div class="mb-3 col-6">
-                <label for="" class="form-label">Time In</label>
-                <input
-                  id=""
-                  v-model="entryForm.supp_pm_in"
-                  type="time"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-                <InputError :message="entryForm.errors.supp_pm_in" />
-              </div>
-              <div class="mb-3 col-6">
-                <label for="" class="form-label">Time Out</label>
-                <input
-                  id=""
-                  v-model="entryForm.supp_pm_out"
-                  type="time"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-                <InputError :message="entryForm.errors.supp_pm_out" />
-              </div>
-            </fieldset>
-          </div>
+          <Supplementary :entryForm="entryForm" />
           <!-- OFFICIAL -->
           <div v-if="entryForm.purpose === 'off'">
-            <div class="mb-3">
-              <label for="" class="form-label">Remarks</label>
-              <select
-                id=""
-                v-model="entryForm.remarks"
-                class="form-select form-select-lg"
-                name=""
-              >
-                <option value="">Select one</option>
-                <option v-for="remark in remarks" :key="remark" :value="remark">{{ remark }}</option>
-              </select>
-              <InputError :message="entryForm.errors.remarks" />
-            </div>
-            <!-- REG_OB -->
-            <div
-              v-if="entryForm.remarks === 'REG_OB'||
-                entryForm.remarks === 'REG_SPL' ||
-                entryForm.remarks === 'REG_VL' || entryForm.remarks === 'REG_SL' ||
-                entryForm.remarks === 'REG_FL' ||
-                entryForm.remarks === 'STUDY_LEAVE' ||
-                entryForm.remarks === 'ON_SCHOLARSHIP' "
-            >
-              <div class="form-check form-check-inline">
-                <input
-                  id="reg_multiday"
-                  v-model="entryForm.reg_multiday"
-                  class="form-check-input"
-                  type="checkbox"
-                  name="reg_multiday"
-                />
-                <label class="form-check-label" for="reg_multiday">Multi Day</label>
-              </div>
-              <!-- ob multiday -->
-              <div v-if="entryForm.reg_multiday">
-                <div class="mb-3">
-                  <label for="" class="form-label">Start</label>
-                  <input
-                    id=""
-                    v-model="entryForm.reg_start"
-                    type="date"
-                    class="form-control"
-                    name=""
-                    aria-describedby="helpId"
-                    placeholder=""
-                  />
-                  <InputError :message="entryForm.errors.reg_start" />
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">End</label>
-                  <input
-                    id=""
-                    v-model="entryForm.reg_end"
-                    type="date"
-                    class="form-control"
-                    name=""
-                    aria-describedby="helpId"
-                    placeholder=""
-                  />
-                  <InputError :message="entryForm.errors.reg_end" />
-                </div>
-              </div>
-            </div>
-            <!-- EO -->
-            <div v-if="entryForm.remarks === 'EO'">
-              <div class="mb-3">
-                <label for="" class="form-label">Title</label>
-                <input
-                  id=""
-                  v-model="entryForm.off_title"
-                  type="text"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                  maxlength="100"
-                />
-                <InputError :message="entryForm.errors.off_title" />
-              </div>
-              <div class="mb-3">
-                <div class="form-check form-check-inline">
-                  <input
-                    id="eo_8"
-                    v-model="entryForm.eo_sched_type"
-                    class="form-check-input"
-                    type="radio"
-                    name="eo_hours"
-                    value="ALLDAY"
-                  />
-                  <label class="form-check-label" for="eo_8">8 hours</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input
-                    id="eo_partial"
-                    v-model="entryForm.eo_sched_type"
-                    class="form-check-input"
-                    type="radio"
-                    name="eo_hours"
-                    value="PARTIAL"
-                  />
-                  <label class="form-check-label" for="eo_partial">Partial</label>
-                </div>
-                <InputError :message="entryForm.errors.eo_sched_type" />
-              </div>
-              <div v-if="entryForm.eo_sched_type === 'PARTIAL'">
-                <div class="mb-3">
-                  <label for="" class="form-label">Start</label>
-                  <input
-                    id=""
-                    v-model="entryForm.eo_start"
-                    type="time"
-                    class="form-control"
-                    name=""
-                    aria-describedby="helpId"
-                    placeholder=""
-                    maxlength="100"
-                  />
-                  <InputError :message="entryForm.errors.eo_start" />
-                </div>
-                <div class="mb-3">
-                  <label for="" class="form-label">End</label>
-                  <input
-                    id=""
-                    v-model="entryForm.eo_end"
-                    type="time"
-                    class="form-control"
-                    name=""
-                    aria-describedby="helpId"
-                    placeholder=""
-                    maxlength="100"
-                  />
-                  <InputError :message="entryForm.errors.eo_end" />
-                </div>
-              </div>
-            </div>
-            <!-- OFFSETTING -->
-            <div v-if="entryForm.remarks === 'OFFSETTING'">
-              <div class="mb-3">
-                <label for="" class="form-label">Hours</label>
-                <input
-                  id=""
-                  v-model="entryForm.off_hours"
-                  type="number"
-                  class="form-control"
-                  name=""
-                  aria-describedby="helpId"
-                  placeholder=""
-                />
-                <InputError :message="entryForm.errors.off_hours" />
-              </div>
-            </div>
+            <Official :entryForm="entryForm" />
           </div>
         </div>
-        <button class="btn btn-sm btn-primary mt-3" :disabled="entryForm.processing" @click="onAdd">Add Entry</button>
+        <div class="d-flex align-items-center gap-2">
+          <button class="btn btn-sm btn-primary mt-3" :disabled="entryForm.processing" @click="onAdd">Add Entry</button>
+          <button type="reset" class="btn btn-sm btn-secondary mt-3" :disabled="entryForm.processing" @click="resetForm">Reset Form</button>
+        </div>
       </template>
     </Modal>
   </DTRLayout>
@@ -425,25 +217,14 @@ import DTRLayout from '@/Pages/Admin/DailyTimeRecord/DTRLayout.vue'
 import { Head, Link, router, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'
-import Pagination from '@/Components/Pagination.vue'
-import {debounce} from 'lodash'
 import Modal from '@/Components/Modal.vue'
 import InputError from '@/Components/InputError.vue'
+import PassSlip from './Components/PassSlip.vue'
+import Supplementary from './Components/Supplementary.vue'
+import Official from './Components/Official.vue'
 
 
-const remarks = [
-  'REG_OB',
-  'REG_SPL',
-  'REG_SL',
-  'REG_VL',
-  'REG_FL',
-  'REG_HOLIDAY',
-  'OFFSETTING',
-  'EO',
-  'RA_9710',
-  'STUDY_LEAVE',
-  'ON_SCHOLARSHIP',
-]
+
 const crumbs = computed(() => [
   {
     label: 'Admin Dashboard',
@@ -455,8 +236,10 @@ const crumbs = computed(() => [
 ])
 
 const entryForm = useForm({
+  rdEmployee: 'single',
   timesheet_draft_id: props.timesheet_draft.id,
   employee: '',
+  multiEmployee: [],
   purpose: '',
   date: '',
   pass_type: 'personal',
@@ -479,6 +262,29 @@ const entryForm = useForm({
 
 const onAdd = () => {
   entryForm.post(route('admin.dtr.timesheet.store'))
+}
+
+const resetForm = () => {
+  entryForm.reset()
+}
+
+const addEmployee = () => {
+  if(!entryForm.multiEmployee.includes(entryForm.employee)){
+    entryForm.multiEmployee.push(entryForm.employee)
+  }else{
+    alert('Employee already exists!')
+  }
+}
+
+const selectedEmployee = computed(() => {
+  return props.employees.filter(employee => entryForm.multiEmployee.includes(employee.id))
+})
+
+const deleteEmployee = (e) => {
+  const userID = e.target.getAttribute('data-id')
+  console.log(entryForm.multiEmployee.filter(employee => employee != userID))
+
+  entryForm.multiEmployee = entryForm.multiEmployee.filter(employee => employee != userID)
 }
       
 const props = defineProps({

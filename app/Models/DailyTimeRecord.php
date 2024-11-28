@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Calculation\LookupRef\Offset;
 use Rats\Zkteco\Lib\ZKTeco;
 
 
@@ -92,7 +93,7 @@ class DailyTimeRecord extends Model
         );
     }
 
-    private static function getTotalHours ($inAM, $outAM, $inPM, $outPM, $remarks = '', $day = '') {
+    private static function getTotalHours ($inAM, $outAM, $inPM, $outPM, $day = '', $offset = '') {
         $totalAM = null;
         $totalPM = null;
         $lateAM = 0;
@@ -142,7 +143,6 @@ class DailyTimeRecord extends Model
                 $totalAM = $exact12->diffInSeconds($exact930);
 
             }else if($time_in_pass_7 && $early_out || $time_in_pass_7 && $time_out_gte_12){ // saktong time in // early out or  saktong time in // saktong out
-
                 if($time_in_pass_7 && $early_out){
                     $utAM = $exact12->diffInSeconds($logTimeOutAm);
                 }
@@ -201,26 +201,34 @@ class DailyTimeRecord extends Model
 
         $total = null;
         $totalMinutes = null;
+        $offsetSeconds = 0;
+
+        if($offset){
+            $offsetSeconds = $offset * 60 * 60;
+        }
+        
 
         if($totalAM || $totalPM){
 
             if($totalAM) {
-                $total = gmdate('H:i:s', $totalAM);
+                $total = gmdate('H:i:s', $totalAM + $offsetSeconds);
                 $totalMinutes =  $totalAM - 25200;
             }
 
             if($totalPM){
-                $total = gmdate('H:i:s', $totalPM);
+                $total = gmdate('H:i:s', $totalPM + $offsetSeconds);
                 $totalMinutes =  $totalPM - 23400;
             }
 
             if($totalAM && $totalPM){
-                $total = gmdate('H:i:s', $totalAM + $totalPM);
+                $total = gmdate('H:i:s', $totalAM + $totalPM + $offsetSeconds);
                 $totalMinutes = ($totalAM + $totalPM ) - 28800;
-                if($totalMinutes > 0 && $remarks){
-                    $totalMinutes = null;
-                    $total = gmdate('H:i:s', 8*60*60);
-                }
+
+                
+                // if($totalMinutes > 0 && $remarks == 'EO'){
+                //     $totalMinutes = null;
+                //     $total = gmdate('H:i:s', 8*60*60);
+                // }
             }
 
         }
@@ -330,7 +338,7 @@ class DailyTimeRecord extends Model
                 // ->where('employee', $user_id)
                 ->where(function($query) use ($user) {
                     $query->where('employee', $user->id)
-                          ->orWhere('employee', 0);
+                          ->orWhere('employee', null);
                 })
                 ->where(DB::raw("DATE_FORMAT(date, '%Y-%m-%e')"), $yearMonth . '-' . $date)
                 ->orWhere(function($query) use ($yearMonth, $date) {
@@ -340,8 +348,8 @@ class DailyTimeRecord extends Model
                 })
                 ->first();
 
-            if($other_dtr && $other_dtr->purpose !== 'supp'){
-                $record = self::getTimeSheet($other_dtr, $date, $dayOfWeek);
+            if($other_dtr && $other_dtr->purpose !== 'supp' && $other_dtr->remarks !== 'OFFSETTING'){
+                $record = self::getTimeSheet($other_dtr, $date, $dayOfWeek, $user_id);
             }else{
                 $dateTimeRecordToday = DB::table('daily_time_record')
                 ->select(['date_time', 'remark'])
@@ -350,6 +358,7 @@ class DailyTimeRecord extends Model
                 ->get();
                 
                 $inout = self::identifyInOut($dateTimeRecordToday);    
+                $remarks = $inout['remarks'];
 
                 if($other_dtr && $other_dtr->purpose === 'supp'){
                     // dd($other_dtr);
@@ -370,8 +379,14 @@ class DailyTimeRecord extends Model
                 }
 
 
-                $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $inout['remarks'], $day);
-                
+
+                // OFFSETTING
+                if($other_dtr && $other_dtr->remarks === 'OFFSETTING'){
+                    $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $day, $other_dtr->off_hours);
+                    $remarks = 'OFFSETTING: ' . $other_dtr->off_hours . 'H';
+                }else{
+                    $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $day);
+                }
 
                
 
@@ -390,7 +405,7 @@ class DailyTimeRecord extends Model
                     'absent' =>  ($total['absent'] / 60) / 480,
                     'totalMinutes'=> $total['totalMinutes'],
                     'totalHours' => $total['total'],
-                    'remarks' => $inout['remarks']
+                    'remarks' => $remarks
                 ];
             }
 
@@ -503,7 +518,7 @@ class DailyTimeRecord extends Model
         
     }
 
-    public static function getTimeSheet($record, $date, $dayOfWeek) {
+    public static function getTimeSheet($record, $date, $dayOfWeek, $currentUser) {
         $entry = [];
         $wholeday_remarks = [
             'REG_HOLIDAY',
@@ -530,6 +545,11 @@ class DailyTimeRecord extends Model
                     'inPM' =>  null,
                     'outPM' =>  null,
                     'totalMinutes'=> 0,
+                    'lateAM'=> 0,
+                    'latePM'=> 0,
+                    'utAM'=> 0,
+                    'utPM'=> 0,
+                    'absent'=> 0,
                     'totalHours' => null,
                     'remarks' => null
                 ];
@@ -542,6 +562,11 @@ class DailyTimeRecord extends Model
                     'inPM' =>  '01:00:00 PM',
                     'outPM' =>  '05:00:00 PM',
                     'totalMinutes'=> 0,
+                    'lateAM'=> 0,
+                    'latePM'=> 0,
+                    'utAM'=> 0,
+                    'utPM'=> 0,
+                    'absent'=> 0,
                     'totalHours' => '08:00:00',
                     'remarks' => $record->remarks
                 ];
@@ -559,8 +584,186 @@ class DailyTimeRecord extends Model
                 'outPM' =>  '05:00:00 PM',
                 'totalMinutes'=> 0,
                 'totalHours' => '08:00:00',
+                'lateAM'=> 0,
+                'latePM'=> 0,
+                'utAM'=> 0,
+                'utPM'=> 0,
+                'absent'=> 0,
                 'remarks' => $record->remarks . ': ' . $record->off_title
             ];
+        }
+
+
+        if($record->remarks === 'EO' && $record->eo_sched_type === 'PARTIAL'){
+            $formattedDate = Carbon::parse($record->date)->format('Y-m-d');
+            $formattedTime = Carbon::parse($record->eo_start)->format('H:i');
+            $_12pm = Carbon::parse('12:00:00');
+            $_1pm = Carbon::parse('13:00:00');
+            $_7pm = Carbon::parse('19:00:00');
+
+            $dateTimeRecordToday = DB::table('daily_time_record')
+                ->select(['date_time', 'remark'])
+                ->where('user_id', '=', $currentUser)
+                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $formattedDate)
+                ->get();
+
+            $time = Carbon::parse($formattedTime);
+            $timeRecord = self::identifyInOut($dateTimeRecordToday);
+
+            if($time->lte($_12pm)){
+                $inAM = $timeRecord['inAM'] ?  $timeRecord['inAM'] : Carbon::parse($record->eo_start);
+                $timeData = self::getTotalHours($inAM, $_12pm, $_1pm, $_7pm, $record->remarks . ': ' . $record->off_title, $date);
+
+                $entry = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => $inAM->format('h:i:00 A') ,
+                    'outAM' =>  '12:00:00 AM',
+                    'inPM' =>  '01:00:00 PM',
+                    'outPM' =>  '07:00:00 PM',
+                    'totalMinutes'=> 0,
+                    'lateAM'=> 0,
+                    'latePM'=> 0,
+                    'utAM'=> 0,
+                    'utPM'=> 0,
+                    'absent'=> 0,
+                    'totalHours' => $timeData['total'],
+                    'remarks' => $record->remarks . ': ' . $record->off_title
+                ];
+            }else if($time->gte($_1pm)){
+                // dd($timeRecord);
+                $inAM = $timeRecord['inAM'];
+                $outAM = $timeRecord['outAM'];
+                $inPM = $timeRecord['inPM'];
+                $timeData = self::getTotalHours($inAM, $outAM, $inPM, $_7pm, $record->remarks . ': ' . $record->off_title, $date);
+
+                $entry = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => $inAM->format('h:i:00 A') ,
+                    'outAM' =>  $outAM->format('h:i:00 A'),
+                    'inPM' =>  $inPM->format('h:i:00 A'),
+                    'outPM' =>  '07:00:00 PM',
+                    'totalMinutes'=> 0,
+                    'lateAM'=> 0,
+                    'latePM'=> 0,
+                    'utAM'=> 0,
+                    'utPM'=> 0,
+                    'absent'=> 0,
+                    'totalHours' => $timeData['total'],
+                    'remarks' => $record->remarks . ': ' . $record->off_title
+                ];
+            }else{
+                $entry = [
+                    'date' => $date,
+                    'day' => $dayOfWeek,
+                    'inAM' => '08:00:00 AM',  
+                    'outAM' =>  '12:00:00 AM',
+                    'inPM' =>  '01:00:00 PM',
+                    'outPM' =>  '05:00:00 PM',
+                    'totalMinutes'=> 0,
+                    'lateAM'=> 0,
+                    'latePM'=> 0,
+                    'utAM'=> 0,
+                    'utPM'=> 0,
+                    'absent'=> 0,
+                    'totalHours' => '08:00:00',
+                    'remarks' => $record->remarks . ': ' . $record->off_title
+                ];
+            }
+
+        }
+
+        // offsetting
+
+        if($record->remarks === 'OFFSETTING'){
+            $formattedDate = Carbon::parse($record->date)->format('Y-m-d');
+            $formattedTime = Carbon::parse($record->eo_start)->format('H:i');
+            $_12pm = Carbon::parse('12:00:00');
+            $_1pm = Carbon::parse('13:00:00');
+            $_7pm = Carbon::parse('19:00:00');
+
+            
+
+            $dateTimeRecordToday = DB::table('daily_time_record')
+                ->select(['date_time', 'remark'])
+                ->where('user_id', '=', $currentUser)
+                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $formattedDate)
+                ->get();
+
+            $time = Carbon::parse($formattedTime);
+            $timeRecord = self::identifyInOut($dateTimeRecordToday);
+            $inAM = $timeRecord['inAM'];
+            $outAM = $timeRecord['outAM'];
+            $inPM = $timeRecord['inPM'];
+            $outPM = $timeRecord['outPM'];
+            $totalHours = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $record->remarks . ': ' . $record->off_title, $date);
+
+            $inAM = $timeRecord['inAM'];
+            $outAM = $timeRecord['outAM'];
+            $inPM = $timeRecord['inPM'];
+            $outPM = $timeRecord['outPM'];
+
+            $entry = [
+                'date' => $date,
+                'day' => $dayOfWeek,
+                'inAM' => $inAM->format('h:i:00 A') ,
+                'outAM' =>  $outAM->format('h:i:00 A'),
+                'inPM' =>  $inPM->format('h:i:00 A'),
+                'outPM' =>  $outPM ? $outPM->format('h:i:00 A') : null,
+                'totalMinutes'=> 0,
+                'lateAM'=> 0,
+                'latePM'=> 0,
+                'utAM'=> 0,
+                'utPM'=> 0,
+                'absent'=> 0,
+                'totalHours' => $totalHours['total'],
+                'remarks' => $record->remarks . ': ' . $record->off_title
+            ];
+        }
+
+        // pass slip personal
+        if($record->purpose == 'pass' && $record->pass_type == 'personal'){
+            $passDeparture = Carbon::parse($record->pass_out);
+            $passReturn = Carbon::parse($record->pass_in);
+            $_7am = Carbon::parse('7:00:00');
+            $_12pm = Carbon::parse('12:00:00');
+            $_1pm = Carbon::parse('13:00:00');
+            $_5pm = Carbon::parse('17:00:00');
+            $_7pm = Carbon::parse('19:00:00');
+
+            $totalPassSlipAM = 0;
+            $totalPassSlipPM = 0;
+
+
+            if($passDeparture->gte($_7am) && $passDeparture->lte($_12pm)){
+                
+                if($passReturn->lessThan($_12pm)){
+                    $totalPassSlipAM = $passReturn->diffInSeconds($passDeparture);
+                }else if($passReturn->lte($_1pm)){
+                    $totalPassSlipAM = $_12pm->diffInSeconds($passReturn);
+                }else if($passReturn->greaterThan($_1pm) && $passReturn->lessThan($_5pm)){
+                    $totalPassSlipAM = $_12pm->diffInSeconds($passDeparture);
+                    $totalPassSlipPM = $passReturn->diffInSeconds($_1pm);
+                }else if($passReturn->greaterThan($_5pm)){
+                    $totalPassSlipAM = $_12pm->diffInSeconds($passDeparture);
+                    $totalPassSlipPM = $_1pm->diffInSeconds($_5pm);
+                }
+            }else if($passDeparture->gte($_1pm)){
+
+                if($passReturn->greaterThan($_1pm)){
+                    $totalPassSlipAM = $passReturn->diffInSeconds($passDeparture);
+                }else if($passDeparture->gte($_5pm)){
+                    $totalPassSlipAM = $_5pm->diffInSeconds($passReturn);
+                }else if($passReturn->gte($_1pm)){
+                    $totalPassSlipAM = $passReturn->diffInSeconds($_1pm);
+                }
+                
+            }
+
+            // dd(gmdate('H:i', $totalPassSlipAM + $totalPassSlipPM));
+
+
         }
 
         return $entry;

@@ -25,7 +25,7 @@ class TimeSheetController extends Controller
         $timesheet_draft = Timesheet::find($request->timesheet_draft_id);
 
         $request->validate([
-            'employee' => 'required|integer',
+            'employee' => 'required_unless:rdEmployee,all|integer|nullable',
             'purpose' => 'required|string',
             'date' => 'required_unless:remarks,STUDY_LEAVE,ON_SCHOLARSHIP,REG_OB,REG_SPL,REG_SL,REG_VL,REG_FL|required_unless:reg_multiday,true|date|nullable',
             'pass_type' => 'required_if:purpose,pass|string|nullable',
@@ -42,120 +42,132 @@ class TimeSheetController extends Controller
             'reg_multiday' => 'boolean',
             'reg_start' => 'required_if:reg_multiday,true|date|nullable',
             'reg_end' => 'required_if:reg_multiday,true|date|nullable',
+            'multiEmployee' => 'required_if:rdEmployee,multiple|array|nullable'
         ]);
 
+
+        $employees = array();
+
+        if($request->rdEmployee == 'single'){
+            array_push($employees, $request->employee);
+        }else if($request->rdEmployee == 'multiple'){
+            $employees = $request->multiEmployee;
+        }else{
+            array_push($employees, 0);
+        }
         
 
-        if($request->purpose === 'pass'){
-            $timesheet_draft->entries()->create([
-                'employee' => $request->employee,
-                'purpose' => $request->purpose,
-                'pass_type' => $request->pass_type,
-                'date' => $request->date,
-                'pass_in' => $request->pass_in,
-                'pass_out' => $request->pass_out
-            ]);
-
-
-            sweetalert()->addSuccess('Pass slip added!');
-            
-        }
-
-        else if($request->purpose === 'supp'){
-            $timesheet_draft->entries()->create([
-                'employee' => $request->employee,
-                'purpose' => $request->purpose,
-                'date' => $request->date,
-                'supp_am_in' => $request->supp_am_in,
-                'supp_am_out' => $request->supp_am_out,
-                'supp_pm_in' => $request->supp_pm_in,
-                'supp_pm_out' => $request->supp_pm_out
-            ]);
-
-
-            sweetalert()->addSuccess('Supplementary added!');
-            
-        }
-
-        else if($request->purpose === 'off'){
-            $eo_and_partial = $request->eo_sched_type === 'PARTIAL' && $request->remarks === 'EO';
-            $eo_and_allday = $request->eo_sched_type === 'ALLDAY' && $request->remarks === 'EO';
-
-            $wholeday_remarks = [
-                'REG_HOLIDAY',
-                'RA_9710',
-                'REG_OB',
-                'REG_SPL',
-                'REG_SL',
-                'REG_VL',
-                'REG_FL',
-                'STUDY_LEAVE',
-                'ON_SCHOLARSHIP'
-            ];
-            
-            // dd($study_or_scholarship);
-
-
-            // if EO and allday
-            if($eo_and_allday){
+        foreach($employees as $employee){
+            if($request->purpose === 'pass'){
                 $timesheet_draft->entries()->create([
-                    'employee' => $request->employee,
+                    'employee' => $employee,
                     'purpose' => $request->purpose,
+                    'pass_type' => $request->pass_type,
                     'date' => $request->date,
-                    'remarks' => $request->remarks,
-                    'off_title' => $request->off_title,
-                    'eo_sched_type' => $request->eo_sched_type,
-                    'off_hours' => 8
+                    'pass_in' => $request->pass_in,
+                    'pass_out' => $request->pass_out
                 ]);
-            }
-            // if EO and partial
-            else if($eo_and_partial){
-                $timesheet_draft->entries()->create([
-                    'employee' => $request->employee,
-                    'purpose' => $request->purpose,
-                    'date' => $request->date,
-                    'remarks' => $request->remarks,
-                    'off_title' => $request->off_title,
-                    'eo_sched_type' => $request->eo_sched_type,
-                    'eo_start' => $request->eo_start,
-                    'eo_end' => $request->eo_end,
-                ]);
-            }
-
-            else if($request->remarks === 'OFFSETTING'){
-                $timesheet_draft->entries()->create([
-                    'employee' => $request->employee,
-                    'purpose' => $request->purpose,
-                    'date' => $request->date,
-                    'remarks' => $request->remarks,
-                    'off_hours' => $request->off_hours,
-                ]);
-            }
-
-
-            else if(in_array($request->remarks, $wholeday_remarks) && $request->reg_multiday){
-                $timesheet_draft->entries()->create([
-                    'employee' => $request->employee,
-                    'purpose' => $request->purpose,
-                    'remarks' => $request->remarks,
-                    'reg_start' => $request->reg_start,
-                    'reg_end' => $request->reg_end,
-                    'reg_multiday' => $request->reg_multiday,
-                ]);
-            }
-
-            else{
+    
+    
+                sweetalert()->addSuccess('Pass slip added!');
                 
+            }
+    
+            else if($request->purpose === 'supp'){
+    
                 $timesheet_draft->entries()->create([
-                    'employee' => $request->employee,
+                    'employee' => $employee,
                     'purpose' => $request->purpose,
                     'date' => $request->date,
-                    'remarks' => $request->remarks,
+                    'supp_am_in' => $request->supp_am_in,
+                    'supp_am_out' => $request->supp_am_out,
+                    'supp_pm_in' => $request->supp_pm_in,
+                    'supp_pm_out' => $request->supp_pm_out
                 ]);
+    
+    
+                sweetalert()->addSuccess('Supplementary added!');
+                
             }
-            
-
-            sweetalert()->addSuccess('Successfully added!');
+    
+            else if($request->purpose === 'off'){
+                $eo_and_partial = $request->eo_sched_type === 'PARTIAL' && $request->remarks === 'EO';
+                $eo_and_allday = $request->eo_sched_type === 'ALLDAY' && $request->remarks === 'EO';
+    
+                $wholeday_remarks = [
+                    'REG_HOLIDAY',
+                    'RA_9710',
+                    'REG_OB',
+                    'REG_SPL',
+                    'REG_SL',
+                    'REG_VL',
+                    'REG_FL',
+                    'STUDY_LEAVE',
+                    'ON_SCHOLARSHIP'
+                ];
+                
+                // dd($study_or_scholarship);
+    
+    
+                // if EO and allday
+                if($eo_and_allday){
+                    $timesheet_draft->entries()->create([
+                        // 'employee' => $request->employee,
+                        'purpose' => $request->purpose,
+                        'date' => $request->date,
+                        'remarks' => $request->remarks,
+                        'off_title' => $request->off_title,
+                        'eo_sched_type' => $request->eo_sched_type,
+                        'off_hours' => 8
+                    ]);
+                }
+                // if EO and partial
+                else if($eo_and_partial){
+                    $timesheet_draft->entries()->create([
+                        'purpose' => $request->purpose,
+                        'date' => $request->date,
+                        'remarks' => $request->remarks,
+                        'off_title' => $request->off_title,
+                        'eo_sched_type' => $request->eo_sched_type,
+                        'eo_start' => $request->eo_start,
+                        'eo_end' => $request->eo_end,
+                    ]);
+                }
+    
+                else if($request->remarks === 'OFFSETTING'){
+                    $timesheet_draft->entries()->create([
+                        'employee' => $employee,
+                        'purpose' => $request->purpose,
+                        'date' => $request->date,
+                        'remarks' => $request->remarks,
+                        'off_hours' => $request->off_hours,
+                    ]);
+                }
+    
+    
+                else if(in_array($request->remarks, $wholeday_remarks) && $request->reg_multiday){
+                    $timesheet_draft->entries()->create([
+                        'employee' => $employee,
+                        'purpose' => $request->purpose,
+                        'remarks' => $request->remarks,
+                        'reg_start' => $request->reg_start,
+                        'reg_end' => $request->reg_end,
+                        'reg_multiday' => $request->reg_multiday,
+                    ]);
+                }
+    
+                else{
+                    $timesheet_draft->entries()->create([
+                        'employee' => $request->rdEmployee == 'all' ? null : $employee,
+                        'purpose' => $request->purpose,
+                        'date' => $request->date,
+                        'remarks' => $request->remarks,
+                    ]);
+                }
+                
+    
+                sweetalert()->addSuccess('Successfully added!');
+            }
         }
 
         return back();
