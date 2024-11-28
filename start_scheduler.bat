@@ -12,8 +12,8 @@ cd /d D:\WEB_PROJECTS\hris
 :: Run Laravel's scheduler worker in the background
 start "" /B php artisan schedule:work
 
-:: Run php artisan schedule:list every minute
+:: Run php artisan schedule:list every 5 minutes
 :loop
 php artisan schedule:list
-timeout /t 60 >NUL
+timeout /t 300 >NUL
 goto loop

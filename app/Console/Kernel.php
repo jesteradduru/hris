@@ -51,6 +51,8 @@ class Kernel extends ConsoleKernel
         })
         ->cron('0-59/15 7-10,12-13,16-20 * * 1-5');
         // ->everyMinute();
+
+        $schedule->command('backup:run')->cron('0 0 * * *');
     }
 
     /**
