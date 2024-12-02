@@ -155,11 +155,37 @@ class ExportPdsController extends Controller
         });
 
 
+        $secondaryRow = 55;
+
+        if($elementary->count() > 0){
+            $secondaryRow = $secondaryRow + $elementary->count();
+        }else{
+            $secondaryRow = $secondaryRow + 1;
+        }
+
+        $vocRow = $secondaryRow + $SECONDARY->count();
+
+        if($VOCATIONAL->count() == 0){
+            $vocRow += 1;
+        }
+
+        $collegeRow = $vocRow + $VOCATIONAL->count();
+
+        if($VOCATIONAL->count() == 0){
+            $vocRow += 1;
+        }
+
+        $gradRow = $collegeRow + $COLLEGE->count();
+
+        if($COLLEGE->count() == 0){
+            $vocRow += 1;
+        }
+        
         self::insertEducation($elementary->values(), $sheetA, 55);
-        self::insertEducation($SECONDARY->values(), $sheetA, 55 + $elementary->count());
-        self::insertEducation($VOCATIONAL->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count());
-        self::insertEducation($COLLEGE->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count());
-        self::insertEducation($GRADUATE->values(), $sheetA, 55 + $elementary->count() +  $SECONDARY->count() + $VOCATIONAL->count() + $COLLEGE->count());
+        self::insertEducation($SECONDARY->values(), $sheetA, $secondaryRow);
+        self::insertEducation($VOCATIONAL->values(), $sheetA, $vocRow);
+        self::insertEducation($COLLEGE->values(), $sheetA, $collegeRow);
+        self::insertEducation($GRADUATE->values(), $sheetA, $gradRow);
 
 
         // code for  civil service eligibility
