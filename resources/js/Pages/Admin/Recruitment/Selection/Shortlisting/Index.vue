@@ -80,6 +80,7 @@
             :applicant="props.applicant_details" 
             :plantilla="posting.plantilla" 
             :posting_id="job_vacancy_status.job_posting_id"
+            :withControls="true" 
           />
         </div>
       </div>

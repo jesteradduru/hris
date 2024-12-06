@@ -207,7 +207,17 @@ class AdminJobApplicationController extends Controller
                 'non_academic_distinction' => ['files'],
                 'pes_rating',
             ]);
+
+            if(count($applicant_details->job_application) > 0){
+                $applicant_details->workExperienceComputation = WorkExperience::compute_experience($applicant_details->job_application[0]->id);
+                $applicant_details->trainingComputation = LearningAndDevelopment::compute_training($applicant_details->job_application[0]->id);
+                $applicant_details->educationComputation = EducationalBackgroundCollegeGraduateStudy::compute_education($applicant_details->id);
+                $applicant_details->performanceComputation = SpmsForm::compute_performance($applicant_details->id, $request->job_posting, $applicant_details->job_application[0]->id);
+                $applicant_details->awardsComputation = RewardAndRecognition::outstanding_accoplishment($applicant_details->job_application[0]->id);
+            }
         }
+
+        
 
         $latest_result = ApplicationResult::with(['application', 'user' => fn($query) => $query->orderBy('surname', 'desc')])->where('result_id', $job_vacancy_status->id)->get();
 

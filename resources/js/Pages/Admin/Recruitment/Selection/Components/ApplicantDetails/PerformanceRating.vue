@@ -21,7 +21,7 @@
                 <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
               <td>{{ ipcr.rating }}</td>
-              <td v-if="index === 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td v-if="index == 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
           </tbody>
         </table>
@@ -47,7 +47,7 @@
             <tr>
               <td>FIRST SEMESTER</td>
               <td>{{ applicant.pes_rating.first_rating }}</td>
-              <td v-if="index === 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td v-if="applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
             <tr>
               <td>SECOND SEMESTER</td>
