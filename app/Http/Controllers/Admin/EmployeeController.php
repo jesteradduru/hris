@@ -129,6 +129,7 @@ class EmployeeController extends Controller
             ]);
         }
 
+        $employee->roles()->detach();
 
         $employee->assignRole($request->role);
 

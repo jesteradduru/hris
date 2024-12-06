@@ -23,7 +23,7 @@ class ApplicationResultController extends Controller
     
                 if($request->result === 'SELECTED'){
                     if($application->user->hasAnyRole('user')){
-                        $application->user->removeRole('user');
+                        $application->user->roles()->detach();
                         $application->user->assignRole('employee');
                     }
         
