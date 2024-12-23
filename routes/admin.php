@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\PublishHiringResultController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RuleController;
 use App\Http\Controllers\Admin\Selection\AcademicAwardController;
+use App\Http\Controllers\Admin\Selection\IncludeIPCRController;
 use App\Http\Controllers\Admin\Selection\LearningAndDevelopmentController;
 use App\Http\Controllers\Admin\Selection\NonAcademicAwardController;
 use App\Http\Controllers\Admin\Selection\PsbPointController;
@@ -120,6 +121,8 @@ use Illuminate\Support\Facades\Route;
         Route::post('lnd/{lnd}/includeLnd', [LearningAndDevelopmentController::class, 'includeLnd'])->name('lnd.includeLnd');
         // selection/work experience
         Route::post('work/{work}/includeWork', [WorkExperienceController::class, 'includeWork'])->name('work.includeWork');
+        // selection/ IPCR
+        Route::post('spms/{spms}/IPCR', [IncludeIPCRController::class, 'includeIPCR'])->name('spms.includeIPCR');
 
         // selection/psbpoints
         Route::post('psb_point/{job_application}/save', [PsbPointController::class, 'save'])->name('psb_point.save');
