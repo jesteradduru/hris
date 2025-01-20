@@ -27,7 +27,7 @@
 
     <Box>
       <!-- special skills and hobbies -->
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <h5 class="text-primary">Special Skills and Hobbies</h5>
         <div v-if="skills" class="d-flex gap-2">
           <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
@@ -35,7 +35,7 @@
         <div v-else class="text-muted text-center text-sm">
           No Record
         </div>
-      </div>
+      </div> -->
 
     
 
