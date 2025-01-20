@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class SpmsForm extends Model
 {
@@ -45,50 +46,37 @@ class SpmsForm extends Model
         return asset("storage/{$this->filepath}");
     }
 
+    public function included() : MorphMany {
+        return $this->morphMany(IncludedComputation::class, 'computable');
+    }
+
     public static function compute_performance(int $user_id, int $posting_id, int $application_id){
         $user = User::find($user_id);
         $job_posting= JobPosting::find($posting_id);
         $job_application = JobApplication::find($application_id);
+        
                
 
                 if($user->hasRole('employee')){//employee
+                    $computable = $job_application->included;
                     $posting_date = Carbon::parse($job_posting->posting_date);
                     $latestSpms = null;
 
-                    if($posting_date->month <= 6){
-                        $previousYear = $posting_date->year - 1;
-                        $latestSpms = $user->spms()
-                                         ->where('user_id', $user->id)
-                                        ->where('year', $previousYear)
-                                        ->where(function (Builder $query) {
-                                            $query->where('semester', 'FIRST')
-                                                ->orWhere('semester', 'SECOND');
-                                        })->get();
-                    }else if($posting_date->month > 6 && $posting_date->month <= 12){
-                        $currentYear = $posting_date->year;
-                        $latestSpms = $user->spms()
-                                        ->where(function (Builder $query) use($currentYear, $user) {
-                                            $query->where('semester', 'FIRST')
-                                                    ->where('user_id', $user->id)
-                                                    ->where('year', $currentYear);
-                                        })
-                                        ->orWhere(function (Builder $query) use($currentYear, $user)  {
-                                            $query->where('year', $currentYear - 1)
-                                                 ->where('user_id', $user->id)
-                                                ->where('semester', 'SECOND');
-                                        })->get();
-                    }
+                    $included_ipcr = $computable->filter(function ($value, int $key) {
+                        return $value->computable_type == 'App\Models\SpmsForm';
+                    });
+            
+                    $ipcrs = $included_ipcr->map(function ($value, int $key) {
+                        return $value->computable->rating;
+                    });
 
-                    // dd($latestSpms->toArray());
-                    if($latestSpms){
-                        $performance_rating = $latestSpms->avg('rating') / 5 * 70;
-                    }
-
+                    $ipcr_values = $ipcrs->values();
+              
                     $applicant = [
                         'name' => $user->name,
-                        'first' => count($latestSpms) >= 1 ? $latestSpms[0]->rating : null,
-                        'second' => count($latestSpms) === 2 ? $latestSpms[1]->rating : null,
-                        'equivalent' => round($performance_rating, 2)
+                        'first' => count($ipcr_values) >= 1 ? round($ipcr_values[0], 2) : null,
+                        'second' => count($ipcr_values) === 2 ? round($ipcr_values[1], 2) : null,
+                        'equivalent' => count($ipcr_values) == 0 ? 50 : round($ipcrs->average() / 5 * 70, 2)
                     ];
 
                     // dd($applicant);

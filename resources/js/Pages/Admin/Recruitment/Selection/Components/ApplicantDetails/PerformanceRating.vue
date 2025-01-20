@@ -10,18 +10,29 @@
         >
           <thead>
             <tr>
+              <th v-if="withControls" scope="col" />
               <th scope="col">Semester</th>
               <th scope="col">Rating</th>
               <th v-if="applicant.spms.length > 0">Equivalent Rating (70)</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="applicant.spms.length > 0">
             <tr v-for="(ipcr, index) in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
+              <td v-if="withControls">
+                <input type="checkbox" :checked="checkIfIncluded(ipcr.id, 'App\\Models\\SpmsForm')" :data-id="ipcr.id" @input="includeIPCR" />
+              </td>
               <td scope="row">
                 <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
               </td>
               <td>{{ ipcr.rating }}</td>
               <td v-if="index == 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+            </tr>
+          </tbody>
+          <tbody v-else>
+            <tr>
+              <td scope="row" />
+              <td> - </td>
+              <td>{{ applicant.performanceComputation.equivalent }}</td>
             </tr>
           </tbody>
         </table>
@@ -94,6 +105,8 @@ import Modal from '@/Components/Modal.vue'
 import Box from '../UI/Box.vue'
 import {useForm} from '@inertiajs/vue3'
 import InputError from '@/Components/InputError.vue'
+import {router} from '@inertiajs/vue3'
+import { computed } from 'vue'
   
 const props = defineProps({
   withControls: Boolean,
@@ -102,7 +115,7 @@ const props = defineProps({
   posting_id: Number,
   latest_spms: Array,
 })
-console.log(props.latest_spms)
+
 const form = useForm({
   first_rating: null,
   second_rating: null,
@@ -111,5 +124,28 @@ const form = useForm({
 const onSubmit = () => {
   form.post(route('admin.recruitment.pes.store', {user_id: props.applicant.id, job_posting_id: props.posting_id}))
 }
+
+const included = computed(() => {
+  return props.applicant.job_application[0].included?.map(included => included)
+})
+
+const checkIfIncluded = (id, type) => {
+  if(!included.value){
+    return
+  }
+  return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
+}
+
+  
+const includeIPCR = (e) => {
+  const id = e.target.getAttribute('data-id')
+
+  router.visit(route('admin.recruitment.spms.includeIPCR', {spms: id, job_application_id: props.applicant.job_application[0].id}), {
+    method: 'post',
+    preserveScroll: true,
+    preserveState: true,
+  })
+}
+
 
 </script>

@@ -29,7 +29,7 @@
       <!-- special skills and hobbies -->
       <!-- <div class="mb-3">
         <h5 class="text-primary">Special Skills and Hobbies</h5>
-        <div v-if="skills" class="d-flex gap-2">
+        <div v-if="skills.length > 0" class="d-flex gap-2">
           <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
         </div>
         <div v-else class="text-muted text-center text-sm">
@@ -48,7 +48,7 @@
             :key="doc.id" 
             :href="doc.src"
             target="_blank"
-          >{{ doc.filename }}</a>
+          ><i class="fa fa-paperclip" /> {{ doc.filename }}</a>
         <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
         </div>
         <div v-else class="text-muted text-center text-sm">
