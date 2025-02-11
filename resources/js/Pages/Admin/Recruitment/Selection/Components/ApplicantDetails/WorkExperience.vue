@@ -38,6 +38,8 @@
             <th v-if="withControls" scope="col" />
             <th scope="col">Position</th>
             <th scope="col">Agency</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Pay Grade</th>
             <th scope="col">Status of Appointment</th>
             <th scope="col">Inclusive Date</th>
           </tr>
@@ -49,6 +51,8 @@
             </td>
             <td scope="row">{{ work.position_title }}</td>
             <td>{{ work.dept_agency_office_company }}</td>
+            <td>{{ work.monthly_salary }}</td>
+            <td>{{ work.paygrade }}</td>
             <td>{{ work.status_of_appointment }}</td>
             <td>
               {{ `${simplifyDate(work.inclusive_date_from)} - ` }}
