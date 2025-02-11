@@ -51,7 +51,7 @@
             </td>
             <td scope="row">{{ work.position_title }}</td>
             <td>{{ work.dept_agency_office_company }}</td>
-            <td>{{ work.monthly_salary }}</td>
+            <td>{{ parseInt(work.monthly_salary).toLocaleString('en-US', { style: 'currency', currency: 'PHP'}) }}</td>
             <td>{{ work.paygrade }}</td>
             <td>{{ work.status_of_appointment }}</td>
             <td>
