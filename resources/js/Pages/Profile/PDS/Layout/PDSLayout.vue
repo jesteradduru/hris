@@ -117,7 +117,8 @@
     <hr />
     <div id="pds" class="container">
       <div class="d-flex justify-content-end">
-        <a class="btn btn-success" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
+        <a class="btn btn-success m-2" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
+        <a class="btn btn-success m-2" :href="route('pds.print')" target="_blank"><i class="fa-solid fa-print" />&nbsp;Print</a>
       </div>
       <slot />
     </div>
