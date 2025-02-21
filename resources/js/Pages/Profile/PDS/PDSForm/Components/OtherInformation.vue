@@ -190,44 +190,44 @@
                     </div>
                     </div>
             </td>
-            <div class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex" style="padding-top:40px;">
-                        <div class="text-center">
-                            <div class="d-flex">
+            <td>
+                <div class="p-2" style="color:black;">
+                    <div class="p-2">
+                        <div class="d-flex" style="padding-top:40px;">
+                            <div class="text-center">
                                 <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
+                                    <div class="d-flex">
+                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
+                                        <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
+                                        <div style="padding-left:5px; font-size:0.7rem;">NO</div>
+                                    </div>
                                 </div>
                                 <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
+                                    <div class="d-flex">
+                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
+                                        <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
+                                        <div style="padding-left:5px; font-size:0.7rem;">NO</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
+                            <br>
                         </div>
-                        <br>
-                    </div>
                     <div>
-                        </div>
-                            If YES, give details:
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" name="hnum"
-                                style="font-size:1rem;border:none; outline: none; width:200px;" value="">
-                        </div>
-                        <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px">
-                            </div>
-                            </div>
+                </div>
+                If YES, give details:
+                </div>
+                    <div class="d-flex justify-content-between">
+                        <input type="text" name="hnum" style="font-size:1rem;border:none; outline: none; width:200px;">
+                    </div>
+                    <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px"></div>
+                </div>
+            </td>
         </tr>
 
         <tr>
@@ -804,20 +804,14 @@
                         <div class="d-flex" style="align-items: center;">
                             SUBSCRIBED AND SWORN to before me this
                             <div>
-                                <div class="d-flex justify-content-between" style="width: 100px;">
-                                    <input type="text" name="hnum"
-                                        style="font-size:0.9rem;border:none; outline: none; width:500px; text-align: center;"
-                                        value="">
-                                </div>
-                                <div
-                                    style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px; width: 500px; margin-top: 5px;">
-                                </div>
+                                <input type="text" name="hnum" style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;" value="">
+                                <div style="border-top: 1px solid black; padding-top: 5px; width:280px;"></div>
                             </div>
                             , affiant exhibiting his/her validly issued government ID as indicated above.
                         </div>
 
                         <div
-                            style="border: 2px solid black; padding: 5px; width: 570px; height: 2.5cm; justify-content: center; align-items: center; overflow: hidden; margin-top: 20px;">
+                            style="border: 2px solid black; padding: 5px; width: 570px; height: 1.4cm; justify-content: center; align-items: center; overflow: hidden; margin-top: 20px;">
                         </div>
                         <div
                             style="border: 2px solid black; padding: 5px; width: 570px; border-top: none; font-size: 0.7rem; margin-bottom: 5px;">
