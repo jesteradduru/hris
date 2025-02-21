@@ -7,6 +7,7 @@ use App\Http\Controllers\LndFormController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationSeenController;
 use App\Http\Controllers\PDS\ExportPdsController;
+use App\Http\Controllers\PDS\PrintpdsController;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
@@ -43,6 +44,7 @@ Route::resource('job_application', JobApplicationController::class)->middleware(
 //export pds
 Route::name('pds.export')->get('pds/export', ExportPdsController::class);
 
+Route::name('pds.print')->get('pds/print', [PrintpdsController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
@@ -51,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::name('notification.seen')->put('notification/{notification}/seen', NotificationSeenController::class);
     // end of notifications
 
-    
+
     Route::prefix('profile')
     ->name('profile.')
     ->group(function () {
