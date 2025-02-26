@@ -33,13 +33,13 @@ class DailyTimeRecord extends Model
     public static function getDtr(){
         set_time_limit(200);
         $zk = new ZKTeco('192.168.222.4', 4370);
-            
+
         $zk->connect();
 
         $dtrs = $zk->getAttendance();
 
         $latestRecord = DB::table('daily_time_record')->max('date_time');
-        
+
         foreach($dtrs as $dtr){
             $dtr_timestamp = Carbon::parse($dtr['timestamp']);
 
@@ -60,22 +60,22 @@ class DailyTimeRecord extends Model
 
         $zk->disconnect();
 
-    
-    } 
 
-    // filter 
+    }
+
+    // filter
     public function scopeFilter(Builder $query, $filters = []) {
         return $query
-        
+
         ->when( // filter by month
-            $filters['month'] ?? false, 
+            $filters['month'] ?? false,
             // fn($query, $value) => $query->whereMonth('date_time', $value)
             fn($query, $value) => $query->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m')"), $value),
             fn($query, $value) => $query->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m')"), date('Y-m'))
         )
-        
+
         ->when( // get sched by id
-            $filters['user_id'] ?? false, 
+            $filters['user_id'] ?? false,
             function ($query, $value) {
                 $query->where('user_id', '=', $value)
                       ->orWhereHas('user', function($query) use ($value) {
@@ -85,9 +85,9 @@ class DailyTimeRecord extends Model
                       });
             }
         )
-        
+
         ->when( // order date_time descending
-            $filters['order'] ?? false, 
+            $filters['order'] ?? false,
             fn($query, $value) => $query->orderBy('date_time', $value),
             fn($query, $value) => $query->orderBy('date_time', "DESC"),
         );
@@ -102,7 +102,7 @@ class DailyTimeRecord extends Model
         $utPM = 0;
         $absent = 0;
 
-        $exact12 = Carbon::parse('12:00');  
+        $exact12 = Carbon::parse('12:00');
         $exact7 = Carbon::parse('7:00');
         $exact930 = Carbon::parse('9:30');
         $exact19 = Carbon::parse('19:00');
@@ -112,7 +112,7 @@ class DailyTimeRecord extends Model
         if($inAM && $outAM){
             $logTimeInAm = Carbon::parse($inAM->format('H:i'));
             $logTimeOutAm = Carbon::parse($outAM->format('H:i'));
-            
+
 
             $time_in_earlier_7 = $logTimeInAm->lessThan(Carbon::parse('7:00:00'));
             $time_in_pass_7 = $logTimeInAm->greaterThan(Carbon::parse('7:00:00')) && $logTimeInAm->lte(Carbon::parse('9:30:00'));
@@ -120,8 +120,8 @@ class DailyTimeRecord extends Model
             $time_in_late = $logTimeInAm->greaterThan(Carbon::parse('09:30:00')) && $logTimeInAm->lte(Carbon::parse('11:00:00'));
             $early_out = $logTimeOutAm->greaterThan(Carbon::parse('11:00:00')) && $logTimeOutAm->lessThan(Carbon::parse('12:00:00'));
 
-            
-            
+
+
             if($time_in_earlier_7 && $time_out_gte_12) { // maaga sa 7 // saktong out
 
                 $totalAM = $exact12->diffInSeconds($exact7);
@@ -129,7 +129,7 @@ class DailyTimeRecord extends Model
             }else if($time_in_earlier_7 && $early_out){ // early time in // early out
 
                 $utAM = $exact12->diffInSeconds($logTimeOutAm);
-                $totalAM = $exact12->diffInSeconds($exact7); 
+                $totalAM = $exact12->diffInSeconds($exact7);
 
             }else if($time_in_late && $time_out_gte_12){ // time in late // gte 12
 
@@ -165,12 +165,12 @@ class DailyTimeRecord extends Model
             // $time_out_pass_12 = $logTimeOutPm->greaterThan(Carbon::parse('12:00:00'));
 
             if($time_in_earlier_13 && $time_out_earlier_7pm) { // saktong in, saktong out
-                $totalPM = $logTimeOutPm->diffInSeconds($exact1pm); 
+                $totalPM = $logTimeOutPm->diffInSeconds($exact1pm);
             }else if($time_in_earlier_13 && $early_out_pm ){ // saktong in, early out
                 $utPM = $exact1pm->diffInSeconds($logTimeOutPm);
-                $totalPM = $exact4pm->diffInSeconds($exact1pm);  
+                $totalPM = $exact4pm->diffInSeconds($exact1pm);
             }else if($time_in_earlier_13 && $time_out_pass_19 ){ // saktong in, pass 7 out
-                $totalPM = $exact19->diffInSeconds($exact1pm);  
+                $totalPM = $exact19->diffInSeconds($exact1pm);
             }else if($time_in_pass_13 && $time_out_earlier_7pm){ // late in, saktong out
                 $latePM = $logTimeInPm->diffInSeconds($exact1pm);
                 $totalPM = $logTimeOutPm->diffInSeconds($exact1pm);
@@ -183,7 +183,7 @@ class DailyTimeRecord extends Model
                 $totalPM = $logTimeOutPm->diffInSeconds($exact1pm);
             }else if($time_in_pass_13 && $time_out_pass_19 ){ // late in, pass 7 out
                 $latePM = $logTimeInPm->diffInSeconds($exact1pm);
-                $totalPM = $exact19->diffInSeconds($exact1pm);  
+                $totalPM = $exact19->diffInSeconds($exact1pm);
             }
         }
 
@@ -197,7 +197,7 @@ class DailyTimeRecord extends Model
             }
         }
 
-        
+
 
         $total = null;
         $totalMinutes = null;
@@ -206,7 +206,7 @@ class DailyTimeRecord extends Model
         if($offset){
             $offsetSeconds = $offset * 60 * 60;
         }
-        
+
 
         if($totalAM || $totalPM){
 
@@ -224,7 +224,7 @@ class DailyTimeRecord extends Model
                 $total = gmdate('H:i:s', $totalAM + $totalPM + $offsetSeconds);
                 $totalMinutes = ($totalAM + $totalPM ) - 28800;
 
-                
+
                 // if($totalMinutes > 0 && $remarks == 'EO'){
                 //     $totalMinutes = null;
                 //     $total = gmdate('H:i:s', 8*60*60);
@@ -252,7 +252,7 @@ class DailyTimeRecord extends Model
         $outAM = null;
         $inPM = null;
         $outPM = null;
-        
+
         $logTimeBetween7to11 = array();
         $logTimeBetween11to3 = array();
         $logTimeBetween3onwards = array();
@@ -264,7 +264,7 @@ class DailyTimeRecord extends Model
 
         if(count($dateTimeRecordToday)){
             foreach($dateTimeRecordToday as $dtrRecord){
-    
+
                 $time = Carbon::create($dtrRecord->date_time);
                 $logTime = Carbon::parse($time->toTimeString());
 
@@ -314,7 +314,7 @@ class DailyTimeRecord extends Model
         if(!count($filter)){
             $filter['month'] = date('Y-m'); //set to current month
         }
-        
+
         $yearMonth = date('Y-m', strtotime($filter['month'])); // 2023-09
 
         // Get the number of days in the given month
@@ -356,8 +356,8 @@ class DailyTimeRecord extends Model
                 ->where('user_id', '=', $user_id)
                 ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%e')"), $yearMonth . '-' . $date)
                 ->get();
-                
-                $inout = self::identifyInOut($dateTimeRecordToday);    
+
+                $inout = self::identifyInOut($dateTimeRecordToday);
                 $remarks = $inout['remarks'];
 
                 if($other_dtr && $other_dtr->purpose === 'supp'){
@@ -388,13 +388,13 @@ class DailyTimeRecord extends Model
                     $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $day);
                 }
 
-               
+
 
                 // Create a daily record for the current day
                 $record = [
                     'date' => $date,
                     'day' => $dayOfWeek,
-                    'inAM' => $inAM ? $inAM->format('h:i:00 A') : null,  
+                    'inAM' => $inAM ? $inAM->format('h:i:00 A') : null,
                     'outAM' => $outAM ? $outAM->format('h:i:00 A') : null,
                     'inPM' => $inPM ? $inPM->format('h:i:00 A') : null,
                     'outPM' => $outPM ? $outPM->format('h:i:00 A') : null,
@@ -424,7 +424,7 @@ class DailyTimeRecord extends Model
     public static function getInfo($user_id){
         $date = Carbon::now();
         $startMonth = Carbon::now()->startOfMonth();
-        
+
         $hours_to_render = ($date->dayOfWeek * 8) * 60 * 60;
 
         if($date->dayOfWeek > $date->format('d')){
@@ -435,7 +435,7 @@ class DailyTimeRecord extends Model
         $timeout = null;
 
         $dtr_now = null;
-        
+
         //  5 > 1
         //
         if($date->format('d') === '01' && $date->dayOfWeek > $date->format('d') || true){
@@ -480,17 +480,17 @@ class DailyTimeRecord extends Model
         if($dtr_now !== null && $dtr_now['inAM'] && $dtr_now['outPM'] == null){
             $dtr_now_am = $dtr_now['inAM'];
             $inAM = Carbon::parse($dtr_now_am->format('H:i:s'));
-    
+
             if($inAM->lessThan(Carbon::parse('7:00:00'))){
                 $inAM = Carbon::parse('7:00:00');
             }else{
                 $inAM = $dtr_now_am;
             }
-    
+
             $exact12 = Carbon::parse('12:00');
-            
+
             $hours_to_render_today = null;
-    
+
             if($dtr_now['outAM']){
                 $hours_to_render_today = $exact12->diffInSeconds($inAM) + ($hours_to_render - $rendered) + 3600;
             }else{
@@ -506,7 +506,7 @@ class DailyTimeRecord extends Model
             }
 
             $hours_remaining = Carbon::now()->diffInSeconds($timeout->format('H:i'));
-    
+
             return([
                 'hours_to_render' => ($hours_to_render / 60) / 60,
                 'render' => round(($hours_to_render - $rendered) / 60 / 60),
@@ -515,7 +515,7 @@ class DailyTimeRecord extends Model
                 'hours_remaining' =>  $hours_remaining
             ]);
         }
-        
+
     }
 
     public static function getTimeSheet($record, $date, $dayOfWeek, $currentUser) {
@@ -533,7 +533,7 @@ class DailyTimeRecord extends Model
         ];
 
         $weekend = ['Sat', 'Sun'];
-        
+
         // dd($record);
         if(in_array($record->remarks, $wholeday_remarks)){
             if(in_array($dayOfWeek, $weekend)){
@@ -557,7 +557,7 @@ class DailyTimeRecord extends Model
                 $entry = [
                     'date' => $date,
                     'day' => $dayOfWeek,
-                    'inAM' => '08:00:00 AM',  
+                    'inAM' => '08:00:00 AM',
                     'outAM' =>  '12:00:00 AM',
                     'inPM' =>  '01:00:00 PM',
                     'outPM' =>  '05:00:00 PM',
@@ -572,13 +572,13 @@ class DailyTimeRecord extends Model
                 ];
             }
         }
-    
+
         if($record->remarks === 'EO' && $record->eo_sched_type === 'ALLDAY'){
-            
+
             $entry = [
                 'date' => $date,
                 'day' => $dayOfWeek,
-                'inAM' => '08:00:00 AM',  
+                'inAM' => '08:00:00 AM',
                 'outAM' =>  '12:00:00 AM',
                 'inPM' =>  '01:00:00 PM',
                 'outPM' =>  '05:00:00 PM',
@@ -657,7 +657,7 @@ class DailyTimeRecord extends Model
                 $entry = [
                     'date' => $date,
                     'day' => $dayOfWeek,
-                    'inAM' => '08:00:00 AM',  
+                    'inAM' => '08:00:00 AM',
                     'outAM' =>  '12:00:00 AM',
                     'inPM' =>  '01:00:00 PM',
                     'outPM' =>  '05:00:00 PM',
@@ -683,7 +683,7 @@ class DailyTimeRecord extends Model
             $_1pm = Carbon::parse('13:00:00');
             $_7pm = Carbon::parse('19:00:00');
 
-            
+
 
             $dateTimeRecordToday = DB::table('daily_time_record')
                 ->select(['date_time', 'remark'])
@@ -737,7 +737,7 @@ class DailyTimeRecord extends Model
 
 
             if($passDeparture->gte($_7am) && $passDeparture->lte($_12pm)){
-                
+
                 if($passReturn->lessThan($_12pm)){
                     $totalPassSlipAM = $passReturn->diffInSeconds($passDeparture);
                 }else if($passReturn->lte($_1pm)){
@@ -758,7 +758,7 @@ class DailyTimeRecord extends Model
                 }else if($passReturn->gte($_1pm)){
                     $totalPassSlipAM = $passReturn->diffInSeconds($_1pm);
                 }
-                
+
             }
 
             // dd(gmdate('H:i', $totalPassSlipAM + $totalPassSlipPM));
@@ -768,5 +768,5 @@ class DailyTimeRecord extends Model
 
         return $entry;
     }
-    
+
 }

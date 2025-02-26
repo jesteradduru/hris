@@ -90,7 +90,7 @@ const props = defineProps({
   suggestions: Object,
 })
 
-// const seconds = ref(props.suggestions.hours_remaining)
+const seconds = ref(props.suggestions.hours_remaining)
 
 const showAwa = (day) => {
   return moment().day() === 5 && moment().date() === day
