@@ -68,7 +68,10 @@
                   entry.remarks === 'REG_OB' ||
                   entry.remarks === 'REG_SPL' ||
                   entry.remarks === 'REG_VL' ||
-                  entry.remarks === 'REG_SL' || entry.remarks === 'REG_FL') &&
+                  entry.remarks === 'REG_SL' || 
+                  entry.remarks === 'REG_FL') ||
+                  entry.remarks === 'PATERNITY_LEAVE' ||
+                  entry.remarks === 'MATERNITY_LEAVE' &&
                   entry.reg_multiday === 1"
               >
                 {{ getDate(entry.reg_start) }} - 
@@ -262,11 +265,35 @@ const entryForm = useForm({
 })
 
 const onAdd = () => {
-  entryForm.post(route('admin.dtr.timesheet.store'))
+  entryForm.post(route('admin.dtr.timesheet.store'), {
+    onSuccess: () => resetForm(),
+  })
 }
 
 const resetForm = () => {
-  entryForm.reset()
+  entryForm.reset(
+    'rdEmployee',
+    'employee',
+    'multiEmployee',
+    'purpose',
+    'date',
+    'pass_type',
+    'pass_out',
+    'pass_in',
+    'supp_am_in',
+    'supp_am_out',
+    'supp_pm_in',
+    'supp_pm_out',
+    'off_title',
+    'eo_start',
+    'eo_end',
+    'off_hours',
+    'eo_sched_type',
+    'remarks',
+    'reg_multiday',
+    'reg_start',
+    'reg_end',
+  )
 }
 
 const addEmployee = () => {

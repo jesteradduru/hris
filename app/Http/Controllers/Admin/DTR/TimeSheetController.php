@@ -25,7 +25,7 @@ class TimeSheetController extends Controller
         $request->validate([
             'employee' => 'required_unless:rdEmployee,all|integer|nullable',
             'purpose' => 'required|string',
-            'date' => 'required_unless:remarks,STUDY_LEAVE,ON_SCHOLARSHIP,REG_OB,REG_SPL,REG_SL,REG_VL,REG_FL|required_unless:reg_multiday,true|date|nullable',
+            'date' => 'required_unless:remarks,STUDY_LEAVE,ON_SCHOLARSHIP,REG_OB,REG_SPL,REG_SL,REG_VL,REG_FL,MATERNITY_LEAVE,PATERNITY_LEAVE|required_unless:reg_multiday,true|date|nullable',
             'pass_type' => 'required_if:purpose,pass|string|nullable',
             'pass_in' => 'required_if:purpose,pass|string|nullable',
             'pass_out' => 'required_if:purpose,pass|string|nullable',
@@ -101,6 +101,8 @@ class TimeSheetController extends Controller
                     'REG_VL',
                     'REG_FL',
                     'STUDY_LEAVE',
+                    'MATERNITY_LEAVE',
+                    'PATERNITY_LEAVE',
                     'ON_SCHOLARSHIP'
                 ];
                 
@@ -144,6 +146,7 @@ class TimeSheetController extends Controller
     
     
                 else if(in_array($request->remarks, $wholeday_remarks) && $request->reg_multiday){
+                    // dd($request->reg_start);
                     $request->user()->timesheet_entry()->create([
                         'employee' => $employee,
                         'purpose' => $request->purpose,

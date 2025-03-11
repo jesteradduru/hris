@@ -19,6 +19,8 @@
       entryForm.remarks === 'REG_VL' || entryForm.remarks === 'REG_SL' ||
       entryForm.remarks === 'REG_FL' ||
       entryForm.remarks === 'STUDY_LEAVE' ||
+      entryForm.remarks === 'MATERNITY_LEAVE' ||
+      entryForm.remarks === 'PATERNITY_LEAVE' ||
       entryForm.remarks === 'ON_SCHOLARSHIP' "
   >
     <div class="form-check form-check-inline">
@@ -99,6 +101,8 @@ const remarks = [
   'RA_9710',
   'STUDY_LEAVE',
   'ON_SCHOLARSHIP',
+  'MATERNITY_LEAVE',
+  'PATERNITY_LEAVE',
 ]
   
 defineProps({
