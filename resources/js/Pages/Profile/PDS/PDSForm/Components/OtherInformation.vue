@@ -1,831 +1,765 @@
+<style scoped>
+table{
+        font-size: 0.5rem;
+        width:98%; 
+        margin-left: auto; 
+        margin-right: auto;
+        border: black;
+    }
+.header{
+    padding-left:10px; 
+    text-align:start; 
+    font-size:0.8rem;
+    background:gray; 
+    color:white; 
+    width:100%;
+}
+.label_name{
+    width:100%;
+}
+.labels{
+    padding:10px;
+    background:lightgray;
+    color:black;
+}
+.elem{
+    padding-left:10px; 
+    font-weight: bold;
+}
+.footer{
+    padding-left:10px; 
+    text-align:center; 
+    background:lightgray;
+    color:red; 
+}
+    .signature{
+        width:130px;
+        background:lightgray;
+        color:black;
+    }
+    .sign_name{
+        padding-left:10px;
+        font-size:1rem;
+        width:50px;
+    }
+.continue{
+    padding-left:10px; 
+    text-align:center; 
+    background:lightgray;
+    color:red; 
+}
+    .checkbox {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 12px;
+        height: 12px;
+        border: 1.5px solid #000;
+        border-radius: 0; /* No rounded corners */
+        position: relative;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    .checkbox:checked {
+        background-color: #fff;
+        border-color: #000;
+    }
+
+    .checkbox:checked::before {
+        content: '\2713'; /* Unicode checkmark */
+        position: absolute;
+        font-size: 14px;
+        color: #000;
+        margin-top: -12px;
+        margin-left: -3px;
+        font-weight: bold;
+    }
+    .yes_no{
+        margin-top:30px;
+        margin-left:10px;
+    }
+    .yes_no1{
+        margin-left:10px;
+    }
+    .thirty_five{
+        padding-left:10px; 
+        align-items: center;
+        display: flex;
+        height: 18px;
+    }
+    .input{
+        border:none; 
+        outline: none; 
+        width:100%; 
+        display: inline-block;
+        font-weight: bold;
+    }
+    .underline{
+        border-top: 1px solid black; 
+        padding-top: 5px;
+    }
+    .subscribed{
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        flex-direction: column; 
+        text-align: center;
+    }
+    .photo_id{
+        margin-left:75px;margin-top:-15px;
+    }
+</style>
+
 <template>
-
-<table class="table-bordered" style="border:black; margin-top:1px; font-size:11px; width:100%;">
-        <tr>
-            <th colspan="8">
-                <div
-                    style="padding-left:10px; text-align:start; font-size:1.2rem; background:gray; color:white; width:100%;">
-                    <i>VIII. OTHER INFORMATION</i>
-                </div>
-            </th>
-        </tr>
-
-        <tr>
-            <td colspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">31.</div>
-                    <div style="width: 100%; white-space: nowrap;">
-                        <div style="font-size:0.7rem; text-align: center;">SPECIAL SKILLS and HOBBIES</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="4" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">32.</div>
-                    <div style="width: 100%; white-space: nowrap;">
-                        <div style="font-size:0.7rem; text-align: center;">NON-ACADEMIC DISTINCTIONS / RECOGNITION</div>
-                        <div class="text-center" style="color:BLACK; font-size:rem;"><i>(Write in full)</i></div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">33.</div>
-                    <div style="width: 100%; white-space: nowrap;">
-                        <div style="font-size:0.7rem; text-align: center;">MEMBERSHIP IN ASSOCIATION/ORGANIZATIONS</div>
-                        <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>(Write in full)</i></div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text"
-                    style="font-size:1rem;border:none; outline: none; width: 100%;  min-width: 150px; height: 42px">
-            </td>
-        </tr>
+<table class="table-bordered">
+    <thead>
         <tr>
             <td colspan="8">
-                <div style="text-align:center; font-size:1.2rem;background:lightgray;color:red; font-size:0.9rem;">
+                <div class="header">
+                    <i>VIII. OTHER INFORMATION</i>
+                </div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="labels">
+            <td colspan="2" style="width:270px;">
+                <div class="d-flex">
+                    <div class="label_name text-center">
+                        31.  SPECIAL SKILLS and HOBBIES
+                    </div>
+                    <div class="label_name text-center">
+                        NON- ACADEMIC DISTINCTIONS / RECOGNITION <br>
+                        (Write in full)
+                    </div>
+                </div>
+            </td>
+            <td colspan="2" style="width:100px;">
+                <div class="label_name text-center">
+                    33.  MEMBERSHIP IN <br>
+                            ASSOCIATION/ORGANIZATION <br>
+                            (Write in full)
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px; width:480px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px; width:500px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+        <tr>
+            <td class="elem" style="height:30px;">{{ other_information.special_skills_hobbies }}</td>
+            <td class="elem" style="height:30px;">sample</td>
+            <td colspan="2" class="elem" style="height:30px;">{{ other_information.membership_in_assoc_org }}</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="8">
+                <div class="continue">
                     <i>(Continue in separate sheet if necessary)</i>
                 </div>
             </td>
         </tr>
+    </tfoot>
+</table>
+<!-- <table class="table-bordered">
+    <tbody>
         <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
+            <td class="signature">
                 <div class="d-flex">
                     <div>
-                        <div style="padding-left:10px; font-size:0.7rem;width:100px;">SIGNATURE</div><br>
+                        <div class="sign_name">SIGNATURE</div>
                     </div>
                 </div>
             </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" style="font-size:0.7rem;border:none; outline: none; width:100px;" value="">
+            <td colspan="2">
             </td>
-            <td colspan="2" style="padding-left:10px;background:lightgray;color:black;">
+            <td class="signature">
                 <div class="d-flex">
                     <div>
-                        <div style="padding-left:10px; font-size:0.7rem;width:100px;">DATE</div><br>
+                        <div class="sign_name">DATE</div>
                     </div>
                 </div>
             </td>
-            <td colspan="3" style="padding-left:10px;">
-
-                <input type="text " style="font-size:0.9rem;border:none; outline: none; width:100px;" readonly>
+            <td colspan="4">
             </td>
         </tr>
-    </table>
-    <div style="text-align:end;">
-        <h6><i>CS FORM 212 (Revised 2017), Page 3 of 4</i></h6>
-    </div>
-
-    <!-- PAGE 4 NA ETO PAR  -->
-    <table class="table-bordered" style="border:black; margin-top:1px; font-size:11px; width:100%;">
-
+    </tbody>
+</table>
+<div style="text-align:end; font-size:0.5rem; margin-right:15px;">
+    <i>CS FORM 212 (Revised 2017), Page 1 of 4</i>
+</div> -->
+<table class="table-bordered">
+    <tbody>
         <tr>
-            <td style="color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">34.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;"> Are you related by consanguity to
-                            the appointing or recommenting authority, or to the chief of bureau or office or to the
-                            person who has immediate supervision over you in the Office, Bureau or Department where you
-                            will be appionted,<br>
-                            a. within the third degree?<br>
-                            b. within the fourth degree(for Local Goverment Umit - Career Employees)?
-                        </div><br><br><br><br>
-                    </div>
-                    </div>
-            </td>
             <td>
-                <div class="p-2" style="color:black;">
-                    <div class="p-2">
-                        <div class="d-flex" style="padding-top:40px;">
-                            <div class="text-center">
-                                <div class="d-flex">
-                                    <div class="d-flex">
-                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                        <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                        <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="d-flex">
-                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                        <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                    </div>
-                                    <div class="d-flex">
-                                        <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                        <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-                    <div>
-                </div>
-                If YES, give details:
-                </div>
-                    <div class="d-flex justify-content-between">
-                        <input type="text" name="hnum" style="font-size:1rem;border:none; outline: none; width:200px;">
-                    </div>
-                    <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px"></div>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td rowspan="2" style="color:black;">
-                <div class="d-flex" style="margin-top: -70px;">
-                    <div style="padding-left:10px; font-size:0.7rem;">35.</div>
-                    <div class="">
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;padding-bottom: 80px;">
-                            a. Have you ever been found guilty of any administrative offenses?
-                        </div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;">
-                            b. Have you been criminally charged before any court?
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="d-flex">
-                            <div class="d-flex">
-                                <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            If YES, give details:
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" name="hnum"
-                                style="font-size:1rem;border:none; outline: none; width:200px;" value="">
-                        </div>
-                        <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px">
-                            </div>
-                            </div>
-                        </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="d-flex">
-                            <div class="d-flex">
-                                <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                            </div>
-                            <div class="d-flex">
-                                <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            If YES, give details:
-                        </div>
-                        <div class="d-flex" style="padding-left:10px; align-items: center;">
-                            <div style="font-size:0.7rem; padding-right: 5px;">Date Filed: </div>
-                            <div>
-                                <input type="text" name="hnum"
-                                    style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                    value="">
-                                <div style="border-top: 1px solid black; padding-top: 5px; width:287px;"></div>
-                            </div>
-                        </div>
-                        <div class="d-flex" style="padding-left:10px; align-items: center;">
-                            <div style="font-size:0.7rem; padding-right: 5px;">Status of Case/s: </div>
-                            <div>
-                                <input type="text" name="hnum"
-                                    style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                    value="">
-                                <div style="border-top: 1px solid black; padding-top: 5px; width:262px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td style="color:black; width: 70%;">
-                <div class="d-flex" style="margin-top: -45px;">
-                    <div style="padding-left:10px; font-size:0.7rem;">36.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem; width:500px;">
-                            Have you ever been convicted of any crime or violation of any law, decree, ordinance or
-                            regulation by any court or tribunal?
-                        </div>
-                    </div>
-                </div>
-            </td>
-
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div>
-                        <div>
-                            If YES, give details:
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" name="hnum"
-                                style="font-size:1rem;border:none; outline: none; width:100px;" value="">
-                        </div>
-                        <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px">
-                            </div>
-                            </div>
-                        </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td style="color:black;">
-                <div class="d-flex" style="margin-top: -45px;">
-                    <div style="padding-left:10px; font-size:0.7rem;">37.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;"> Have you ever been seperated from
-                            the service in any of the following modes: resignation,
-                            retirement, dropped from the rolls, dismissal, termination, end of term, finished contract
-                            or phased out (abolition) in the public or private sector?
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div>
-                        <div>
-                            If YES, give details:
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" name="hnum"
-                                style="font-size:1rem;border:none; outline: none; width:200px;" value="">
-                        </div>
-                        <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px">
-                            </div>
-                            </div>
-                        </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td style="color:black;">
                 <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">38.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;">
-                            a. Have you ever been a candidate in a national or local election held within the last year
-                            (except Barangay election)?
-                            <br><br><br>
-                            b. Have you resigned from the government service during the three(3)-month period before the
-                            last election to promoted/ actively campaign for a national or local candidate?
-                        </div>
-                    </div>
-                </div>
-            </td>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="d-flex" style="align-items: center;">
-                        <div style="font-size:0.7rem;">If YES, give details:</div>
-                        </div>
-                            <input type="text" name="hnum"
-                                style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                value="">
-                            <div style="border-top: 1px solid black; padding-top: 5px; width:319px;"></div>
-                        </div>
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="d-flex" style="align-items: center;">
-                        <div style="font-size:0.7rem;">If YES, give details:</div>
-                        <div>
-                            <input type="text" name="hnum"
-                                style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                value="">
-                            <div style="border-top: 1px solid black; padding-top: 5px; width:319px;"></div>
-                        </div>
-                    </div>
+                    <table class="table-bordered" style="border:black; width:100%;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex" style="height:71px;">
+                                        <div style="padding-left:10px;">34.</div>
+                                        <div>
+                                            <div style="padding-left:5px;"> Are you related by consanguity to
+                                                the appointing or recommenting authority, or to the chief of bureau or office or to the
+                                                person who has immediate supervision over you in the Office, Bureau or Department where you
+                                                will be appionted,<br>
+                                                a. within the third degree?<br><br>
+                                                b. within the fourth degree(for Local Goverment Umit - Career Employees)?
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex pt-2" style="height:92px;">
+                                        <div style="padding-left:10px;">35.</div>
+                                        <div>
+                                            <div style="padding-left:5px;padding-bottom:45px;">
+                                                a. Have you ever been found guilty of any administrative offenses?
+                                            </div>
+                                            <div style="padding-left:5px;">
+                                                b. Have you been criminally charged before any court?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex" style="height:27px;">
+                                        <div style="padding-left:10px;">36.</div>
+                                        <div>
+                                            <div style="padding-left:5px;">
+                                                Have you ever been convicted of any crime or violation of any law, decree, ordinance or
+                                                regulation by any court or tribunal?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex" style="height:25px;">
+                                        <div style="padding-left:10px;">37.</div>
+                                        <div>
+                                            <div style="padding-left:5px;"> Have you ever been seperated from
+                                                the service in any of the following modes: resignation,
+                                                retirement, dropped from the rolls, dismissal, termination, end of term, finished contract
+                                                or phased out (abolition) in the public or private sector?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex" style="height:50px;">
+                                        <div style="padding-left:10px;">38.</div>
+                                        <div>
+                                            <div style="padding-left:5px;">
+                                                <div class="pb-2">
+                                                    a. Have you ever been a candidate in a national or local election held within the last year
+                                                    (except Barangay election)?
+                                                </div>  
+                                                <div>
+                                                    b. Have you resigned from the government service during the three(3)-month period before the
+                                                    last election to promoted/ actively campaign for a national or local candidate?
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex"  style="height:23px;">
+                                        <div style="padding-left:10px;">39.</div>
+                                        <div>
+                                            <div style="padding-left:5px;"> Have you acquired the status of an
+                                                immigration or permanent resident of another country?
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex" style="height:89px;">
+                                        <div style="padding-left:10px;">40.</div>
+                                        <div>
+                                            <div style="padding-left:5px;">
+                                                Pursuant to: (a) Indegenous People's Act(RA 8371); (b) Magna Carta for Disabled Persons (RA
+                                                7277); and (c) Solo Parent Welfare Act of 2000 (RA 8972), Please answer the following
+                                                items:? <br>
+                                                a. Are you a member of any indigenous group? <br><br>
+                                                b. Are you a person with disability? <br><br>
+                                                c. Are you a solo parent?<br><br><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-bordered" style="border:black;width:70%;">
+                        <tbody>
+                            <tr>
+                                <td style="height:20px;">
+                                    <!-- 34. a. -->
+                                    <div class="yes_no d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_four_a === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_four_a === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <!-- 34. b. -->
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_four_b === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_four_b === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1" style="margin-left:10px;">
+                                        <div>If YES, give details:</div>
+                                        <div class="d-flex justify-content-between">
+                                            <input type="text" name="hnum" 
+                                            v-model="questions.thirty_four_a_b_if_yes"
+                                            style="border:none; outline: none; width:100%; font-weight:bold;">
+                                        </div>
+                                        <div style="border-top: 1px solid black;"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_five_a === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_five_a === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-1" style="margin-left:10px;">
+                                        <div>If YES, give details:</div>
+                                        <div class="d-flex justify-content-between">
+                                            <input type="text" name="hnum" v-model="questions.thirty_five_a_if_yes" style="border:none; outline: none; width:100%; font-weight:bold;">
+                                        </div>
+                                        <div style="border-top: 1px solid black;"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_five_b === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_five_b === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five">
+                                        <div>If YES, give details:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_five_b_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five">
+                                        <div>Date Filed: </div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_five_b_if_yes_case">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five">
+                                        <div>Status of Case/s:</div>
+                                        <div>
+                                            <input type="text" class="input">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_six === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_six === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five mb-1" style="height:15px;">
+                                        <div>If YES, give details:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_six_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_seven === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_seven === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:15px;">
+                                        <div>If YES, give details:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_seven_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_eight_a === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_eight_a === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:10px;">
+                                        <div>If YES, give details:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_eight_a_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_eight_b === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_eight_b === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:20px;">
+                                        <div>If YES, give details:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_eight_b_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex" style="height:15px;">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_nine === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.thirty_nine === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five">
+                                        <div>If YES, give details(country): </div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.thirty_nine_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="yes_no1 d-flex mt-4">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_a === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_a === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:10px;">
+                                        <div>If YES, please specify:</div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.fourty_a_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_b === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_b === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:10px;">
+                                        <div>If YES, please specify ID No: </div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.fourty_b_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="yes_no1 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_c === 'Yes'">
+                                            <div class="p-1">YES</div>
+                                        </div>
+                                        <div class="d-flex align-items-center" style="padding-left:30px;">
+                                            <input type="checkbox" class="checkbox p-1"  :checked="questions.fourty_c === 'No'">
+                                            <div class="p-1">NO</div>
+                                        </div>
+                                    </div>
+                                    <div class="thirty_five" style="height:20px;">
+                                        <div>If YES, please specify ID No: </div>
+                                        <div>
+                                            <input type="text" class="input" v-model="questions.fourty_c_if_yes">
+                                            <div class="underline" style="width:100%;"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </td>
         </tr>
-
-        <tr>
-            <td style="color:black;">
-                <div class="d-flex" style="margin-top:-40px;">
-                    <div style="padding-left:10px; font-size:0.7rem;">39.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;"> Have you acquired the status of an
-                            immigration or permanent resident of another country?
-                        </div>
-                    </div>
-                    </div>
-            </td>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
+    </tbody>
+</table>
+<table class="table-bordered">
+    <tr>
+        <td>
+            <div class="d-flex">
+                <table class="table-bordered" style="width:100%">
+                    <tbody>
+                        <tr>
+                            <td class="p-3" colspan="4">
+                                41. REFERENCES <span style="color:red;">(Person not related by consanguinity or affinity to applicant /appointee)</span>
+                            </td>
+                        </tr>
+                        <tr class="text-center">
+                            <td style="width:100px;height:25px;">NAME</td>
+                            <td style="width:50px;">ADDRESS</td>
+                            <td style="width:50px;">TEL. NO</td>
+                        </tr>
+                        <tr>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                        </tr>
+                        <tr>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                            <td style="height:25px;"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="d-flex text-dark">
+                                    <div class="p-2">
+                                        42.
+                                    </div>
+                                    <div class="text-start p-2">
+                                        I declare under oath that I have personally accomplished this Personal Data Sheet
+                                        which is a true, correct and complete statement pursuant to the provisions of pertinent
+                                        laws, rules and regulations of the Republic of the Philippines. I authorize the agency
+                                        head/authorized representative to verify/validate the contents stated herein. I agree
+                                        that any misrepresentation made in this document and its attachments shall cause the
+                                        filing of administrative/criminal case/s against me.
+                                    </div>
                                 </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                        <br>
-                    </div>
-                    <div>
-                        <div>
-                            If YES, give details (country):
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <input type="text" name="hnum"
-                                style="font-size:1rem;border:none; outline: none; width:200px;" value="">
-                        </div>
-                        <div style="border-top: 1px solid black; padding-top: 5px; padding-right: 5px">
-                            <div>
-                            </div>
-                        </div>
-                        </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td style="color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">40.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:500px;">
-                            Pursuant to: (a) Indegenous People's Act(RA 8371); (b) Magna Carta for Disabled Persons (RA
-                            7277); and (c) Solo Parent Welfare Act of 2000 (RA 8972), Please answer the following
-                            items:? <br>
-                            a. Are you a member of any indigenous group? <br><br><br>
-                            b. Are you a person with disability? <br><br><br><br>
-                            c. Are you a solo parent?
-                        </div>
- </div>
-                    </div>
-            </td>
-            <td class="p-2" style="color:black;">
-                <div class="p-2">
-                    <div class="d-flex" style="padding-top:50px;">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="d-flex" style="align-items: center;">
-                        <div style="font-size:0.7rem;">If YES, please specify:</div>
-                        <div>
-                            <input type="text" name="hnum"
-                                style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                value="">
-                            <div style="border-top: 1px solid black; padding-top: 5px; width:280px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="d-flex" style="align-items: center;">
-                        <div style="font-size:0.7rem;">If YES, please specify ID No:</div>
-                        <div>
-                            <input type="text" name="hnum"
-                                style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                value="">
-                            <div style="border-top: 1px solid black; padding-top: 5px; width:255px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="p-2">
-                    <div class="d-flex">
-                        <div class="text-center">
-                            <div class="d-flex">
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; padding-right: 50px; font-size:0.7rem;">YES</div>
-                                </div>
-                                <div class="d-flex">
-                                    <input type="checkbox" id="checkbox1" style="vertical-align: middle;">
-                                    <div style="padding-left:5px; font-size:0.7rem;">NO</div>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="d-flex" style="align-items: center;">
-                        <div style="font-size:0.7rem;">If YES, please specify ID No:</div>
-                        <div>
-                            <input type="text" name="hnum"
-                                style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;"
-                                value="">
-                            <div style="border-top: 1px solid black; padding-top: 5px; width:255px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </td>
-        </tr>
-
-
-        <table border="1" style="color:black; width: 100%; border-collapse: collapse;">
-            <tr>
-                <td style="border: none;">
-                    <table border="1"
-                        style="width: 100%; text-align: left; border-collapse: collapse; margin-left: -1px; border-top: none;border-left: none;">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table style="width:40%">
+                    <tbody>
                         <tr>
                             <td>
-                                <div colspan="3"
-                                    style="color:black; padding: 5px; font-size:0.7rem; font-weight: bold;">
-                                    41. REFERENCES <span style="color:red;">(Person not related by consanguinity or
-                                        affinity to applicant/appointee)</span>
+                                <div class="">
+                                    <div style="padding: 25px;">
+                                        <div style="border: 1px solid black; padding: 5px; width: 3.5cm; height: 4.5cm; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                            <p
+                                                style="font-size: line-height: 1.2; word-wrap: break-word; text-align: center;">
+                                                Center this ID picture taken within the last 6 months<br>
+                                                3.5 cm X 4.5 cm (passport size)<br>
+                                                With full and handwritten name tag and signature over printed name<br>
+                                                Computer generated or photocopied picture is not accepted.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="photo_id">PHOTO</div>
                                 </div>
+                                
                             </td>
                         </tr>
-
-                    </table>
-                    <table border="1"
-                        style="width: 100%; text-align: left; border-collapse: collapse; margin: -1px; border-left: none;">
-                        <tr>
-                            <th style="padding: 5px; font-size: 0.7rem; text-align: center;">NAME</th>
-                            <th style="padding: 5px; font-size: 0.7rem; text-align: center;">ADDRESS</th>
-                            <th style="padding: 5px; font-size: 0.7rem; text-align: center;">TEL. NO.</th>
-                        </tr>
-                        <tr>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                            <td style="width: 33.33%; padding-left:5px;">
-                                <input type="text"
-                                    style="padding-left:5px; font-size:0.8rem; border:none; outline: none; display: inline-block; width: 100%;"
-                                    value="">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"
-                                style="padding: 30px; border: 1px solid black; font-size: 0.7rem; color:black; border-left:none;">
-                                42. I declare under oath that I have personally accomplished this Personal Data Sheet
-                                which is a true, correct and complete statement pursuant to the provisions of pertinent
-                                laws, rules and regulations of the Republic of the Philippines. I authorize the agency
-                                head/authorized representative to verify/validate the contents stated herein. I agree
-                                that any misrepresentation made in this document and its attachments shall cause the
-                                filing of administrative/criminal case/s against me.
-                            </td>
-                        </tr>
-                    </table>
-                    <table style="width: 100%;">
-                        <tr>
-                            <td class="d-flex">
-                                <table border="2"
-                                    style="width: 100%; text-align: left; border-collapse: collapse; margin-right: 100px; border-color: #333; margin: 10px;">
-                                    <tr>
-                                        <td style="padding: 5px; font-size: 0.7rem; text-align: center;">
-                                            Government Issued ID <span style="font-size: 0.6rem;">(i.e Passport, GSIS,
-                                                SSS, PRC, Driver's License, etc.)</span>
-                                                <br>
-                                                <div style="font-size: 0.8rem;">PLEASE INDICATE ID Number and Date of
-                                                    Issuance</div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; width: 50%; font-size: 0.7rem;">Government Issued ID:
-                                            <input type="text" name="hnum"
-                                                style="font-size:0.9rem;border:none; outline: none; width:200px;"
-                                                value="">
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; font-size: 0.7rem;">ID/License/Passport No.:
-                                            <input type="text" name="hnum"
-                                                style="font-size:0.9rem;border:none; outline: none; width:200px;"
-                                                value="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; font-size: 0.7rem;">Date/Place of Issuance:
-                                            <input type="text" name="hnum"
-                                                style="font-size:0.9rem;border:none; outline: none; width:200px;"
-                                                value="">
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <table border="2"
-                                    style="width: 100%; text-align: left; border-collapse: collapse; margin-right: 100px; border-color: #333; margin: 10px;">
-                                    <tr>
-                                        <td style="padding: 40px; font-size: 0.7rem; text-align: center;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; font-size: 0.7rem; text-align: center;">Signature (Sign
-                                            inside the box)</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 10px; font-size: 0.7rem; text-align: center;">
-                                            <input type="text" name="hnum"
-                                                style="font-size:0.9rem;border:none; outline: none; width:200px;"
-                                                value="">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 5px; font-size: 0.7rem; text-align: center;">Date
-                                            Accomplished
-
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td
-                    style="text-align: center; vertical-align: middle; border: none; padding-left: 50px;padding-right: 50px;">
-                    <div class="text-center">
-                        <div style="padding: 25px;">
-                            <div
-                                style="border: 2px solid black; padding: 5px; width: 3.5cm; height: 4.5cm; display: flex; justify-content: center; align-items: center; overflow: hidden;">
-                                <p
-                                    style="font-size: 0.6rem; line-height: 1.2; word-wrap: break-word; text-align: center;">
-                                    Center this ID picture taken within the last 6 months<br>
-                                    3.5 cm X 4.5 cm (passport size)<br>
-                                    With full and handwritten name tag and signature over printed name<br>
-                                    Computer generated or photocopied picture is not accepted.
-                                </p>
+                    </tbody>
+                </table>
+            </div>
+            <div class="d-flex">
+                <table border="1" class="table-bordered border-dark text-dark m-2" style="width:80%;"> 
+                    <tr>
+                        <td class="text-start">
+                            Government Issued ID <span>(i.e Passport, GSIS, SSS, PRC, Driver's License, etc.)</span>
+                                <div>PLEASE INDICATE ID Number and Date of Issuance</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Government Issued ID:</td>
+                    </tr>
+                    <tr>
+                        <td>ID/License/Passport No.:</td>
+                    </tr>
+                    <tr>
+                        <td>Date/Place of Issuance:</td>
+                    </tr>
+                </table>
+                <table border="1" class="table-bordered border-dark text-dark m-2" style="width:50%;">
+                    <tr>
+                        <td class="text-center" style="height:80px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" style="height:5px;">Signature (Sign
+                            inside the box)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"  style="height:15px;"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" style="height:5px;">Date
+                            Accomplished
+                        </td>
+                    </tr>
+                </table>
+                <table class="m-2" style="width:30%;">
+                    <tr>
+                        <td>
+                            <div class="text-center" style="">
+                                <div style="border: 1px solid black; padding: 5px; width: 180px; height: 3.5cm;">
+                                </div>
+                                <div style="border: 1px solid black; padding: 5px; width: 180px; border-top: none;">
+                                    Right Thumbmark
+                                </div>
                             </div>
-                            <div style="margin-top: 5px; font-size: 0.7rem; font-weight: bold;">PHOTO</div>
-                        </div>
-                        <div
-                            style="border: 2px solid black; padding: 5px; width: 180px; height: 3.5cm; justify-content: center; align-items: center; overflow: hidden;">
-                        </div>
-                        <div
-                            style="border: 2px solid black; padding: 5px; width: 180px; border-top: none; font-size: 0.7rem;margin-bottom: 50px;">
-                            Right Thumbmark
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <table border="1" style="color:black; width: 100%; border-collapse: collapse; text-align: center;">
-            <tr>
-                <td colspan="2">
-                    <div
-                        style="display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center;">
-                        <div style=" margin-top: 20px;"></div>
-                        <div class="d-flex" style="align-items: center;">
-                            SUBSCRIBED AND SWORN to before me this
-                            <div>
-                                <input type="text" name="hnum" style="font-size:0.7rem; border:none; outline: none; width:200px; display: inline-block;" value="">
-                                <div style="border-top: 1px solid black; padding-top: 5px; width:280px;"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div>
+                <table class="w-100 text-center border-black">
+                    <tr>
+                        <td colspan="2">
+                            <div class="subscribed mt-4">
+                                <div class="d-flex" style="align-items: center;">
+                                    SUBSCRIBED AND SWORN to before me this
+                                    <div>
+                                        <input type="text" name="hnum" style="border:none; outline: none; width:200px; display: inline-block;">
+                                        <div style="border-top: 1px solid black; padding-top: 5px; width:280px;"></div>
+                                    </div>
+                                    , affiant exhibiting his/her validly issued government ID as indicated above.
+                                </div>
+                                <div style="width: 500px;">
+                                    <div class="p-1 mt-3" style="border: 1px solid black; height: 2cm;">
+                                    </div>
+                                    <div
+                                        class="p-1 mb-2" style="border: 1px solid black; border-top: none;">
+                                        Person Administering Oath
+                                    </div>
+                                </div>
                             </div>
-                            , affiant exhibiting his/her validly issued government ID as indicated above.
-                        </div>
-
-                        <div
-                            style="border: 2px solid black; padding: 5px; width: 570px; height: 1.4cm; justify-content: center; align-items: center; overflow: hidden; margin-top: 20px;">
-                        </div>
-                        <div
-                            style="border: 2px solid black; padding: 5px; width: 570px; border-top: none; font-size: 0.7rem; margin-bottom: 5px;">
-                            Person Administering Oath
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </table>
-    <div style="text-align:end;">
-        <h6><i>CS FORM 212 (Revised 2017), Page 4 of 4</i></h6>
-    </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
+<div style="text-align:end; font-size:0.5rem; margin-right:15px;">
+    <i>CS FORM 212 (Revised 2017), Page 4 of 4</i>
+</div>
 </template>
-<script setup>
 
+<script setup>
+    import InputError from '@/Components/InputError.vue'
+    import InputLabel from '@/Components/InputLabel.vue'
+    import PrimaryButton from '@/Components/PrimaryButton.vue'
+    import TextInput from '@/Components/TextInput.vue'
+    import { Link, useForm, usePage } from '@inertiajs/vue3'
+
+    const props = defineProps({
+    other_information: Object,
+    questions: Object,
+    })
+
+    // console.log(props.questions)
 </script>
