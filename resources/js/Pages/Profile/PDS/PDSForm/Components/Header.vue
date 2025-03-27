@@ -1,7 +1,33 @@
 <style scoped>
 
-    table{
-        width:98%; margin-left: auto; margin-right: auto;
+table {
+        font-size: 0.5rem;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0;
+        padding: 0;
+        border: black;
+
+    }
+
+    td, th {
+        padding: 0;
+    }
+
+    .nested-table {
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .cs_fill{
+        width: 40%;
+    }
+    .cs_id {
+        background: gray;
+        color: black;
+        font-size: 0.5rem;
+        width: 50px;
     }
     .cs_form {
         padding-left: 5px;
@@ -23,22 +49,14 @@
         padding-left: 5px;
         text-align: start;
         font-size: 0.6rem;
-        margin-top: -5px;
         width: 100%;
     }
     .print_legibly {
         padding-left: 5px;
         text-align: start;
-        font-size: 0.5rem;
+        font-size: 0.6rem;
         width: 100%;
-        height: 15px;
-        word-spacing: -1px;
-    }
-    .cs_id {
-        background: gray;
-        color: black;
-        font-size: 0.5rem;
-        width: 8%;
+        letter-spacing: -0.8px;
     }
     tfoot tr {
         border-top: none;
@@ -74,7 +92,7 @@
 
 </style>
 <template>
-    <table class="table-bordered">
+    <table class="table-bordered w-100">
         <tbody>
             <tr class="text-center">
                 <td colspan="4">
@@ -97,10 +115,32 @@
                                 PDS FORM.</b>
                         </div>
                     </i>
+                    <br>
+                    <div class="d-flex">
+                        <div class="print_legibly">
+                            Print legibly. Tick appropriate boxes (
+                            <input type="checkbox" class="checkbox"> ) and use a separate sheet if necessary. Indicate N/A if
+                            not applicable. <b> DO NOT ABBREVIATE.</b>
+                        </div>
+                        <table class="table-bordered cs_fill float-end">
+                            <tbody>
+                                <tr>
+                                    <td class="cs_id">
+                                        1. CS ID No.
+                                    </td>
+                                    <td class="align-items-center">
+                                        <div class="text-end" style="font-size:0.5rem;">
+                                            (Do not fill up. For CSC use only)
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </td>
             </tr>
         </tbody>
-        <tfoot>
+        <!-- <tfoot>
             <tr>
                 <td>
                     <div class="print_legibly">
@@ -118,6 +158,6 @@
                     </div>
                 </td>
             </tr>
-        </tfoot>
+        </tfoot> -->
     </table>
 </template>

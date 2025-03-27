@@ -1,7 +1,7 @@
 <style scoped>
     table{
         font-size: 0.5rem;
-        width:98%; 
+        width:100%; 
         margin-left: auto; 
         margin-right: auto;
         border: black;

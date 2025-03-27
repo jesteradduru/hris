@@ -1,7 +1,9 @@
 <style scoped>
-table{
+table {
+        border-collapse: collapse;
+        border-spacing: 0;
         font-size: 0.5rem;
-        width:98%; 
+        width:100%; 
         margin-left: auto; 
         margin-right: auto;
         border: black;
@@ -15,8 +17,7 @@ table{
         width:100%;
     }
 .label_name{
-
-    width:100%;
+        width:100%;
 }
 .labels{
     padding:10px;
@@ -129,7 +130,7 @@ table{
             <td class="elem">{{ we.status_of_appointment }}</td>
             <td class="elem">{{ we.govt_service }}</td>
         </tr>
-            <tr v-for="n in (100 - work_experience.length)" :key="n">
+            <tr v-for="n in (32 - work_experience.length)" :key="n">
                 <td class="elem"></td>
                 <td class="elem"></td>
                 <td class="elem"></td>
@@ -150,33 +151,6 @@ table{
             </tr>
         </tfoot>
     </table>
-    <!-- <table class="table-bordered">
-        <tbody>
-            <tr>
-                <td class="signature">
-                    <div class="d-flex">
-                        <div>
-                            <div class="sign_name">SIGNATURE</div>
-                        </div>
-                    </div>
-                </td>
-                <td colspan="2">
-                </td>
-                <td class="signature">
-                    <div class="d-flex">
-                        <div>
-                            <div class="sign_name">DATE</div>
-                        </div>
-                    </div>
-                </td>
-                <td colspan="4">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="text-align:end; font-size:0.5rem; margin-right:15px;">
-        <i>CS FORM 212 (Revised 2017), Page 1 of 4</i>
-    </div> -->
 </template>
 <script setup>
     import InputError from '@/Components/InputError.vue'

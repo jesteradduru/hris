@@ -1,9 +1,25 @@
 <style scoped>
+    table {
+        border-collapse: collapse; /* Removes spacing between borders */
+        border-spacing: 0; /* Ensures no extra space */
+        margin: 0;
+        padding: 0;
+        border: 0.5px solid black;
+    }
+
+    td, th {
+        padding: 0; /* Removes padding inside table cells */
+    }
+
+    .nested-table {
+        margin: 0; /* Ensures no extra margin */
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
 table{
+        width: 100%;
         font-size: 0.5rem;
-        width:98%; 
-        margin-left: auto; 
-        margin-right: auto;
         border: black;
     }
 .header{
@@ -216,12 +232,12 @@ table{
 <div style="text-align:end; font-size:0.5rem; margin-right:15px;">
     <i>CS FORM 212 (Revised 2017), Page 1 of 4</i>
 </div> -->
-<table class="table-bordered">
+<table>
     <tbody>
         <tr>
             <td>
                 <div class="d-flex">
-                    <table class="table-bordered" style="border:black; width:100%;">
+                    <table class="table-bordered w-100">
                         <tbody>
                             <tr>
                                 <td>
@@ -270,7 +286,7 @@ table{
                             </tr>
                             <tr>
                                 <td>
-                                    <div class="d-flex" style="height:25px;">
+                                    <div class="d-flex" style="height:30px;">
                                         <div style="padding-left:10px;">37.</div>
                                         <div>
                                             <div style="padding-left:5px;"> Have you ever been seperated from
@@ -332,7 +348,7 @@ table{
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table-bordered" style="border:black;width:70%;">
+                    <table class="table-bordered" style="width:70%; page-break-before: always;">
                         <tbody>
                             <tr>
                                 <td style="height:20px;">
@@ -458,7 +474,7 @@ table{
                                             <div class="p-1">NO</div>
                                         </div>
                                     </div>
-                                    <div class="thirty_five" style="height:15px;">
+                                    <div class="thirty_five" style="height:21px;">
                                         <div>If YES, give details:</div>
                                         <div>
                                             <input type="text" class="input" v-model="questions.thirty_seven_if_yes">
@@ -592,7 +608,7 @@ table{
     <tr>
         <td>
             <div class="d-flex">
-                <table class="table-bordered" style="width:100%">
+                <table class="table-bordered w-100" style="border-top: none;">
                     <tbody>
                         <tr>
                             <td class="p-3" colspan="4">
@@ -644,9 +660,9 @@ table{
                             <td>
                                 <div class="">
                                     <div style="padding: 25px;">
-                                        <div style="border: 1px solid black; padding: 5px; width: 3.5cm; height: 4.5cm; display: flex; justify-content: center; align-items: center; overflow: hidden;">
+                                        <div style="border: 1px solid black; width: 3.5cm; height: 4.5cm; display: flex; justify-content: center; align-items: center; overflow: hidden;">
                                             <p
-                                                style="font-size: line-height: 1.2; word-wrap: break-word; text-align: center;">
+                                                style=" padding:10px; font-size: 0.5rem; line-height: 1.2; word-wrap: break-word; text-align: center;">
                                                 Center this ID picture taken within the last 6 months<br>
                                                 3.5 cm X 4.5 cm (passport size)<br>
                                                 With full and handwritten name tag and signature over printed name<br>
@@ -744,9 +760,6 @@ table{
         </td>
     </tr>
 </table>
-<div style="text-align:end; font-size:0.5rem; margin-right:15px;">
-    <i>CS FORM 212 (Revised 2017), Page 4 of 4</i>
-</div>
 </template>
 
 <script setup>

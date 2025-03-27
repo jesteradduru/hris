@@ -1,47 +1,40 @@
-<style>
-    @media print {
-        @page {
-            padding-top: 2mm;
-            padding-bottom: 5mm;
-        }
-        .main-table{
-            position: relative;
-        }
-        .sign_table {
-            position: fixed;
-            bottom: -14px;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            border-top: 2px solid black;
-        }
-    }
-    @media screen {
-        .sign_table {
-            display: none;
-        }
-        .page_num{
-            display: none;
-        }
-    }
-</style>
 <style scoped>
+
+    @page{
+        @bottom-right{
+            content: 'CS FORM 212 (Revised 2017), Page ' counter( page ) ' of ' counter(pages) '.';
+            font-size: 0.6rem;
+        }
+        padding: 5px;
+    }
     table {
         font-size: 0.5rem;
-        width: 98%;
-        margin-left: auto;
-        margin-right: auto;
-        border: 1px solid black;
-    }
-    .header {
-        padding-left: 10px;
-        text-align: start;
-        font-size: 0.8rem;
-        background: gray;
-        color: white;
-        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0;
+        padding: 0;
+        border: black;
+
     }
 
+    td, th {
+        padding: 0;
+    }
+
+    .nested-table {
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .header{
+        padding-left:10px; 
+        text-align:start; 
+        font-size:0.8rem;
+        background:gray; 
+        color:white; 
+        width:100%;
+    }
     .labels {
         padding: 10px;
         background: lightgray;
@@ -81,8 +74,9 @@
 
 </style>
 <template>
-    <table class="table-bordered main-table">
-        <thead>
+
+    <table class="table-bordered w-100">
+        <tbody>
             <tr>
                 <td colspan="8">
                     <div class="header">
@@ -90,8 +84,6 @@
                     </div>
                 </td>
             </tr>
-        </thead>
-        <tbody>
             <tr class="labels">
                 <td rowspan="2" style="width:20%;">
                     <div class="level p-2">26. LEVEL
@@ -239,30 +231,6 @@
                 </td>
             </tr>
         </tfoot>
-    </table>
-    <table class="sign_table table-bordered">
-        <tbody>
-            <tr>
-                <td class="signature">
-                    <div class="d-flex">
-                        <div>
-                            <div class="sign_name">SIGNATURE</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                </td>
-                <td class="signature">
-                    <div class="d-flex">
-                        <div>
-                            <div class="sign_name">DATE</div>
-                        </div>
-                    </div>
-                </td>
-                <td>
-                </td>
-            </tr>
-        </tbody>
     </table>
 </template>
 

@@ -1,13 +1,84 @@
+<style scoped>
+    table {
+        border-collapse: collapse; /* Removes spacing between borders */
+        border-spacing: 0; /* Ensures no extra space */
+        margin: 0;
+        padding: 0;
+    }
+
+    td, th {
+        padding: 0; /* Removes padding inside table cells */
+    }
+
+    .nested-table {
+        margin: 0; /* Ensures no extra margin */
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    table.report-container{
+        page-break-after: always;
+    }
+    .signature {
+        width: 130px;
+        background: lightgray;
+        color: black;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .sign_name {
+        padding-left: 10px;
+        font-size: 1rem;
+        width: 50px;
+    }
+    @media screen {
+        tfoot{
+            display: none;
+        }
+    }
+</style>
 <template>
-   <Header />
-   <PersonalInformation :personal_information="props.personal_information" />
-   <FamilyBackgorund :family_background="props.family_background" :children="props.children" />
-   <EducationalBackground :college_graduate_studies="props.college_graduate_studies" />
-   <CivilService :civil_service_eligibility="props.civil_service_eligibility" />
-   <WorkExperience :work_experience="props.work_experience" />
-   <VoluntaryWork :voluntary_work="props.voluntary_work" />
-   <LearningandDev :learning_and_development="props.learning_and_development" />
-   <OtherInformation :other_information="props.other_information" :questions="props.questions" />
+<table class="table-bordered report-container">
+    <tbody>
+        <tr>
+            <th colspan="8">
+                <Header />
+                <PersonalInformation :personal_information="props.personal_information" />
+                <FamilyBackgorund :family_background="props.family_background" :children="props.children" />
+                <EducationalBackground :college_graduate_studies="props.college_graduate_studies" />
+                <CivilService :civil_service_eligibility="props.civil_service_eligibility" />
+                <WorkExperience :work_experience="props.work_experience" />
+                <VoluntaryWork :voluntary_work="props.voluntary_work" />
+                <LearningandDev :learning_and_development="props.learning_and_development" />
+                <OtherInformation :other_information="props.other_information" :questions="props.questions" />
+            </th>
+        </tr>
+        
+    </tbody>
+   <tfoot class="report-footer table-bordered">
+        <tr>
+            <td class="signature">
+                <div class="d-flex">
+                    <div>
+                        <div class="sign_name">SIGNATURE</div>
+                    </div>
+                </div>
+            </td>
+            <td class="input">
+            </td>
+            <td class="signature">
+                <div class="d-flex">
+                    <div>
+                        <div class="sign_name">DATE</div>
+                    </div>
+                </div>
+            </td>
+            <td class="input">
+            </td>
+        </tr>
+   </tfoot>
+</table>
 </template>
 
 <script setup>

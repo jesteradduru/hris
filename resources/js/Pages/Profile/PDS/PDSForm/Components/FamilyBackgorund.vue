@@ -1,10 +1,22 @@
 <style scoped>
-    table{
+    table {
         font-size: 0.5rem;
-        width:98%; 
-        margin-left: auto; 
-        margin-right: auto;
+        border-collapse: collapse; /* Removes spacing between borders */
+        border-spacing: 0; /* Ensures no extra space */
+        margin: 0;
+        padding: 0;
         border: black;
+    }
+
+    td, th {
+        padding: 0; /* Removes padding inside table cells */
+    }
+
+    .nested-table {
+        margin: 0; /* Ensures no extra margin */
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
     .header{
         padding-left:10px; 
@@ -66,12 +78,12 @@
     }
 </style>
 <template>
-    <table class="table-bordered">
+    <table class="w-100">
         <tbody>
             <tr>
                 <td colspan="8">
                     <div class="header">
-                        <i>III. FAMILY BACKGROUND</i>
+                        <i>II. FAMILY BACKGROUND</i>
                     </div>
                 </td>
             </tr>
@@ -175,7 +187,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="table-bordered">
+                        <table class="table-bordered w-100">
                             <tbody>
                                 <tr>
                                     <td class="names"  style="width:215px;">
