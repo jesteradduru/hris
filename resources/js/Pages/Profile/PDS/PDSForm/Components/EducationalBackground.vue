@@ -1,253 +1,272 @@
+<style scoped>
+
+    @page{
+        @bottom-right{
+            content: 'CS FORM 212 (Revised 2017), Page ' counter( page ) ' of ' counter(pages) '.';
+            font-size: 0.6rem;
+        }
+        padding: 5px;
+    }
+    table {
+        font-size: 0.5rem;
+        border-collapse: collapse;
+        border-spacing: 0;
+        margin: 0;
+        padding: 0;
+        border: black;
+
+    }
+
+    td, th {
+        padding: 0;
+    }
+
+    .nested-table {
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .header{
+        padding-left:10px; 
+        text-align:start; 
+        font-size:0.8rem;
+        background:gray; 
+        color:white; 
+        width:100%;
+    }
+    .labels {
+        padding: 10px;
+        background: lightgray;
+        color: black;
+    }
+
+    .label_name {
+        width: 100%;
+    }
+
+    .elem {
+        font-weight: bold;
+        padding-left: 10px;
+    }
+
+    .signature {
+        width: 130px;
+        background: lightgray;
+        color: black;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .sign_name {
+        padding-left: 10px;
+        font-size: 1rem;
+        width: 50px;
+    }
+
+    .continue {
+        padding-left: 10px;
+        text-align: center;
+        background: lightgray;
+        color: red;
+        font-weight: bold;
+    }
+
+</style>
 <template>
-<table class="table-bordered" style="border:black; margin-top:1px; font-size:11px; width:100%;">
-        <!-- Section Header Row -->
-        <tr>
-            <td colspan="8">
-                <div
-                    style="padding-left:10px; text-align:start; font-size:1.2rem;background:gray; color:white; width:100%;">
-                    <i>III. EDUCATIONAL BACKGROUND</i>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">26.</div>
-                    <div>
-                        <div style="padding-left:10px; font-size:0.7rem;width:100px;">LEVEL</div><br>
+
+    <table class="table-bordered w-100">
+        <tbody>
+            <tr>
+                <td colspan="8">
+                    <div class="header">
+                        <i>III. EDUCATIONAL BACKGROUND</i>
                     </div>
-                </div>
-            </td>
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>NAME OF SCHOOL</i></div><br>
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;margin-top:-15px;"><i>(Write in full)</i>
-                </div>
-            </td>
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>BASIC EDUCATION/DEGREE/COURSE</i>
-                </div><br>
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;margin-top:-15px;"><i>(Write in full)</i>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;margin-top:-5px;"><i>PERIOD OF
-                        ATTENDANCE</i></div>
-            </td>
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>HIGHEST LEVEL/ UNITS EARNED</i></div>
-                <br>
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;margin-top:-15px;"><i>(if not
-                        graduated)</i></div>
-            </td>
-
-
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>YEAR GRADUATED</i></div><br>
-            </td>
-            <td rowspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:BLACK; font-size:0.7rem;"><i>SCHOLARSHIP / ACADEMIC HONORS
-                        RECEIVED</i></div><br>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:black; font-size:0.6rem;">FROM</div>
-            </td>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:black; font-size:0.6rem;">TO</div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div>
-                    <div style="padding-left:10px;padding-top:7px; padding-bottom: 7px; font-size:0.6rem;width:100px;">
-                        ELEMENTARY</div>
-                </div>
-            </td>
-            <td style="padding-left:10px; height: 40px;">
-                <input type="text" name="elename" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="baele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="fromele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="toele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="hiele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="yeele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="schoele" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div>
-                    <div style="padding-left:10px;padding-top:7px; padding-bottom: 7px; font-size:0.6rem;width:100px;">
-                        SECONDARY</div>
-                </div>
-            </td>
-            <td style="padding-left:10px; height: 40px;">
-                <input type="text" name="secname" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="basec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="fromsec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="tosec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="hisec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="yesec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="schosec" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
-
-
-
-
-
-
-
-
-
-
-
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div>
-                    <div style="padding-left:10px;padding-top:7px; padding-bottom: 7px; font-size:0.6rem;width:100px;">
-                        VOCATIONAL / TRADE COURSE</div>
-                </div>
-            </td>
-            <td style="padding-left:10px; height: 40px;">
-                <input type="text" name="vocname" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="bavoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="fromvoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="tovoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="hivoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="yevoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="schovoc" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div>
-                    <div style="padding-left:10px;padding-top:7px; padding-bottom: 7px; font-size:0.6rem;width:100px;">
-                        COLLAGE</div>
-                </div>
-            </td>
-            <td style="padding-left:10px; height: 40px;">
-                <input type="text" name="colname" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="bacol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="fromcol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="tocol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="hicol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="yecol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="schocol" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div style="padding-left:10px;padding-top:7px; padding-bottom: 7px; font-size:0.6rem;width:100px;">
-                    GRADUATE STUDIES</div>
-            </td>
-            <td style="padding-left:10px; height: 40px;">
-                <input type="text" name="graname" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="bagra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="fromgra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="togra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="higra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="yegra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="schogra" style="font-size:0.7rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
-        <tr>
-            <td colspan="8">
-                <div
-                    style="padding-left:10px; text-align:center; font-size:1.2rem;background:lightgray;color:red; font-size:0.7rem;">
-                    <i>(Continue in separate sheet if necessary)</i>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div>
-                        <div style="padding-left:10px; font-size:1rem;width:50px;">SIGNATURE</div>
+                </td>
+            </tr>
+            <tr class="labels">
+                <td rowspan="2" style="width:20%;">
+                    <div class="level p-2">26. LEVEL
                     </div>
-                </div>
-            </td>
-            <td colspan="4" style="padding-left:10px;">
-                <input type="text" style="font-size:0.7rem;border:none; outline: none; width:100px;" value="">
-            </td>
-            <td style="padding-left:10px;background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div>
-                        <div style="padding-left:10px; font-size:1rem;width:50px;">DATE</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
+                </td>
+                <td rowspan="2" style="width:120px;">
+                    <div class="label_name text-center"><i>NAME OF SCHOOL</i></div>
+                    <div class="label_name text-center"><i>(Write in full)</i></div>
+                </td>
+                <td rowspan="2" style="width:150px;">
+                    <div class="label_name text-center"><i>BASIC EDUCATION/DEGREE/COURSE</i></div>
+                    <div class="label_name text-center"><i>(Write in full)</i></div>
+                </td>
+                <td colspan="2">
+                    <div class="label_name text-center"><i>PERIOD OF ATTENDANCE</i></div>
+                </td>
+                <td rowspan="2">
+                    <div class="label_name text-center"><i>HIGHEST LEVEL/ UNITS EARNED</i></div>
+                    <br>
+                    <div class="label_name text-center" style="margin-top:-10px;"><i>(if not graduated)</i></div>
+                </td>
 
-                <input type="text" style="font-size:0.9rem;border:none; outline: none; width:100px;">
-            </td>
-        </tr>
+
+                <td rowspan="2">
+                    <div class="label_name text-center" style=""><i>YEAR GRADUATED</i></div><br>
+                </td>
+                <td rowspan="2">
+                    <div class="label_name text-center" style=""><i>SCHOLARSHIP / ACADEMIC HONORS
+                            RECEIVED</i></div><br>
+                </td>
+            </tr>
+            <tr class="labels">
+                <td>
+                    <div class="label_name text-center" style="width: 50px;">FROM</div>
+                </td>
+                <td>
+                    <div class="label_name text-center" style="width: 50px;">TO</div>
+                </td>
+            </tr>
+            <tr v-for="(college, index) in elementary" :key="college.id">
+                <td :rowspan="elementary.length" class="labels" v-if="index === 0"><div>ELEMENTARY</div></td>
+                <td class="elem">{{ college.name_of_school }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.period_from }}</td>
+                <td class="elem">{{ college.period_to }}</td>
+                <td class="elem">{{ college.highest_lvl_units_earned }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.year_graduated }}</td>
+            </tr>
+            <tr v-if="elementary.length === 0">
+                    <td class="labels"><div>VOCATIONAL / TRADE COURSE</div></td>
+                    <td class="elem"></td>
+                    <td class="elem"></td>
+                    <td class="elem"></td>
+                    <td class="elem"></td>
+                    <td class="elem"></td>
+                    <td class="elem"></td>
+                </tr>
+            <tr v-for="(college, index) in secondary" :key="college.id">
+                <td :rowspan="secondary.length" class="labels" v-if="index === 0"><div>SECONDARY</div></td>
+                <td class="elem">{{ college.name_of_school }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.period_from }}</td>
+                <td class="elem">{{ college.period_to }}</td>
+                <td class="elem">{{ college.highest_lvl_units_earned }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.year_graduated }}</td>
+            </tr>
+            <tr v-if="secondary.length === 0">
+                <td class="labels"><div>VOCATIONAL / TRADE COURSE</div></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+            </tr>
+            <tr v-for="(college, index) in vocational" :key="college.id">
+                <td :rowspan="vocational.length" class="labels" v-if="index === 0"><div>VOCATIONAL / TRADE COURSE</div></td>
+                <td class="elem">{{ college.name_of_school }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.period_from }}</td>
+                <td class="elem">{{ college.period_to }}</td>
+                <td class="elem">{{ college.highest_lvl_units_earned }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.year_graduated }}</td>
+            </tr>
+            <tr v-if="vocational.length === 0">
+                <td class="labels"><div>VOCATIONAL / TRADE COURSE</div></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+            </tr>
+            <tr v-for="(college, index) in colleges" :key="college.id">
+                <td :rowspan="colleges.length" class="labels" v-if="index === 0"><div>COLLEGE</div></td>
+                <td class="elem">{{ college.name_of_school }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.period_from }}</td>
+                <td class="elem">{{ college.period_to }}</td>
+                <td class="elem">{{ college.highest_lvl_units_earned }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.year_graduated }}</td>
+            </tr>
+            <tr v-if="colleges.length === 0">
+                <td class="labels"><div>COLLEGE</div></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+            </tr>
+            <tr v-for="(college, index) in graduate_studies" :key="college.id">
+                <td :rowspan="graduate_studies.length" class="labels" v-if="index === 0"><div>GRADUATE STUDIES</div></td>
+                <td class="elem">{{ college.name_of_school }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.period_from }}</td>
+                <td class="elem">{{ college.period_to }}</td>
+                <td class="elem">{{ college.highest_lvl_units_earned }}</td>
+                <td class="elem">{{ college.basic_ed_degree_course }}</td>
+                <td class="elem">{{ college.year_graduated }}</td>
+            </tr>
+            <tr v-if="graduate_studies.length === 0">
+                <td class="labels"><div>GRADUATE STUDIES</div></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+                <td class="elem"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="8">
+                    <div class="continue">
+                        <i>(Continue in separate sheet if necessary)</i>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-    <div style="text-align:end;">
-        <h6><i>CS FORM 212 (Revised 2017), Page 1 of 4</i></h6>
-    </div>
 </template>
 
 <script setup>
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import TextInput from '@/Components/TextInput.vue'
+import { Link, useForm, usePage } from '@inertiajs/vue3'
+import {ref, computed} from 'vue'
+
+const props = defineProps({
+//   educational_background: Object,
+  college_graduate_studies: Object
+})
+
+const elementary = computed(() => {
+  return props.college_graduate_studies.filter(ed => ed.type === 'ELEMENTARY')
+})
+
+const secondary = computed(() => {
+  return props.college_graduate_studies.filter(ed => ed.type === 'SECONDARY')
+})
+
+const vocational = computed(() => {
+  return props.college_graduate_studies.filter(ed => ed.type === 'VOCATIONAL')
+})
+
+const colleges = computed(() => {
+  return props.college_graduate_studies.filter(ed => ed.type === 'COLLEGE')
+})
+const graduate_studies = computed(() => {
+  return props.college_graduate_studies.filter(ed => ed.type === 'GRADUATE')
+})
+
+// console.log(props.college_graduate_studies)
+
 
 </script>

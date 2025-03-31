@@ -1,322 +1,243 @@
+<style scoped>
+    table {
+        font-size: 0.5rem;
+        border-collapse: collapse; /* Removes spacing between borders */
+        border-spacing: 0; /* Ensures no extra space */
+        margin: 0;
+        padding: 0;
+        border: black;
+    }
+
+    td, th {
+        padding: 0; /* Removes padding inside table cells */
+    }
+
+    .nested-table {
+        margin: 0; /* Ensures no extra margin */
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    .header{
+        padding-left:10px; 
+        text-align:start; 
+        font-size:0.8rem;
+        background:gray; 
+        color:white; 
+        width:100%;
+    }
+    .names{
+        background:lightgray; 
+        color:black; 
+        padding-left:10px; 
+         
+        width:205px;
+        height: 20px;
+    }
+    .names .name{
+        padding-left:10px; 
+        
+    }
+    .input{
+        padding-left:10px; 
+        font-weight: bold;
+        height: 20px;
+    }
+    .extention{
+        background-color:lightgray;
+        color:black;
+        width: 0px;
+    }
+    .exten{
+        padding-left:5px; 
+        font-weight: bold;
+    }
+    .label_name{
+        
+         width:100%;
+         padding-left: 10px;
+    }
+    .occupation{
+        background:lightgray;
+        color:black;
+        padding-left:27px;
+        
+    }
+    .children{
+        padding-left:10px; 
+        font-weight: bold;
+        height: 22px;
+    }
+    .continue{
+        padding-left:10px; 
+        text-align:center; 
+        background:lightgray;
+        color:red; 
+        
+        height: 15px;
+    }
+</style>
 <template>
-
-<table class="table-bordered" style="border:black; margin-top:1px; font-size:11px; width:100%;">
-        <!-- Section Header Row -->
-        <tr>
-            <td colspan="5">
-                <div
-                    style="padding-left:10px; text-align:start; font-size:1.2rem;background:gray; color:white; width:100%;">
-                    <i>II. FAMILY BACKGROUND</i>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td rowspan="3" style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">22.</div>
-                    <div>
-                        <div style="padding-left:10px; font-size:0.6rem;width:100px;">
-                            <div class="pb-3">SPOUSE'S SURNAME</div> LASTNAME <br><br> MIDDLE NAME
-                        </div>
+    <table class="w-100">
+        <tbody>
+            <tr>
+                <td colspan="8">
+                    <div class="header">
+                        <i>II. FAMILY BACKGROUND</i>
                     </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;padding-top:10px;padding-left:10px;">
-                <input name="ssname" type="text" style="font-size:0.9rem;border:none; outline: none;">
-            </td>
-            <td style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">23.</div>
-                    <div>
-                        <div style="padding-left:5px; font-size:0.7rem;width:300px;">NAME of CHILDREN (Write fullname
-                            and list all)</div>
-                    </div>
-                </div>
-            </td>
-            <td style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px;padding-right:10px; font-size:0.7rem;">DATE OF BIRTH (mm/dd/yyyy)
-                    </div>
-
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;">
-                <input type="text" name="slname" style="font-size:0.9rem;border:none; outline: none; width:300px;">
-            </td>
-            <td style="background-color:lightgray;color:black;">
-                NAME EXTENSION (JR., SR)
-                <input type="text"
-                    style="padding-left:10px;padding-top:10px;padding-bottom:10px;background:lightgray;font-size:0.7rem;border:none; outline: none; width:50px;"
-                    value="cxxccccccc">
-            </td>
-            <td style="padding-left:10px;">
-                <input name="ch1" type="text" style="font-size:0.9rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.9rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="smname"
-                    style="padding-top:10px;padding-bottom:10px;font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="background:lightgray;color:black;height: 40px;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;"></div>
-                    <div
-                        style="padding-left: 22px; padding-top: 5px; padding-bottom: 5px; font-size:0.6rem;width:80px;">
-                        OCCUPATION</div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="accu" style="font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-
-        <tr>
-            <td style="background:lightgray;color:black;height: 40px;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;"> </div>
-                    <div>
-                        <div style="padding-left:22px; font-size:0.6rem;width:90px;">EMPLOYER/BUSINESS NAME</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="emname" style="font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;"> </div>
-                    <div>
-                        <div style="padding-left: 22px; font-size:0.6rem;width:80px;">BUSINESS NAME</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="busname" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;"> </div>
-                    <div>
-                        <div style="padding-left:22px; font-size:0.6rem;width: 80px;">TELEPHONE NO.</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="ftele" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td rowspan="3" style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">24.</div>
-                    <div>
-                        <div style="padding-left:10px; font-size:0.7rem;width:100px;"> FATHER'S SURNAME <br><br>
-                            LASTNAME <br><br> MIDDLE NAME</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="fsname" style="font-size:0.7rem;border:none; outline: none;" value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none;" value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding-left:10px;">
-                <input type="text" name="flname" style="font-size:0.7rem;border:none; outline: none; width:300px;"
-                    value="">
-            </td>
-            <td style="background-color:lightgray;color:black;">
-                NAME EXTENSION (JR., SR)
-                <input type="text"
-                    style="padding-left:10px;background:lightgray;font-size:0.7rem;border:none; outline: none; width:50px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="fmname" style="font-size:0.7rem;border:none; outline: none; width:300px;"
-                    value="">
-            </td>
-
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <!-- <td rowspan ="4"style="background:lightgray;color:black;">
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <div class="d-flex">
-                        <div style="padding-left:10px; font-size:0.7rem;">22.</div>
-
-                        <div>
-                            <div style="font-size:0.7rem;">
-                                MOTHER'S SURNAME
-                            </div>
-                            <div>
-                                LAST NAME
-                            </div>
-                            <div>
-                                MIDDLE NAME
-                            </div>
-                        </div>
+                        <table class="table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3" class="names" style="width:38%;">
+                                        <div class="d-flex">
+                                            <div>2.</div>
+                                            <div>
+                                                <div class="name ">SPOUSE'S SURNAME</div>
+                                                <div class="name pt-2">FIRSTNAME</div>
+                                                <div class="name pt-2">MIDDLENAME</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="input" colspan="3" style="width:600px;">{{ family_background.spouse_surname }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="input" width="90px">{{ family_background.spouse_first_name }}</td>
+                                    <td class="extention">
+                                        <div class="d-flex">
+                                            <div>
+                                                <sup>NAME EXTENSION (JR., SR)</sup>
+                                            </div>
+                                            <div class="exten">{{ family_background.spouse_name_extension }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="input" colspan="2">{{ family_background.spouse_middle_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="occupation">OCCUPATION</td>
+                                    <td class="input" colspan="2">{{ family_background.spouse_occupation }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="occupation">EMPLOYER/BUSINESS NAME</td>
+                                    <td class="input" colspan="2">{{ family_background.spouse_employer_business_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="occupation">BUSINESS NAME</td>
+                                    <td class="input" colspan="2">{{ family_background.spouse_business_address }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="occupation">TELEPHONE NO.</td>
+                                    <td class="input" colspan="2">{{ family_background.spouse_telephone_number }}</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="3" class="names">
+                                        <div class="d-flex">
+                                            <div>24.</div>
+                                            <div>
+                                                <div class="name ">FATHER'S SURNAME</div>
+                                                <div class="name pt-2">FIRSTNAME</div>
+                                                <div class="name pt-2">MIDDLENAME</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="input" colspan="2">{{ family_background.fathers_surname }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="input">{{ family_background.fathers_first_name }}</td>
+                                    <td class="extention">
+                                        <div class="d-flex">
+                                            <div>
+                                                <sup>NAME EXTENSION (JR., SR)</sup>
+                                            </div>
+                                            <div class="exten">{{ family_background.fathers_name_extension }}</div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="input" colspan="2">{{ family_background.fathers_middle_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td rowspan="4" class="names">
+                                        <div class="d-flex">
+                                            <div>25.</div>
+                                            <div>
+                                                <div class="name">MOTHER'S MAIDEN NAME</div>
+                                                <div class="name pt-2">SURNAME</div>
+                                                <div class="name pt-2">FIRSTNAME</div>
+                                                <div class="name pt-2">MIDDLENAME</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td colspan="2" class="input">{{ family_background.mothers_surname }}</td>   
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="input">{{ family_background.mothers_surname }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="input">{{ family_background.mothers_first_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="input">{{ family_background.mothers_middle_name }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-bordered w-100">
+                            <tbody>
+                                <tr>
+                                    <td class="names"  style="width:215px;">
+                                        <div class="label_name">23. NAME of CHILDREN (Write fullnameand list all)
+                                        </div>
+                                    </td>
+                                    <td class="names"  style="width:130px;">
+                                        <div class="d-flex">
+                                            <div class="label_name">DATE OF BIRTH (mm/dd/yyyy)
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr v-for="(child) in children" :key="child.id">
+                                    <td class="children">{{ child.fullname }}</td>
+                                    <td class="children">{{ child.date_of_birth }}</td>
+                                </tr>
+                                <tr v-for="n in (12 - children.length)" :key="n">
+                                    <td class="children"></td>
+                                    <td class="children"></td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="continue">
+                                            <i>(Continue in separate sheet if necessary)</i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </div>
-                </td> -->
-            <td rowspan="4" style="background:lightgray;color:black;">
-                <div class="d-flex">
-                    <div style="padding-left:10px; font-size:0.7rem;">25.</div>
-                    <div>
-                        <div style="padding-left:10px; font-size:0.7rem;width:100px;"> MOTHER'S MAIDEN NAME<br><br>
-                            SURNAME <br><br> LASTNAME <br><br> MIDDLE NAME</div>
-                    </div>
-                </div>
-            </td>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="msname" style="font-size:0.7rem;border:none; outline: none;" value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none;" value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:300px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:300px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="mlname" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <input type="text" name="ch1" style="font-size:0.7rem;border:none; outline: none; width:200px;"
-                    value="">
-            </td>
-            <td style="padding-left:10px;">
-                <div>
-                    <input type="text" name="ch1b" style="font-size:0.7rem;border:none; outline: none; color:black;"
-                        placeholder>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding-left:10px;">
-                <input type="text" name="mmname" style="font-size:0.7rem;border:none; outline: none; width:300px;"
-                    value="">
-            </td>
-
-            <td colspan="2" style="padding-left:10px;background:lightgray;color:black;">
-                <div class="text-center" style="color:red; font-size:0.7rem;"><i>(Continue in separate sheet if
-                        necessary)</i></div>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        </tbody>
     </table>
 </template>
 
 <script setup>
+import InputError from '@/Components/InputError.vue'
+import InputLabel from '@/Components/InputLabel.vue'
+import PrimaryButton from '@/Components/PrimaryButton.vue'
+import TextInput from '@/Components/TextInput.vue'
+import { Link, useForm, usePage } from '@inertiajs/vue3'
 
+const props = defineProps({
+  family_background: Object,
+  children: Array
+})
+
+// console.log(props.children)
 </script>

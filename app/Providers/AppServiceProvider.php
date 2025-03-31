@@ -23,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        URL::forceScheme('https');
-        
+        #URL::forceScheme('https');
+
         if(!Config::get('app.debug')){
             URL::forceRootUrl(Config::get('app.url'));
 
@@ -33,6 +33,6 @@ class AppServiceProvider extends ServiceProvider
                 return url(request()->path());
             });
         }
-       
+
     }
 }

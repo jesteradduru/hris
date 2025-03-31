@@ -29,10 +29,7 @@ defineProps({
       <div class="container d-flex flex-column gap-4">
         <div class="card shadow">
           <div class="card-body">
-            <UpdateProfileInformationForm
-              :must-verify-email="mustVerifyEmail" :status="status"
-              class="max-w-xl"
-            />
+            <UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" class="max-w-xl"/>
           </div>
         </div>
 
