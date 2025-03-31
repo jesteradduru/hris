@@ -7,7 +7,7 @@
         <label for="" class="form-label">Year</label>
         <select
           id=""
-          v-model="yearNow"
+          v-model="form.year"
           class="form-select form-select-lg"
           name=""
         >
@@ -21,7 +21,7 @@
         <label for="" class="form-label">Month</label>
         <select
           id=""
-          v-model="monthNow"
+          v-model="form.month"
           class="form-select form-select-lg"
           name=""
         >
@@ -47,7 +47,7 @@
           
 <script setup>
 import DTRLayout from '@/Pages/Admin/DailyTimeRecord/DTRLayout.vue'
-import { Head, Link, router, useForm } from '@inertiajs/vue3'
+import { Head, useForm } from '@inertiajs/vue3'
 import { computed } from 'vue'
 import moment from 'moment'
 import Pagination from '@/Components/Pagination.vue'
@@ -59,11 +59,10 @@ import InputError from '@/Components/InputError.vue'
 const confirm = () => window.confirm('Are you sure?')
 
 const yearNow = moment().format('Y')
-const monthNow = moment().format('MM')
 
 const form = useForm({
-  year: yearNow,
-  month: monthNow,
+  year: moment().format('Y'),
+  month: moment().format('MM'),
 })
 
 

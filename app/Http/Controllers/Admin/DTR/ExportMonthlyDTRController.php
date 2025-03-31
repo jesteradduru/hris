@@ -27,6 +27,6 @@ class ExportMonthlyDTRController extends Controller
         $month = $request->month;
         $year = $request->year;
 
-        return $this->excel->download(new DTRIndividualMonthlyExport($year, $month, 3), 'dtr.xlsx');
+        return $this->excel->download(new DTRIndividualMonthlyExport($year, $month, 2), 'dtr.xlsx');
     }
 }
