@@ -133,5 +133,5 @@ table{
     learning_and_development: Object,
     })
 
-    console.log(props.learning_and_development)
+    // console.log(props.learning_and_development)
 </script>

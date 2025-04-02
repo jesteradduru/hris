@@ -22,7 +22,9 @@ class PrintpdsController extends Controller
         "references" => $request->user()->references,
         "service_record" => $request->user()->service_record,
         "learning_and_development" => $request->user()->learning_and_development,
-        'questions'=> $request->user()->page_four_questions
+        'questions'=> $request->user()->page_four_questions,
+        'references_id'=> $request->user()->references_id
+
     ]);
 }
 

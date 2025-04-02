@@ -621,19 +621,37 @@ table{
                             <td style="width:50px;">TEL. NO</td>
                         </tr>
                         <tr>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_name_one">
+                            </td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_address_one">
+                            </td>
+                            <td style="height:25px;">
+                                 <input type="text" class="input p-2" v-model="references_id.references_telephone_one">
+                            </td>
                         </tr>
                         <tr>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_name_two">
+                            </td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_address_two">
+                            </td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_telephone_two">
+                            </td>
                         </tr>
                         <tr>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
-                            <td style="height:25px;"></td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_name_three">
+                            </td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_address_three">
+                            </td>
+                            <td style="height:25px;">
+                                <input type="text" class="input p-2" v-model="references_id.references_telephone_three">
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="3">
@@ -679,22 +697,26 @@ table{
                 </table>
             </div>
             <div class="d-flex">
-                <table border="1" class="table-bordered border-dark text-dark m-2" style="width:80%;"> 
-                    <tr>
-                        <td class="text-start">
-                            Government Issued ID <span>(i.e Passport, GSIS, SSS, PRC, Driver's License, etc.)</span>
-                                <div>PLEASE INDICATE ID Number and Date of Issuance</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Government Issued ID:</td>
-                    </tr>
-                    <tr>
-                        <td>ID/License/Passport No.:</td>
-                    </tr>
-                    <tr>
-                        <td>Date/Place of Issuance:</td>
-                    </tr>
+                <table border="1" class="table-bordered border-dark text-dark m-2" style="width:60%;"> 
+                    <thead>
+                        <tr>
+                            <td class="text-start p-2">
+                                Government Issued ID <span>(i.e Passport, GSIS, SSS, PRC, Driver's License, etc.)</span>
+                                    <div>PLEASE INDICATE ID Number and Date of Issuance</div>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="p-2">Government Issued ID: {{ references_id.government_issued_id }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">ID/License/Passport No.: {{ references_id.id_license_passport_number }}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2">Date/Place of Issuance: {{ references_id.date_place_of_issuance }}</td>
+                        </tr>
+                    </tbody>
                 </table>
                 <table border="1" class="table-bordered border-dark text-dark m-2" style="width:50%;">
                     <tr>
@@ -772,7 +794,8 @@ table{
     const props = defineProps({
     other_information: Object,
     questions: Object,
+    references_id: Object,
     })
 
-    // console.log(props.questions)
+    // console.log(props.references_id)
 </script>

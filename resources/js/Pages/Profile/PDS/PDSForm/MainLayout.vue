@@ -51,7 +51,7 @@
                 <WorkExperience :work_experience="props.work_experience" />
                 <VoluntaryWork :voluntary_work="props.voluntary_work" />
                 <LearningandDev :learning_and_development="props.learning_and_development" />
-                <OtherInformation :other_information="props.other_information" :questions="props.questions" />
+                <OtherInformation :other_information="props.other_information" :questions="props.questions" :references_id="props.references_id" />
             </th>
         </tr>
         
@@ -104,9 +104,10 @@ const props = defineProps({
     learning_and_development: Object,
     other_information: Object,
     questions: Object,
+    references_id: Object,
 })
 
-// console.log(props.questions)
+// console.log(props.references_id)
 </script>
 
 <style>
