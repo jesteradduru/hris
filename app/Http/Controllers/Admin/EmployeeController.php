@@ -75,7 +75,7 @@ class EmployeeController extends Controller
 
     public function edit(User $employee){
         return inertia('Admin/Employee/Edit/Profile', [
-            'employee' => $employee->load(['position']),
+            'employee' => $employee->load(['position', 'division']),
             'roles' => Role::all()->pluck('name'),
             'positions' => PlantillaPosition::doesntHave('user')->with('division')->get()
         ]);

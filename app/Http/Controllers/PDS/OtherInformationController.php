@@ -15,7 +15,10 @@ class OtherInformationController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/OtherInformation/Index', [
-            'other_information' => $request->user()->other_information
+            'other_information' => $request->user()->other_information,
+            'distinctions' => $request->user()->non_academic_distinction()->with(['files'])->paginate(15),
+            'questions'=> $request->user()->page_four_questions,
+            'reference_id' => $request->user()->references_id ? $request->user()->references_id->load(['files']) : null
         ]);
     }
 

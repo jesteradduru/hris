@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\AdminJobPostingController;
 use App\Http\Controllers\Admin\AdminLearningAndDevelopmentController;
 use App\Http\Controllers\Admin\AdminRewardAndRecognitionController;
 use App\Http\Controllers\Admin\AdminSpmsController;
+use App\Http\Controllers\Admin\API\DTRController;
 use App\Http\Controllers\Admin\ApplicationHistoryController;
 use App\Http\Controllers\Admin\ApplicationResultController;
 use App\Http\Controllers\Admin\ApplicationScoreController;
 use App\Http\Controllers\Admin\CompetencyGapController;
+use App\Http\Controllers\Admin\Division\DivisionController;
 use App\Http\Controllers\Admin\DTR\ExportMonthlyDTRController;
 use App\Http\Controllers\Admin\DTR\TimeSheetController;
 use App\Http\Controllers\Admin\DTR\TimesheetEntriesController;
@@ -36,8 +38,6 @@ use App\Http\Controllers\Admin\Selection\PsbPointController;
 use App\Http\Controllers\Admin\Selection\WorkExperienceController;
 use App\Http\Controllers\Admin\SetExamScheduleController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\JobApplicationController;
-use App\Http\Controllers\PDS\NonAcademicDistinctionController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\RolePermissionController;
@@ -165,6 +165,9 @@ use Illuminate\Support\Facades\Route;
         Route::post('daily_time_record/getDtr', [AdminDailyTimeRecordController::class, 'getDtr'])->name('getDtr');
     });
 
+    //Division
+    Route::resource('divisions', DivisionController::class);
+    
     
  });
 

@@ -17,8 +17,4 @@ class Division extends Model
     public function positions() : HasMany {
         return $this->hasMany(PlantillaPosition::class, 'division_id');
     }
-
-    public function employees() : HasManyThrough {
-        return $this->hasManyThrough(User::class, PlantillaPosition::class, 'division_id', 'plantilla_id');
-    }
 }

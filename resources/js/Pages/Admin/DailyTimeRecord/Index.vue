@@ -80,8 +80,8 @@ const filterForm = useForm({
   entryPerPage: props.filters.entryPerPage ? props.filters.entryPerPage : 15,
 })
 
-const filter = debounce((e) => {
-  filterForm.get(route('admin.daily_time_record.index'), {
+const filter = debounce(() => {
+  filterForm.get(route('admin.dtr.dtr.index'), {
     preserveState: true,
   })
 }, 1000)

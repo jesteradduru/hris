@@ -230,6 +230,7 @@ class DailyTimeRecord extends Model
         if($absent == 28800){
             $totalMinutes = -28800;
         }
+        
 
         return [
             'absent' => $absent,
@@ -294,9 +295,13 @@ class DailyTimeRecord extends Model
         // IN PM LOGIC
         if($inAM && count($logTimeBetween11to3) == 1){
             $outAM = $logTimeBetween11to3[0];
-        }else if(!$inAM && count($logTimeBetween11to3) == 1 ){
+        }
+        
+        if(!$inAM && count($logTimeBetween11to3) == 1 ){
             $inPM = $logTimeBetween11to3[0];
-        }else if(count($logTimeBetween11to3) > 1 ){
+        }
+        
+        if(count($logTimeBetween11to3) > 1 ){
             $inPM = $logTimeBetween11to3[1];
         }
 
@@ -361,6 +366,10 @@ class DailyTimeRecord extends Model
                 ->get();
 
                 $inout = self::identifyInOut($dateTimeRecordToday);
+                // if($date === 31){
+                //     // dd($date);
+                //     dd($dateTimeRecordToday);
+                // }
                 $remarks = $inout['remarks'];
 
                 if($other_dtr && $other_dtr->purpose === 'supp'){
@@ -385,7 +394,7 @@ class DailyTimeRecord extends Model
 
                 // OFFSETTING
                 if($other_dtr && $other_dtr->remarks === 'OFFSETTING'){
-                    $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $dayOfWeek, $other_dtr->off_hours, $dayOfWeek);
+                    $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $dayOfWeek, $other_dtr->off_hours);
                     $remarks = 'OFFSETTING: ' . $other_dtr->off_hours . 'H';
                 }else{
                     $total = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $dayOfWeek);
@@ -421,9 +430,9 @@ class DailyTimeRecord extends Model
                     'date' => $date,
                     'day' => $dayOfWeek,
 
-                    'inAM' => $inAM && $outAM ? $inAM->format('h:i:00 A') : '-',  
+                    'inAM' => $inAM ? $inAM->format('h:i:00 A') : '-',  
                     'outAM' => $outAM ? $outAM->format('h:i:00 A') : '-',
-                    'inPM' => $inPM && $outPM ? $inPM->format('h:i:00 A') : '-',
+                    'inPM' => $inPM && $outAM ? $inPM->format('h:i:00 A') : '-',
                     'outPM' => $outPM ? $outPM->format('h:i:00 A') : '-',
                     'lateAM' =>  ($total['lateAM'] / 60) / 480,
                     'utAM' =>  ($total['utAM'] / 60) / 480,
@@ -454,6 +463,17 @@ class DailyTimeRecord extends Model
 
     }
 
+    public static function getDtrToday($user_id) {
+        $date = Carbon::now();
+        $user_dtr = DB::table('daily_time_record')->select('date_time')
+            ->where('user_id', $user_id)
+            ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%d')"), $date->format('Y-m-d'))
+            ->get();
+
+        $user_dtr = self::identifyInOut($user_dtr);
+            return $user_dtr;
+    }
+
 
     public static function getInfo($user_id){
         $date = Carbon::now();
@@ -467,53 +487,56 @@ class DailyTimeRecord extends Model
 
         $rendered = 0;
         $timeout = null;
-
         $dtr_now = null;
 
         //  5 > 1
         //
-        if($date->format('d') === '01' && $date->dayOfWeek > $date->format('d') || true){
-            // $hours_to_render = (5 - ($date->dayOfWeek - 1)) * 8;
-            $days_before_count = $date->dayOfWeek;
 
-            if($date->dayOfWeek > $date->format('d')){
-                $days_before_count = 7 - $date->dayOfWeek;
+        // $hours_to_render = (5 - ($date->dayOfWeek - 1)) * 8;
+        $days_before_count = $date->dayOfWeek;
+
+        if($date->dayOfWeek > $date->format('d')){
+            $days_before_count = ($date->dayOfWeek + 1 - $startMonth->dayOfWeek);
+        }
+        // 1; 1 < 1; 0+1
+
+        for($i = 0; $i < $days_before_count; $i ++){
+
+            // $days_before = $date;
+
+            if($i != 0){
+                $date = $date->subDay();
             }
-            // 1; 1 < 1; 0+1
 
-            for($i = 0; $i < $days_before_count; $i ++){
+            $user_dtr = DB::table('daily_time_record')->select('date_time')
+            ->where('user_id', $user_id)
+            ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%d')"), $date->format('Y-m-d'))
+            ->get();
 
-                $days_before = $date;
+            if($i == 0){
+                $dtr_now = self::identifyInOut($user_dtr);
+            }
 
-                if($i != 0){
-                    $days_before = $date->subDay();
-                }
+            $parse_dtr = self::identifyInOut($user_dtr);
 
-                $user_dtr = DB::table('daily_time_record')->select('date_time')
-                ->where('user_id', $user_id)
-                ->where(DB::raw("DATE_FORMAT(date_time, '%Y-%m-%d')"), $days_before->format('Y-m-d'))
-                ->get();
+            $count_hours = self::getTotalHours($parse_dtr['inAM'], $parse_dtr['outAM'], $parse_dtr['inPM'], $parse_dtr['outPM']);
 
-                if($i == 0){
-                    $dtr_now = self::identifyInOut($user_dtr);
-                }
+            // if($i == 0){
+            //     dd($days_before_count);
+            // }
 
-                $parse_dtr = self::identifyInOut($user_dtr);
-
-                $count_hours = self::getTotalHours($parse_dtr['inAM'], $parse_dtr['outAM'], $parse_dtr['inPM'], $parse_dtr['outPM']);
-
-                if($count_hours['totalAM']){
-                    $rendered += $count_hours['totalAM'];
-                }
-                if($count_hours['totalPM']){
-                    $rendered += $count_hours['totalPM'];
-                }
+            if($count_hours['totalAM']){
+                $rendered += $count_hours['totalAM'];
+            }
+            if($count_hours['totalPM']){
+                $rendered += $count_hours['totalPM'];
             }
         }
 
-        if($dtr_now !== null && $dtr_now['inAM'] && $dtr_now['outPM'] == null){
+        if($dtr_now !== null && $dtr_now['inAM'] ){
             $dtr_now_am = $dtr_now['inAM'];
             $inAM = Carbon::parse($dtr_now_am->format('H:i:s'));
+            $hours_remaining = null;
 
             if($inAM->lessThan(Carbon::parse('7:00:00'))){
                 $inAM = Carbon::parse('7:00:00');
@@ -544,10 +567,18 @@ class DailyTimeRecord extends Model
 
             return([
                 'hours_to_render' => ($hours_to_render / 60) / 60,
-                'render' => round(($hours_to_render - $rendered) / 60 / 60),
-                'rendered' => round($rendered / 60 / 60),
+                'render' => ($hours_to_render - $rendered) / 60 / 60,
+                'rendered' => $rendered / 60 / 60,
                 'timeout' => $timeout->format('h:i A'),
-                'hours_remaining' =>  $hours_remaining
+                'hours_remaining' =>  $hours_remaining,
+            ]);
+        }else{
+            return([
+                'hours_to_render' => ($hours_to_render / 60) / 60,
+                'render' => 0,
+                'rendered' => 0,
+                'timeout' => '-',
+                'hours_remaining' =>  0,
             ]);
         }
 
@@ -655,7 +686,7 @@ class DailyTimeRecord extends Model
 
             if($time->lte($_12pm)){
                 $inAM = $timeRecord['inAM'] ?  $timeRecord['inAM'] : Carbon::parse($record->eo_start);
-                $timeData = self::getTotalHours($inAM, $_12pm, $_1pm, $_7pm, $record->remarks . ': ' . $record->off_title, $dayOfWeek);
+                $timeData = self::getTotalHours($inAM, $_12pm, $_1pm, $_7pm, $dayOfWeek);
 
                 $entry = [
                     'date' => $date,
@@ -680,7 +711,7 @@ class DailyTimeRecord extends Model
                 $inAM = $timeRecord['inAM'];
                 $outAM = $timeRecord['outAM'];
                 $inPM = $timeRecord['inPM'];
-                $timeData = self::getTotalHours($inAM, $outAM, $inPM, $_7pm, $record->remarks . ': ' . $record->off_title, $dayOfWeek);
+                $timeData = self::getTotalHours($inAM, $outAM, $inPM, $_7pm, $dayOfWeek);
 
                 $entry = [
                     'date' => $date,
@@ -746,7 +777,7 @@ class DailyTimeRecord extends Model
             $outAM = $timeRecord['outAM'];
             $inPM = $timeRecord['inPM'];
             $outPM = $timeRecord['outPM'];
-            $totalHours = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $record->remarks . ': ' . $record->off_title, $dayOfWeek);
+            $totalHours = self::getTotalHours($inAM, $outAM, $inPM, $outPM, $dayOfWeek);
 
             $inAM = $timeRecord['inAM'];
             $outAM = $timeRecord['outAM'];

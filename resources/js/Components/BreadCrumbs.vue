@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex justify-content-between align-items-center">
+  <div class="px-1" style="background: #e0e0e0;">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li

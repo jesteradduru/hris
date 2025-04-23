@@ -152,7 +152,7 @@
           <div class="d-flex align-items-center">
             <b v-if="form.isDirty" class="text-danger form-status">Not Saved</b>
           </div>
-          <Link :href="route('profile.pds.reference_id.index')" class="btn btn-secondary">Back</Link>
+          <Link :href="route('profile.pds.other_information.index')" class="btn btn-secondary">Back</Link>
           <button
             type="submit" :disabled="!form.isDirty && form.wasSuccessful"
             class="btn btn-success"

@@ -16,6 +16,7 @@
           Plantilla Positions
         </Link>
       </li>
+      
       <li class="nav-item">
         <Link
           class="nav-link"
@@ -38,6 +39,19 @@
           :href="route('admin.recruitment.selection.index')"
         >
           Selection and Placement
+        </Link>
+      </li>
+      <li class="nav-item">
+        <Link
+          class="nav-link"
+          :class="{
+            active: route().current(
+              'admin.dashboard.*'
+            )
+          }"
+          :href="route('admin.dashboard')"
+        >
+          Service Records
         </Link>
       </li>
     </ul>

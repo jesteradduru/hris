@@ -1,5 +1,12 @@
 <template>
-  <div class="tabbable">
+  <div class="d-flex justify-content-between">
+    <h3>Personal Data Sheet</h3>
+    <div>
+      <a class="btn btn-primary btn-sm m-2" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
+      <a class="btn btn-success btn-sm m-2" :href="route('pds.print')" target="_blank"><i class="fa-solid fa-print" />&nbsp;Print</a>
+    </div>
+  </div>
+  <div>
     <ul class="nav nav-pills" role="tablist">
       <li class="nav-item">
         <Link
@@ -74,26 +81,29 @@
       </li>
 
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.non_academic_distinctions.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.non_academic_distinctions.*') }"
         >
           Non-academic Distinctions / Recognition
         </Link>
-      </li>
+      </li> -->
 
       <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.other_information.index')" class="nav-link"
-          :class="{ active: route().current('profile.pds.other_information.*') }"
+          :class="{ active: route().current('profile.pds.other_information.*') 
+            || route().current('profile.pds.non_academic_distinctions.*') 
+            || route().current('profile.pds.reference_id.*') 
+          }"
         >
           Other Information
         </Link>
       </li>
 
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.page_four_questions.edit')" class="nav-link"
           :class="{ active: route().current('profile.pds.page_four_questions.*') }"
@@ -101,10 +111,10 @@
           Questions
           <i v-if="props.isFormDirty && route().current('profile.pds.page_four_questions.*')" class="bi-record-fill text-secondary" />
         </Link>
-      </li>
+      </li> -->
 
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.reference_id.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.reference_id.*') }"
@@ -112,14 +122,10 @@
           References and ID
           <i v-if="props.isFormDirty && route().current('profile.pds.reference_id.*')" class="bi-record-fill text-secondary" />
         </Link>
-      </li>
+      </li> -->
     </ul>
     <hr />
     <div id="pds" class="container">
-      <div class="d-flex justify-content-end">
-        <a class="btn btn-success m-2" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
-        <a class="btn btn-success m-2" :href="route('pds.print')" target="_blank"><i class="fa-solid fa-print" />&nbsp;Print</a>
-      </div>
       <slot />
     </div>
   </div>

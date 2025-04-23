@@ -73,6 +73,19 @@
               Accounts
             </Link>
           </li>
+
+          <!-- division link -->
+          <li class="nav-item">
+            <Link
+              class="nav-link" :href="route('admin.divisions.index')" :class="{
+                active: route().current(
+                  'admin.divisions.*'
+                )
+              }"
+            >
+              Divisions
+            </Link>
+          </li>
           
           
           <li v-if="permissions.includes('View Roles and Permissions Page')" class="nav-item">

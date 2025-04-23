@@ -219,6 +219,10 @@ class User extends Authenticatable
         return $this->morphOne(Document::class, 'fileable');
     }
 
+    public function division() : HasOneThrough {
+        return $this->hasOneThrough(Division::class, PlantillaPosition::class, 'id', 'id', 'plantilla_id', 'division_id');
+    }
+
     public function getDivisionAttribute() {
         if($this->plantilla_id){
             $plantilla = PlantillaPosition::find($this->plantilla_id);

@@ -44,7 +44,7 @@
         
           <div class="col-12">
             <div class="d-flex gap-2">
-              <Link :href="route('profile.pds.non_academic_distinctions.index')" class="btn btn-secondary" :disabled="submitForm.processing" type="submit">  Back</Link>
+              <Link :href="route('profile.pds.other_information.index')" class="btn btn-secondary" :disabled="submitForm.processing" type="submit">  Back</Link>
               <button class="btn btn-success" :disabled="submitForm.processing" type="submit"><Spinner :processing="form.processing" />  Add</button>
             </div>
           </div>
