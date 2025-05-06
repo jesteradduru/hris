@@ -87,6 +87,7 @@ class JobApplicationController extends Controller
             $job_application = $request->user()->job_application()->create(
                 [
                     'job_posting_id' => $job_posting->id,
+                    'privacy_consent_accepted' => true,
                 ]
             );
             

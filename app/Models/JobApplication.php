@@ -14,8 +14,12 @@ class JobApplication extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_application_id', 'job_posting_id'];
+    protected $fillable = ['job_application_id', 'job_posting_id', 'privacy_consent_accepted'];
     protected $appends = ['latest_result'];
+
+    protected $casts = [
+        'privacy_consent_accepted' => 'boolean',
+    ];
 
     public function user() : BelongsTo {
         return $this->belongsTo(User::class, 'user_id');

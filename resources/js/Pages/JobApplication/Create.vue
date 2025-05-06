@@ -120,21 +120,6 @@
             </div>
             <div class="form-text text-info">Accepted file formats: pdf</div>
           </div>
-          <!-- training -->
-          <!-- <div class="form-group mb-3 ">
-            <label for="Documents">
-              5. Photocopy of certificates on Learning and Development Interventions/ Training Programs
-            </label>
-            <div class="mb-3 d-flex gap-2">
-              <div>
-                <input id="training" type="file" class="form-control" name="" placeholder="" data-input="training" aria-describedby="fileHelpId" multiple @input="addDocument" />
-              </div>
-              <InputError :message="form.errors['training']" />
-              <InputError :message="form.errors['training.0']" />
-            </div>
-            <div class="form-text text-info">Accepted file formats: pdf</div>
-          </div> -->
-          <!-- other documents -->
           <div class="form-group mb-3 ">
             <label for="Documents">
               5. Other Documents
@@ -154,35 +139,32 @@
         <button type="reset" class="btn btn-secondary" :onClick="resetForm">
           Reset
         </button>
-        <button type="submit" class="btn btn-success" :disabled="form.processing">
-          <Spinner :processing="form.processing" />
+        <button type="button" class="btn btn-success" :disabled="form.processing" data-bs-toggle="modal" data-bs-target="#privacy_notice">
+          <Spinner :processing="form.processing" /> 
           Submit
         </button>
       </div>
+      <Modal modal_id="privacy_notice">
+        <template #header>
+          <h3>Privacy Notice</h3>
+        </template>
+        <template #body>
+          <div class="alert alert-info ">
+            <p class>All information provided will remain secure and confidential within the Department of Economic, Planning and Development Region 2 (DEPDev2). Only authorized personnel will have access to this data. DEPDev2 will retain this information for the duration of the engagement, plus an additional ten (10) years.</p>
+            <p class>DEPDev2 employs appropriate technical and organizational measures to ensure data security and protect it against unauthorized disclosure or access. DEPDev2 complies with the standards set by the <a href="https://privacy.gov.ph/data-privacy-act/" target="_blank"><b>Data Privacy Act of 2012</b></a> and does not share data with any third parties.</p>
+            <p class>You hold specific rights under the Data Privacy Act, including the right to object to data processing, access your data, correct inaccuracies, and request data erasure or blocking. For more information on these rights or to make requests concerning your data (review, withdrawal of consent, correction, or updates), please contact us at <a href="mailto:neda2ict@gmail.com"><b>neda2ict@gmail.com</b></a>.</p>
+          </div>
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <Spinner :processing="form.processing" /> 
+              <span v-if="form.processing">Submitting Application</span>
+              <span v-else>Agree</span>
+            </button>
+            <button type="button" data-bs-toggle="modal" data-bs-target="#privacy_notice" class="btn btn-danger">Disagree</button>
+          </div>
+        </template>
+      </Modal>
     </form>
-    <Modal modal_id="reminder">
-      <template #header>
-        <h3>Reminder</h3>
-      </template>
-      <template #body>
-        <div class="alert alert-danger">
-          <b>Important Reminders:</b> 
-          <ol>
-            <li>
-              Work Experiences and Learning and Development(L&D) Interventions/ Training Programs must be inputted to the PDS through the system. Click <b>
-                <a :href="route('profile.pds.personal_information.edit')" target="_blank">
-                  here
-                </a>
-              </b>
-              to update your PDS.
-            </li>
-            <li>
-              Please attach  the certificates of Trainings on PDS under <b><Link :href="route('profile.pds.learning_and_development.index')">L&D Interventions/ Training Programs</Link></b> for it to be valid. All trainings without certificate will be invalid.
-            </li>
-          </ol>
-        </div>
-      </template>
-    </Modal>
   </ApplicationLayout>
 </template>
 
@@ -220,7 +202,7 @@ const addDocument = (e) => {
 
 const submitApplication = () => {
   form.post(route('job_application.store', {job_posting: props.job_posting.id}), {
-    onSuccess: () => form.reset(),
+    onSuccess: () => location.reload(),
   })
 }
 
@@ -230,10 +212,6 @@ const permissions = usePage().props.auth.permissions.map(p => p.name)
 
 const resetForm = () => {
   form.reset()
-}
-
-window.onload = () => {
-  $('#reminder').modal('show')
 }
 
 </script>

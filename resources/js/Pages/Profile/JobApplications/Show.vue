@@ -15,7 +15,7 @@
           Document/s Submitted
         </dt>
         <dd>
-          <span v-for="file in job_application.document" :key="file.id"><a :href="file.src" target="_blank">{{ file.filename }}</a></span>
+          <span v-for="file in job_application.document" :key="file.id"><a :href="file.src" target="_blank">{{ file.filename }}</a><br /></span>
         </dd>
         <dt>
           History
@@ -72,6 +72,7 @@
         </dd>
       </dl>
     </div>
+    <!-- <Link :onBefore="confirm" method="delete" as="button" :href="route('job_application.destroy', {job_application: job_application.id})" class="btn btn-danger btn-sm ">Recall Application</Link> -->
   </AuthenticatedLayout>
 </template>
   
@@ -101,5 +102,7 @@ const getDateTime = (schedule, start_time) => {
   const time = moment(start_time, [moment.ISO_8601, 'HH:mm']).format('hh:mm A') 
   return `${date} ${time}`
 }
+
+const confirm = () => window.confirm('Are you sure to cancel the job application.')
 
 </script>
