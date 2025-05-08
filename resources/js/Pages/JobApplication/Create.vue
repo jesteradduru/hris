@@ -150,7 +150,7 @@
         </template>
         <template #body>
           <div class="alert alert-info ">
-            <p class>All information provided will remain secure and confidential within the Department of Economic, Planning and Development Region 2 (DEPDev2). Only authorized personnel will have access to this data. DEPDev2 will retain this information for the duration of the engagement, plus an additional ten (10) years.</p>
+            <p class>All information provided will remain secure and confidential within the Department of Economic, Planning and Development Region 2 (DEPDev2). Only authorized personnel will have access to this data. DEPDev2 will retain this information for 2 years.</p>
             <p class>DEPDev2 employs appropriate technical and organizational measures to ensure data security and protect it against unauthorized disclosure or access. DEPDev2 complies with the standards set by the <a href="https://privacy.gov.ph/data-privacy-act/" target="_blank"><b>Data Privacy Act of 2012</b></a> and does not share data with any third parties.</p>
             <p class>You hold specific rights under the Data Privacy Act, including the right to object to data processing, access your data, correct inaccuracies, and request data erasure or blocking. For more information on these rights or to make requests concerning your data (review, withdrawal of consent, correction, or updates), please contact us at <a href="mailto:neda2ict@gmail.com"><b>neda2ict@gmail.com</b></a>.</p>
           </div>
