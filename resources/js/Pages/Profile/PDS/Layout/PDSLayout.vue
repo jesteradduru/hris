@@ -88,7 +88,7 @@
         >
           Non-academic Distinctions / Recognition
         </Link>
-      </li>
+      </li> 
 
       <li class="nav-item">
         <Link
