@@ -23,9 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        #URL::forceScheme('https');
-
-        if(!Config::get('app.debug')){
+        
+        if(env('APP_ENV') !== 'local'){
+            URL::forceScheme('https');
             URL::forceRootUrl(Config::get('app.url'));
 
             Paginator::currentPathResolver(function () {
