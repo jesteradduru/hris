@@ -81,14 +81,14 @@
       </li>
 
 
-      <!-- <li class="nav-item">
+      <li class="nav-item">
         <Link
           preserve-state :href="route('profile.pds.non_academic_distinctions.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.non_academic_distinctions.*') }"
         >
           Non-academic Distinctions / Recognition
         </Link>
-      </li> -->
+      </li>
 
       <li class="nav-item">
         <Link
