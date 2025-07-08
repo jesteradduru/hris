@@ -94,7 +94,7 @@
         <Link
           preserve-state :href="route('profile.pds.other_information.index')" class="nav-link"
           :class="{ active: route().current('profile.pds.other_information.*') 
-            || route().current('profile.pds.non_academic_distinctions.*') 
+            // || route().current('profile.pds.non_academic_distinctions.*') 
             || route().current('profile.pds.reference_id.*') 
           }"
         >
