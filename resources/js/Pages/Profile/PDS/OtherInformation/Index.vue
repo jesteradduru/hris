@@ -28,7 +28,7 @@
       
 
       <!-- non academic distincions -->
-      <Accordion class="my-4" accordion-name="Non-Academic Distinctions/ Recognition/ Award" accordion-id="nonacad" :collapsed="false">
+      <!-- <Accordion class="my-4" accordion-name="Non-Academic Distinctions/ Recognition/ Award" accordion-id="nonacad" :collapsed="false">
         <div class="table-responsive uppercase">
           <table class="table table-bordered table-sm">
             <thead>
@@ -76,7 +76,7 @@
           </table>
           <Link :href="route('profile.pds.non_academic_distinctions.create')" class="btn btn-primary btn-sm"><i class="fa fa-plus" /></Link>
         </div>
-      </Accordion>
+      </Accordion> -->
 
       <!-- questions -->
       <Accordion class="my-4" accordion-name="Questions" accordion-id="questions" :collapsed="false">
