@@ -2,32 +2,36 @@
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Edit Division</h3>
-    <div class="mb-3">
-      <label for="" class="form-label">Division</label>
-      <input
-        id=""
-        v-model="editForm.name"
-        type="text"
-        class="form-control"
-        name=""
-        aria-describedby="helpId"
-        placeholder=""
-      />
-      <InputError :message="editForm.errors.name" />
-    </div>
-    <div class="mb-3">
-      <label for="" class="form-label">Abbreviation</label>
-      <input
-        id=""
-        v-model="editForm.abbreviation"
-        type="text"
-        class="form-control"
-        name=""
-        aria-describedby="helpId"
-        placeholder=""
-      />
-      <InputError :message="editForm.errors.abbreviation" />
-    </div>
+    <form action="">
+      <div class="mb-3">
+        <label for="" class="form-label">Division</label>
+        <input
+          id=""
+          v-model="editForm.name"
+          type="text"
+          class="form-control"
+          name=""
+          aria-describedby="helpId"
+          placeholder=""
+        />
+        <InputError :message="editForm.errors.name" />
+      </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Abbreviation</label>
+        <input
+          id=""
+          v-model="editForm.abbreviation"
+          type="text"
+          class="form-control"
+          name=""
+          aria-describedby="helpId"
+          placeholder=""
+        />
+        <InputError :message="editForm.errors.abbreviation" />
+      </div>
+      <br />
+      <button type="submit">Save</button>
+    </form>
 
     <!-- <hr />
     <div

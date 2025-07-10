@@ -1,8 +1,8 @@
 <template>
   <ul class="nav flex-column shadow pt-4 side-nav bg-primary" style="z-index: 1; text-transform:">
-    <li class="nav-item  d-flex align-center gap-2 mx-2 mb-4">
+    <li class="nav-item  d-flex align-items-center gap-2 mx-2 mb-4">
       <img :src="nedalogo" alt="" class="img-fluid side-nav-logo" />
-      <span class="text-light">NEDA2 Human Resource Information System</span>
+      <span class="text-light">DEPDev2 Human Resource Information System</span>
     </li>
     <li :class="{'mt-3': !user}" class="nav-item">
       <Link
@@ -72,7 +72,7 @@
       </Link>
     </li>
     <li class="mt-auto text-center text-secondary mb-4">
-      <small>&copy; 2023 - {{ moment().format('Y') }} | <a class="text-secondary" target="_blank" href="https://neda.rdc2.gov.ph">NEDA2</a></small>
+      <small>&copy; 2023 - {{ moment().format('Y') }} | <a class="text-secondary" target="_blank" href="https://neda.rdc2.gov.ph">DEPDev2</a></small>
     </li>
   </ul>
 </template>

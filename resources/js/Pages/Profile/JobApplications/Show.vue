@@ -32,7 +32,7 @@
                     {{ `The interview is scheduled on ${getDateTime(result.results.schedule, result.results.start_time)}` }}
                   </b>
                   <b v-else-if="result.result === 'EXAM_PASSED'">
-                    {{ `You've successfully passed the NEDA exam and will proceed to the next hiring process.` }}
+                    {{ `You've successfully passed the entrance exam and will proceed to the next hiring process.` }}
                   </b>
                   <b v-else-if="result.result === 'EXAM_FAILED'">
                     {{ `You did not meet the passing criteria in the examination.` }}

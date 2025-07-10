@@ -6,7 +6,7 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
-        <h3>NEDA Exam</h3>
+        <h3>DEPDev Exam</h3>
         <Spinner :processing="loading" :text="'Loading'" />
       </div>
       <div>

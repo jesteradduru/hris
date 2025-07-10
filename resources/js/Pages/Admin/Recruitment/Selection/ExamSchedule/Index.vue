@@ -7,7 +7,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div class="d-flex justify-content-between align-items-center gap-2">
         <h3>
-          Schedule NEDA Exam
+          Schedule DEPDev Exam
           <span v-if="examScheduleForm.schedule">on {{ moment(examScheduleForm.schedule).format('MMM D, Y') }}</span>
         </h3>
         <Spinner :processing="loading" :text="'Loading'" />
@@ -109,7 +109,7 @@ const examScheduleForm = useForm({
 })
 
 const setSchedule = debounce(() => {
-  if(window.confirm('Set this schedule for the NEDA exam?')){
+  if(window.confirm('Set this schedule for the entrance exam?')){
     examScheduleForm.post(route('admin.recruitment.neda_exam.set', {result: props.job_vacancy_status.id}))
   }
 }, 200)

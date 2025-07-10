@@ -19,7 +19,7 @@
             results: props.job_vacancy_status.id,
           })"
         >
-          NEXT (NEDA EXAM)
+          NEXT (DEPDev EXAM)
         </Link>
       </div>
     </div>

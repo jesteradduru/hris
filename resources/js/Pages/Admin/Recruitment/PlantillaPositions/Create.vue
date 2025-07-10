@@ -195,7 +195,7 @@ const props = defineProps({
 })
 
 const form = useForm({
-  place_of_assignment: props.plantilla ? props.plantilla.place_of_assignment : 'NEDA Region 2',
+  place_of_assignment: props.plantilla ? props.plantilla.place_of_assignment : 'DEPDev Region 2',
   position: props.plantilla ? props.plantilla.position : null,
   salary_grade: props.plantilla ? props.plantilla.salary_grade : null,
   monthly_salary: props.plantilla ? props.plantilla.monthly_salary : null,
