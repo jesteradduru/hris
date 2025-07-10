@@ -70,9 +70,22 @@ class DivisionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Division $division)
     {
-        //
+        // dd($division);
+        $request->validate([
+            'name' => 'required|string|max:300',
+            'abbreviation' => 'required|string|max:300',
+        ]);
+
+        $division->update([
+            'name' => $request->name,
+            'abbreviation' => $request->abbreviation,
+        ]);
+
+        sweetalert()->addSuccess('Updated Successfully!');
+
+        return redirect()->back();
     }
 
     /**

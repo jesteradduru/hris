@@ -2,7 +2,7 @@
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Edit Division</h3>
-    <form action="">
+    <form @submit.prevent="update">
       <div class="mb-3">
         <label for="" class="form-label">Division</label>
         <input
@@ -30,7 +30,7 @@
         <InputError :message="editForm.errors.abbreviation" />
       </div>
       <br />
-      <button type="submit">Save</button>
+      <button class="btn btn-primary" type="submit">Save</button>
     </form>
 
     <!-- <hr />
@@ -94,6 +94,11 @@ const crumbs = computed(() => [
   },
 ])
 
+const update = () => {
+  editForm.put(route('admin.divisions.update', { division: props.division.id }), {
+    preserveScroll: true,
+  })
+}
 
 
 </script>
