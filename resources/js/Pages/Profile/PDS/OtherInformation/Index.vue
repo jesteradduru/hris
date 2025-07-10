@@ -21,7 +21,7 @@
                 </tr>
               </tbody>
             </table>
-            <Link class="btn btn-primary btn-sm" :href="route('profile.pds.other_information.edit')"><i class="fa fa-plus" /></Link>
+            <Link class="btn btn-success btn-sm" :href="route('profile.pds.other_information.edit')">Edit</Link>
           </div>
         </div>
       </Accordion>
@@ -423,7 +423,7 @@
               </div>
               <button
                 type="submit" :disabled="!form.isDirty && form.wasSuccessful"
-                class="btn btn-success"
+                class="btn btn-sm btn-success"
               >
                 <Spinner :processing="form.processing" /> {{ !form.isDirty &&
                   form.wasSuccessful ? 'Saved' : 'Save' }}
@@ -536,15 +536,7 @@
         </div>
         <div class="mb-3 d-flex gap-2 justify-content-between">
           <div class="d-flex gap-2">
-            <Link :href="route('profile.pds.reference_id.edit')" class="btn btn-success">Edit</Link>
-          </div>
-          <div class="d-flex gap-2">
-            <Link
-              :href="route('profile.pds.page_four_questions.edit')" type="button"
-              class="btn btn-dark"
-            >
-              <i class="fa-solid fa-arrow-left" />
-            </Link>
+            <Link :href="route('profile.pds.reference_id.edit')" class="btn btn-success btn-sm">Edit</Link>
           </div>
         </div>
       </Accordion>
