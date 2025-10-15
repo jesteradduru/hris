@@ -81,7 +81,7 @@ class PlantillaPositionController extends Controller
             "education" => "required|string|max:255",
             "training" => "nullable|integer|min:1",
             "work_experience" => "nullable|integer|min:1",
-            "competency" => "required|string|max:500",
+            "competency" => "required|string",
             "division_id" => "required|integer",
         ], $messages)->validate();
         
