@@ -119,6 +119,6 @@ class WorkExperience extends Model
     }
 
     public function scopeMostRecent(Builder $query) {
-        return $query->orderBy('inclusive_date_to', 'desc');
+        return $query->orderBy('inclusive_date_from', 'desc');
     }
 }

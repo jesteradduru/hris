@@ -38,22 +38,33 @@
             <th v-if="withControls" scope="col" />
             <th scope="col">Position</th>
             <th scope="col">Agency</th>
-            <th scope="col">Salary</th>
-            <th scope="col">Pay Grade</th>
+            <!-- <th scope="col">Salary</th> -->
             <th scope="col">Status of Appointment</th>
+            <th scope="col">Government Service</th>
             <th scope="col">Inclusive Date</th>
           </tr>
         </thead>
         <tbody v-if="works">
-          <tr v-for="work in works" :id="`work${work.id}`" :key="work.id" class="" :class="{'table-success': checkIfIncluded(work.id, 'App\\Models\\WorkExperience')}">
+          <tr
+            v-for="work in works" :id="`work${work.id}`" :key="work.id" class=""
+            :class="{ 'table-success': checkIfIncluded(work.id, 'App\\Models\\WorkExperience') }"
+          >
             <td v-if="withControls">
-              <input type="checkbox" :checked="checkIfIncluded(work.id, 'App\\Models\\WorkExperience')" :data-id="work.id" @input="includeAward" />
+              <input
+                type="checkbox" :checked="checkIfIncluded(work.id, 'App\\Models\\WorkExperience')"
+                :data-id="work.id" @input="includeAward"
+              />
             </td>
+
             <td scope="row">{{ work.position_title }}</td>
             <td>{{ work.dept_agency_office_company }}</td>
-            <td>{{ parseInt(work.monthly_salary).toLocaleString('en-US', { style: 'currency', currency: 'PHP'}) }}</td>
-            <td>{{ work.paygrade }}</td>
+            <!-- <td>{{ parseInt(work.monthly_salary).toLocaleString('en-US', { style: 'currency', currency: 'PHP'}) }}</td>-->
             <td>{{ work.status_of_appointment }}</td>
+            <td>
+              <span v-if="work.govt_service">Yes</span>
+              <span v-else-if="work.govt_service == 0">No</span>
+              <span v-else>N/A</span>
+            </td>
             <td>
               {{ `${simplifyDate(work.inclusive_date_from)} - ` }}
               <span v-if="work.inclusive_date_to">{{ simplifyDate(work.inclusive_date_to) }}</span>
@@ -68,12 +79,12 @@
     </div>
   </Box>
 </template>
-      
+
 <script setup>
 import moment from 'moment'
 import Box from '../UI/Box.vue'
-import {computed} from 'vue'
-import {router} from '@inertiajs/vue3'
+import { computed } from 'vue'
+import { router } from '@inertiajs/vue3'
 
 const props = defineProps({
   works: Array,
@@ -87,17 +98,17 @@ const included = computed(() => {
 })
 
 const checkIfIncluded = (id, type) => {
-  if(!included.value){
+  if (!included.value) {
     return
   }
   return included.value.filter(includedVal => includedVal.computable_type === type && includedVal.computable_id === id).length > 0
 }
 
-  
+
 const includeAward = (e) => {
   const id = e.target.getAttribute('data-id')
 
-  router.visit(route('admin.recruitment.work.includeWork', {work: id, job_application_id: props.applicant.job_application[0].id}), {
+  router.visit(route('admin.recruitment.work.includeWork', { work: id, job_application_id: props.applicant.job_application[0].id }), {
     method: 'post',
     preserveScroll: true,
     preserveState: true,

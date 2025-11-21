@@ -68,7 +68,7 @@
 
     <div class="footer">
       <div class="signature-block">
-        <div class="signature-line" />
+        <div class="signature-line">{{ $page.props.auth.user.full_name }}</div>
         <div class="signature-text">(Signature over Printed Name of Employee/Applicant)</div>
       </div>
       <div class="date-block">
@@ -246,6 +246,7 @@ onMounted(() => {
   border-bottom: 1px solid #000;
   margin-bottom: 5px;
   width: 100%;
+  font-weight: bold;;
 }
 
 .signature-text {

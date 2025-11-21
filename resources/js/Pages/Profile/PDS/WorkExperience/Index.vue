@@ -11,8 +11,8 @@
               <th scope="col">TO</th>
               <th scope="col">POSITION</th>
               <th scope="col">DEPARTMENT / AGENCY / OFFICE / COMPANY</th>
-              <th scope="col">MONTHLY SALARY</th>
-              <th scope="col">SALARY GRADE</th>
+              <!-- <th scope="col">MONTHLY SALARY</th>
+              <th scope="col">SALARY GRADE</th> -->
               <th scope="col">STATUS OF APPOINTMENT</th>
             </tr>
           </thead>
@@ -25,8 +25,8 @@
               </td>
               <td>{{ work_experience.position_title }}</td>
               <td>{{ work_experience.dept_agency_office_company }}</td>
-              <td>{{ work_experience.monthly_salary }}</td>
-              <td>{{ work_experience.paygrade }}</td>
+              <!-- <td>{{ work_experience.monthly_salary }}</td>
+              <td>{{ work_experience.paygrade }}</td> -->
               <td>{{ work_experience.status_of_appointment }}</td>
               <td>
                 <div class="d-flex gap-2">
@@ -39,6 +39,7 @@
                   </Link>
                   <Link
                     as="button" class="btn btn-danger " method="delete"
+                    :onBefore="confirm"
                     :href="route('profile.pds.work_experience.destroy', { work_experience: work_experience.id })"
                     preserve-scroll
                   >
@@ -81,5 +82,7 @@ import Pagination from '@/Components/Pagination.vue'
 const props = defineProps({
   work_experiences: Object,
 })
+
+const confirm = () => window.confirm('Are you sure to delete the work experience?')
 
 </script>
