@@ -54,7 +54,7 @@ class AdminJobPostingController extends Controller
     public function store(Request $request)
     {
         $validateData = $request->validate([
-            "documents" => "required|string|max:500|nullable",
+            "documents" => "required|string|nullable",
             "posting_date" => "required|date",
             "closing_date" => "required|date"
         ], [
@@ -115,7 +115,7 @@ class AdminJobPostingController extends Controller
         ];
 
         $validated = Validator::make($request->all(), [
-            "documents" => "string|max:500|nullable",
+            "documents" => "string|nullable",
             "posting_date" => "required|date",
             "closing_date" => "required|date",
             "plantilla_id" => "required|integer"
