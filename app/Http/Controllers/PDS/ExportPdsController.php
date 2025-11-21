@@ -4,6 +4,7 @@ namespace App\Http\Controllers\PDS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Carbon\Carbon;
 
 class ExportPdsController extends Controller
@@ -25,7 +26,11 @@ class ExportPdsController extends Controller
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
 
         // load user
-        $user = $request->user();
+        // $user = $request->user();
+
+        $user_id = $request->user_id ?? $request->user()->id;
+        $user = User::find($user_id);
+
         $personal_info = $user->personal_information;  
         $family_background = $user->family_background;       
         $children = $user->children;       
@@ -92,16 +97,29 @@ class ExportPdsController extends Controller
             $sheetA->setCellValue('I22', strtoupper($personal_info['r_address_city_municipality']));
             $sheetA->setCellValue('I24', strtoupper($personal_info['r_address_zipcode']));
             $sheetA->setCellValue('L22', strtoupper($personal_info['r_address_province']));
-            $sheetA->setCellValue('I25', strtoupper($personal_info['p_address_house_block_lot_number']));
-            $sheetA->setCellValue('L25', strtoupper($personal_info['p_address_street']));
-            $sheetA->setCellValue('I27', strtoupper($personal_info['p_address_subdivision_village']));
-            $sheetA->setCellValue('L27', strtoupper($personal_info['p_address_barangay']));
-            $sheetA->setCellValue('I29', strtoupper($personal_info['p_address_city_municipality']));
-            $sheetA->setCellValue('I31', strtoupper($personal_info['p_address_zipcode']));
-            $sheetA->setCellValue('L29', strtoupper($personal_info['p_address_province']));
+
+            if($personal_info->same_address){
+                $sheetA->setCellValue('I25', strtoupper($personal_info['r_address_house_block_lot_number']));
+                $sheetA->setCellValue('L25', strtoupper($personal_info['r_address_street']));
+                $sheetA->setCellValue('I27', strtoupper($personal_info['r_address_subdivision_village']));
+                $sheetA->setCellValue('L27', strtoupper($personal_info['r_address_barangay']));
+                $sheetA->setCellValue('I29', strtoupper($personal_info['r_address_city_municipality']));
+                $sheetA->setCellValue('I31', strtoupper($personal_info['r_address_zipcode']));
+                $sheetA->setCellValue('L29', strtoupper($personal_info['r_address_province']));
+            }else{
+                $sheetA->setCellValue('I25', strtoupper($personal_info['p_address_house_block_lot_number']));
+                $sheetA->setCellValue('L25', strtoupper($personal_info['p_address_street']));
+                $sheetA->setCellValue('I27', strtoupper($personal_info['p_address_subdivision_village']));
+                $sheetA->setCellValue('L27', strtoupper($personal_info['p_address_barangay']));
+                $sheetA->setCellValue('I29', strtoupper($personal_info['p_address_city_municipality']));
+                $sheetA->setCellValue('I31', strtoupper($personal_info['p_address_zipcode']));
+                $sheetA->setCellValue('L29', strtoupper($personal_info['p_address_province']));
+            }
+
             $sheetA->setCellValue('I32', strtoupper($personal_info['telephone_number']));
             $sheetA->setCellValue('I33', strtoupper($personal_info['mobile_number']));
             $sheetA->setCellValue('I34', strtolower($personal_info['email_address']));
+            
            
             // citizenship
             $sheetA->setCellValue('T17', $personal_info['filipino'] != null);
@@ -153,7 +171,7 @@ class ExportPdsController extends Controller
                 $child_deceased = $child['deceased'] ? ' (deceased)' : '';
                 // dd($child);
                 $sheetA->setCellValue('I'. 37 + $key, strtoupper($child['fullname']) . $child_deceased);
-                $sheetA->setCellValue('M'. 37 + $key, Carbon::parse($child['date_of_birth'])->format('m-d-Y'));
+                $sheetA->setCellValue('M'. 37 + $key, self::formatDate($child['date_of_birth']));
             }
         }
 
@@ -453,7 +471,7 @@ class ExportPdsController extends Controller
     }
 
     private static function formatDate($date){
-        $date = Carbon::parse($date)->format('m/d/Y');
+        $date = Carbon::parse($date)->format('d/m/Y');
 
         return ($date);
 
