@@ -107,7 +107,7 @@
             </div>
           </div>
 
-
+          <!-- 
           <div class="form-group col-6">
             <div class="mb-3">
               <label for="" class="form-label">MONTHLY SALARY</label>
@@ -121,9 +121,9 @@
                 e.g. 12000.00
               </p> 
             </div>
-          </div>
+          </div> -->
 
-
+          <!-- 
           <div class="form-group col-6">
             <div class="mb-3">
               <label for="" class="form-label">SALARY/ JOB/ PAY GRADE</label>
@@ -137,7 +137,7 @@
                 (if applicable)& STEP  (Format "00-0")/ INCREMENT
               </p>
             </div>
-          </div>
+          </div> -->
 
 
 
