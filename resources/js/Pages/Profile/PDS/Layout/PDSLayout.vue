@@ -2,8 +2,7 @@
   <div class="d-flex justify-content-between">
     <h3>Personal Data Sheet</h3>
     <div>
-      <a class="btn btn-primary btn-sm m-2" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Download PDS</a>
-      <!-- <a class="btn btn-success btn-sm m-2" :href="route('pds.print')" target="_blank"><i class="fa-solid fa-print" />&nbsp;Print</a> -->
+      <a class="btn btn-primary btn-sm m-2" :href="route('pds.export')" target="_blank"><i class="fa-solid fa-download" />&nbsp; Export PDS</a>
     </div>
   </div>
   <div>

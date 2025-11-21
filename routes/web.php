@@ -8,6 +8,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\NotificationSeenController;
 use App\Http\Controllers\PDS\ExportPdsController;
 use App\Http\Controllers\PDS\PrintpdsController;
+use App\Http\Controllers\Profile\PrintWorkExperienceSheet;
 use App\Http\Controllers\Profile\RewardAndRecognitionController;
 use App\Http\Controllers\Profile\SpmsController;
 use App\Http\Controllers\ProfileController;
@@ -41,10 +42,7 @@ Route::prefix('recruitment')
 Route::resource('job_application', JobApplicationController::class)->middleware(['auth']);
 
 
-//export pds
-Route::name('pds.export')->get('pds/export', ExportPdsController::class);
 
-Route::name('pds.print')->get('pds/print', [PrintpdsController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
@@ -70,6 +68,14 @@ Route::middleware('auth')->group(function () {
     Route::resource('lnd_forms', LndFormController::class);
 
     Route::resource('daily_time_record', DailyTimeRecordController::class);
+
+    
+    //export pds
+    Route::name('pds.export')->get('pds/export', ExportPdsController::class);
+
+    Route::name('pds.print')->get('pds/print', [PrintpdsController::class, 'index']);
+
+    Route::name('wes.print')->get('wes/print', [PrintWorkExperienceSheet::class, 'print']);
 });
 
 require __DIR__.'/auth.php';

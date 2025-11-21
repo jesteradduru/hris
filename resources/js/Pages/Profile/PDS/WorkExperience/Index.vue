@@ -1,7 +1,8 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout>
-      <Link :href="route('profile.pds.work_experience.create')" class="btn btn-success">Add Work Experience</Link>
+      <Link :href="route('profile.pds.work_experience.create')" class="btn btn-success btn-sm">Add Work Experience</Link>
+      <a class="btn btn-success btn-sm m-2" :href="route('wes.print')" target="_blank"><i class="fa-solid fa-print" />&nbsp;Print Work Experience Sheet</a>
       <div class="table-responsive">
         <table class="table table-sm table-bordered mt-3">
           <thead>

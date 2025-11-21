@@ -4,11 +4,7 @@ namespace App\Http\Controllers\PDS;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Barryvdh\Debugbar\Facades\Debugbar;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
-use PhpOffice\PhpSpreadsheet\RichText\RichText;
-use PhpParser\Node\Stmt\Else_;
 
 class ExportPdsController extends Controller
 {
@@ -20,11 +16,11 @@ class ExportPdsController extends Controller
         }
 
         
-        $pdsfile='./pds/PDS.xlsx';
+        $pdsfile='./pds/PDS2025.xlsx';
         /** Load $inputFileName to a Spreadsheet Object  **/
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($pdsfile);
 
-        $spreadsheet->setActiveSheetIndexByName('A');
+        $spreadsheet->setActiveSheetIndexByName('C1');
 
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, "Xlsx");
 
@@ -44,10 +40,10 @@ class ExportPdsController extends Controller
         
 
 
-        $sheetA = $spreadsheet->getSheetByName('A');
-        $sheetB = $spreadsheet->getSheetByName('B');
-        $sheetC = $spreadsheet->getSheetByName('C');
-        $sheetD = $spreadsheet->getSheetByName('D');
+        $sheetA = $spreadsheet->getSheetByName('C1');
+        $sheetB = $spreadsheet->getSheetByName('C2');
+        $sheetC = $spreadsheet->getSheetByName('C3');
+        $sheetD = $spreadsheet->getSheetByName('C4');
         
         
         if($personal_info){
@@ -55,10 +51,31 @@ class ExportPdsController extends Controller
             $sheetA->setCellValue('D10', strtoupper($personal_info['surname']));
             $sheetA->setCellValue('D11', strtoupper($personal_info['first_name']));
             $sheetA->setCellValue('D12', strtoupper($personal_info['middle_name']));
-            $sheetA->setCellValue('N11', strtoupper($personal_info['name_extension']));
-            $sheetA->setCellValue('D13', Carbon::parse($personal_info['date_of_birth'])->format('m-d-Y'));
+            // $sheetA->setCellValue('N11', strtoupper($personal_info['name_extension']));
+            $sheetA->setCellValue('L11', 'NAME EXTENSION (JR., SR)
+' . strtoupper($personal_info['name_extension']));
+            $sheetA->setCellValue('D13', Carbon::parse($personal_info['date_of_birth'])->format('d-m-Y'));
             $sheetA->setCellValue('D15', strtoupper($personal_info['place_of_birth']));
-            $sheetA->setCellValue('D16', strtoupper($personal_info['sex']));
+            $sheetA->setCellValue('T10', strtoupper($personal_info['sex']));
+            // Set TRUE for Male, FALSE for Female. This can control a linked checkbox.
+            // Assuming the 'Male' checkbox is linked to T10 and 'Female' to another cell.
+            $sheetA->setCellValue('T10', $personal_info['sex'] === 'male');
+            $sheetA->setCellValue('T11', $personal_info['sex'] === 'female');
+            // You would have a similar line for the 'Female' checkbox, e.g.: $sheetA->setCellValue('U10', strtoupper($personal_info['sex']) === 'FEMALE');
+
+
+            $sheetA->setCellValue('T12', $personal_info['civil_status'] === 'single');
+            $sheetA->setCellValue('T13', $personal_info['civil_status'] === 'widowed');
+            $sheetA->setCellValue('T14', $personal_info['civil_status'] === 'married');
+            $sheetA->setCellValue('T14', $personal_info['civil_status'] === 'married');
+            $sheetA->setCellValue('T15', $personal_info['civil_status'] === 'separated');
+            $sheetA->setCellValue('T16', $personal_info['civil_status'] === 'others');
+
+            if($personal_info['civil_status'] === 'others'){
+                $sheetA->setCellValue('E20', strtoupper($personal_info['other_civil_status']));
+            }
+
+
             $sheetA->setCellValue('D22', strtoupper($personal_info['height']));
             $sheetA->setCellValue('D24', strtoupper($personal_info['weight']));
             $sheetA->setCellValue('D25', strtoupper($personal_info['blood_type']));
@@ -84,18 +101,18 @@ class ExportPdsController extends Controller
             $sheetA->setCellValue('L29', strtoupper($personal_info['p_address_province']));
             $sheetA->setCellValue('I32', strtoupper($personal_info['telephone_number']));
             $sheetA->setCellValue('I33', strtoupper($personal_info['mobile_number']));
-            $sheetA->setCellValue('I34', strtoupper($personal_info['email_address']));
-            $sheetA->setCellValue('D17', strtoupper($personal_info['civil_status']));
-            $sheetA->setCellValue('D17', 'Others: ' . strtoupper($personal_info['other_civil_status']));
-            $sheetA->setCellValue('J13', $personal_info['filipino'] ? 'Filipino' : '');
+            $sheetA->setCellValue('I34', strtolower($personal_info['email_address']));
+           
+            // citizenship
+            $sheetA->setCellValue('T17', $personal_info['filipino'] != null);
 
             if($personal_info['dual_citizenship'] == 1){
-                $sheetA->setCellValue('J15', 'Dual Citizenship');
+                $sheetA->setCellValue('T18', 'TRUE');
 
                 if($personal_info['by_birth'] == 1){
-                    $sheetA->setCellValue('J15', 'Dual Citizenship (by birth)');
+                    $sheetA->setCellValue('T20', 'TRUE');
                 }else if($personal_info['by_naturalization'] == 1){
-                    $sheetA->setCellValue('J15', 'Dual Citizenship (by birth)');
+                    $sheetA->setCellValue('T21', 'TRUE');
                 }
 
                 $sheetA->setCellValue('J16', $personal_info['country']);
@@ -113,7 +130,7 @@ class ExportPdsController extends Controller
 
             $spreadsheet->getActiveSheet()->setCellValue('D36', strtoupper($family_background['spouse_surname']) . $spouse_deceased);
             $sheetA->setCellValue('D37', strtoupper($family_background['spouse_first_name']));
-            $sheetA->setCellValue('H37', strtoupper($family_background['spouse_name_extension']));
+            $sheetA->setCellValue('G36', strtoupper($family_background['spouse_name_extension']));
             $sheetA->setCellValue('D38', strtoupper($family_background['spouse_middle_name']));
             $sheetA->setCellValue('D39', strtoupper($family_background['spouse_occupation']));
             $sheetA->setCellValue('D40', strtoupper($family_background['spouse_employer_business_name']));
@@ -122,7 +139,9 @@ class ExportPdsController extends Controller
 
             $sheetA->setCellValue('D43', strtoupper($family_background['fathers_surname']) . $fathers_deceased);
             $sheetA->setCellValue('D44', strtoupper($family_background['fathers_first_name']));
-            $sheetA->setCellValue('H44', strtoupper($family_background['fathers_name_extension']));
+            // $sheetA->setCellValue('G43', strtoupper($family_background['fathers_name_extension']));
+            $sheetA->setCellValue('G44', 'NAME EXTENSION (JR., SR)
+' . strtoupper($family_background['fathers_name_extension']));
             $sheetA->setCellValue('D45', strtoupper($family_background['fathers_middle_name']));
 
             $sheetA->setCellValue('D47', strtoupper($family_background['mothers_surname']). $mothers_deceased);
@@ -203,8 +222,8 @@ class ExportPdsController extends Controller
                 $sheetB->setCellValue('F'. 5 + $i, strtoupper($civil_service_eligibility[$i]->rating));
                 $sheetB->setCellValue('G'. 5 + $i, self::formatDate($civil_service_eligibility[$i]->date_of_exam_conferment));
                 $sheetB->setCellValue('I'. 5 + $i, strtoupper($civil_service_eligibility[$i]->place_of_exam_conferment));
-                $sheetB->setCellValue('L'. 5 + $i, strtoupper($civil_service_eligibility[$i]->license_number));
-                $sheetB->setCellValue('M'. 5 + $i, self::formatDate($civil_service_eligibility[$i]->license_date_of_validity));
+                $sheetB->setCellValue('J'. 5 + $i, strtoupper($civil_service_eligibility[$i]->license_number));
+                $sheetB->setCellValue('K'. 5 + $i, self::formatDate($civil_service_eligibility[$i]->license_date_of_validity));
             }
         }
 
@@ -238,16 +257,16 @@ class ExportPdsController extends Controller
                 $sheetB->setCellValue('C'. $work_start_row + $i, strtoupper($workstatus));
                 $sheetB->setCellValue('D'. $work_start_row + $i, strtoupper($work_experience[$i]->position_title));
                 $sheetB->setCellValue('G'. $work_start_row + $i, strtoupper($work_experience[$i]->dept_agency_office_company));
-                $sheetB->setCellValue('J'. $work_start_row + $i, $work_experience[$i]->monthly_salary);
-                $sheetB->setCellValue('K'. $work_start_row + $i, $work_experience[$i]->paygrade);
-                $sheetB->setCellValue('L'. $work_start_row + $i, strtoupper($work_experience[$i]->status_of_appointment));
+                // $sheetB->setCellValue('J'. $work_start_row + $i, $work_experience[$i]->monthly_salary);
+                $sheetB->setCellValue('J'. $work_start_row + $i, strtoupper($work_experience[$i]->status_of_appointment));
+                // $sheetB->setCellValue('K'. $work_start_row + $i, $work_experience[$i]->paygrade);
 
                 
                 if($work_experience[$i]->govt_service=='1') $govt_service='Y';
                 else $govt_service ='N';;
 
 
-                $sheetB->setCellValue('M'. $work_start_row + $i, $govt_service);
+                $sheetB->setCellValue('K'. $work_start_row + $i, $govt_service);
             }
 
 
@@ -256,29 +275,67 @@ class ExportPdsController extends Controller
 
         // page four questions
         if($page_four_questions){
-            $sheetD->setCellValue('G6', strtoupper($page_four_questions->thirty_four_a));
-            $sheetD->setCellValue('G8', strtoupper($page_four_questions->thirty_four_b));
-            $sheetD->setCellValue('H11', strtoupper($page_four_questions->thirty_four_a_b_if_yes));
-            $sheetD->setCellValue('G13', strtoupper($page_four_questions->thirty_five_a));
-            $sheetD->setCellValue('H15', strtoupper($page_four_questions->thirty_five_a_if_yes));
-            $sheetD->setCellValue('G18', strtoupper($page_four_questions->thirty_five_b));
+
+            // $sheetD->setCellValue('G6', strtoupper($page_four_questions->thirty_four_a));
+            $sheetD->setCellValue('R6', $page_four_questions->thirty_four_a == 'Yes');
+            $sheetD->setCellValue('S6', $page_four_questions->thirty_four_a == 'No');
+
+            // $sheetD->setCellValue('G8', strtoupper($page_four_questions->thirty_four_b));
+            $sheetD->setCellValue('U6', $page_four_questions->thirty_four_a == 'Yes');
+            $sheetD->setCellValue('V6', $page_four_questions->thirty_four_a == 'No');
+            $sheetD->setCellValue('G11', strtoupper($page_four_questions->thirty_four_a_b_if_yes));
+
+            // 35 a
+            $sheetD->setCellValue('R8', $page_four_questions->thirty_five_a == 'Yes');
+            $sheetD->setCellValue('S8', $page_four_questions->thirty_five_a == 'No');
+            $sheetD->setCellValue('G15', strtoupper($page_four_questions->thirty_five_a_if_yes));
+
+            // 35B
+            $sheetD->setCellValue('R10', $page_four_questions->thirty_five_b == "Yes");
+            $sheetD->setCellValue('S10', $page_four_questions->thirty_five_b == "No");
             $sheetD->setCellValue('K20', strtoupper($page_four_questions->thirty_five_b_if_yes_date));
             $sheetD->setCellValue('K21', strtoupper($page_four_questions->thirty_five_b_if_yes_case));
-            $sheetD->setCellValue('G23', strtoupper($page_four_questions->thirty_six));
+
+            // 36
+            $sheetD->setCellValue('R11', $page_four_questions->thirty_six == 'Yes');
+            $sheetD->setCellValue('S11', $page_four_questions->thirty_six == 'No');
             $sheetD->setCellValue('H25', strtoupper($page_four_questions->thirty_six_if_yes));
-            $sheetD->setCellValue('G27', strtoupper($page_four_questions->thirty_seven));
-            $sheetD->setCellValue('H29', strtoupper($page_four_questions->thirty_seven_if_yes));
-            $sheetD->setCellValue('G31', strtoupper($page_four_questions->thirty_eight_a));
+
+            // 37
+            $sheetD->setCellValue('R13', $page_four_questions->thirty_seven == "Yes");
+            $sheetD->setCellValue('S13', $page_four_questions->thirty_seven == "No");
+            $sheetD->setCellValue('G29', strtoupper($page_four_questions->thirty_seven_if_yes));
+
+            // 38 A
+            $sheetD->setCellValue('R14', $page_four_questions->thirty_eight_a == "Yes");
+            $sheetD->setCellValue('S14', $page_four_questions->thirty_eight_a == "No");
             $sheetD->setCellValue('K32', strtoupper($page_four_questions->thirty_eight_a_if_yes));
-            $sheetD->setCellValue('G34', strtoupper($page_four_questions->thirty_eight_b));
+
+            // 38 B
+            $sheetD->setCellValue('R15', $page_four_questions->thirty_eight_b == "Yes");
+            $sheetD->setCellValue('S15', $page_four_questions->thirty_eight_b == "No");
             $sheetD->setCellValue('K35', strtoupper($page_four_questions->thirty_eight_b_if_yes));
-            $sheetD->setCellValue('G37', strtoupper($page_four_questions->thirty_nine));
+
+            // 39
+            $sheetD->setCellValue('R18', $page_four_questions->thirty_nine == "Yes");
+            $sheetD->setCellValue('S18', $page_four_questions->thirty_nine == "No");
             $sheetD->setCellValue('H39', strtoupper($page_four_questions->thirty_nine_if_yes));
-            $sheetD->setCellValue('G43', strtoupper($page_four_questions->fourty_a));
+
+
+            // 49
+            // A
+            $sheetD->setCellValue('R19', $page_four_questions->fourty_a == "Yes");
+            $sheetD->setCellValue('S19', $page_four_questions->fourty_a == "No");
             $sheetD->setCellValue('L44', strtoupper($page_four_questions->fourty_a_if_yes));
-            $sheetD->setCellValue('G45', strtoupper($page_four_questions->fourty_b));
+
+            // B
+            $sheetD->setCellValue('R20', $page_four_questions->fourty_b == "Yes");
+            $sheetD->setCellValue('S20', $page_four_questions->fourty_b == "No");
             $sheetD->setCellValue('L46', strtoupper($page_four_questions->fourty_b_if_yes));
-            $sheetD->setCellValue('G47', strtoupper($page_four_questions->fourty_c));
+
+            // C
+            $sheetD->setCellValue('R21', $page_four_questions->fourty_c == "Yes");
+            $sheetD->setCellValue('S21', $page_four_questions->fourty_c == "No");
             $sheetD->setCellValue('L48', strtoupper($page_four_questions->fourty_c_if_yes));
         }
         
