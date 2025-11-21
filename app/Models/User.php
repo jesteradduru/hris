@@ -60,10 +60,21 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['name', 'role_name', 'profile_pic', 'division'];
+    protected $appends = ['name', 'role_name', 'profile_pic', 'division', 'full_name'];
 
     public function getNameAttribute() {
         return "{$this->surname}, {$this->first_name},  {$this->middle_name} {$this->name_extension}";
+    }
+
+    public function getFullNameAttribute() {
+        if($this->personal_information){
+            $personal_information = $this->personal_information;
+            $name_extension = $personal_information->name_extension ? ", {$personal_information->name_extension}." : "";
+            return strtoupper("{$personal_information->first_name}  {$personal_information->middle_name} {$personal_information->surname}{$name_extension}");
+        }else{
+            $name_extension = $this->name_extension ? ", {$this->name_extension}." : "";
+            return "{$this->first_name}  {$this->middle_name[0]}. {$this->surname} {$this->name_extension}";
+        }
     }
 
     public function getRoleNameAttribute() {
