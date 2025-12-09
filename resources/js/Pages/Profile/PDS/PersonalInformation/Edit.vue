@@ -190,7 +190,7 @@
 
           <div class="col-12 col-md-2">
             <div class="mb-3">
-              <label for="gsis_id_number" class="form-label">GSIS No.</label>
+              <label for="gsis_id_number" class="form-label">UMID No.</label>
               <input v-model="form.gsis_id_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.gsis_id_number" />
             </div>
@@ -222,7 +222,7 @@
 
           <div class="col-12 col-md-2">
             <div class="mb-3">
-              <label class="form-label">TIN No.</label>
+              <label class="form-label">PhilSys Number (PSN)</label>
               <input v-model="form.tin_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.tin_number" />
             </div>
