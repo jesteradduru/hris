@@ -214,7 +214,7 @@
 
           <div class="col-12 col-md-2">
             <div class="mb-3">
-              <label class="form-label">SSS No.</label>
+              <label class="form-label">PhilSys Number (PSN)</label>
               <input v-model="form.sss_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.sss_number" />
             </div>
@@ -222,7 +222,7 @@
 
           <div class="col-12 col-md-2">
             <div class="mb-3">
-              <label class="form-label">PhilSys Number (PSN)</label>
+              <label class="form-label">TIN No.</label>
               <input v-model="form.tin_number" type="text" class="form-control form-control-sm" />
               <InputError :message="form.errors.tin_number" />
             </div>
