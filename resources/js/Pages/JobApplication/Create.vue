@@ -12,11 +12,9 @@
           document.filename }}</a>
       </div>
       <div>
-        <Link
-          v-if="permissions.includes('Delete Application')" :onBefore="confirm" method="delete" as="button"
+        <Link v-if="permissions.includes('Delete Application')" :onBefore="confirm" method="delete" as="button"
           :href="route('job_application.destroy', { job_application: props.application[0].id })"
-          class="btn btn-danger btn-md "
-        >
+          class="btn btn-danger btn-md ">
           Recall Application
         </Link>
       </div>
@@ -39,7 +37,7 @@
           <a class="btn btn-primary " :href="route('profile.pds.personal_information.edit')" target="_blank">
             <i class="fa-solid fa-up-right-from-square " />&nbsp; Update PDS
           </a>
-          <a class="btn btn-link " :href="route('profile.pds.personal_information.edit')" target="_blank">
+          <a class="btn btn-link " :href="route('pds.export')" target="_blank">
             <i class="fa-solid fa-download " />&nbsp; Export PDS
           </a>
           <a class="btn btn-link " :href="route('wes.print')" target="_blank">
@@ -80,7 +78,7 @@
             <span v-else>None required</span>
           </div>
         </div>
-     
+
         <h4>Training</h4>
         <div class="mb-5 text-pre-wrap">
           <span v-if="props.job_posting.plantilla.training">{{ props.job_posting.plantilla.training }} hour/s of
@@ -101,10 +99,8 @@
             </b>
             <div class="d-flex gap-2 mt-3">
               <div>
-                <input
-                  id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
-                  multiple data-input="pds" @input="addDocument"
-                />
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
+                  multiple data-input="pds" @input="addDocument" />
               </div>
               <InputError :message="form.errors['pds']" />
               <InputError :message="form.errors['pds.0']" />
@@ -119,10 +115,8 @@
             </b>
             <div class="d-flex gap-2 mt-3">
               <div>
-                <input
-                  id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
-                  data-input="rating" multiple @input="addDocument"
-                />
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
+                  data-input="rating" multiple @input="addDocument" />
               </div>
               <InputError :message="form.errors['rating']" />
               <InputError :message="form.errors['rating.0']" />
@@ -137,10 +131,8 @@
             </b>
             <div class="d-flex gap-2 mt-3">
               <div>
-                <input
-                  id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
-                  data-input="eligibility" multiple @input="addDocument"
-                />
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
+                  data-input="eligibility" multiple @input="addDocument" />
               </div>
               <InputError :message="form.errors['eligibility']" />
               <InputError :message="form.errors['eligibility.0']" />
@@ -155,10 +147,8 @@
             </b>
             <div class="d-flex gap-2 mt-3">
               <div>
-                <input
-                  id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
-                  multiple data-input="tor" @input="addDocument"
-                />
+                <input id="" type="file" class="form-control" name="" placeholder="" aria-describedby="fileHelpId"
+                  multiple data-input="tor" @input="addDocument" />
               </div>
               <InputError :message="form.errors['tor']" />
               <InputError :message="form.errors['tor.0']" />
@@ -172,10 +162,8 @@
             </b>
             <div class="d-flex gap-2 mt-3">
               <div>
-                <input
-                  id="" type="file" class="form-control" name="" placeholder="" data-input="documents"
-                  aria-describedby="fileHelpId" multiple @input="addDocument"
-                />
+                <input id="" type="file" class="form-control" name="" placeholder="" data-input="documents"
+                  aria-describedby="fileHelpId" multiple @input="addDocument" />
               </div>
               <InputError :message="form.errors['documents']" />
               <InputError :message="form.errors['documents.0']" />
@@ -188,10 +176,8 @@
         <button type="reset" class="btn btn-secondary" :onClick="resetForm">
           Reset
         </button>
-        <button
-          type="button" class="btn btn-success" :disabled="form.processing" data-bs-toggle="modal"
-          data-bs-target="#privacy_notice"
-        >
+        <button type="button" class="btn btn-success" :disabled="form.processing" data-bs-toggle="modal"
+          data-bs-target="#privacy_notice">
           <Spinner :processing="form.processing" />
           Submit
         </button>
@@ -210,8 +196,7 @@
             <p class>
               DEPDev2 employs appropriate technical and organizational measures to ensure data security and
               protect it against unauthorized disclosure or access. DEPDev2 complies with the standards set by the <a
-                href="https://privacy.gov.ph/data-privacy-act/" target="_blank"
-              ><b>Data Privacy Act of 2012</b></a> and
+                href="https://privacy.gov.ph/data-privacy-act/" target="_blank"><b>Data Privacy Act of 2012</b></a> and
               does not share data with any third parties.
             </p>
             <p class>
@@ -219,8 +204,7 @@
               processing, access your data, correct inaccuracies, and request data erasure or blocking. For more
               information on these rights or to make requests concerning your data (review, withdrawal of consent,
               correction, or updates), please contact us at <a
-                href="mailto:neda2ict@gmail.com"
-              ><b>neda2ict@gmail.com</b></a>.
+                href="mailto:neda2ict@gmail.com"><b>neda2ict@gmail.com</b></a>.
             </p>
           </div>
           <div class="d-flex gap-2">
