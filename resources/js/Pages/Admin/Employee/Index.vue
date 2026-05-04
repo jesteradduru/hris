@@ -1,17 +1,15 @@
 <template>
+
   <Head title="Job Vacancies" />
-    
+
   <AdminLayout>
     <BreadCrumbs :crumbs="crumbs" />
     <h3>Accounts</h3>
     <Link :href="route('admin.employees.employee.create')" class="btn btn-primary">Create Account</Link>
     <div class="row mt-3">
       <div class="col-4">
-        <input
-          id=""
-          v-model="filterForm.name"
-          type="text" class="form-control form-control-sm" name="" aria-describedby="helpId" placeholder="Search Name"
-        />
+        <input id="" v-model="filterForm.name" type="text" class="form-control form-control-sm" name=""
+          aria-describedby="helpId" placeholder="Search Name" />
       </div>
       <div class="col-4">
         <div class="d-flex gap-2">
@@ -19,7 +17,7 @@
           <select id="division" v-model="filterForm.division" class="form-select form-select-sm" name="">
             <option value="" selected>All</option>
             <option v-for="division in divisions" :key="division.id" :value="division.id">
-              {{ 
+              {{
                 division.name }}
             </option>
           </select>
@@ -45,7 +43,8 @@
         <tbody>
           <tr v-for="employee in props.employees.data" :key="employee.id" class="">
             <td scope="row">
-              <img v-if="employee.profile_pic" class="profile-pic-nav rounded-circle shadow me-2" :src="employee.profile_pic" alt="" />
+              <img v-if="employee.profile_pic" class="profile-pic-nav rounded-circle shadow me-2"
+                :src="employee.profile_pic" alt="" />
               <img v-else class="profile-pic-nav rounded-circle  me-2" src="../../../Assets/profile.png" alt="" />
             </td>
             <td>{{ employee.username }}</td>
@@ -53,8 +52,19 @@
             <td>{{ employee.position?.position }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">
-              <Link :href="route('admin.employees.employee.edit', {employee: employee.id})" class="btn btn-success btn-sm"><i class="fa-solid fa-pencil" /></Link>
-              <Link :onBefore="confirm" method="delete" as="button" :href="route('admin.employees.employee.destroy', {employee: employee.id})" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash" /></Link>
+              <a :href="route('pds.export', { user_id: employee.id })" target="_blank">
+                <i class="fa-solid fa-file-export" class="btn btn-primary btn-sm" />
+                Export PDS
+              </a>
+              <Link :href="route('admin.employees.employee.edit', { employee: employee.id })"
+                class="btn btn-success btn-sm">
+                <i class="fa-solid fa-pencil" />
+              </Link>
+              <Link :onBefore="confirm" method="delete" as="button"
+                :href="route('admin.employees.employee.destroy', { employee: employee.id })"
+                class="btn btn-danger btn-sm">
+                <i class="fa-solid fa-trash" />
+              </Link>
             </td>
           </tr>
         </tbody>
@@ -63,7 +73,7 @@
     </div>
   </AdminLayout>
 </template>
-    
+
 <script setup>
 import BreadCrumbs from '@/Components/BreadCrumbs.vue'
 import AdminLayout from '@/Pages/Admin/Layout/AdminLayout.vue'
@@ -108,6 +118,5 @@ const crumbs = computed(() => [
     label: 'Accounts',
   },
 ])
-    
+
 </script>
-    
