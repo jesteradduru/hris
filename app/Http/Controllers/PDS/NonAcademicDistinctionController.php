@@ -16,7 +16,7 @@ class NonAcademicDistinctionController extends Controller
     public function index(Request $request)
     {
         return inertia('Profile/PDS/NonAcademicDistinction/Index', [
-            'distinctions' => $request->user()->non_academic_distinction()->with(['files'])->paginate(15)
+            'distinctions' => $request->user()->non_academic_distinction()->with(['files'])->orderBy('date_awarded', 'desc')->paginate(15)
         ]);
     }
 

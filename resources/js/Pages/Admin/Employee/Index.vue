@@ -52,8 +52,8 @@
             <td>{{ employee.position?.position }}</td>
             <td>{{ employee.dtr_user_id }}</td>
             <td class="d-flex gap-2">
-              <a :href="route('pds.export', { user_id: employee.id })" target="_blank">
-                <i class="fa-solid fa-file-export" class="btn btn-primary btn-sm" />
+              <a class="btn btn-primary btn-sm" :href="route('pds.export', { user_id: employee.id })" target="_blank">
+                <i class="fa-solid fa-file-export" />
                 Export PDS
               </a>
               <Link :href="route('admin.employees.employee.edit', { employee: employee.id })"

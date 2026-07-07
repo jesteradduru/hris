@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::prefix('dtr_api')
-    ->name('dtr_api.')
-    ->group(function () {
-        Route::get('/get_dtr_log/{dtr_id}', [DTRController::class, 'get_dtr_log'])->name('get_dtr_log');
-    });
+    // Route::prefix('dtr_api')
+    // ->name('dtr_api.')
+    // ->group(function () {
+    //     Route::get('/get_dtr_log/{dtr_id}', [DTRController::class, 'get_dtr_log'])->name('get_dtr_log');
+    // });
 });

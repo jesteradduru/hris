@@ -2,7 +2,7 @@
 setlocal
 
 :: Change to the directory where your Laravel project is located
-cd /d D:\WEB_PROJECTS\hris
+cd /d C:\\xampp\htdocs\hris
 
 :: Activate the virtual environment if you are using one
 :: Replace "venv" with the name of your virtual environment if needed
