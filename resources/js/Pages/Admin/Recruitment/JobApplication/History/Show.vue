@@ -6,7 +6,7 @@
       <div class="d-flex justify-content-between align-items-center gap-2">
         <h3 class="mt-3">
           {{ result.title }}
-          <span v-if="result.schedule"> {{ moment(result.schedule).format('MMM D, Y') }}</span>
+          <!-- <span v-if="result.schedule"> {{ moment(result.schedule).format('MMM D, Y') }}</span> -->
         </h3>
         <Spinner :processing="loading" :text="'Loading'" />
       </div>

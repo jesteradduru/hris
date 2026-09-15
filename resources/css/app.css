@@ -42,7 +42,7 @@
   margin: 0 10px 0 10px;
 }
 .topbar-control:hover {
-  background-color: #084298;
+  background-color: rgb(7.8, 66, 151.8);
   color: #f8f9fa;
 }
 
@@ -57,7 +57,7 @@
   height: 100vh;
   z-index: 1;
   width: 270px;
-  background: linear-gradient(135deg, #3d8bfd, #084298); /* Gradient from light blue to darker blue */
+  background: linear-gradient(135deg, rgb(61.4, 139, 253.4), rgb(7.8, 66, 151.8)); /* Gradient from light blue to darker blue */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -68,10 +68,10 @@
   padding: 12px 13px 12px 13px;
 }
 .side-nav .nav-link:hover {
-  background-color: #084298;
+  background-color: rgb(7.8, 66, 151.8);
 }
 .side-nav .nav-item .active {
-  background-color: #084298;
+  background-color: rgb(7.8, 66, 151.8);
 }
 
 .side-nav-logo {
@@ -98,28 +98,32 @@
   padding-left: 8px;
 }
 #job_vacancies a:hover {
-  color: #031633;
+  color: rgb(2.6, 22, 50.6);
 }
 #job_vacancies .active {
   border-left: 4px solid #0d6efd;
 }
 #job_vacancies .active a {
-  color: #031633;
+  color: rgb(2.6, 22, 50.6);
   font-size: 1.05em;
 }
 
 .profile-pic {
   width: 150px;
-  height: auto;
+  height: 150px;
+  object-fit: cover;
 }
 
 .pic-md {
-  width: 300px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 
 .profile-pic-nav {
   width: 50px;
-  height: auto;
+  height: 50px;
+  object-fit: cover;
 }
 
 .bg-dashboard {
@@ -208,15 +212,17 @@
 .btnx {
   position: relative;
   overflow: hidden;
+}
+.btnx:not(:last-child) {
+  margin-bottom: 3rem;
+}
+.btnx {
   font-size: 1.1rem;
   border-radius: 4px;
   text-decoration: none;
   border: var(--btn-border);
   color: var(--btn-text-color);
   background: var(--btn-bg);
-}
-.btnx:not(:last-child) {
-  margin-bottom: 3rem;
 }
 .btnx::before {
   content: "";
@@ -246,14 +252,16 @@
   font-size: 1.1rem;
   position: relative;
   overflow: hidden;
+}
+.btn-alt:not(:last-child) {
+  margin-bottom: 3rem;
+}
+.btn-alt {
   border-radius: 4px;
   text-decoration: none;
   border: var(--btn-border);
   color: var(--btn-text-color);
   background: var(--btn-bg);
-}
-.btn-alt:not(:last-child) {
-  margin-bottom: 3rem;
 }
 .btn-alt::before, .btn-alt::after {
   content: "";

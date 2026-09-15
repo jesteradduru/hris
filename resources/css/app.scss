@@ -136,17 +136,20 @@ $theme-colors: (
 
 .profile-pic{
     width: 150px;
-    height: auto;
-
+    height: 150px;
+    object-fit: cover;
 }
 
 .pic-md{
-    width: 300px;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
 }
 
 .profile-pic-nav{
     width: 50px;
-    height: auto;
+    height: 50px;
+    object-fit: cover;
 }
 
 .bg-dashboard{

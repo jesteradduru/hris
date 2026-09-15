@@ -42,7 +42,7 @@
         </Link>
       </li>
       <li class="nav-item">
-        <Link
+        <!-- <Link
           class="nav-link"
           :class="{
             active: route().current(
@@ -52,7 +52,7 @@
           :href="route('admin.dashboard')"
         >
           Service Records
-        </Link>
+        </Link> -->
       </li>
     </ul>
     <div class="mt-3">
