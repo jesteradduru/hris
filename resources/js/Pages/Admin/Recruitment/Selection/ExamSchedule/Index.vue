@@ -1,22 +1,31 @@
 <template>
-  <Head title="Selection" />
+  <Head title="Schedule DEPDev Exam - Selection" />
   <RecruitmentLayout>
-    <b>VACANCIES</b>
-    <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
+    <div class="card shadow-sm border-0 rounded-3 p-3 mb-4 bg-white">
+      <!-- VACANCIES -->
+      <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <div class="d-flex justify-content-between align-items-center gap-2">
-        <h3>
-          Schedule DEPDev Exam
-          <span v-if="examScheduleForm.schedule">on {{ moment(examScheduleForm.schedule).format('MMM D, Y') }}</span>
-        </h3>
-        <Spinner :processing="loading" :text="'Loading'" />
-      </div>
-      <div class="d-flex gap-2">
+      <!-- TITLE BAR -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 bg-light p-3 rounded-3 border">
+        <div class="d-flex align-items-center gap-3">
+          <div>
+            <div class="d-flex align-items-center gap-2">
+              <h4 class="fw-bold mb-0 text-dark">
+                Schedule DEPDev Exam
+                <span v-if="examScheduleForm.schedule" class="text-primary fs-5 ms-1">
+                  (on {{ moment(examScheduleForm.schedule).format('MMM D, YYYY') }})
+                </span>
+              </h4>
+              <span class="badge bg-primary text-white rounded-pill px-3 py-1">Schedule Setup</span>
+              <Spinner :processing="loading" :text="'Loading'" />
+            </div>
+            <small class="text-muted">Set date and time window for the upcoming DEPDev entrance examination</small>
+          </div>
+        </div>
         <div>
           <Link 
             as="button"
-            class="btn btn-primary"
+            class="btn btn-primary rounded-pill px-4 shadow-sm fw-semibold d-flex align-items-center gap-2"
             :onBefore="confirm"
             method="put"
             :href="route('admin.recruitment.application_result.publish', {
@@ -24,57 +33,67 @@
             })"
             :disabled="!examScheduleForm.wasSuccessful"
           >
-            PUBLISH
+            <i class="fa-solid fa-paper-plane" />
+            <span>PUBLISH SCHEDULE</span>
           </Link>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="row mb-3">
-          <div class="col-4">
-            <div class="mb-3">
-              <label for="" class="form-label">DATE</label>
-              <input
-                id=""
-                v-model="examScheduleForm.schedule" type="date" class="form-control" name="" aria-describedby="helpId"
-                placeholder=""
-              />
-              <InputError :message="examScheduleForm.errors.schedule" />
-            </div>
+
+      <!-- SCHEDULE FORM CARD -->
+      <div class="p-3 bg-light rounded-3 border mb-4">
+        <h6 class="fw-bold text-dark mb-3 text-uppercase extra-small d-flex align-items-center gap-2">
+          <i class="fa-solid fa-clock text-primary" />Exam Date & Time Controls
+        </h6>
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label class="form-label fw-semibold extra-small text-muted text-uppercase mb-1">Date</label>
+            <input
+              v-model="examScheduleForm.schedule" 
+              type="date" 
+              class="form-control form-control-sm rounded-2 shadow-none" 
+            />
+            <InputError :message="examScheduleForm.errors.schedule" />
           </div>
-          <div class="col-4">
-            <div class="mb-3">
-              <label for="" class="form-label">FROM</label>
-              <input
-                id=""
-                v-model="examScheduleForm.start_time" type="time" class="form-control" name="" aria-describedby="helpId"
-                placeholder=""
-              />
-              <InputError :message="examScheduleForm.errors.start_time" />
-            </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold extra-small text-muted text-uppercase mb-1">Start Time</label>
+            <input
+              v-model="examScheduleForm.start_time" 
+              type="time" 
+              class="form-control form-control-sm rounded-2 shadow-none" 
+            />
+            <InputError :message="examScheduleForm.errors.start_time" />
           </div>
-          <div class="col-4">
-            <div class="mb-3">
-              <label for="" class="form-label">TO</label>
-              <input
-                id=""
-                v-model="examScheduleForm.end_time" type="time" class="form-control" name="" aria-describedby="helpId"
-                placeholder=""
-              />
-              <InputError :message="examScheduleForm.errors.end_time" />
-            </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold extra-small text-muted text-uppercase mb-1">End Time</label>
+            <input
+              v-model="examScheduleForm.end_time" 
+              type="time" 
+              class="form-control form-control-sm rounded-2 shadow-none" 
+            />
+            <InputError :message="examScheduleForm.errors.end_time" />
           </div>
-          <div class="col-3">
-            <button class="btn btn-primary btn-sm" @click="setSchedule">Set Schedule</button>
+          <div class="col-md-3">
+            <button class="btn btn-primary btn-sm rounded-pill px-4 w-100 shadow-sm fw-semibold" @click="setSchedule">
+              <i class="fa-solid fa-calendar-check me-1" />Set Schedule
+            </button>
           </div>
         </div>
       </div>
-      <div class="col-3">
-        <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
-      </div>
-      <div class="col-9">
-        <ApplicantDetails v-if="props.applicant_details" :applicant="props.applicant_details" />
+
+      <!-- APPLICANT DETAILS GRID -->
+      <div class="row g-3">
+        <div class="col-lg-3 col-md-4">
+          <ApplicantsList :job_applications="props.qualified_applicants" :posting="posting" :applicant_details="applicant_details" />
+        </div>
+        <div class="col-lg-9 col-md-8">
+          <div v-if="props.applicant_details" class="card border-0 shadow-sm rounded-3 p-3" style="height: 75vh; overflow-y: auto;">
+            <ApplicantDetails :applicant="props.applicant_details" />
+          </div>
+          <div v-else class="text-center py-5 text-muted card border-0 shadow-sm rounded-3 p-5">
+            <i class="fa-solid fa-user-slash display-6 mb-2" />
+            <p>Please select an applicant from the left list to view details.</p>
+          </div>
+        </div>
       </div>
     </div>
   </RecruitmentLayout>

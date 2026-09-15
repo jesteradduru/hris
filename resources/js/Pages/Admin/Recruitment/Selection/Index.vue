@@ -1,26 +1,17 @@
 <template>
-  <Head title="Selection" />
+  <Head title="Selection and Placement" />
   <RecruitmentLayout>
-    <b>VACANCIES</b>
-    <JobVacancies :job_vacancies="job_vacancies" />
-    <!-- <div class="row">
-      <div class="col-3">
-        <b>APPLICANTS</b>
-        <ol v-if="props.job_applications.length !== 0">
-          <li v-for="(item) in props.job_applications" :key="item.id">
-            <Link :class="{'text-dark': applicant?.id}" :href="route('admin.recruitment.selection.index', {job_posting: posting_id, applicant: item.user.id})">
-              {{ item.user.name }}
-            </Link>
-          </li>
-        </ol>
-        <small v-else class="text-muted d-block">
-          No Applications
-        </small>
+    <div class="card shadow-sm border-0 rounded-3 p-4 mb-4 bg-white">
+      <JobVacancies :job_vacancies="job_vacancies" :posting="posting" />
+      
+      <div v-if="!posting" class="text-center py-5 bg-light rounded-3 border border-dashed my-3">
+        <div class="mb-3">
+          <i class="fa-solid fa-arrow-pointer text-primary display-5" />
+        </div>
+        <h5 class="fw-bold text-dark mb-1">Select a Job Vacancy Above</h5>
+        <p class="text-muted small mb-0">Choose an active job vacancy from the list above to view applicant screenings and evaluations.</p>
       </div>
-      <div class="col-9">
-        <ApplicantDetails v-if="applicant_details" :applicant="props.applicant_details" />
-      </div>
-    </div> -->
+    </div>
   </RecruitmentLayout>
 </template>
 

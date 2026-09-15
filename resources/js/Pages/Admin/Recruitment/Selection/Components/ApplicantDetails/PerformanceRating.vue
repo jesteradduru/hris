@@ -1,100 +1,138 @@
 <template>
-  <Box id="performance" class="mb-3">
-    <template #header>Performance Rating</template>
+  <Box id="performance" class="mb-4">
+    <template #header>
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-chart-line text-primary" />
+        <span>Performance Rating (IPCR / PES)</span>
+      </div>
+    </template>
+    
     <div v-if="isEmployee">
-      <div
-        class="table-responsive"
-      >
-        <table
-          class="table table-sm table-bordered"
-        >
-          <thead>
+      <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0 bg-white border rounded-2 overflow-hidden">
+          <thead class="bg-light text-uppercase extra-small text-muted border-bottom">
             <tr>
-              <th v-if="withControls" scope="col" />
-              <th scope="col">Semester</th>
-              <th scope="col">Rating</th>
-              <th v-if="applicant.spms.length > 0">Equivalent Rating (70)</th>
+              <th v-if="withControls" class="py-2 px-2 text-center" style="width: 40px;">Select</th>
+              <th class="py-2 px-3">Semester & Year</th>
+              <th class="py-2 px-3 text-center">Rating</th>
+              <th v-if="applicant.spms?.length > 0" class="py-2 px-3 text-center">Equivalent Rating (70 Points Max)</th>
             </tr>
           </thead>
-          <tbody v-if="applicant.spms.length > 0">
-            <tr v-for="(ipcr, index) in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id" class="">
-              <td v-if="withControls">
-                <input type="checkbox" :checked="checkIfIncluded(ipcr.id, 'App\\Models\\SpmsForm')" :data-id="ipcr.id" @input="includeIPCR" />
+          <tbody v-if="applicant.spms && applicant.spms.length > 0" class="small text-uppercase">
+            <tr v-for="(ipcr, index) in applicant.spms" :id="`ipcr${ipcr.id}`" :key="ipcr.id">
+              <td v-if="withControls" class="text-center">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input border-secondary"
+                  :checked="checkIfIncluded(ipcr.id, 'App\\Models\\SpmsForm')" 
+                  :data-id="ipcr.id" 
+                  @input="includeIPCR" 
+                />
               </td>
-              <td scope="row">
-                <a :href="ipcr.src" target="_blank">{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }} <i class="fa-solid fa-up-right-from-square" /></a>
+              <td class="px-3 fw-semibold">
+                <a :href="ipcr.src" target="_blank" class="text-primary text-decoration-none d-inline-flex align-items-center gap-1 hover-underline">
+                  <span>{{ `${ipcr.semester} SEMESTER ${ipcr.year}` }}</span>
+                  <i class="fa-solid fa-up-right-from-square extra-small" />
+                </a>
               </td>
-              <td>{{ ipcr.rating }}</td>
-              <td v-if="index == 0 && applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td class="px-3 text-center fw-bold text-dark">{{ ipcr.rating }}</td>
+              <td v-if="index == 0 && applicant.performanceComputation" rowspan="2" class="px-3 text-center align-middle bg-light-subtle">
+                <span class="badge bg-primary fs-6 px-3 py-2 shadow-sm rounded-pill">
+                  {{ applicant.performanceComputation.equivalent }}
+                </span>
+              </td>
             </tr>
           </tbody>
-          <tbody v-else>
+          <tbody v-else class="small text-uppercase">
             <tr>
-              <td scope="row" />
-              <td> - </td>
-              <td>{{ applicant.performanceComputation.equivalent }}</td>
+              <td v-if="withControls" />
+              <td class="px-3 text-muted italic">No SPMS IPCR rating records</td>
+              <td class="px-3 text-center">-</td>
+              <td class="px-3 text-center fw-bold text-primary">{{ applicant.performanceComputation?.equivalent || 'N/A' }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    
     <div v-else>
-      <button v-if="!applicant.pes_rating" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#addSpmsRating">Add Rating</button>
-      <div
-        v-else
-        class="table-responsive"
+      <button 
+        v-if="!applicant.pes_rating" 
+        class="btn btn-success btn-sm rounded-pill px-3 shadow-sm d-flex align-items-center gap-2 mb-2" 
+        data-bs-toggle="modal" 
+        data-bs-target="#addSpmsRating"
       >
-        <table
-          class="table table-sm table-bordered"
-        >
-          <thead>
+        <i class="fa-solid fa-plus" />
+        <span>Add PES Rating</span>
+      </button>
+
+      <div v-else class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0 bg-white border rounded-2 overflow-hidden">
+          <thead class="bg-light text-uppercase extra-small text-muted border-bottom">
             <tr>
-              <th scope="col">Semester</th>
-              <th scope="col">Rating</th>
-              <th v-if="applicant.pes_rating">Equivalent Rating (70)</th>
+              <th class="py-2 px-3">Semester</th>
+              <th class="py-2 px-3 text-center">Rating</th>
+              <th v-if="applicant.pes_rating" class="py-2 px-3 text-center">Equivalent Rating (70 Points Max)</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="small text-uppercase">
             <tr>
-              <td>FIRST SEMESTER</td>
-              <td>{{ applicant.pes_rating.first_rating }}</td>
-              <td v-if="applicant.performanceComputation" rowspan="2">{{ applicant.performanceComputation.equivalent }}</td>
+              <td class="px-3 fw-semibold text-dark">First Semester</td>
+              <td class="px-3 text-center fw-bold text-dark">{{ applicant.pes_rating.first_rating }}</td>
+              <td v-if="applicant.performanceComputation" rowspan="2" class="px-3 text-center align-middle bg-light-subtle">
+                <span class="badge bg-primary fs-6 px-3 py-2 shadow-sm rounded-pill">
+                  {{ applicant.performanceComputation.equivalent }}
+                </span>
+              </td>
             </tr>
             <tr>
-              <td>SECOND SEMESTER</td>
-              <td>{{ applicant.pes_rating.second_rating }}</td>
+              <td class="px-3 fw-semibold text-dark">Second Semester</td>
+              <td class="px-3 text-center fw-bold text-dark">{{ applicant.pes_rating.second_rating }}</td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
   </Box>
+
+  <!-- Modal for PES Rating -->
   <Modal id="addSpmsRating">
     <template #header>
-      <h5>Add PES Rating</h5>
+      <div class="d-flex align-items-center gap-2 text-primary fw-bold">
+        <i class="fa-solid fa-square-plus" />
+        <span>Add PES Rating</span>
+      </div>
     </template>
     <template #body>
       <div class="mb-3">
-        <label for="" class="form-label">FIRST</label>
+        <label class="form-label fw-semibold extra-small text-muted text-uppercase">First Semester Rating (1 - 5)</label>
         <input
-          id=""
-          v-model="form.first_rating" type="number" class="form-control" min="1" max="5" name=""
-          aria-describedby="helpId"
-          placeholder=""
+          v-model="form.first_rating" 
+          type="number" 
+          class="form-control rounded-3" 
+          min="1" 
+          max="5" 
+          placeholder="e.g. 4.5"
         />
         <InputError :message="form.errors.first_rating" />
       </div>
       <div class="mb-3">
-        <label for="" class="form-label">SECOND</label>
+        <label class="form-label fw-semibold extra-small text-muted text-uppercase">Second Semester Rating (1 - 5)</label>
         <input
-          id=""
-          v-model="form.second_rating" type="number" class="form-control" min="1" max="5" name=""
-          aria-describedby="helpId"
-          placeholder=""
+          v-model="form.second_rating" 
+          type="number" 
+          class="form-control rounded-3" 
+          min="1" 
+          max="5" 
+          placeholder="e.g. 4.8"
         />
         <InputError :message="form.errors.second_rating" />
       </div>
-      <button class="btn btn-primary" :disabled="form.processing" @click="onSubmit">Submit</button>
+      <div class="d-flex justify-content-end gap-2 pt-2">
+        <button class="btn btn-primary rounded-pill px-4" :disabled="form.processing" @click="onSubmit">
+          <i class="fa-solid fa-save me-1" />Submit Rating
+        </button>
+      </div>
     </template>
   </Modal>
 </template>

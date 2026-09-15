@@ -1,30 +1,42 @@
 <template>
-  <Box v-if="educ || college_graduate_studies.length > 0" id="educ" class="mb-3">
-    <template #header>Educational BackGround</template>
-    <div v-if="plantilla" class="alert alert-primary">
-      <div>
-        <b>Educational Requirement</b>
+  <Box v-if="educ || college_graduate_studies?.length > 0" id="educ" class="mb-4">
+    <template #header>
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-graduation-cap text-primary" />
+        <span>Educational Background</span>
       </div>
-      {{ plantilla.education }}
+    </template>
+    
+    <!-- Plantilla Requirement Alert -->
+    <div v-if="plantilla" class="alert alert-primary bg-primary-subtle border-primary-subtle text-primary rounded-3 p-3 mb-3 d-flex align-items-start gap-2">
+      <i class="fa-solid fa-circle-info mt-1" />
+      <div>
+        <small class="text-uppercase fw-bold extra-small d-block text-primary">Educational Requirement</small>
+        <span class="fw-semibold text-dark">{{ plantilla.education || 'None Required' }}</span>
+      </div>
     </div>
-    <div v-if="educationComputation" class="table-responsive">
-      <table class="table table-bordered table-sm">
-        <thead>
+
+    <!-- Education Computation Summary -->
+    <div v-if="educationComputation" class="table-responsive mb-3">
+      <table class="table table-sm table-bordered align-middle mb-0 bg-white rounded-2 overflow-hidden">
+        <thead class="bg-light text-uppercase extra-small text-muted">
           <tr>
-            <th>Equivalent Score</th>
-            <th>Education(10%)</th>
+            <th class="py-2 px-3">Equivalent Score</th>
+            <th class="py-2 px-3">Education Weight (10%)</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>{{ educationComputation.equivalent }}</td>
-            <td>{{ educationComputation.education }}</td>
+            <td class="px-3 fw-bold text-primary">{{ educationComputation.equivalent }}</td>
+            <td class="px-3 fw-bold text-success">{{ educationComputation.education }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div v-if="college_graduate_studies.length > 0">
-      <div class="row">
+
+    <!-- Courses List -->
+    <div v-if="college_graduate_studies?.length > 0">
+      <div class="row g-3">
         <EducationBox :courses="college_graduate_studies" />
       </div>
     </div>

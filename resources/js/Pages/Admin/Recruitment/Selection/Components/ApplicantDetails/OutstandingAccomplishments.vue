@@ -1,76 +1,150 @@
 <template>
-  <Box id="out-accomp" class="mb-3">
-    <template #header>Outstanding Accomplishments</template>
-    <div v-if="applicant.awardsComputation && withControls" class="table-responsive">
-      <table class="table table-sm table-bordered">
-        <thead>
+  <Box id="out-accomp" class="mb-4">
+    <template #header>
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa-solid fa-award text-primary" />
+        <span>Outstanding Accomplishments & Awards</span>
+      </div>
+    </template>
+
+    <!-- Awards Computation Rating -->
+    <div v-if="applicant.awardsComputation && withControls" class="table-responsive mb-3">
+      <table class="table table-sm table-bordered align-middle mb-0 bg-white rounded-2 overflow-hidden">
+        <thead class="bg-light text-uppercase extra-small text-muted">
           <tr>
-            <th scope="col">Equivalent Rating</th>
+            <th class="py-2 px-3">Equivalent Awards Rating</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td scope="col">{{ applicant.awardsComputation }}</td>
+            <td class="px-3 fw-bold text-primary">{{ applicant.awardsComputation }}</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="mb-2">
-      <b>SCHOLARSHIP/ACADEMIC HONORS RECEIVED</b>
+
+    <!-- Academic Honors -->
+    <div class="mb-4">
+      <div class="d-flex align-items-center gap-2 mb-2 text-uppercase text-muted fw-bold extra-small">
+        <i class="fa-solid fa-graduation-cap text-primary" />
+        <span>Scholarship / Academic Honors Received</span>
+      </div>
       <div class="table-responsive">
-        <table class="table table-sm table-bordered">
-          <thead>
+        <table class="table table-sm table-hover align-middle mb-0 bg-white border rounded-2 overflow-hidden">
+          <thead class="bg-light text-uppercase extra-small text-muted border-bottom">
             <tr>
-              <th v-if="withControls" scope="col" />
-              <th scope="col">Awards</th>
-              <th scope="col">Category</th>
-              <th scope="col">File</th>
+              <th v-if="withControls" class="py-2 px-2 text-center" style="width: 40px;">Select</th>
+              <th class="py-2 px-3">Award Title</th>
+              <th class="py-2 px-2">Category</th>
+              <th class="py-2 px-3">Attachment</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(award, index) in applicant.academic_distinction" :id="`award${award.id}`" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')}">
-              <td v-if="withControls">
-                <input v-if="!award.used_at" type="checkbox" :checked="checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')" :data-id="award.id" data-type="ACAD" @input="includeAward" />
+          <tbody v-if="applicant.academic_distinction && applicant.academic_distinction.length > 0" class="small text-uppercase">
+            <tr 
+              v-for="award in applicant.academic_distinction" 
+              :id="`award${award.id}`" 
+              :key="award.id" 
+              :class="{'table-success bg-success-subtle': checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')}"
+            >
+              <td v-if="withControls" class="text-center">
+                <input 
+                  v-if="!award.used_at" 
+                  type="checkbox" 
+                  class="form-check-input border-secondary"
+                  :checked="checkIfIncluded(award.id, 'App\\Models\\AcademicDistinction')" 
+                  :data-id="award.id" 
+                  data-type="ACAD" 
+                  @input="includeAward" 
+                />
               </td>
-              <td scope="row">{{ award.title }}</td>
-              <td>{{ award.category }}</td>
-              <td><a :href="award.files[0]?.src" target="_blank">{{ award.files[0]?.filename }}</a></td>
+              <td class="px-3 fw-semibold text-dark">{{ award.title }}</td>
+              <td class="px-2"><span class="badge bg-light text-secondary border extra-small">{{ award.category }}</span></td>
+              <td class="px-3">
+                <a 
+                  v-if="award.files && award.files[0]" 
+                  :href="award.files[0]?.src" 
+                  target="_blank" 
+                  class="badge bg-white text-primary border text-decoration-none hover-shadow-sm extra-small d-inline-flex align-items-center gap-1 p-1"
+                >
+                  <i class="fa-solid fa-paperclip" />
+                  <span class="text-truncate" style="max-width: 120px;">{{ award.files[0]?.filename }}</span>
+                </a>
+                <span v-else class="text-muted extra-small italic">None</span>
+              </td>
             </tr>
           </tbody>
         </table>
+        <div v-if="!applicant.academic_distinction || applicant.academic_distinction.length === 0" class="text-center py-3 text-muted extra-small italic border rounded-bottom">
+          No academic honors recorded
+        </div>
       </div>
     </div>
-    <div class="mb-2">
-      <b>NON-ACADEMIC DISTINCTIONS / RECOGNITION / AWARD</b>
+
+    <!-- Non-Academic Distinctions -->
+    <div>
+      <div class="d-flex align-items-center gap-2 mb-2 text-uppercase text-muted fw-bold extra-small">
+        <i class="fa-solid fa-trophy text-primary" />
+        <span>Non-Academic Distinctions / Recognition / Awards</span>
+      </div>
       <div class="table-responsive">
-        <table class="table table-sm table-bordered">
-          <thead>
+        <table class="table table-sm table-hover align-middle mb-0 bg-white border rounded-2 overflow-hidden">
+          <thead class="bg-light text-uppercase extra-small text-muted border-bottom">
             <tr>
-              <th v-if="withControls" scope="col" />
-              <th scope="col">Awards</th>
-              <th scope="col">Date awarded</th>
-              <th scope="col">File</th>
+              <th v-if="withControls" class="py-2 px-3">Evaluation Control & Category</th>
+              <th class="py-2 px-3">Award Title</th>
+              <th class="py-2 px-2">Date Awarded</th>
+              <th class="py-2 px-3">Attachment</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="(award, index) in applicant.non_academic_distinction" :key="award.id" :class="{'table-success': checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')}">
-              <td v-if="withControls" class="d-flex gap-2">
-                <input v-if="!award.used_at" type="checkbox" :data-id="award.id" :checked="checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')" @input="includeAward" />
-                <div>
-                  <select id="" name="" :data-id="award.id" :value="award.category" @change="onChangeAwardCategory">
+          <tbody v-if="applicant.non_academic_distinction && applicant.non_academic_distinction.length > 0" class="small text-uppercase">
+            <tr 
+              v-for="award in applicant.non_academic_distinction" 
+              :key="award.id" 
+              :class="{'table-success bg-success-subtle': checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')}"
+            >
+              <td v-if="withControls" class="px-3">
+                <div class="d-flex align-items-center gap-2">
+                  <input 
+                    v-if="!award.used_at" 
+                    type="checkbox" 
+                    class="form-check-input border-secondary flex-shrink-0"
+                    :data-id="award.id" 
+                    :checked="checkIfIncluded(award.id, 'App\\Models\\NonAcademicDistinction')" 
+                    @input="includeAward" 
+                  />
+                  <select 
+                    class="form-select form-select-sm extra-small py-0 border-light-subtle" 
+                    :data-id="award.id" 
+                    :value="award.category" 
+                    @change="onChangeAwardCategory"
+                  >
                     <option value="MAJOR_NATIONAL">Major Award (National)</option>
                     <option value="MAJOR_LOCAL">Major Award (Local)</option>
-                    <option value="MINOR">Minor Award </option>
-                    <option value="SPECIAL">Special Award </option>
+                    <option value="MINOR">Minor Award</option>
+                    <option value="SPECIAL">Special Award</option>
                   </select>
                 </div>
               </td>
-              <td scope="row">{{ award.title }}</td>
-              <td scope="row">{{ moment(award.date_awarded).format('MMMM Do, YYYY') }}</td>
-              <td><a :href="award.files[0]?.src" target="_blank">{{ award.files[0]?.filename }}</a></td>
+              <td class="px-3 fw-semibold text-dark">{{ award.title }}</td>
+              <td class="px-2 text-muted">{{ moment(award.date_awarded).format('MMM D, YYYY') }}</td>
+              <td class="px-3">
+                <a 
+                  v-if="award.files && award.files[0]" 
+                  :href="award.files[0]?.src" 
+                  target="_blank" 
+                  class="badge bg-white text-primary border text-decoration-none hover-shadow-sm extra-small d-inline-flex align-items-center gap-1 p-1"
+                >
+                  <i class="fa-solid fa-paperclip" />
+                  <span class="text-truncate" style="max-width: 120px;">{{ award.files[0]?.filename }}</span>
+                </a>
+                <span v-else class="text-muted extra-small italic">None</span>
+              </td>
             </tr>
           </tbody>
         </table>
+        <div v-if="!applicant.non_academic_distinction || applicant.non_academic_distinction.length === 0" class="text-center py-3 text-muted extra-small italic border rounded-bottom">
+          No non-academic distinctions recorded
+        </div>
       </div>
     </div>
   </Box>

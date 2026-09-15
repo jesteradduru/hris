@@ -26,34 +26,27 @@
     <Eligibility :eligs="eligs" :plantilla="plantilla" />
 
     <Box>
-      <!-- special skills and hobbies -->
-      <!-- <div class="mb-3">
-        <h5 class="text-primary">Special Skills and Hobbies</h5>
-        <div v-if="skills.length > 0" class="d-flex gap-2">
-          <span v-for="skill in skills.special_skills_hobbies.split(',')" :key="skill" class="badge bg-success">{{ skill }}</span>
+      <template #header>
+        <div class="d-flex align-items-center gap-2">
+          <i class="fa-solid fa-folder-open text-primary" />
+          <span>Attached Application Documents</span>
         </div>
-        <div v-else class="text-muted text-center text-sm">
-          No Record
-        </div>
-      </div> -->
-
-    
-
-      <!-- documents -->
-      <div class="mb-3">
-        <h5 class="text-primary">Attached Documents</h5>
-        <div v-if="applicant.job_application" class="d-flex gap-2">
-          <a 
-            v-for="doc in applicant.job_application[0].document"
-            :key="doc.id" 
-            :href="doc.src"
-            target="_blank"
-          ><i class="fa fa-paperclip" /> {{ doc.filename }}</a>
-        <!-- <a v-for="doc in applicant.job_application[0].document" :key="doc.id" target="_blank" :href="doc.src">{{ doc.filename }}</a> -->
-        </div>
-        <div v-else class="text-muted text-center text-sm">
-          No Record
-        </div>
+      </template>
+      <div v-if="applicant.job_application && applicant.job_application[0]?.document?.length > 0" class="d-flex flex-wrap gap-2">
+        <a 
+          v-for="doc in applicant.job_application[0].document"
+          :key="doc.id" 
+          :href="doc.src"
+          target="_blank"
+          class="btn btn-outline-primary btn-sm rounded-pill px-3 py-1 shadow-sm d-inline-flex align-items-center gap-2 text-decoration-none"
+        >
+          <i class="fa-solid fa-file-pdf" />
+          <span>{{ doc.filename }}</span>
+          <i class="fa-solid fa-up-right-from-square extra-small" />
+        </a>
+      </div>
+      <div v-else class="text-muted text-center py-3 extra-small italic">
+        <i class="fa-solid fa-folder-minus me-1" />No documents attached
       </div>
     </Box>
     <!-- Modal -->
