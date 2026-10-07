@@ -1,77 +1,64 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout>
-      <form @submit.prevent="save">
-        <div class="row">
-          <div class="form-group col-12">
-            <div class="mb-3">
-              <label for="" class="form-label">SPECIAL SKILLS and HOBBIES</label>
-              <ListBadge v-if="skills" :lists="skills" class="mb-3" />
-              <textarea
-                id=""
-                v-model="form.special_skills_hobbies" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.special_skills_hobbies" /> 
-              <p class="form-text text-muted">
-                Separate each item with comma(,)
-              </p>
-            </div>
-          </div>
-
-
-          <!-- <div class="form-group col-12">
-            <div class="mb-3">
-              <label for="" class="form-label">NON-ACADEMIC DISTINCTIONS / RECOGNITION</label>
-              <ListBadge v-if="none_academic_distinctions" :lists="none_academic_distinctions" class="mb-3" />
-              <textarea
-                id=""
-                v-model="form.none_academic_distinctions" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <p class="form-text text-muted">
-                Separate each item with comma(,)
-              </p>
-              <InputError :message="form.errors.none_academic_distinctions" />
-            </div>
-          </div> -->
-
-
-          <div class="form-group col-12">
-            <div class="mb-3">
-              <label for="" class="form-label">MEMBERSHIP IN ASSOCIATION/ORGANIZATION </label>
-              <ListBadge v-if="membership_in_assoc_org" :lists="membership_in_assoc_org" class="mb-3" />
-              <textarea
-                id=""
-                v-model="form.membership_in_assoc_org" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <p class="form-text text-muted">
-                Separate each item with comma(,)
-              </p>
-              <InputError :message="form.errors.membership_in_assoc_org" />
-            </div>
-          </div>
-
-
-
-          <div class="col-12">
-            <div class="d-flex gap-2">
-              <div class="d-flex align-items-center">
-                <b v-if="form.isDirty" class="text-danger form-status">Not Saved</b>
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center">
+              <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                <i class="fa-solid fa-pen-to-square text-primary"></i>
               </div>
-              <Link :href="route('profile.pds.other_information.index')" class="btn btn-secondary" :disabled="form.processing" type="submit">  Back</Link>
-              <button
-                type="submit" :disabled="!form.isDirty && form.wasSuccessful"
-                class="btn btn-success"
-              >
-                <Spinner :processing="form.processing" /> {{ !form.isDirty &&
-                  form.wasSuccessful ? 'Updated' : 'Update' }}
-              </button>
+              <h5 class="mb-0 fw-bold text-dark">Edit Special Skills and Memberships</h5>
+            </div>
+            <div class="card-body p-4">
+              <form @submit.prevent="save">
+                <div class="row g-4">
+                  <div class="col-12">
+                    <label class="form-label fw-bold text-secondary small text-uppercase">Special Skills and Hobbies</label>
+                    <ListBadge v-if="skills && skills.length" :lists="skills" class="mb-3 d-flex flex-wrap gap-1" />
+                    <textarea
+                      v-model="form.special_skills_hobbies" class="form-control" rows="3"
+                      placeholder="e.g. Graphic Design, Swimming, Coding"
+                    ></textarea>
+                    <div class="form-text text-muted small mt-2">
+                      <i class="fa-solid fa-circle-info me-1"></i>Separate each item with a comma (,)
+                    </div>
+                    <InputError :message="form.errors.special_skills_hobbies" class="mt-1" /> 
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label fw-bold text-secondary small text-uppercase">Membership in Association/Organization</label>
+                    <ListBadge v-if="membership_in_assoc_org && membership_in_assoc_org.length" :lists="membership_in_assoc_org" class="mb-3 d-flex flex-wrap gap-1" />
+                    <textarea
+                      v-model="form.membership_in_assoc_org" class="form-control" rows="3"
+                      placeholder="e.g. Red Cross, Philippine Institute of Civil Engineers"
+                    ></textarea>
+                    <div class="form-text text-muted small mt-2">
+                      <i class="fa-solid fa-circle-info me-1"></i>Separate each item with a comma (,)
+                    </div>
+                    <InputError :message="form.errors.membership_in_assoc_org" class="mt-1" />
+                  </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <span v-if="form.isDirty" class="text-warning small fw-medium"><i class="fa-solid fa-triangle-exclamation me-1"></i>Unsaved changes</span>
+                  <span v-else></span>
+                  
+                  <div class="d-flex gap-2">
+                    <Link :href="route('profile.pds.other_information.index')" class="btn btn-light rounded-pill px-4 fw-medium text-secondary" :disabled="form.processing">Cancel</Link>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm" :disabled="form.processing">
+                      <Spinner :processing="form.processing" class="me-2" v-if="form.processing" /> 
+                      <i class="fa-solid fa-save me-2" v-else></i>Save Changes
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </PDSLayout>
   </AuthenticatedLayout>
 </template>

@@ -52,47 +52,47 @@ class EducationalBackgroundCollegeGraduateStudy extends Model
 
         if(count($two_year) == 1){
             $courses .= self::join_educ($two_year);
-            $education = 70;
+            $education = 50;
         }
 
         if(count($bachelor) == 1){
             $courses .= self::join_educ($bachelor);
-            $education = 80;
+            $education = 60;
         }else if(count($bachelor) > 1){
             $courses .= self::join_educ($bachelor);
-            $education = 81.5;
+            $education = 65;
         }
 
         if(count($earned_masteral) > 0){
             $courses .= self::join_educ($earned_masteral);
             foreach($earned_masteral as $earned){
                 if($earned->highest_lvl_units_earned >= 18){
-                    $education = 82.5;
+                    $education = 70;
                 }
             }
         }
         
         if(count($diploma) == 1){
             $courses .= self::join_educ($diploma);
-            $education = 83.5;
+            $education = 75;
         }
 
         if(count($masteral) == 1 || count($diploma) >= 2){
             $courses .= self::join_educ($masteral);
             $courses .= self::join_educ($diploma);
-            $education = 85;
+            $education = 80;
         }
 
         if(count($masteral) >= 2){
             $courses .= self::join_educ($masteral);
-            $education = 90;
+            $education = 85;
         }
 
         if(count($earned_doctoral) > 0){
             $courses .= self::join_educ($earned_doctoral);
             foreach($earned_doctoral as $earned){
                 if($earned->highest_lvl_units_earned >= 18){
-                    $education = 92.5;
+                    $education = 90;
                 }
             }
         }

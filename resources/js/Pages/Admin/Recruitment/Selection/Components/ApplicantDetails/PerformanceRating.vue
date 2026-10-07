@@ -15,7 +15,7 @@
               <th v-if="withControls" class="py-2 px-2 text-center" style="width: 40px;">Select</th>
               <th class="py-2 px-3">Semester & Year</th>
               <th class="py-2 px-3 text-center">Rating</th>
-              <th v-if="applicant.spms?.length > 0" class="py-2 px-3 text-center">Equivalent Rating (70 Points Max)</th>
+              <th class="py-2 px-3 text-center">Equivalent Rating (60 Points Max)</th>
             </tr>
           </thead>
           <tbody v-if="applicant.spms && applicant.spms.length > 0" class="small text-uppercase">
@@ -72,7 +72,7 @@
             <tr>
               <th class="py-2 px-3">Semester</th>
               <th class="py-2 px-3 text-center">Rating</th>
-              <th v-if="applicant.pes_rating" class="py-2 px-3 text-center">Equivalent Rating (70 Points Max)</th>
+              <th class="py-2 px-3 text-center">Equivalent Rating (60 Points Max)</th>
             </tr>
           </thead>
           <tbody class="small text-uppercase">

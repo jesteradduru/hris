@@ -1,206 +1,137 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout>
-      <form @submit.prevent="saveWork">
-        <div class="row">
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">FROM</label>
-              <input
-                id=""
-                v-model="workForm.inclusive_date_from" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.inclusive_date_from" />
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">TO</label>
-              <div class="form-check">
-                <input id="training" v-model="workForm.to_present" class="form-check-input" type="checkbox" value="" />
-                <label class="form-check-label" for="training"> Present </label>
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center">
+              <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                <i class="fa-solid fa-pen-to-square text-primary"></i>
               </div>
-              <input
-                id=""
-                v-model="workForm.inclusive_date_to"
-                :disabled="workForm.to_present" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.inclusive_date_to" />
+              <h5 class="mb-0 fw-bold text-dark">Edit Work Experience</h5>
             </div>
-          </div>
+            <div class="card-body p-4">
+              <form @submit.prevent="saveWork">
+                <div class="row g-3">
+                  <!-- Dates -->
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">From</label>
+                    <input v-model="workForm.inclusive_date_from" type="date" class="form-control" />
+                    <InputError :message="workForm.errors.inclusive_date_from" class="mt-1" />
+                  </div>
 
+                  <div class="col-12 col-md-6">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="form-label mb-0 fw-medium text-secondary small text-uppercase">To</label>
+                      <div class="form-check form-switch mb-0">
+                        <input id="training" v-model="workForm.to_present" class="form-check-input" type="checkbox" role="switch" />
+                        <label class="form-check-label small text-muted" for="training">Present</label>
+                      </div>
+                    </div>
+                    <input v-model="workForm.inclusive_date_to" :disabled="workForm.to_present" type="date" class="form-control" />
+                    <InputError :message="workForm.errors.inclusive_date_to" class="mt-1" />
+                  </div>
 
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">POSITION TITLE</label>
-              <input
-                id=""
-                v-model="workForm.position_title" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.position_title" /> 
-              <p class="form-text text-muted">
-                Write in full/Do not abbreviate
-              </p>
-            </div>
-          </div>
+                  <!-- Details -->
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Position Title</label>
+                    <input v-model="workForm.position_title" type="text" class="form-control" placeholder="Write in full / Do not abbreviate" />
+                    <InputError :message="workForm.errors.position_title" class="mt-1" />
+                  </div>
 
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Department / Agency / Office / Company</label>
+                    <input v-model="workForm.dept_agency_office_company" type="text" class="form-control" placeholder="Write in full / Do not abbreviate" />
+                    <InputError :message="workForm.errors.dept_agency_office_company" class="mt-1" />
+                  </div>
 
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">DEPARTMENT / AGENCY / OFFICE / COMPANY</label>
-              <input
-                id=""
-                v-model="workForm.dept_agency_office_company" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.dept_agency_office_company" />  
-              <p class="form-text text-muted">
-                Write in full/Do not abbreviate
-              </p>
-            </div>
-          </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Name of Office/Unit</label>
+                    <input v-model="workForm.name_of_office_unit" type="text" class="form-control" placeholder="Write in full / Do not abbreviate" />
+                    <InputError :message="workForm.errors.name_of_office_unit" class="mt-1" />
+                  </div>
 
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Office Address</label>
+                    <input v-model="workForm.office_address" type="text" class="form-control" />
+                    <InputError :message="workForm.errors.office_address" class="mt-1" />
+                  </div>
 
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">NAME OF OFFICE/UNIT</label>
-              <input
-                id=""
-                v-model="workForm.name_of_office_unit" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.name_of_office_unit" />
-              <p class="form-text text-muted">
-                Write in full/Do not abbreviate
-              </p>
-            </div>
-          </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Immediate Supervisor</label>
+                    <input v-model="workForm.immediate_supervisor" type="text" class="form-control" />
+                    <InputError :message="workForm.errors.immediate_supervisor" class="mt-1" />
+                  </div>
 
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Monthly Salary</label>
+                    <div class="input-group">
+                      <span class="input-group-text bg-light text-muted">₱</span>
+                      <input v-model="workForm.monthly_salary" type="text" class="form-control" placeholder="0.00" />
+                    </div>
+                    <InputError :message="workForm.errors.monthly_salary" class="mt-1" />
+                  </div>
 
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">OFFICE ADDRESS</label>
-              <input
-                id=""
-                v-model="workForm.office_address" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.office_address" />
-            </div>
-          </div>
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Salary/Job/Pay Grade (if applicable)</label>
+                    <input v-model="workForm.paygrade" type="text" class="form-control" placeholder="e.g. 12-1" />
+                    <InputError :message="workForm.errors.paygrade" class="mt-1" />
+                  </div>
 
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Status of Appointment</label>
+                    <input v-model="workForm.status_of_appointment" type="text" class="form-control" />
+                    <InputError :message="workForm.errors.status_of_appointment" class="mt-1" />
+                  </div>
 
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">IMMEDIATE SUPERVISOR</label>
-              <input
-                id=""
-                v-model="workForm.immediate_supervisor" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.immediate_supervisor" />
-            </div>
-          </div>
+                  <div class="col-12">
+                    <label class="form-label fw-medium text-secondary small text-uppercase d-block">Government Service</label>
+                    <div class="d-flex gap-3">
+                      <div class="form-check">
+                        <input id="govt_yes" v-model="workForm.govt_service" class="form-check-input" type="radio" name="govt_service" value="1" />
+                        <label class="form-check-label" for="govt_yes">Yes</label>
+                      </div>
+                      <div class="form-check">
+                        <input id="govt_no" v-model="workForm.govt_service" class="form-check-input" type="radio" name="govt_service" value="0" />
+                        <label class="form-check-label" for="govt_no">No</label>
+                      </div>
+                    </div>
+                    <InputError :message="workForm.errors.govt_service" class="mt-1" />
+                  </div>
 
+                  <!-- Textareas -->
+                  <div class="col-12">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">List of Accomplishments</label>
+                    <textarea v-model="workForm.list_of_accomplishments" class="form-control" rows="3" placeholder="- Start with a hyphen on each new item"></textarea>
+                    <InputError :message="workForm.errors.list_of_accomplishments" class="mt-1" />
+                  </div>
 
-          <!-- <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">MONTHLY SALARY</label>
-              <input
-                id=""
-                v-model="workForm.monthly_salary" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.monthly_salary" /> 
-              <p class="text-muted form-text">
-                e.g. 12000.00
-              </p> 
-            </div>
-          </div> -->
+                  <div class="col-12">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Summary of Duties</label>
+                    <textarea v-model="workForm.summary_of_duties" class="form-control" rows="3" placeholder="- Start with a hyphen on each new item"></textarea>
+                    <InputError :message="workForm.errors.summary_of_duties" class="mt-1" />
+                  </div>
+                </div>
 
+                <hr class="my-4">
 
-          <!-- <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">SALARY/ JOB/ PAY GRADE</label>
-              <input
-                id=""
-                v-model="workForm.paygrade" type="text" class="form-control form-control-sm" step="any" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.paygrade" />
-              <p class="form-text text-muted">
-                (if applicable)& STEP  (Format "00-0")/ INCREMENT
-              </p>
-            </div>
-          </div> -->
-
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">STATUS OF APPOINTMENT</label>
-              <input
-                id=""
-                v-model="workForm.status_of_appointment" type="text" class="form-control form-control-sm" step="any" name=""
-                placeholder=""
-              />
-              <InputError :message="workForm.errors.status_of_appointment" />
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <label for="" class="form-label">GOVERNMENT SERVICE</label>
-            <div class="mb-3">
-              <div class="form-check form-check-inline">
-                <input id="govt_yes" v-model="workForm.govt_service" class="form-check-input" type="radio" name="govt_service" value="1" />
-                <label class="form-check-label" for="govt_yes">Yes</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input id="govt_no" v-model="workForm.govt_service" class="form-check-input" type="radio" name="govt_service" value="0" />
-                <label class="form-check-label" for="govt_no">No</label>
-              </div>
-              <InputError :message="workForm.errors.govt_service" />
-            </div>
-          </div>
-
-
-          <div class="form-group col-12">
-            <div class="mb-3">
-              <label for="" class="form-label">LIST OF ACCOMPLISHMENTS</label>
-              <textarea id="" v-model="workForm.list_of_accomplishments" class="form-control" name="" rows="3" />
-              <p class="form-text text-muted">
-                Start with a hyphen on each new item
-              </p>
-              <InputError :message="workForm.errors.list_of_accomplishments" /> 
-            </div>
-          </div>
-
-
-          <div class="form-group col-12">
-            <div class="mb-3">
-              <label for="" class="form-label">SUMMARY OF DUTIES</label>
-              <textarea id="" v-model="workForm.summary_of_duties" class="form-control" name="" rows="3" />
-              <p class="form-text text-muted">
-                Start with a hyphen on each new item
-              </p>
-              <InputError :message="workForm.errors.summary_of_duties" />
-            </div>
-          </div>
-
-          <div class="col-12">
-            <div class="d-flex gap-2">
-              <Link :href="route('profile.pds.work_experience.index')" class="btn btn-secondary" :disabled="workForm.processing" type="submit">  Back</Link>
-              <button class="btn btn-success" :disabled="workForm.processing" type="submit"><Spinner :processing="workForm.processing" />  Save</button>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span v-if="workForm.isDirty" class="text-warning small fw-medium"><i class="fa-solid fa-triangle-exclamation me-1"></i>Unsaved changes</span>
+                  <span v-else></span>
+                  
+                  <div class="d-flex gap-2">
+                    <Link :href="route('profile.pds.work_experience.index')" class="btn btn-light rounded-pill px-4 fw-medium text-secondary" :disabled="workForm.processing">Cancel</Link>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm" :disabled="workForm.processing">
+                      <Spinner :processing="workForm.processing" class="me-2" v-if="workForm.processing" /> 
+                      <i class="fa-solid fa-save me-2" v-else></i>Save Changes
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </PDSLayout>
   </AuthenticatedLayout>
 </template>

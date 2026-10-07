@@ -57,6 +57,9 @@ class SpmsForm extends Model
         
                
 
+                $has_work_experience = $user->work_experience()->exists();
+                $default_points = $has_work_experience ? 40 : 30;
+
                 if($user->hasRole('employee')){//employee
                     $computable = $job_application->included;
                     $posting_date = Carbon::parse($job_posting->posting_date);
@@ -76,7 +79,7 @@ class SpmsForm extends Model
                         'name' => $user->name,
                         'first' => count($ipcr_values) >= 1 ? round($ipcr_values[0], 2) : null,
                         'second' => count($ipcr_values) === 2 ? round($ipcr_values[1], 2) : null,
-                        'equivalent' => count($ipcr_values) == 0 ? 50 : round($ipcrs->average() / 5 * 70, 2)
+                        'equivalent' => count($ipcr_values) == 0 ? $default_points : round($ipcrs->average() / 5 * 60, 2)
                     ];
 
                     // dd($applicant);
@@ -91,7 +94,7 @@ class SpmsForm extends Model
                         $pesRatingOutsider = $job_application->pes_rating;
             
                         if(($pesRatingOutsider->first_rating && $pesRatingOutsider->second_rating)){
-                            $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 70;
+                            $performance_rating = ((($pesRatingOutsider->first_rating + $pesRatingOutsider->second_rating) / 2) / 5) * 60;
                             $applicant = [
                                 'name' => $user->name,
                                 'first' => $pesRatingOutsider->first_rating,
@@ -99,7 +102,7 @@ class SpmsForm extends Model
                                 'equivalent' => $performance_rating
                             ];
                         }else if($pesRatingOutsider->first_rating){
-                            $performance_rating = ($pesRatingOutsider->first_rating / 5) * 70;
+                            $performance_rating = ($pesRatingOutsider->first_rating / 5) * 60;
                             $applicant = [
                                 'name' => $user->name,
                                 'first' => $pesRatingOutsider->first_rating,
@@ -107,7 +110,7 @@ class SpmsForm extends Model
                                 'equivalent' => $performance_rating
                             ];
                         }else if($pesRatingOutsider->second_rating){
-                            $performance_rating = ($pesRatingOutsider->second_rating / 5) * 70;
+                            $performance_rating = ($pesRatingOutsider->second_rating / 5) * 60;
                             $applicant = [
                                 'name' => $user->name,
                                 'second' =>  $pesRatingOutsider->second_rating,
@@ -118,12 +121,11 @@ class SpmsForm extends Model
                         return $applicant;
                         
                     }else{
-                        $performance_rating = 50;
                         $applicant = [
                             'name' => $user->name,
                             'second' =>  "NONE",
                             'first' => "NONE",
-                            'equivalent' => $performance_rating
+                            'equivalent' => $default_points
                         ];
 
                         return $applicant;

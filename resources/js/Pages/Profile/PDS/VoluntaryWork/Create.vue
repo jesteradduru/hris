@@ -1,93 +1,72 @@
 <template>
   <AuthenticatedLayout>
     <PDSLayout>
-      <form @submit.prevent="add">
-        <div class="row">
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">NAME & ADDRESS OF ORGANIZATION</label>
-              <input
-                id=""
-                v-model="form.name_address_of_org" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.name_address_of_org" /> 
-              <p class="form-text text-muted">
-                Write in full
-              </p>
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">FROM</label>
-              <input
-                id=""
-                v-model="form.inclusive_date_from" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.inclusive_date_from" />
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">TO</label>
-              <input
-                id=""
-                v-model="form.inclusive_date_to" type="date" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.inclusive_date_to" />
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">NUMBER OF HOURS</label>
-              <input
-                id=""
-                v-model="form.number_of_hours" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.number_of_hours" /> 
-            </div>
-          </div>
-
-
-          <div class="form-group col-6">
-            <div class="mb-3">
-              <label for="" class="form-label">POSITION / NATURE OF WORK</label>
-              <input
-                id=""
-                v-model="form.position_work" type="text" class="form-control form-control-sm" name=""
-                placeholder=""
-              />
-              <InputError :message="form.errors.position_work" />  
-            </div>
-          </div>
-
-
-          <div class="col-12">
-            <div class="d-flex gap-2">
-              <div class="d-flex align-items-center">
-                <b v-if="form.isDirty" class="text-danger form-status">Not Saved</b>
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div class="card shadow-sm border-0 rounded-4 mb-4">
+            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center">
+              <div class="bg-primary bg-opacity-10 p-2 rounded-circle me-3">
+                <i class="fa-solid fa-hand-holding-heart text-primary"></i>
               </div>
-              <Link :href="route('profile.pds.voluntary_work.index')" class="btn btn-secondary" :disabled="form.processing" type="submit">  Back</Link>
-              <button
-                type="submit" :disabled="!form.isDirty && form.wasSuccessful"
-                class="btn btn-success"
-              >
-                <Spinner :processing="form.processing" /> {{ !form.isDirty &&
-                  form.wasSuccessful ? 'Added' : 'Add' }}
-              </button>
+              <h5 class="mb-0 fw-bold text-dark">Add Voluntary Work</h5>
+            </div>
+            <div class="card-body p-4">
+              <form @submit.prevent="add">
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Name & Address of Organization</label>
+                    <input v-model="form.name_address_of_org" type="text" class="form-control" placeholder="Write in full" />
+                    <InputError :message="form.errors.name_address_of_org" class="mt-1" />
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">From</label>
+                    <input v-model="form.inclusive_date_from" type="date" class="form-control" />
+                    <InputError :message="form.errors.inclusive_date_from" class="mt-1" />
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">To</label>
+                    <input v-model="form.inclusive_date_to" type="date" class="form-control" />
+                    <InputError :message="form.errors.inclusive_date_to" class="mt-1" />
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Number of Hours</label>
+                    <div class="input-group">
+                      <input v-model="form.number_of_hours" type="number" class="form-control" placeholder="e.g. 40" />
+                      <span class="input-group-text bg-light text-muted">hrs</span>
+                    </div>
+                    <InputError :message="form.errors.number_of_hours" class="mt-1" />
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <label class="form-label fw-medium text-secondary small text-uppercase">Position / Nature of Work</label>
+                    <input v-model="form.position_work" type="text" class="form-control" placeholder="Describe your role" />
+                    <InputError :message="form.errors.position_work" class="mt-1" />
+                  </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <span v-if="form.isDirty" class="text-warning small fw-medium"><i class="fa-solid fa-triangle-exclamation me-1"></i>Unsaved changes</span>
+                  <span v-else></span>
+                  
+                  <div class="d-flex gap-2">
+                    <Link :href="route('profile.pds.voluntary_work.index')" class="btn btn-light rounded-pill px-4 fw-medium text-secondary" :disabled="form.processing">Cancel</Link>
+                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-medium shadow-sm" :disabled="!form.isDirty && form.wasSuccessful">
+                      <Spinner :processing="form.processing" class="me-2" v-if="form.processing" /> 
+                      <span v-if="!form.isDirty && form.wasSuccessful"><i class="fa-solid fa-check me-2"></i>Added</span>
+                      <span v-else><i class="fa-solid fa-save me-2" v-if="!form.processing"></i>Save Voluntary Work</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </form>
+      </div>
     </PDSLayout>
   </AuthenticatedLayout>
 </template>

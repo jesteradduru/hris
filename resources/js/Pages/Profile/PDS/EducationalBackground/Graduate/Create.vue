@@ -14,7 +14,7 @@
             >
               <option value="">Select One</option>
               <option value="DIPLOMA">Diploma Course</option>
-              <option value="MASTERAL">Masteral Degree</option>
+              <option value="MASTERAL">Masteral Degree / Juris Doctor</option>
               <option value="DOCTORATE">Doctorate Degree</option>
             </select>
             

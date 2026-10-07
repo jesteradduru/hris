@@ -49,6 +49,8 @@
             <th v-if="withControls" class="py-2 px-2 text-center" style="width: 40px;">Select</th>
             <th class="py-2 px-3">Position Title</th>
             <th class="py-2 px-2">Agency / Office / Company</th>
+            <th class="py-2 px-2">Paygrade</th>
+            <th class="py-2 px-2">Salary</th>
             <th class="py-2 px-2">Appointment Status</th>
             <th class="py-2 px-2 text-center">Govt Service</th>
             <th class="py-2 px-3">Inclusive Dates</th>
@@ -72,6 +74,8 @@
             </td>
             <td class="px-3 fw-semibold text-dark">{{ work.position_title }}</td>
             <td class="px-2 text-muted">{{ work.dept_agency_office_company }}</td>
+            <td class="px-2 text-muted">{{ work.paygrade }}</td>
+            <td class="px-2 text-muted">{{ work.monthly_salary }}</td>
             <td class="px-2"><span class="badge bg-light text-secondary border extra-small">{{ work.status_of_appointment || 'N/A' }}</span></td>
             <td class="px-2 text-center">
               <span v-if="work.govt_service" class="badge bg-primary-subtle text-primary border px-2">Yes</span>

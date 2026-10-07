@@ -67,23 +67,23 @@ class RewardAndRecognition extends Model
         // 1 major award national or more
         if(count($non_acad_award_major_national) >= 1 ){
             foreach($non_acad_award_major_national as $x){
-                $outstanding += 80;
+                $outstanding += 100;
             }
          }
 
          // 1 or more major awards local
          if(count($non_acad_award_major_local) >= 1 ){
-            $outstanding = $outstanding + 50;
+            $outstanding = $outstanding + 80;
          }
 
          // 1 minor award local
          if(count($non_acad_award_minor) == 1){
-            $outstanding = $outstanding + 30;
+            $outstanding = $outstanding + 40;
          }
 
          // 2 or more minor awards local
          if(count($non_acad_award_minor) >= 2){
-            $outstanding = $outstanding + 40;
+            $outstanding = $outstanding + 50;
          }
 
         // 1 special awards 
@@ -113,7 +113,7 @@ class RewardAndRecognition extends Model
             $outstanding = 100;
         }
 
-        $outstanding = $outstanding * .15;
+        $outstanding = $outstanding * .20;
 
         return $outstanding;
     }
