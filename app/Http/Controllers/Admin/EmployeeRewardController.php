@@ -60,7 +60,7 @@ class EmployeeRewardController extends Controller
             'reward_id' => $request->reward_id,
             'title' => $reward->title,
             'category' => $reward->category,
-            'office' => 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2',
+            'office' => 'Department of Economy, Planning, and Development Region 2',
             'date_awarded' => $request->date_awarded
         ]);
 

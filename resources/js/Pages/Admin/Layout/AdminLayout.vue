@@ -1,23 +1,27 @@
 <template>
-  <div>
-    <div class="container-fluid">
+  <div class="min-vh-100 bg-light d-flex flex-column">
+    <div class="container-fluid px-3 px-md-4 pt-3">
       <AdminMainNavbar />
-      <!-- Page Heading -->
-      <header v-if="$slots.header" class="bg-white shadow">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8" />
-      </header>
-
-      <!-- Page Content -->
-      <main class="main">
-        <div :class="`${fluid ? 'container-fluid' : 'container'} mt-3`">
-          <slot />
-        </div>
-      </main>
-
-      <footer class="footer text-center rounded shadow p-1 mt-5">
-        <div><small>&copy; 2023 - {{ moment().format('Y') }} | <a target="_blank" href="https://neda.rdc2.gov.ph">NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2</a></small></div>
-      </footer>
     </div>
+
+    <!-- Page Content -->
+    <main class="main flex-grow-1">
+      <div :class="`${fluid ? 'container-fluid px-3 px-md-4' : 'container'} py-3`">
+        <slot />
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto py-4 bg-white border-top">
+      <div class="container-fluid text-center">
+        <p class="text-muted small mb-0">
+          &copy; 2023 - {{ moment().format('Y') }} | 
+          <a target="_blank" href="https://dro2.depdev.gov.ph" class="text-decoration-none fw-medium text-primary">
+            Department of Economy, Planning, and Development Region 2
+          </a>
+        </p>
+      </div>
+    </footer>
   </div>
 </template>
 

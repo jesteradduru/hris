@@ -1,9 +1,13 @@
 <template>
   <Head title="Application" />
   <AuthenticatedLayout>
-    <BreadCrumbs :crumbs="crumbs" />
-    <div class="container rounded p-4">
-      <slot />
+    <div class="container py-4">
+      <BreadCrumbs :crumbs="crumbs" class="mb-4" />
+      <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+          <slot />
+        </div>
+      </div>
     </div>
   </AuthenticatedLayout>
 </template>

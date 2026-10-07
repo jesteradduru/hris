@@ -1,51 +1,47 @@
 <template>
   <form @submit.prevent="filter">
-    <div class="row g-3 align-items-center">
-      <div class="col-auto">
-        <label for="search" class="col-form-label">Search</label>
-      </div>
-      <div class="col-auto">
+    <div class="d-flex flex-column gap-2">
+      <!-- Search Input -->
+      <div class="input-group input-group-sm shadow-sm rounded">
+        <span class="input-group-text bg-light border-end-0 text-muted">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </span>
         <input
           id="search"
           v-model="filterForm.search"
           type="text"
-          class="form-control"
+          class="form-control border-start-0 ps-0 bg-light"
+          placeholder="Search jobs..."
         />
       </div>
-      <div class="col-auto">
-        <label for="search" class="col-form-label">Sort By</label>
+      
+      <!-- Sorting Options -->
+      <div class="d-flex gap-2">
+        <select
+          v-model="filterForm.order_by"
+          class="form-select form-select-sm shadow-sm text-secondary"
+        >
+          <option value="posting_date">Posting Date</option>
+          <option value="closing_date">Closing Date</option>
+        </select>
+        <select
+          v-model="filterForm.order"
+          class="form-select form-select-sm shadow-sm text-secondary"
+          style="max-width: 100px;"
+        >
+          <option value="desc">Latest</option>
+          <option value="asc">Oldest</option>
+        </select>
       </div>
-      <div class="col-auto">
-        <div class="input-group flex-nowrap">
-          <select
-            id=""
-            v-model="filterForm.order_by"
-            name=""
-            class="form-control"
-          >
-            <option value="posting_date">Posting Date</option>
-            <option value="closing_date">Closing Date</option>
-          </select>
-          <select
-            id=""
-            v-model="filterForm.order"
-            name=""
-            class="form-control"
-          >
-            <option value="desc">Latest</option>
-            <option value="asc">Oldest</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-auto">
-        <button type="submit" class="btn btn-dark ">
-          Filter
+      
+      <!-- Action Buttons -->
+      <div class="d-flex gap-2 mt-1">
+        <button type="submit" class="btn btn-primary btn-sm flex-grow-1 fw-medium shadow-sm">
+          Apply Filter
         </button>
-      </div>
-      <div class="col-auto">
         <button
-          type="reset"
-          class="btn btn-secondary "
+          type="button"
+          class="btn btn-light btn-sm flex-grow-1 border fw-medium shadow-sm"
           @click="resetFilter"
         >
           Reset

@@ -122,7 +122,7 @@ WithTitle
         $sheet->mergeCells('A3:' . $sheet->getHighestColumn() . '3');
         $sheet->mergeCells('A4:' . $sheet->getHighestColumn() . '4');
 
-        $sheet->setCellValue('A2', 'NATIONAL ECONOMIC DEVELOPMENT AUTHORITY REGION 2');
+        $sheet->setCellValue('A2', 'Department of Economy, Planning, and Development Region 2');
         $sheet->setCellValue('A3',  $this->position);
         $sheet->setCellValue('A4',  'SPB FORM B-1.2 PERFORMANCE SUMMARY SCORE SHEET');
 

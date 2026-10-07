@@ -2,17 +2,15 @@
   <div>
     <MainNavbar />
     <!-- Page Content -->
-    <div class="row">
+    <div class="row g-0">
       <div class="col-2 side-nav-col">
         <SideNav />
       </div>
-      <div class="col">
-        <div class="container-fluid">
-          <br />
-          <br />
-          <br />
+      <div class="col bg-light min-vh-100">
+        <div class="container-fluid pt-5 mt-4">
           <br />
           <slot />
+          <br />
         </div>
       </div>
     </div>
