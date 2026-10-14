@@ -74,7 +74,7 @@ WithTitle
 
                 if($PSBPOINTS){
                     $PVEI = $PSBPOINTS->org_competency + $PSBPOINTS->leadership_competency + $PSBPOINTS->technical_competency;
-                    $PVEI_PERCENT = $PVEI * .15;
+                    $PVEI_PERCENT = $PVEI * .2;
                 }
                
 
@@ -140,9 +140,9 @@ WithTitle
 
         // PREPARE COLUMN HEADERS
         $sheet->setCellValue('A6', 'CANDIDATES');
-        $sheet->setCellValue('B6', 'SPMS RATING (70)');
-        $sheet->setCellValue('C6', 'OUTSTANDING ACCOMPLISHMENT (15)');
-        $sheet->setCellValue('D6', 'PVEI (15)');
+        $sheet->setCellValue('B6', 'SPMS RATING (60)');
+        $sheet->setCellValue('C6', 'OUTSTANDING ACCOMPLISHMENT (20)');
+        $sheet->setCellValue('D6', 'PVEI (20)');
         $sheet->setCellValue('E6', 'PERFORMANCE (25)');
         $sheet->setCellValue('F6', 'RANK');
 

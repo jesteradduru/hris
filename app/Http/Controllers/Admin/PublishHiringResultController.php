@@ -171,7 +171,7 @@ class PublishHiringResultController extends Controller
         $user = $currentResult->user;
 
         $pvei = $hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency;
-        $performance_rating = ($performance_rating['equivalent'] + $outstanding + ($pvei * .15)) * 0.25;
+        $performance_rating = ($performance_rating['equivalent'] + $outstanding + ($pvei * .2)) * 0.25;
         $education_rating = $education['education'] + $relevant_training['score'];
         $experience_rating = $experience['score'];
         $personality_rating = ($hrmpsb_points->org_competency + $hrmpsb_points->leadership_competency + $hrmpsb_points->technical_competency ) * .15;
